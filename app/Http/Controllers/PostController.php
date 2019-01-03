@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+use Illuminate\Http\Request;
 use App\Repository\PostRepositoryEloquent;
 use Exception;
 
 class PostController extends Controller
 {
+    protected $postRepository;
+
     public function __construct()
     {
         $this->postRepository = app(PostRepositoryEloquent::class);
