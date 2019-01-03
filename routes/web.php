@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('post', 'PostController');
+Route::get('post/{id}/delete', 'PostController@destroy');
