@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Entities\Post;
+use Request;
 use App\Repository\PostRepositoryEloquent;
-use Nexmo\Client\Exception\Exception;
+use Exception;
 
 class PostController extends Controller
 {
     public function __construct()
     {
-        $this->postRepository = new PostRepositoryEloquent;
+        $this->postRepository = app(PostRepositoryEloquent::class);
     }
 
     public function index(){
@@ -52,7 +51,7 @@ class PostController extends Controller
     public function update($id, Request $request)
     {
         $input = $request->except('_method','_token');
-        $post = $this->postRepository->update($id, $input);
+        $this->postRepository->update($id, $input);
 
         return redirect('/post');
     }

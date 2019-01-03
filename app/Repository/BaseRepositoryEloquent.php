@@ -11,7 +11,7 @@ abstract class BaseRepositoryEloquent implements BaseRepository
 
     public function __construct()
     {
-        $this->app = new App();
+        $this->app = app(App::class);
         $this->makeModel();
     }
 

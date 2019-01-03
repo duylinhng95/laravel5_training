@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
-class PostServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -23,9 +25,6 @@ class PostServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'App\Repository\PostRepository',
-            'App\Repository\PostRepositoryEloquent'
-        );
+        $this->app->bind( PostRepository::class, PostRepositoryEloquent::class);
     }
 }
