@@ -16,3 +16,8 @@ Route::get('/', function () {
 });
 Route::resource('post', 'PostController');
 Route::get('post/{id}/delete', 'PostController@destroy');
+
+Route::get('user/register', 'UserController@showRegister');
+Route::post('/user/register', 'UserController@register');
+Route::get('/user/login', 'UserController@showLogin');
+Route::post('/user/login', 'UserController@login');
