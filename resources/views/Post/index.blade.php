@@ -23,8 +23,10 @@
                         <td>{{$p->description}}</td>
                         <td>{{$p->content}}</td>
                         <td>
-                            <a href="{{url('/post/'.$p->id.'/edit')}}" class="btn btn-info"><i class="fa fa-pen"></i> Edit</a>
-                            <a href="{{url('/post/'.$p->id.'/delete')}}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                            <a href="{{url('/post/'.$p->id.'/edit')}}" class="btn btn-info"><i class="fa fa-pen"></i>
+                                Edit</a>
+                            <a href="{{url('/post/'.$p->id.'/delete')}}" class="btn btn-danger"><i
+                                        class="fa fa-trash"></i> Delete</a>
                         </td>
                     </tr>
                 @endforeach

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\PostRepositoryEloquent;
-use Exception;
 
 class PostController extends Controller
 {
@@ -15,17 +14,20 @@ class PostController extends Controller
         $this->postRepository = app(PostRepositoryEloquent::class);
     }
 
-    public function index(){
+    public function index()
+    {
         $posts = $this->postRepository->all();
         return view('Post/index', compact('posts'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $post = $this->postRepository->find($id);
         return $post;
     }
 
-    public function create(){
+    public function create()
+    {
         return view('Post/create');
     }
 
@@ -42,8 +44,7 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        if ($post = $this->postRepository->find($id))
-        {
+        if ($post = $this->postRepository->find($id)) {
             return view('Post/edit', compact('post'));
         } else {
             throw new Exception('Post not found');
@@ -52,7 +53,7 @@ class PostController extends Controller
 
     public function update($id, Request $request)
     {
-        $input = $request->except('_method','_token');
+        $input = $request->except('_method', '_token');
         $this->postRepository->update($id, $input);
 
         return redirect('/post');
@@ -60,8 +61,7 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        if ($this->postRepository->delete($id))
-        {
+        if ($this->postRepository->delete($id)) {
             return redirect('/post');
         } else {
             throw new Exception('Delete error');

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Repository\UserRepositoryEloquent;
 use Hash;
 use Auth;
-use Exception;
 
 class UserController extends Controller
 {
