@@ -8,7 +8,10 @@
     <title>Register User</title>
 </head>
 <body>
-<form action="{{url('/user/login')}}" method="post">
+@if(session('error'))
+    <p>{{session('error')}}</p>
+@endif
+<form action="{{route('auth.login')}}" method="post">
     {{csrf_field()}}
     <label for="name">Email</label>
     <input type="email" name="email">
