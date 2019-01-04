@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\UserRepositoryEloquent;
 use Hash;
+use Auth;
+use Exception;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $input = $request->except('_token');
+        $input             = $request->except('_token');
         $input['password'] = Hash::make($input['password']);
         $this->userRepository->create($input);
 
@@ -31,12 +33,29 @@ class UserController extends Controller
 
     public function showLogin()
     {
+        if (Auth::user() && Auth::user() != null) {
+            return redirect('/post');
+        }
         return view('User.login');
     }
 
     public function login(Request $request)
     {
         $input = $request->except('_token');
-        $this->userRepository->login($input);
+
+        if ($user = Auth::guard()->attempt($input)) {
+            return redirect('/post');
+        } else {
+            return redirect('/auth/login')->with('error', 'Wrong credentials');
+        }
+
+    }
+
+    public function logout()
+    {
+        if (Auth::user() && Auth::user() != null) {
+            Auth::logout();
+        }
+        return redirect('/auth/login');
     }
 }

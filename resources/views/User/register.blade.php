@@ -8,16 +8,16 @@
     <title>Register User</title>
 </head>
 <body>
-    <form action="{{url('/user/register')}}" method="post">
-        {{csrf_field()}}
-        <label for="name">Name</label>
-        <input type="text" name="name">
-        <label for="name">Email</label>
-        <input type="email" name="email">
-        <label for="name">Password</label>
-        <input type="password" name="password">
+<form action="{{url('/user/register')}}" method="post">
+    {{csrf_field()}}
+    <label for="name">Name</label>
+    <input type="text" name="name">
+    <label for="name">Email</label>
+    <input type="email" name="email">
+    <label for="name">Password</label>
+    <input type="password" name="password">
 
-        <button type="submit">Register</button>
-    </form>
+    <button type="submit">Register</button>
+</form>
 </body>
 </html>
