@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'post', 'middleware' => 'jwt.auth'], function () {
+Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
     Route::resource('/', 'PostController');
     Route::get('/{id}/delete', 'PostController@destroy');
 });
