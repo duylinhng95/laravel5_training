@@ -19,7 +19,7 @@ class AuthenticateUser
         if (Auth::user() && Auth::user() != null) {
             return $next($request);
         } else {
-            return redirect("/auth/post");
+            return redirect("/auth/login");
         }
     }
 }

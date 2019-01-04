@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/post');
 });
 Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
     Route::resource('/', 'PostController');

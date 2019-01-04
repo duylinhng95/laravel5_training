@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="title">Content</label>
                 <textarea name="content" id="" cols="30" rows="10"
-                           class="form-control"></textarea>
+                          class="form-control"></textarea>
             </div>
         </div>
         <div class="card-footer">

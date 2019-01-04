@@ -6,6 +6,7 @@
     <div class="card-header">
         <h2>Post</h2>
         <a href="{{url('/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
+        <a href="{{url('/auth/logout')}}" class="btn btn-danger float-right">Logout</a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
