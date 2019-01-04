@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\PostRepositoryEloquent;
+use Exception;
 
 class PostController extends Controller
 {
@@ -61,10 +62,6 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        if ($this->postRepository->delete($id)) {
-            return redirect('/post');
-        } else {
-            throw new Exception('Delete error');
-        }
+        $this->postRepository->delete($id);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use Illuminate\Container\Container as App;
@@ -8,6 +9,7 @@ abstract class BaseRepositoryEloquent implements BaseRepository
 {
 
     protected $model;
+    protected $app;
 
     public function __construct()
     {
@@ -17,7 +19,8 @@ abstract class BaseRepositoryEloquent implements BaseRepository
 
     abstract public function model();
 
-    public function makeModel(){
+    public function makeModel()
+    {
         $model = $this->app->make($this->model());
         return $this->model = $model;
     }

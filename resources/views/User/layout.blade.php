@@ -12,14 +12,14 @@
 <header>
     &nbsp
 </header>
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 offset-md-3">
-                <div class="card align-middle">
-                    @yield('content')
-                </div>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-md-6 offset-md-3">
+            <div class="card align-middle">
+                @yield('content')
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
