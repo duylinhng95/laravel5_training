@@ -10,11 +10,11 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-light text-dark">
-                <thead>
-                <td>Title</td>
-                <td>Description</td>
-                <td>Content</td>
-                <td>Action</td>
+                <thead class="text-center">
+                <th>Title</th>
+                <th>Description</th>
+                <th>Content</th>
+                <th>Action</th>
                 </thead>
                 @foreach($posts as $p)
                     <tr>

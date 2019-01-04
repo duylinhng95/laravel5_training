@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
     Route::resource('/', 'PostController');
+    Route::get('/{id}/edit', 'PostController@edit');
     Route::get('/{id}/delete', 'PostController@destroy');
 });
 
