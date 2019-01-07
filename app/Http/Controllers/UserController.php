@@ -26,7 +26,6 @@ class UserController extends Controller
         $input             = $request->except('_token');
         $input['password'] = Hash::make($input['password']);
         $this->userRepository->create($input);
-
         return redirect('/');
     }
 

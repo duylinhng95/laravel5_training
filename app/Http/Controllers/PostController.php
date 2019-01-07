@@ -56,7 +56,6 @@ class PostController extends Controller
     {
         $input = $request->except('_method', '_token');
         $this->postRepository->update($id, $input);
-
         return redirect('/post');
     }
 

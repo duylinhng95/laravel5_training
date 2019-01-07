@@ -11,13 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
-mix.autoload({
-	jquery: ['$', 'window.jQuery', 'jQuery'],
-	'popper.js/dist/umd/popper.js': ['Popper']
-})
-	.js('resources/assets/js/app.js', 'public/js')
-	.sass('resources/assets/sass/style.scss', 'public/css')
+mix.js('resources/js/*.js', 'public/js')
+   .sass('resources/sass/app.scss', 'public/css')
+   .sass('resources/sass/admin.scss', 'public/css')
 	.version()
+
+mix.copyDirectory('resources/images', 'public/images');
+mix.copyDirectory('resources/fonts', 'public/fonts');
+
+// mix.autoload({
+// 	jquery: ['$', 'window.jQuery', 'jQuery'],
+// 	'popper.js/dist/umd/popper.js': ['Popper']
+// })
+// 	.js('resources/js/app.js', 'public/js')
+// 	.sass('resources/sass/app.scss', 'public/css')
+// 	.version()
 

@@ -23,5 +23,6 @@
         </div>
     </div>
 </div>
+<script src="{{ mix("js/abc.js") }}"></script>
 </body>
 </html>
