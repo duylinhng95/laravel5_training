@@ -28,6 +28,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', 'UserController@logout');
 });
 
-Route::get('/admin', function(){
-   return view('Admin.index');
+Route::group(['prefix' => 'admin'], function(){
+    Route::get('/', function(){
+        return view('Admin.index');
+    });
+    Route::get('/user/import', 'AdminController@importUser');
 });
