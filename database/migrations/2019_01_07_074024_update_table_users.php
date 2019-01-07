@@ -14,9 +14,9 @@ class UpdateTableUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('status');
-            $table->tinyInteger('role');
-            $table->integer('rating');
+            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('role')->default(0);
+            $table->integer('rating')->default(0);
         });
     }
 
