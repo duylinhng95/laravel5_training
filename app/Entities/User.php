@@ -4,7 +4,6 @@ namespace App\Entities;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable
 {
@@ -19,6 +18,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
+        'role',
+        'rating',
     ];
 
     /**
@@ -31,13 +33,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function getJWTIdentifier()
+    public function rocket()
     {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+        $this->hasOne('App\Entities\RocketProfile');
     }
 }

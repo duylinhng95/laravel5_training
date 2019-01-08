@@ -4,7 +4,7 @@ window.Dropzone = require('dropzone');
 window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
 
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 	'use strict';
 
 	// ==============================================================
@@ -24,9 +24,7 @@ jQuery(document).ready(function($) {
 
 
 	if ($(".menu-list").length) {
-		$('.menu-list').slimScroll({
-
-		});
+		$('.menu-list').slimScroll({});
 	}
 
 	// ==============================================================
@@ -37,7 +35,7 @@ jQuery(document).ready(function($) {
 		$('.sidebar-nav-fixed a')
 		// Remove links that don't actually link to anything
 
-			.click(function(event) {
+			.click(function (event) {
 				// On-page links
 				if (
 					location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
@@ -52,7 +50,7 @@ jQuery(document).ready(function($) {
 						event.preventDefault();
 						$('html, body').animate({
 							scrollTop: target.offset().top - 90
-						}, 1000, function() {
+						}, 1000, function () {
 							// Callback after animation
 							// Must change focus!
 							var $target = $(target);
@@ -62,11 +60,13 @@ jQuery(document).ready(function($) {
 							} else {
 								$target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
 								$target.focus(); // Set focus again
-							};
+							}
+							;
 						});
 					}
-				};
-				$('.sidebar-nav-fixed a').each(function() {
+				}
+				;
+				$('.sidebar-nav-fixed a').each(function () {
 					$(this).removeClass('active');
 				})
 				$(this).addClass('active');
@@ -118,8 +118,6 @@ jQuery(document).ready(function($) {
 //     "use strict";
 
 
-
-
 // var monkeyList = new List('test-list', {
 //    valueNames: ['name']
 
@@ -128,10 +126,6 @@ jQuery(document).ready(function($) {
 //    valueNames: ['name']
 
 // });
-
-
-
-
 
 
 // });

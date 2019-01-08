@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTableUsers extends Migration
+class UpdateNullableUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,8 @@ class UpdateTableUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('status')->default(0);
-            $table->tinyInteger('role')->default(0);
-            $table->integer('rating')->default(0);
+            $table->string('email')->nullable()->change();
+            $table->string('password')->nullable()->change();
         });
     }
 
