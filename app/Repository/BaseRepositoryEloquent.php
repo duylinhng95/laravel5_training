@@ -49,4 +49,9 @@ abstract class BaseRepositoryEloquent implements BaseRepository
     {
         return $this->model->destroy($id);
     }
+
+    public function createMany($arr)
+    {
+        return $this->model->insert($arr);
+    }
 }

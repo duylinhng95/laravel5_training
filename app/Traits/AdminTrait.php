@@ -3,8 +3,7 @@
 namespace App\Traits;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\Exception\ClientException;
 
 Trait AdminTrait
 {
@@ -17,18 +16,9 @@ Trait AdminTrait
             'user'     => $username,
             'password' => $password
         ]);
-        $handler = new CurlHandler();
-        $stack = HandlerStack::create($handler);
-        $request  = new Client(['handler' => $stack]);
+        $request  = new Client();
         $res      = $request->post("https://neolab.wc.calling.fun/api/v1/login",
             ['headers' => ['Content-Type' => 'application/json'], 'body' => $body]);
-        return json_decode($res->getBody()->getContents(),true);
-
-//        $ch = curl_init('https://neolab.wc.calling.fun/api/v1/login');
-//        curl_setopt($ch, CURLOPT_POST, true);
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-//        $res = curl_exec($ch);
-//        dd(json_decode($res));
+        return json_decode($res->getBody()->getContents(), true);
     }
 }

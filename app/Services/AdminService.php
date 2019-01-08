@@ -1,22 +1,41 @@
 <?php
+
 namespace App\Services;
 
-use App\Traits\AdminTrait;
-use GuzzleHttp\Client;
+use App\Repository\AdminRepositoryEloquent;
+use App\Repository\UserRepositoryEloquent;
+use App\Repository\RocketProfileRepositoryEloquent;
 
 class AdminService
 {
-    use AdminTrait;
+    protected $adminRepository;
+    protected $userRepository;
+    protected $rocketRepository;
 
-    public function getUsersArray()
+    public function __construct()
     {
-        $user = $this->loginAPI();
-        $headers = [
-            'X-Auth-Token' => $user['data']['authToken'],
-            'X-User-Id' => $user['data']['userId'],
-        ];
-        $request = new Client();
-        $res = $request->get('https://neolab.wc.calling.fun/api/v1/users.list?count=0', ['headers' => $headers]);
-        return json_decode($res->getBody()->getContents(), true);
+        $this->adminRepository  = app(AdminRepositoryEloquent::class);
+        $this->userRepository   = app(UserRepositoryEloquent::class);
+        $this->rocketRepository = app(RocketProfileRepositoryEloquent::class);
+    }
+
+    public function importUserDB()
+    {
+        $arr = $this->adminRepository->getUser();
+        foreach ($arr['users'] as $user) {
+            $users[] = [
+                'user'   => ['name' => $user['name']],
+                'rocket' => ['owner_id' => $user['_id'], 'username' => $user['username']],
+            ];
+        }
+        $res    = $this->userRepository->createProfile($users);
+        $rocket = $this->rocketRepository->createMany($res);
+
+        return $rocket;
+    }
+
+    public function getUser()
+    {
+        return $this->userRepository->paginate(50);
     }
 }

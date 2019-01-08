@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\AdminRepositoryEloquent;
+use App\Services\AdminService;
 
 class AdminController extends Controller
 {
-    protected $adminRepository;
+    protected $adminService;
 
     public function __construct()
     {
-        $this->adminRepository = app(AdminRepositoryEloquent::class);
+        $this->adminService = app(AdminService::class);
     }
 
     public function importUser()
     {
-        $array = $this->adminRepository->getUser();
-        dd($array);
+        $this->adminService->importUserDB();
+        return response()->json(['status' => '200', 'message' => 'Import User Success']);
+    }
+
+    public function index()
+    {
+        $users = $this->adminService->getUser();
+        return view('Admin.index', compact('users'));
     }
 }

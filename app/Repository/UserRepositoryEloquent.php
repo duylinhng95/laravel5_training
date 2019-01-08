@@ -14,4 +14,22 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         return User::class;
     }
+
+    public function createProfile($users)
+    {
+        foreach ($users as $u)
+        {
+            $id = $this->model->firstOrCreate($u['user'])->id;
+            $rocket = $u['rocket'];
+            $rocket['user_id'] = $id;
+            $rockets[] = $rocket;
+        }
+        return $rockets;
+    }
+
+    public function paginate($num)
+    {
+
+        return $this->model->paginate($num);
+    }
 }

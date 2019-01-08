@@ -15,8 +15,8 @@ class CreateRocketProfilesTable extends Migration
     {
         Schema::create('rocket_profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('auth_token');
-            $table->string('owner_id');
+            $table->string('auth_token')->nullable();
+            $table->string('owner_id')->nullable();
             $table->string('username');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
