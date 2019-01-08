@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 
 Trait AdminTrait
 {

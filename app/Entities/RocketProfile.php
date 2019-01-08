@@ -12,6 +12,8 @@ class RocketProfile extends Model
         'auth_token', 'owner_id', 'username', 'user_id'
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         $this->belongsTo('App/Entities/User');

@@ -59,7 +59,13 @@
                             User
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/admin/')}}"><i class="fas fa-fw fa-user"></i>List</a>
+                            <a class="nav-link" href="{{url('/admin/')}}"><i class="fas fa-fw fa-user"></i>Users list</a>
+                        </li>
+                        <li class="nav-divider">
+                            Post
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-user"></i>Posts list</a>
                         </li>
                     </ul>
                 </div>

@@ -11,4 +11,13 @@ class RocketProfileRepositoryEloquent extends BaseRepositoryEloquent implements 
     {
         return RocketProfile::class;
     }
+
+    public function createProfile($arr)
+    {
+        foreach ($arr as $a)
+        {
+            $this->model->firstOrCreate($a);
+        }
+        return true;
+    }
 }
