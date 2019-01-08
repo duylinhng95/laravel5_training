@@ -5,11 +5,11 @@ namespace App\Repository;
 use App\Entities\User;
 use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
-use App\Traits\UserTrait;
+use App\Traits\RocketTrait;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
-    use UserTrait;
+    use RocketTrait;
 
     public function model()
     {

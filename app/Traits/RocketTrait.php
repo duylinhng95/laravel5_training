@@ -5,7 +5,7 @@ namespace App\Traits;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
-trait UserTrait
+trait RocketTrait
 {
     public function loginAPI($input)
     {

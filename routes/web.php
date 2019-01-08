@@ -20,7 +20,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
     Route::get('/{id}/delete', 'PostController@destroy');
 });
 
-Route::group(['prefix' => 'user', 'middleware' => 'user.auth'], function() {
+Route::group(['prefix' => 'user', 'middleware' => 'user.auth'], function () {
     Route::get('/', 'UserController@index');
 });
 
