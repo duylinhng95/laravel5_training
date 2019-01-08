@@ -45,4 +45,9 @@ class UserController extends Controller
     {
         return redirect('/post');
     }
+
+    public function logout()
+    {
+        return $this->userService->logout();
+    }
 }
