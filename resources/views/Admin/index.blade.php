@@ -1,6 +1,6 @@
 @extends('Admin.layout')
 @section('header')
-    <h2 class="pageheader-title">Cards </h2>
+    <h2 class="pageheader-title">List Users </h2>
 @endsection
 @section('content')
     <div class="card-header">

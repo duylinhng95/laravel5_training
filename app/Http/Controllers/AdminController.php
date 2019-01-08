@@ -22,7 +22,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $users = $this->adminService->getUser();
+        $users = $this->adminService->getUsers();
         return view('Admin.index', compact('users'));
     }
 
@@ -38,5 +38,11 @@ class AdminController extends Controller
         $id = $request->id;
         $user = $this->adminService->unblock($id);
         return response()->json($user);
+    }
+
+    public function listPost()
+    {
+        $posts = $this->adminService->getPosts();
+        return view('Admin.post', compact('posts'));
     }
 }

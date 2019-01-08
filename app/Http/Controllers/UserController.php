@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\UserRepositoryEloquent;
-use Hash;
-use Auth;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
-    protected $userRepository;
+    protected $userService;
 
     public function __construct()
     {
-        $this->userRepository = app(UserRepositoryEloquent::class);
+        $this->userService = app(UserService::class);
     }
 
     public function showRegister()
@@ -23,37 +21,28 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $input             = $request->except('_token');
-        $input['password'] = Hash::make($input['password']);
-        $this->userRepository->create($input);
-        return redirect('/');
+        $input = $request->except('_token');
+        $result = $this->userService->register($input);
+        if(isset($result['code'])){
+            return view('User.register', compact('result'));
+        }
+        return $this->userService->login($input);
     }
 
     public function showLogin()
     {
-        if (Auth::user() && Auth::user() != null) {
-            return redirect('/post');
-        }
         return view('User.login');
     }
 
     public function login(Request $request)
     {
         $input = $request->except('_token');
-
-        if ($user = Auth::guard()->attempt($input)) {
-            return redirect('/post');
-        } else {
-            return redirect('/auth/login')->with('error', 'Wrong credentials');
-        }
-
+        $this->userService->login($input);
+        return redirect('/user');
     }
 
-    public function logout()
+    public function index()
     {
-        if (Auth::user() && Auth::user() != null) {
-            Auth::logout();
-        }
-        return redirect('/auth/login');
+        return redirect('/post');
     }
 }

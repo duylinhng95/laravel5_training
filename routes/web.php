@@ -20,6 +20,10 @@ Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
     Route::get('/{id}/delete', 'PostController@destroy');
 });
 
+Route::group(['prefix' => 'user', 'middleware' => 'user.auth'], function() {
+    Route::get('/', 'UserController@index');
+});
+
 Route::group(['prefix' => 'auth'], function () {
     Route::get('register', 'UserController@showRegister');
     Route::post('register', 'UserController@register');
@@ -33,4 +37,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/user/import', 'AdminController@importUser');
     Route::get('/user/block', 'AdminController@blockUser');
     Route::get('/user/unblock', 'AdminController@unblockUser');
+    Route::get('/post', 'AdminController@listPost');
 });

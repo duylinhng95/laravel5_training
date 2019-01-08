@@ -5,11 +5,12 @@ namespace App\Repository;
 use App\Entities\User;
 use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Traits\UserTrait;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
+    use UserTrait;
+
     public function model()
     {
         return User::class;
@@ -50,6 +51,17 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
             $user->status = 0;
         }
         $user->save();
+        return $user;
+    }
+
+    public function findByField($field, $value = null, $columns = ['*'])
+    {
+        return $this->model->where($field, $value)->get($columns);
+    }
+
+    public function loginRocket($input)
+    {
+        $user = $this->loginAPI($input);
         return $user;
     }
 }
