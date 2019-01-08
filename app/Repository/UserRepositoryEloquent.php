@@ -17,12 +17,11 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
     public function createProfile($users)
     {
-        foreach ($users as $u)
-        {
-            $id = $this->model->firstOrCreate($u['user'])->id;
-            $rocket = $u['rocket'];
+        foreach ($users as $u) {
+            $id                = $this->model->firstOrCreate($u['user'])->id;
+            $rocket            = $u['rocket'];
             $rocket['user_id'] = $id;
-            $rockets[] = $rocket;
+            $rockets[]         = $rocket;
         }
         return $rockets;
     }
@@ -31,5 +30,26 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
 
         return $this->model->paginate($num);
+    }
+
+    public function blocked($id)
+    {
+        $user         = $this->model->find($id);
+        $user->status = 2;
+        $user->save();
+
+        return $user;
+    }
+
+    public function unblocked($id)
+    {
+        $user = $this->model->find($id);
+        if (!empty($user->email)) {
+            $user->status = 1;
+        } else {
+            $user->status = 0;
+        }
+        $user->save();
+        return $user;
     }
 }

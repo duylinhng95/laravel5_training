@@ -28,7 +28,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', 'UserController@logout');
 });
 
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
     Route::get('/user/import', 'AdminController@importUser');
+    Route::get('/user/block', 'AdminController@blockUser');
+    Route::get('/user/unblock', 'AdminController@unblockUser');
 });

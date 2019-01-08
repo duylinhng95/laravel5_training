@@ -25,4 +25,18 @@ class AdminController extends Controller
         $users = $this->adminService->getUser();
         return view('Admin.index', compact('users'));
     }
+
+    public function blockUser(Request $request)
+    {
+        $id = $request->id;
+        $user = $this->adminService->block($id);
+        return response()->json($user);
+    }
+
+    public function unblockUser(Request $request)
+    {
+        $id = $request->id;
+        $user = $this->adminService->unblock($id);
+        return response()->json($user);
+    }
 }

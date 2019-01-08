@@ -22,12 +22,14 @@ class AdminService
     public function importUserDB()
     {
         $arr = $this->adminRepository->getUser();
+
         foreach ($arr['users'] as $user) {
             $users[] = [
                 'user'   => ['name' => $user['name']],
                 'rocket' => ['owner_id' => $user['_id'], 'username' => $user['username']],
             ];
         }
+
         $res    = $this->userRepository->createProfile($users);
         $rocket = $this->rocketRepository->createMany($res);
 
@@ -38,4 +40,15 @@ class AdminService
     {
         return $this->userRepository->paginate(50);
     }
+
+    public function block($id)
+    {
+        return $this->userRepository->blocked($id);
+    }
+
+    public function unblock($id)
+    {
+        return $this->userRepository->unBlocked($id);
+    }
+
 }
