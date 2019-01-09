@@ -65,7 +65,13 @@
                             Post
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-user"></i>Posts list</a>
+                            <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-sticky-note"></i>Posts list</a>
+                        </li>
+                        <li class="nav-divider">
+                            Category
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/category')}}"><i class="fas fa-fw fa-database"></i>Categories list</a>
                         </li>
                     </ul>
                 </div>

@@ -32,10 +32,22 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', 'UserController@logout');
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     Route::get('/', 'AdminController@index');
-    Route::get('/user/import', 'AdminController@importUser');
-    Route::get('/user/block', 'AdminController@blockUser');
-    Route::get('/user/unblock', 'AdminController@unblockUser');
-    Route::get('/post', 'AdminController@listPost');
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('import', 'AdminController@importUser');
+        Route::get('block', 'AdminController@blockUser');
+        Route::get('unblock', 'AdminController@unblockUser');
+    });
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', 'CategoryController@index');
+        Route::post('/', 'CategoryController@store');
+        Route::get('/{id}', 'CategoryController@show');
+        Route::put('/', 'CategoryController@save');
+        Route::delete('/{id}', 'CategoryController@delete');
+    });
+
+    Route::group(['prefix' => 'post'], function () {
+        Route::get('/', 'AdminController@listPost');
+    });
 });

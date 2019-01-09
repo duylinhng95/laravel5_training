@@ -40,7 +40,7 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         return $this->model->create($input);
     }
 
-    public function update($id, $att = 'id', $input)
+    public function update($id, $input, $att = 'id')
     {
         return $this->model->where($att, $id)->update($input);
     }
