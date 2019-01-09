@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'description', 'content'];
+    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
 
     public function category()
     {
-        $this->belongsTo("App\Entities\Category");
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(PostTag::class, 'post_id');
     }
 }

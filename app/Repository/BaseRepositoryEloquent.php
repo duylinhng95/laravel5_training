@@ -17,13 +17,14 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         $this->makeModel();
     }
 
-    abstract public function model();
-
     public function makeModel()
     {
-        $model = $this->app->make($this->model());
-        return $this->model = $model;
+        $model       = $this->app->make($this->model());
+        $this->model = $model;
+        return $this->model;
     }
+
+    abstract public function model();
 
     public function all()
     {

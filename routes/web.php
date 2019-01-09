@@ -14,14 +14,19 @@
 Route::get('/', function () {
     return redirect('/post');
 });
-Route::group(['prefix' => 'post', 'middleware' => 'user.auth'], function () {
-    Route::resource('/', 'PostController');
-    Route::get('/{id}/edit', 'PostController@edit');
-    Route::get('/{id}/delete', 'PostController@destroy');
-});
 
-Route::group(['prefix' => 'user', 'middleware' => 'user.auth'], function () {
-    Route::get('/', 'UserController@index');
+Route::group(['middleware' => 'user.auth'], function () {
+    Route::group(['prefix' => 'post'], function () {
+        Route::get('/', 'PostController@index');
+        Route::get('/create', 'PostController@create');
+        Route::post('/create' , 'PostController@store');
+        Route::get('/{id}/edit', 'PostController@edit');
+        Route::get('/{id}/delete', 'PostController@destroy');
+    });
+
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', 'UserController@index');
+    });
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -32,7 +37,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', 'UserController@logout');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
+Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
     Route::group(['prefix' => 'user'], function () {
         Route::get('import', 'AdminController@importUser');

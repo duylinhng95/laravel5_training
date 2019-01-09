@@ -6,7 +6,7 @@
     <div class="card-header">
         <h2><i class="fa fa-plus"></i> Create Post</h2>
     </div>
-    <form action="{{url('post')}}" method="post">
+    <form action="{{url('/post/create')}}" method="POST" enctype="multipart/form-data">
         <div class="card-body">
             {{csrf_field()}}
             <div class="form-group">
@@ -14,15 +14,24 @@
                 <input type="text" name="title"
                        class="form-control">
             </div>
+
             <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" name="description"
-                       class="form-control">
+                <label for="category_id">Category</label>
+                <select name="category_id" class="form-control">
+                    @foreach ($categories as $c)
+                        <option value="{{$c->id}}">{{$c->name}}</option>
+                    @endforeach
+                </select>
             </div>
+
+            <div class="form-group">
+                <label for="tag">Tags</label>
+                <input type="text" name="tags" class="form-control" data-role="tagsinput" >
+            </div>
+
             <div class="form-group">
                 <label for="title">Content</label>
-                <textarea name="content" id="" cols="30" rows="10"
-                          class="form-control"></textarea>
+                <textarea name="content" class="form-control" id="texteditor"></textarea>
             </div>
         </div>
         <div class="card-footer">
@@ -31,4 +40,7 @@
         </div>
     </form>
 @endsection
+@push('script')
+    <script src="{{mix('js/post.js')}}"></script>
+@endpush
 
