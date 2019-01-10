@@ -14,10 +14,10 @@ Trait SummernoteTrait
             list($type, $data) = array_pad(explode(';', $data), -2, null);
             list(, $data) = array_pad(explode(',', $data), -2, null);
             $data = base64_decode($data);
-            $image_name = "/upload/" . time() . $k . '.png';
+            $image_name = "/storage/" . time() . $k . '.png';
             $path = public_path() . $image_name;
-            if (!file_exists(public_path()."/upload/")) {
-                mkdir(public_path()."/upload/", 0777, true);
+            if (!file_exists(public_path()."/storage/")) {
+                mkdir(public_path()."/storage/", 0777, true);
             }
             file_put_contents($path, $data);
             $img->removeAttribute('src');
