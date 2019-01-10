@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\PostService;
 use App\Services\CategoryService;
+use App\Traits\SummernoteTrait;
 
 class PostController extends Controller
 {
+    use SummernoteTrait;
+
     protected $postService;
     protected $categorySerivice;
 
@@ -38,14 +41,15 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request->except('_token');
+        $input  = $request->except('_token');
+        $input['content'] = $this->convertImg($input['content']);
         $this->postService->create($input);
         return redirect('/user/post');
     }
 
     public function edit($id)
     {
-        $post = $this->postService->find($id);
+        $post       = $this->postService->find($id);
         $categories = $this->categoryService->all();
         return view('Post/edit', compact('post', 'categories'));
     }
@@ -53,6 +57,7 @@ class PostController extends Controller
     public function update($id, Request $request)
     {
         $input = $request->except('_method', '_token');
+        $input['content'] = $this->convertImg($input['content']);
         $this->postService->update($id, $input);
         return redirect('user/post');
     }
