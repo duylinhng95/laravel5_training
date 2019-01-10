@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repository\PostTagRepositoryEloquent;
+use App\Repository\PostTagRepository;
 
 class PostTagService
 {
@@ -10,7 +10,7 @@ class PostTagService
 
     public function __construct()
     {
-        $this->postTagRepository = app(PostTagRepositoryEloquent::class);
+        $this->postTagRepository = app(PostTagRepository::class);
     }
 
     public function createMany($array)

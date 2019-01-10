@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Repository\PostRepositoryEloquent;
-use App\Repository\PostTagRepositoryEloquent;
+use App\Repository\PostRepository;
+use App\Repository\PostTagRepository;
 use Auth;
+use App\Traits\SummernoteTrait;
 
 class PostService
 {
@@ -13,8 +14,8 @@ class PostService
 
     public function __construct()
     {
-        $this->postRepository = app(PostRepositoryEloquent::class);
-        $this->postTagRepository = app(PostTagRepositoryEloquent::class);
+        $this->postRepository = app(PostRepository::class);
+        $this->postTagRepository = app(PostTagRepository::class);
     }
 
     public function all()
@@ -25,6 +26,7 @@ class PostService
     public function create($input)
     {
         $input['user_id'] = Auth::user()->id;
+        $input['content'] = $this->convertImg($input['content']);
         return $this->postRepository->create($input);
     }
 
@@ -38,8 +40,7 @@ class PostService
     {
         $post = $this->postRepository->find($id);
         $tags = implode(',', $post->tags->pluck('name')->toArray());
-
-        return ['post' => $post, 'tags' => $tags];
+        return [$post, $tags];
     }
 
     public function delete($id)
@@ -49,6 +50,7 @@ class PostService
 
     public function update($id, $input)
     {
+        $input['content'] = $this->convertImg($input['content']);
         $this->postRepository->update($id, $input);
         $tags = explode(",", $input['tags']);
         foreach ($tags as $key => $tag) {
@@ -59,5 +61,10 @@ class PostService
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
 
         return ['code' => 202, 'message' => "Update Post Success"];
+    }
+
+    public function paginate($num)
+    {
+        return $this->postRepository->paginate($num);
     }
 }

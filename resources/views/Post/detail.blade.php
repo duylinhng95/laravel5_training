@@ -10,11 +10,11 @@
     <div class="card-body">
         <div class="row">
             <ul>
-                <li>Author: {{$post['post']->user->name}}</li>
-                <li>Tags: <input type="text" value="{{$post['tags']}}" data-role="tagsinput" disabled></li>
-                <li>Created Date: {{$post['post']->created_at}}</li>
+                <li>Author: {{$post->user->name}}</li>
+                <li>Tags: <input type="text" value="{{$tags}}" data-role="tagsinput" disabled></li>
+                <li>Created Date: {{$post->created_at}}</li>
                 <li>Content:</li>
-                {{$post['post']->content}}
+                {{$post->content}}
             </ul>
         </div>
     </div>

@@ -28,12 +28,6 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         return $rockets;
     }
 
-    public function paginate($num)
-    {
-
-        return $this->model->paginate($num);
-    }
-
     public function blocked($id)
     {
         $user         = $this->model->find($id);

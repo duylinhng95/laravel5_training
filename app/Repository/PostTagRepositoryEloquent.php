@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Repository\BaseRepositoryEloquent;
 use App\Entities\PostTag;
 
-class PostTagRepositoryEloquent extends BaseRepositoryEloquent
+class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTagRepository
 {
     public function model()
     {

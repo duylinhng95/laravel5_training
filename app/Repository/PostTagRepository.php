@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-interface PostRepository
+interface PostTagRepository
 {
 
 }

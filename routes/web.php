@@ -59,5 +59,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'post'], function () {
         Route::get('/', 'AdminController@listPost');
+        Route::get('/{id}', 'AdminController@showPost');
     });
 });

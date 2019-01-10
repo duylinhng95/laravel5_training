@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AdminService;
+use App\Services\PostService;
 
 class AdminController extends Controller
 {
@@ -12,6 +13,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->adminService = app(AdminService::class);
+        $this->postService = app(PostService::class);
     }
 
     public function importUser()
@@ -42,7 +44,13 @@ class AdminController extends Controller
 
     public function listPost()
     {
-        $posts = $this->adminService->getPosts();
+        $posts = $this->postService->paginate(50);
         return view('Admin.post.index', compact('posts'));
+    }
+
+    public function showPost($id)
+    {
+        list($post, $tags) = $this->postService->find($id);
+        return view('Admin.post.detail', compact('post', 'tags', 'user'));
     }
 }

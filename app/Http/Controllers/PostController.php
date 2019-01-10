@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\PostService;
 use App\Services\CategoryService;
-use App\Traits\SummernoteTrait;
 
 class PostController extends Controller
 {
-    use SummernoteTrait;
-
     protected $postService;
     protected $categorySerivice;
 
@@ -24,34 +21,33 @@ class PostController extends Controller
     {
         $posts      = $this->postService->all();
         $categories = $this->categoryService->all();
-        return view('Post/index', compact('posts', 'categories'));
+        return view('Post.index', compact('posts', 'categories'));
     }
 
     public function show($id)
     {
-        $post = $this->postService->find($id);
-        return view('Post/detail', compact('post'));
+        list($post, $tags) = $this->postService->find($id);
+        return view('Post.detail', compact('post', 'tags'));
     }
 
     public function create()
     {
         $categories = $this->categoryService->all();
-        return view('Post/create', compact('categories'));
+        return view('Post.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $input  = $request->except('_token');
-        $input['content'] = $this->convertImg($input['content']);
         $this->postService->create($input);
         return redirect('/user/post');
     }
 
     public function edit($id)
     {
-        $post       = $this->postService->find($id);
+        list($post, $tags)      = $this->postService->find($id);
         $categories = $this->categoryService->all();
-        return view('Post/edit', compact('post', 'categories'));
+        return view('Post.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update($id, Request $request)

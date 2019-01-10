@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repository\UserRepositoryEloquent;
-use App\Repository\RocketProfileRepositoryEloquent;
+use App\Repository\UserRepository;
+use App\Repository\RocketProfileRepository;
 use Auth;
 
 class UserService
@@ -13,8 +13,8 @@ class UserService
 
     public function __construct()
     {
-        $this->userRepository   = app(UserRepositoryEloquent::class);
-        $this->rocketRepository = app(RocketProfileRepositoryEloquent::class);
+        $this->userRepository   = app(UserRepository::class);
+        $this->rocketRepository = app(RocketProfileRepository::class);
     }
 
     /**

@@ -24,9 +24,9 @@
                         <td style="width: 15%">
                             <a href="{{url('/post/'.$p->id)}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
                                 View</a>
-                            <a href="{{url('/user/post/'.$p->id.'/edit')}}" class="btn btn-info"><i
+                            <a href="{{url('/user.post/'.$p->id.'/edit')}}" class="btn btn-info"><i
                                         class="fa fa-pen"></i>
-                                Edit</a href="{{url('/user/post/'.$p->id.'/edit')}}">
+                                Edit</a>
                             <button onclick="deletePost({{$p->id}})" class="btn btn-danger"><i
                                         class="fa fa-trash"></i> Delete
                             </button>

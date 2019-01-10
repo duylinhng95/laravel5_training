@@ -55,4 +55,9 @@ abstract class BaseRepositoryEloquent implements BaseRepository
     {
         return $this->model->where($fields, $att, $value)->get($columns);
     }
+
+    public function paginate($num)
+    {
+        return $this->model->paginate($num);
+    }
 }
