@@ -12,9 +12,16 @@ class PostTagRepositoryEloquent extends BaseRepositoryEloquent
         return PostTag::class;
     }
 
-    public function createMany($array)
+    public function deleteTags($array, $id)
     {
-        $postId = $array['id'];
+        return $this->makeModel()->where('post_id', $id)->whereNotIn('name', $array)->delete();
+    }
 
+    public function updateMany($id, $array)
+    {
+        foreach ($array as $data) {
+            $result[] = $this->makeModel()->firstOrCreate($data, $id);
+        }
+        return $result;
     }
 }

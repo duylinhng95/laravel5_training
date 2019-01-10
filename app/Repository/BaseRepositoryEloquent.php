@@ -51,8 +51,8 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         return $this->model->destroy($id);
     }
 
-    public function findByFields($fields, $value = null, $columns = ['*'])
+    public function findByFields($fields, $value = null, $att = "=", $columns = ['*'])
     {
-        return $this->model->where($fields, $value)->get($columns);
+        return $this->model->where($fields, $att, $value)->get($columns);
     }
 }

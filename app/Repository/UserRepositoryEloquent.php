@@ -55,11 +55,6 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         return $user;
     }
 
-    public function findByField($field, $value = null, $columns = ['*'])
-    {
-        return $this->model->where($field, $value)->get($columns);
-    }
-
     public function loginRocket($input)
     {
         $user = $this->loginAPI($input);

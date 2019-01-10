@@ -26,8 +26,8 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = $this->postRepository->find($id);
-        return $post;
+        $post = $this->postService->find($id);
+        return view('Post/detail', compact('post'));
     }
 
     public function create()
@@ -40,24 +40,31 @@ class PostController extends Controller
     {
         $input = $request->except('_token');
         $this->postService->create($input);
-        return redirect('/post');
+        return redirect('/user/post');
     }
 
     public function edit($id)
     {
-        $post = $this->postRepository->find($id);
-        return view('Post/edit', compact('post'));
+        $post = $this->postService->find($id);
+        $categories = $this->categoryService->all();
+        return view('Post/edit', compact('post', 'categories'));
     }
 
     public function update($id, Request $request)
     {
         $input = $request->except('_method', '_token');
-        $this->postRepository->update($id, $input);
-        return redirect('/post');
+        $this->postService->update($id, $input);
+        return redirect('user/post');
     }
 
     public function destroy($id)
     {
-        $this->postRepository->delete($id);
+        return response()->json($this->postService->delete($id));
+    }
+
+    public function list()
+    {
+        $posts = $this->postService->listByUser();
+        return view('Post.list', compact('posts'));
     }
 }

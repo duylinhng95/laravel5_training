@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +18,19 @@ Route::get('/', function () {
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
         Route::get('/', 'PostController@index');
-        Route::get('/create', 'PostController@create');
-        Route::post('/create' , 'PostController@store');
-        Route::get('/{id}/edit', 'PostController@edit');
-        Route::get('/{id}/delete', 'PostController@destroy');
+        Route::get('/{id}', 'PostController@show');
     });
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@index');
+        Route::group(['prefix' => 'post'], function () {
+            Route::get('/', 'PostController@list');
+            Route::get('/create', 'PostController@create');
+            Route::post('/create', 'PostController@store');
+            Route::get('/{id}/edit', 'PostController@edit');
+            Route::delete('/{id}', 'PostController@destroy');
+            Route::put('/{id}', 'PostController@update');
+        });
     });
 });
 

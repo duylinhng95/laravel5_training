@@ -5,7 +5,7 @@
 @section('content')
     <div class="card-header">
         <h2>Post</h2>
-        <a href="{{url('/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
+        <a href="{{url('/user/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
         <a href="{{url('/auth/logout')}}" class="btn btn-danger float-right">Logout</a>
     </div>
     <div class="card-body">
@@ -14,22 +14,13 @@
                 <thead class="text-center">
                 <tr>
                     <th>Title</th>
-                    <th>Description</th>
-                    <th>Content</th>
-                    <th>Action</th>
+                    <th>Created Date</th>
                 </tr>
                 </thead>
                 @foreach($posts as $p)
                     <tr>
-                        <td>{{$p->title}}</td>
-                        <td>{{$p->description}}</td>
-                        <td>{{$p->content}}</td>
-                        <td>
-                            <a href="{{url('/post/'.$p->id.'/edit')}}" class="btn btn-info"><i class="fa fa-pen"></i>
-                                Edit</a>
-                            <a href="{{url('/post/'.$p->id.'/delete')}}" class="btn btn-danger"><i
-                                        class="fa fa-trash"></i> Delete</a>
-                        </td>
+                        <td style="width: 65%">{{$p->title}}</td>
+                        <td style="width: 15%" class="text-center">{{$p->created_at}}</td>
                     </tr>
                 @endforeach
             </table>
