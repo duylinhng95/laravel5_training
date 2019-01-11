@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use App\Repository\PostTagRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
+use Illuminate\Session\Store as Session;
 
 class PostService
 {
@@ -18,6 +19,7 @@ class PostService
     {
         $this->postRepository    = app(PostRepository::class);
         $this->postTagRepository = app(PostTagRepository::class);
+        $this->session           = app(Session::class);
     }
 
     public function all()
@@ -63,5 +65,22 @@ class PostService
     public function paginate($num)
     {
         return $this->postRepository->paginate($num);
+    }
+
+    public function countView($post)
+    {
+        if (!$this->checkViewed($post)) {
+            $this->session->push('viewed_post', $post->id);
+            $post->view += 1;
+            $post->save();
+            return true;
+        }
+        return false;
+    }
+
+    private function checkViewed($post)
+    {
+        $viewed = $this->session->get('viewed_post', []);
+        return in_array($post->id, $viewed);
     }
 }
