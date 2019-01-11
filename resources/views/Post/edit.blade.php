@@ -5,8 +5,9 @@
 @section('content')
     <div class="card-header">
         <h2><i class="fa fa-pen"></i> Edit {{$post->title}} Post</h2>
+        <a href="{{url('/user/post')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
     </div>
-    <form action="{{url('post/' . $post->id)}}" method="post">
+    <form action="{{url('user/post/' . $post->id)}}" method="post">
         <div class="card-body">
             @method('PUT')
             {{csrf_field()}}
@@ -15,20 +16,29 @@
                 <input type="text" name="title" placeholder="{{$post->title}}" value="{{$post->title}}"
                        class="form-control">
             </div>
+
             <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" name="description" placeholder="{{$post->title}}" value="{{$post->title}}"
-                       class="form-control">
+                <label for="category_id">Category</label>
+                <select name="category_id" class="form-control">
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}" {{$post->category->id == $category->id ? 'selected="selected"' : ''}}>{{$category->name}}</option>
+                    @endforeach
+                </select>
             </div>
+
+            <div class="form-group">
+                <label for="tag">Tags</label>
+                <input type="text" name="tags" class="form-control" data-role="tagsinput" value="{{$tags}}">
+            </div>
+
             <div class="form-group">
                 <label for="title">Content</label>
-                <textarea name="content" id="" cols="30" rows="10"
-                          placeholder="{{$post->title}}" class="form-control">{{$post->title}}</textarea>
+                <textarea name="content" class="form-control" id="texteditor">{{$post->content}}</textarea>
             </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-outline-primary">Submit</button>
-            <a href="{{url('/post')}}" class="btn btn-outline-secondary">Cancel</a>
+            <a href="{{url('user/post')}}" class="btn btn-outline-secondary">Cancel</a>
         </div>
     </form>
 @endsection

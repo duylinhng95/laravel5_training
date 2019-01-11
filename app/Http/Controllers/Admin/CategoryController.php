@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
+use App\Traits\ResponseTrait;
 
 class CategoryController extends Controller
 {
+    use ResponseTrait;
+
     protected $categoryService;
 
     public function __construct()
@@ -23,27 +27,27 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-        $this->categoryService->updateOrCreate($input);
-        return response()->json(['code' => 200, 'message' => 'Create Category Success']);
+        $this->categoryService->create($input);
+        return $this->responseCode('200', 'Create Category Successful');
     }
 
     public function show($id)
     {
         $category = $this->categoryService->find($id);
-        return response()->json($category);
+        return $this->responseObject($category);
     }
 
     public function save(Request $request)
     {
         $input = $request->except('_token', 'categoryId');
-        $id = $request->input('categoryId');
+        $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
-        return response()->json(['code' => 200, 'message' => 'Edit Category Success']);
+        return $this->responseCode('200', 'Edit Category Successful');
     }
 
     public function delete($id)
     {
         $this->categoryService->delete($id);
-        return response()->json(['code' => 200, 'message' => 'Delete Category Success']);
+        return $this->responseCode('200', 'Delete Category Successful');
     }
 }

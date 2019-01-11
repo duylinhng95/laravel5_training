@@ -14,35 +14,9 @@ class AdminController extends Controller
         $this->adminService = app(AdminService::class);
     }
 
-    public function importUser()
-    {
-        $this->adminService->importUserDB();
-        return response()->json(['status' => '200', 'message' => 'Import User Success']);
-    }
-
     public function index()
     {
         $users = $this->adminService->getUsers();
         return view('Admin.user.index', compact('users'));
-    }
-
-    public function blockUser(Request $request)
-    {
-        $id = $request->input('id');
-        $user = $this->adminService->block($id);
-        return response()->json($user);
-    }
-
-    public function unblockUser(Request $request)
-    {
-        $id = $request->input('id');
-        $user = $this->adminService->unblock($id);
-        return response()->json($user);
-    }
-
-    public function listPost()
-    {
-        $posts = $this->adminService->getPosts();
-        return view('Admin.post.index', compact('posts'));
     }
 }

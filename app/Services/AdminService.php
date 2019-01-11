@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Repository\AdminRepositoryEloquent;
-use App\Repository\UserRepositoryEloquent;
-use App\Repository\RocketProfileRepositoryEloquent;
-use App\Repository\PostRepositoryEloquent;
+use App\Repository\AdminRepository;
+use App\Repository\UserRepository;
+use App\Repository\RocketProfileRepository;
+use App\Repository\PostRepository;
 
 class AdminService
 {
@@ -16,10 +16,10 @@ class AdminService
 
     public function __construct()
     {
-        $this->adminRepository  = app(AdminRepositoryEloquent::class);
-        $this->userRepository   = app(UserRepositoryEloquent::class);
-        $this->rocketRepository = app(RocketProfileRepositoryEloquent::class);
-        $this->postRepository   = app(PostRepositoryEloquent::class);
+        $this->adminRepository  = app(AdminRepository::class);
+        $this->userRepository   = app(UserRepository::class);
+        $this->rocketRepository = app(RocketProfileRepository::class);
+        $this->postRepository   = app(PostRepository::class);
     }
 
     public function importUserDB()
@@ -53,9 +53,5 @@ class AdminService
     {
         return $this->userRepository->unBlocked($id);
     }
-
-    public function getPosts()
-    {
-        return $this->postRepository->all();
-    }
+    
 }

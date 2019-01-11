@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\PostService;
 use App\Services\CategoryService;
+use App\Traits\ResponseTrait;
 
 class PostController extends Controller
 {
+    use ResponseTrait;
+
     protected $postService;
-    protected $categorySerivice;
+    protected $categoryService;
 
     public function __construct()
     {
@@ -21,43 +23,13 @@ class PostController extends Controller
     {
         $posts      = $this->postService->all();
         $categories = $this->categoryService->all();
-        return view('Post/index', compact('posts', 'categories'));
+        return view('Post.index', compact('posts', 'categories'));
     }
 
     public function show($id)
     {
-        $post = $this->postRepository->find($id);
-        return $post;
-    }
-
-    public function create()
-    {
-        $categories = $this->categoryService->all();
-        return view('Post/create', compact('categories'));
-    }
-
-    public function store(Request $request)
-    {
-        $input = $request->except('_token');
-        $this->postService->create($input);
-        return redirect('/post');
-    }
-
-    public function edit($id)
-    {
-        $post = $this->postRepository->find($id);
-        return view('Post/edit', compact('post'));
-    }
-
-    public function update($id, Request $request)
-    {
-        $input = $request->except('_method', '_token');
-        $this->postRepository->update($id, $input);
-        return redirect('/post');
-    }
-
-    public function destroy($id)
-    {
-        $this->postRepository->delete($id);
+        list($post, $tags) = $this->postService->find($id);
+        $this->postService->countView($post);
+        return view('Post.detail', compact('post', 'tags'));
     }
 }

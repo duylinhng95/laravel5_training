@@ -20,7 +20,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $rockets = [];
         foreach ($users as $u) {
-            $id                = $this->model->firstOrCreate($u['user'])->id;
+            $id                = $this->makeModel()->firstOrCreate($u['user'])->id;
             $rocket            = $u['rocket'];
             $rocket['user_id'] = $id;
             $rockets[]         = $rocket;
@@ -28,15 +28,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         return $rockets;
     }
 
-    public function paginate($num)
-    {
-
-        return $this->model->paginate($num);
-    }
-
     public function blocked($id)
     {
-        $user         = $this->model->find($id);
+        $user         = $this->makeModel()->find($id);
         $user->status = 2;
         $user->save();
 
@@ -45,7 +39,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
     public function unblocked($id)
     {
-        $user = $this->model->find($id);
+        $user = $this->makeModel()->find($id);
         if (!empty($user->email)) {
             $user->status = 1;
         } else {
@@ -53,11 +47,6 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         }
         $user->save();
         return $user;
-    }
-
-    public function findByField($field, $value = null, $columns = ['*'])
-    {
-        return $this->model->where($field, $value)->get($columns);
     }
 
     public function loginRocket($input)

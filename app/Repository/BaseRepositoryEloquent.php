@@ -28,31 +28,36 @@ abstract class BaseRepositoryEloquent implements BaseRepository
 
     public function all()
     {
-        return $this->model->all();
+        return $this->makeModel()->all();
     }
 
     public function find($id)
     {
-        return $this->model->find($id);
+        return $this->makeModel()->find($id);
     }
 
     public function create($input)
     {
-        return $this->model->create($input);
+        return $this->makeModel()->create($input);
     }
 
     public function update($id, $input, $att = 'id')
     {
-        return $this->model->where($att, $id)->update($input);
+        return $this->makeModel()->where($att, $id)->update($input);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        return $this->makeModel()->destroy($id);
     }
 
-    public function findByFields($fields, $value = null, $columns = ['*'])
+    public function findByFields($fields, $value = null, $att = "=", $columns = ['*'])
     {
-        return $this->model->where($fields, $value)->get($columns);
+        return $this->makeModel()->where($fields, $att, $value)->get($columns);
+    }
+
+    public function paginate($num)
+    {
+        return $this->makeModel()->paginate($num);
     }
 }

@@ -16,7 +16,7 @@ class RocketProfileRepositoryEloquent extends BaseRepositoryEloquent implements 
     public function createProfile($arr)
     {
         foreach ($arr as $a) {
-            $this->model->firstOrCreate($a);
+            $this->makeModel()->firstOrCreate($a);
         }
         return true;
     }

@@ -5,8 +5,9 @@
 @section('content')
     <div class="card-header">
         <h2><i class="fa fa-plus"></i> Create Post</h2>
+        <a href="{{url('/user/post')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
     </div>
-    <form action="{{url('/post/create')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{url('user/post/create')}}" method="POST" enctype="multipart/form-data">
         <div class="card-body">
             {{csrf_field()}}
             <div class="form-group">
@@ -26,7 +27,7 @@
 
             <div class="form-group">
                 <label for="tag">Tags</label>
-                <input type="text" name="tags" class="form-control" data-role="tagsinput" >
+                <input type="text" name="tags" class="form-control" data-role="tagsinput">
             </div>
 
             <div class="form-group">
@@ -40,7 +41,4 @@
         </div>
     </form>
 @endsection
-@push('script')
-    <script src="{{mix('js/post.js')}}"></script>
-@endpush
 

@@ -37,7 +37,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $input = $request->except('_token');
+        $input  = $request->except('_token');
         $result = $this->userService->login($input);
         if ($result['code'] == 200) {
             return redirect('/user');

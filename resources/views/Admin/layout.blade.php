@@ -124,8 +124,8 @@
 <!-- end main wrapper -->
 <!-- ============================================================== -->
 <!-- Optional JavaScript -->
-<script src="{{asset('js/admin.js')}}"></script>
-@yield('script')
+<script src="{{mix('js/admin.js')}}"></script>
+@stack('script')
 </body>
 
 </html>

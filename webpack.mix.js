@@ -12,12 +12,13 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/post.js', 'public/js/post.js')
-	.js('resources/js/app.js', 'public/js/app.js')
-	.js('resources/js/admin.js', 'public/js/admin.js')
-	.sass('resources/sass/app.scss', 'public/css')
-	.sass('resources/sass/admin.scss', 'public/css')
-	.sass('resources/sass/post.scss', 'public/css')
-	.version()
+	 .js('resources/js/app.js', 'public/js/app.js')
+	 .js('resources/js/admin.js', 'public/js/admin.js')
+	 .js('resources/js/category.js', 'public/js/category.js')
+	 .sass('resources/sass/app.scss', 'public/css')
+	 .sass('resources/sass/admin.scss', 'public/css')
+	 .sass('resources/sass/post.scss', 'public/css')
+	 .version()
 
 mix.copyDirectory('resources/images', 'public/images');
 mix.copyDirectory('resources/fonts', 'public/fonts');

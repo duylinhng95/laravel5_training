@@ -17,4 +17,9 @@ class Post extends Model
     {
         return $this->hasMany(PostTag::class, 'post_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

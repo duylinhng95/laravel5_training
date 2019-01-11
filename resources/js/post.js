@@ -7,3 +7,16 @@ window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/
 $(document).ready(function () {
 	$('#texteditor').summernote();
 });
+
+window.deletePost = function deletePost(id) {
+	$.ajax({
+		url: deletePostURI + id,
+		type: "DELETE",
+		data: {_token: csrf_token},
+		success: function (res) {
+			if (res.code == 200) {
+				location.reload();
+			}
+		}
+	})
+}

@@ -12,3 +12,6 @@ yarn-error.log
 .idea/*
 yarn.lock
 composer.lock
+/public/mix-manifest.json
+/public/js/*
+/public/css/*
