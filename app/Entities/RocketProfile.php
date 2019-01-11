@@ -17,6 +17,6 @@ class RocketProfile extends Model
 
     public function user()
     {
-        return $this->belongsTo('App/Entities/User');
+        return $this->belongsTo(User::class);
     }
 }

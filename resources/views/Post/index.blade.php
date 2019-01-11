@@ -17,10 +17,10 @@
                     <th>Created Date</th>
                 </tr>
                 </thead>
-                @foreach($posts as $p)
+                @foreach($posts as $post)
                     <tr>
-                        <td style="width: 65%">{{$p->title}}</td>
-                        <td style="width: 15%" class="text-center">{{$p->created_at}}</td>
+                        <td style="width: 65%">{{$post->title}}</td>
+                        <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
                     </tr>
                 @endforeach
             </table>

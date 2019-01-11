@@ -17,17 +17,17 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                @foreach($posts as $p)
+                @foreach($posts as $post)
                     <tr>
-                        <td style="width: 65%">{{$p->title}}</td>
-                        <td style="width: 15%" class="text-center">{{$p->created_at}}</td>
+                        <td style="width: 65%">{{$post->title}}</td>
+                        <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
                         <td style="width: 15%">
-                            <a href="{{url('/post/'.$p->id)}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
+                            <a href="{{url('/user/post/'.$post->id)}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
                                 View</a>
-                            <a href="{{url('/user.post/'.$p->id.'/edit')}}" class="btn btn-info"><i
+                            <a href="{{url('/user/post/'.$post->id.'/edit')}}" class="btn btn-info"><i
                                         class="fa fa-pen"></i>
                                 Edit</a>
-                            <button onclick="deletePost({{$p->id}})" class="btn btn-danger"><i
+                            <button onclick="deletePost({{$post->id}})" class="btn btn-danger"><i
                                         class="fa fa-trash"></i> Delete
                             </button>
                         </td>
@@ -39,17 +39,17 @@
 @endsection
 @push('script')
     <script>
-			function deletePost(id) {
-				$.ajax({
-					url: "{{url('user/post/')}}/" + id,
-					type: "DELETE",
-                    data: {_token: "{{csrf_token()}}"},
-					success: function (res) {
-						if (res.code == 200) {
-							location.reload();
-						}
-					}
-				})
-			}
+	    function deletePost(id) {
+		    $.ajax({
+			    url: "{{url('user/post/')}}/" + id,
+			    type: "DELETE",
+			    data: {_token: "{{csrf_token()}}"},
+			    success: function (res) {
+				    if (res.code == 200) {
+					    location.reload();
+				    }
+			    }
+		    })
+	    }
     </script>
 @endpush

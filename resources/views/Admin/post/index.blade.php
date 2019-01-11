@@ -16,11 +16,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($posts as $i => $p)
+                @foreach($posts as $index => $post)
                 <tr>
-                    <td>{{$p->id}}</td>
-                    <td>{{$p->title}}</td>
-                    <td><a href="{{url('admin/post/'.$p->id)}}" class="btn btn-primary">View</a></td>
+                    <td>{{++$index}}</td>
+                    <td>{{$post->title}}</td>
+                    <td><a href="{{url('admin/post/'.$post->id)}}" class="btn btn-primary">View</a></td>
                 </tr>
                 @endforeach
             {{$posts->links()}}

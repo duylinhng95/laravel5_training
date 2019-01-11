@@ -24,12 +24,13 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@index');
         Route::group(['prefix' => 'post'], function () {
-            Route::get('/', 'PostController@list');
-            Route::get('/create', 'PostController@create');
-            Route::post('/create', 'PostController@store');
-            Route::get('/{id}/edit', 'PostController@edit');
-            Route::delete('/{id}', 'PostController@destroy');
-            Route::put('/{id}', 'PostController@update');
+            Route::get('/', 'User\PostController@index');
+            Route::get('/create', 'User\PostController@create');
+            Route::get('/{id}', 'User\PostController@show');
+            Route::post('/create', 'User\PostController@store');
+            Route::get('/{id}/edit', 'User\PostController@edit');
+            Route::delete('/{id}', 'User\PostController@destroy');
+            Route::put('/{id}', 'User\PostController@update');
         });
     });
 });
@@ -45,20 +46,20 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
     Route::group(['prefix' => 'user'], function () {
-        Route::get('import', 'AdminController@importUser');
-        Route::get('block', 'AdminController@blockUser');
-        Route::get('unblock', 'AdminController@unblockUser');
+        Route::get('import', 'Admin\UserController@import');
+        Route::get('block', 'Admin\UserController@block');
+        Route::get('unblock', 'Admin\UserController@unblock');
     });
     Route::group(['prefix' => 'category'], function () {
-        Route::get('/', 'CategoryController@index');
-        Route::post('/', 'CategoryController@store');
-        Route::get('/{id}', 'CategoryController@show');
-        Route::put('/', 'CategoryController@save');
-        Route::delete('/{id}', 'CategoryController@delete');
+        Route::get('/', 'Admin\CategoryController@index');
+        Route::post('/', 'Admin\CategoryController@store');
+        Route::get('/{id}', 'Admin\CategoryController@show');
+        Route::put('/', 'Admin\CategoryController@save');
+        Route::delete('/{id}', 'Admin\CategoryController@delete');
     });
 
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/', 'AdminController@listPost');
-        Route::get('/{id}', 'AdminController@showPost');
+        Route::get('/', 'Admin\PostController@all');
+        Route::get('/{id}', 'Admin\PostController@show');
     });
 });

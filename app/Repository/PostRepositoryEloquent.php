@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entities\Post;
-use App\Repository\PostRepository;
-use App\Repository\BaseRepositoryEloquent;
 
 class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepository
 {
@@ -15,14 +13,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function create($input)
     {
-        $tags = explode(",", $input['tags']);
-        foreach ($tags as $k => $t) {
-            $tags[$k] = ['name' => $t];
-        }
-        unset($input['tags']);
         $post = $this->makeModel()->create($input);
+        $tags = $this->generateTagFromString($input);
         $post->tags()->createMany($tags);
-
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
 
@@ -38,8 +31,19 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function update($id, $input, $att = 'id')
     {
         $post = $this->makeModel()->where($att, $id)->first();
+        $tags = $this->generateTagFromString($input);
         $post->update($input);
+        return $tags;
+    }
 
-        return ['code' => 200, 'message' => 'Edit Post Successful'];
+    public function generateTagFromString($input)
+    {
+        $tags = explode(",", $input['tags']);
+        foreach ($tags as $key => $tag) {
+            $tags[$key] = ['name' => $tag];
+        }
+        unset($input['tags']);
+
+        return $tags;
     }
 }

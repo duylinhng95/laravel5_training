@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function rocket()
     {
-        return $this->hasOne('App\Entities\RocketProfile');
+        return $this->hasOne(RocketProfile::class);
     }
 
     public function posts()

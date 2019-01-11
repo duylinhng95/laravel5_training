@@ -18,7 +18,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" onsubmit="submitCategory()">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="submitCategory()">Save changes</button>
                 </form>
             </div>
         </div>
@@ -74,6 +74,7 @@
 			type: "POST",
 			data: formData,
 			success: function (res) {
+				console.log('abc');
 				if (res.code == 200) {
 					$('#createModal').modal('hide');
 					$('#notification').modal('show');

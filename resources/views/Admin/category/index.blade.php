@@ -18,13 +18,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $i=>$c)
+                @foreach($categories as $index => $category)
                 <tr>
-                    <td>{{++$i}}</td>
-                    <td>{{$c->name}}</td>
+                    <td>{{++$index}}</td>
+                    <td>{{$category->name}}</td>
                     <td>
-                        <button onclick="editCategory({{$c->id}})" class="btn btn-success">Edit</button>
-                        <button onclick="deleteCategory({{$c->id}})" class="btn btn-warning">Delete</button>
+                        <button onclick="editCategory({{$category->id}})" class="btn btn-success">Edit</button>
+                        <button onclick="deleteCategory({{$category->id}})" class="btn btn-warning">Delete</button>
                     </td>
                 </tr>
                 @endforeach

@@ -54473,6 +54473,20 @@ window.Tagsinput = __webpack_require__(/*! ../../node_modules/bootstrap4-tagsinp
 $(document).ready(function () {
   $('#texteditor').summernote();
 });
+$(function deletePost(id) {
+  $.ajax({
+    url: "{{url('user/post/')}}/" + id,
+    type: "DELETE",
+    data: {
+      _token: "{{csrf_token()}}"
+    },
+    success: function success(res) {
+      if (res.code == 200) {
+        location.reload();
+      }
+    }
+  });
+});
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),

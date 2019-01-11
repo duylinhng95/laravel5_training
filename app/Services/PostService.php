@@ -9,12 +9,14 @@ use App\Traits\SummernoteTrait;
 
 class PostService
 {
+    use SummernoteTrait;
+
     protected $postRepository;
     protected $postTagRepository;
 
     public function __construct()
     {
-        $this->postRepository = app(PostRepository::class);
+        $this->postRepository    = app(PostRepository::class);
         $this->postTagRepository = app(PostTagRepository::class);
     }
 
@@ -52,14 +54,9 @@ class PostService
     {
         $input['content'] = $this->convertImg($input['content']);
         $this->postRepository->update($id, $input);
-        $tags = explode(",", $input['tags']);
-        foreach ($tags as $key => $tag) {
-            $tags[$key] = ['name' => $tag];
-        }
-        unset($input['tags']);
+        $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-
         return ['code' => 202, 'message' => "Update Post Success"];
     }
 
