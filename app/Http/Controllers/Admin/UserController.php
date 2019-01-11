@@ -26,14 +26,14 @@ class UserController extends Controller
 
     public function block(Request $request)
     {
-        $id = $request->input('id');
+        $id   = $request->input('id');
         $user = $this->adminService->block($id);
         return $this->responseObject($user);
     }
 
     public function unblock(Request $request)
     {
-        $id = $request->input('id');
+        $id   = $request->input('id');
         $user = $this->adminService->unblock($id);
         return $this->responseObject($user);
     }

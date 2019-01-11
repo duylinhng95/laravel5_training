@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function save(Request $request)
     {
         $input = $request->except('_token', 'categoryId');
-        $id = $request->input('categoryId');
+        $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
         return $this->responseCode('200', 'Edit Category Successful');
     }

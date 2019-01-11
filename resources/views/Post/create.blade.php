@@ -41,7 +41,4 @@
         </div>
     </form>
 @endsection
-@push('script')
-    <script src="{{mix('js/post.js')}}"></script>
-@endpush
 

@@ -15,7 +15,7 @@ class PostController extends Controller
     public function __construct()
     {
         $this->adminService = app(AdminService::class);
-        $this->postService = app(PostService::class);
+        $this->postService  = app(PostService::class);
     }
 
     public function all()

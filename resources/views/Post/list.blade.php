@@ -39,17 +39,7 @@
 @endsection
 @push('script')
     <script>
-	    function deletePost(id) {
-		    $.ajax({
-			    url: "{{url('user/post/')}}/" + id,
-			    type: "DELETE",
-			    data: {_token: "{{csrf_token()}}"},
-			    success: function (res) {
-				    if (res.code == 200) {
-					    location.reload();
-				    }
-			    }
-		    })
-	    }
+	    var deletePostURI = "{{url('user/post/')}}/";
+	    var csrf_token = "{{csrf_token()}}";
     </script>
 @endpush

@@ -55,52 +55,8 @@
 @endsection
 @push('script')
 <script>
-    function importUser() {
-	    $.ajax(
-		    {
-			    url: "{{url('/admin/user/import')}}",
-			    type: "GET",
-			    success: function (res) {
-				    location.reload();
-			    }
-		    }
-	    );
-    }
-
-    function blockUser(id) {
-	    $.ajax({
-		    url: "{{url('/admin/user/block')}}",
-		    type: "GET",
-		    data: {id: id},
-		    success: function (res) {
-			    $('#' + res.id).find('#status').text('Block');
-			    $('#' + res.id).find('#action').html('');
-			    $('#' + res.id).find('#action').append(
-				    "<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' disabled>Block User</button>" +
-				    " <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")'>Unblock User</button>"
-			    )
-		    }
-	    });
-    }
-
-    function unBlockUser(id) {
-	    $.ajax({
-		    url: "{{url('/admin/user/unblock')}}",
-		    type: "GET",
-		    data: {id: id},
-		    success: function (res) {
-			    if (res.status == 1) {
-				    $('#' + res.id).find('#status').text('Active');
-			    } else {
-				    $('#' + res.id).find('#status').text('Not Active');
-			    }
-			    $('#' + res.id).find('#action').html('');
-			    $('#' + res.id).find('#action').append(
-				    "<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' >Block User</button>" +
-				    " <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")' disabled>Unblock User</button>"
-			    )
-		    }
-	    })
-    }
+	var importUserURI = "{{url('/admin/user/import')}}";
+	var blockUserURI = "{{url('/admin/user/block')}}";
+	var unBlockUserURI = "{{url('/admin/user/unblock')}}";
 </script>
 @endpush
