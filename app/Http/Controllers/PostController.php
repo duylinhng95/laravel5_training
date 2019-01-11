@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\PostService;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -28,8 +29,14 @@ class PostController extends Controller
 
     public function show($id)
     {
-        list($post, $tags) = $this->postService->find($id);
+        list($post, $tags, $comments) = $this->postService->find($id);
         $this->postService->countView($post);
-        return view('Post.detail', compact('post', 'tags'));
+        return view('Post.detail', compact('post', 'tags', 'comments'));
+    }
+    public function comment($postId, Request $request)
+    {
+        $input = $request->except('_token');
+        $comment = $this->postService->comment($postId, $input);
+        return $this->responseObject($comment);
     }
 }
