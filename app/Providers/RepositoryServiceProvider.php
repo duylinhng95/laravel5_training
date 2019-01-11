@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repository\CommentRepositoryEloquent;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\UserRepository;
 use App\Repository\AdminRepository;
@@ -38,5 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PostTagRepository::class, PostTagRepositoryEloquent::class);
         $this->app->bind(AdminRepository::class, AdminRepositoryEloquent::class);
         $this->app->bind(RocketProfileRepository::class, RocketProfileRepositoryEloquent::class);
+        $this->app->bind(CommentRepository::class, CommentRepositoryEloquent::class);
     }
 }

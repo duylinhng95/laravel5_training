@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repository\PostRepository;
 use App\Repository\PostTagRepository;
+use App\Repository\CommentRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
 use Illuminate\Session\Store as Session;
@@ -14,12 +15,14 @@ class PostService
 
     protected $postRepository;
     protected $postTagRepository;
+    protected $commentRepository;
 
     public function __construct()
     {
         $this->postRepository    = app(PostRepository::class);
         $this->postTagRepository = app(PostTagRepository::class);
         $this->session           = app(Session::class);
+        $this->commentRepository = app(CommentRepository::class);
     }
 
     public function all()
@@ -44,7 +47,8 @@ class PostService
     {
         $post = $this->postRepository->find($id);
         $tags = implode(',', $post->tags->pluck('name')->toArray());
-        return [$post, $tags];
+        $comments = $post->comments;
+        return [$post, $tags, $comments];
     }
 
     public function delete($id)
@@ -82,5 +86,15 @@ class PostService
     {
         $viewed = $this->session->get('viewed_post', []);
         return in_array($post->id, $viewed);
+    }
+
+    public function comment($postId, $input)
+    {
+        $userId = Auth::user()->id;
+        $input['user_id'] = $userId;
+        $input['post_id'] = $postId;
+        $comment = $this->commentRepository->create($input);
+        $user = $comment->user;
+        return $comment;
     }
 }

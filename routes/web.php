@@ -19,6 +19,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
         Route::get('/', 'PostController@index');
         Route::get('/{id}', 'PostController@show');
+        Route::post('/comment/{id}', 'PostController@comment');
     });
 
     Route::group(['prefix' => 'user'], function () {
