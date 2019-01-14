@@ -3,6 +3,13 @@
     User Detail
 @endsection
 @section('content')
+    @if (session('error'))
+        <div class="card-header">
+            <div class="alert alert-danger">
+                {{session('error')}}
+            </div>
+        </div>
+    @endif
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
