@@ -36,7 +36,8 @@
             </div>
             <div class="col-md-6">
                 <h4>Votes: <span id="voteNum">{{count($post->votes)}}</span></h4>
-                <button type="button" onclick="votePost({{$post->id}})" class="btn btn-success">Vote <i
+                <button type="button" onclick="votePost({{$post->id}})" class="btn btn-success"
+                        @if(Auth::user()->id == $post->user->id) disabled @endif>Vote <i
                             class="fa fa-plus"></i>
                 </button>
             </div>
@@ -74,7 +75,7 @@
 @push('script')
     <script>
 			var addCommentURI = "{{url('/post/comment')}}/";
-            var votePostURI = "{{url('/post/vote')}}/";
+			var votePostURI = "{{url('/post/vote')}}/";
 
 			$(document).on('keypress', function (e) {
 				if (e.which == 13) {
