@@ -19,7 +19,7 @@
                 </thead>
                 @foreach($posts as $post)
                     <tr>
-                        <td style="width: 65%">{{$post->title}}</td>
+                        <td style="width: 65%"><a href="{{url('post/'.$post->id)}}">{{$post->title}}</a></td>
                         <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
                     </tr>
                 @endforeach

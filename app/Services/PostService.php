@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Repository\PostRepository;
+use App\Repository\PostVoteRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
+use App\Repository\FollowRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
 use Illuminate\Session\Store as Session;
@@ -16,13 +18,18 @@ class PostService
     protected $postRepository;
     protected $postTagRepository;
     protected $commentRepository;
+    protected $postVoteRepository;
+    protected $session;
+    protected $followRepository;
 
     public function __construct()
     {
-        $this->postRepository    = app(PostRepository::class);
-        $this->postTagRepository = app(PostTagRepository::class);
-        $this->session           = app(Session::class);
-        $this->commentRepository = app(CommentRepository::class);
+        $this->postRepository     = app(PostRepository::class);
+        $this->postTagRepository  = app(PostTagRepository::class);
+        $this->session            = app(Session::class);
+        $this->commentRepository  = app(CommentRepository::class);
+        $this->postVoteRepository = app(PostVoteRepository::class);
+        $this->followRepository   = app(FollowRepository::class);
     }
 
     public function all()
@@ -45,10 +52,16 @@ class PostService
 
     public function find($id)
     {
-        $post = $this->postRepository->find($id);
-        $tags = implode(',', $post->tags->pluck('name')->toArray());
+        $post     = $this->postRepository->find($id);
+        $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
-        return [$post, $tags, $comments];
+        $followed = 0;
+        $user     = Auth::user();
+        $author   = $post->user_id;
+        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $followed = 1;
+        }
+        return [$post, $tags, $comments, $followed];
     }
 
     public function delete($id)
@@ -90,11 +103,17 @@ class PostService
 
     public function comment($postId, $input)
     {
-        $userId = Auth::user()->id;
+        $userId           = Auth::user()->id;
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
-        $comment = $this->commentRepository->create($input);
-        $user = $comment->user;
+        $comment          = $this->commentRepository->create($input);
+        $user             = $comment->user;
         return $comment;
+    }
+
+    public function vote($postId)
+    {
+        $userId = Auth::user()->id;
+        return $this->postVoteRepository->votePost($postId, $userId);
     }
 }

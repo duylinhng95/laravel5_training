@@ -60,4 +60,37 @@ abstract class BaseRepositoryEloquent implements BaseRepository
     {
         return $this->makeModel()->paginate($num);
     }
+
+    public function deleteWhere(array $where)
+    {
+        $this->applyConditions($where);
+        $deleted = $this->model->delete();
+        return $deleted;
+    }
+
+    protected function applyConditions(array $where)
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                $this->model = $this->model->where($field, $condition, $val);
+            } else {
+                $this->model = $this->model->where($field, '=', $value);
+            }
+        }
+    }
+
+    public function findWhereGetFirst(array $where)
+    {
+        $this->applyConditions($where);
+        $model = $this->model->first();
+        return $model;
+    }
+
+    public function findWhere(array $where, $columns = ['*'])
+    {
+        $this->applyConditions($where);
+        $model = $this->model->get($columns);
+        return $model;
+    }
 }

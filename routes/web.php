@@ -20,15 +20,18 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::get('/', 'PostController@index');
         Route::get('/{id}', 'PostController@show');
         Route::post('/comment/{id}', 'PostController@comment');
+        Route::get('/vote/{id}', 'PostController@vote');
     });
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@index');
+        Route::get('/follow/{id}', 'UserController@follow');
+        Route::get('/unfollow/{id}', 'UserController@unfollow');
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index');
-            Route::get('/create', 'PostController@create');
+            Route::get('/create', 'PostController@create')->middleware('user.block');
             Route::get('/{id}', 'PostController@show');
-            Route::post('/create', 'PostController@store');
+            Route::post('/create', 'PostController@store')->middleware('user.block');
             Route::get('/{id}/edit', 'PostController@edit');
             Route::delete('/{id}', 'PostController@destroy');
             Route::put('/{id}', 'PostController@update');
@@ -44,7 +47,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', 'UserController@logout');
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     Route::get('/', 'AdminController@index');
     Route::group(['namespace' => 'Admin'], function () {
         Route::group(['prefix' => 'user'], function () {

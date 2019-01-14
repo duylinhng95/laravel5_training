@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    const ROLE = ['ADMIN' => 1, 'USER' => 0];
+    const STATUS = ['NOT_VERIFY' => 0, 'VERIFY' => 1, 'BLOCK' => 2];
+
     use Notifiable;
 
     /**
@@ -46,5 +49,20 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function follows()
+    {
+        return $this->hasMany(Follow::class);
+    }
+
+    public function followings()
+    {
+        return $this->hasMany(Follow::class, 'follower_id', 'id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(PostVote::class);
     }
 }
