@@ -19,6 +19,17 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
 
+    public function generateTagFromString($input)
+    {
+        $tags = explode(",", $input['tags']);
+        foreach ($tags as $key => $tag) {
+            $tags[$key] = ['name' => $tag];
+        }
+        unset($input['tags']);
+
+        return $tags;
+    }
+
     public function delete($id)
     {
         $post = $this->makeModel()->find($id);
@@ -33,17 +44,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         $post = $this->makeModel()->where($att, $id)->first();
         $tags = $this->generateTagFromString($input);
         $post->update($input);
-        return $tags;
-    }
-
-    public function generateTagFromString($input)
-    {
-        $tags = explode(",", $input['tags']);
-        foreach ($tags as $key => $tag) {
-            $tags[$key] = ['name' => $tag];
-        }
-        unset($input['tags']);
-
         return $tags;
     }
 }
