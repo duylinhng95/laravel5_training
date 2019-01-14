@@ -16,10 +16,12 @@
         <div class="row">
             <ul>
                 <li>Author: {{$post->user->name}}
-                    @if($followed == 0)
-                        <a href="{{url('user/follow/'.$post->user->id)}}" class="btn btn-primary">Follow</a>
-                    @else
-                        <a href="{{url('user/unfollow/'.$post->user->id)}}" class="btn btn-danger">Unfollow</a>
+                    @if(Auth::user()->id != $post->user->id)
+                        @if($followed == 0)
+                            <a href="{{url('user/follow/'.$post->user->id)}}" class="btn btn-primary">Follow</a>
+                        @else
+                            <a href="{{url('user/unfollow/'.$post->user->id)}}" class="btn btn-danger">Unfollow</a>
+                        @endif
                     @endif
                 </li>
                 <li>Tags: <input type="text" value="{{$tags}}" data-role="tagsinput" disabled></li>
