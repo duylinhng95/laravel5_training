@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    const ROLE = ['admin' => 1, 'user' => 0];
+    const STATUS = ['not verify' => 0, 'verify' => 1, 'block' => 2];
+
     use Notifiable;
 
     /**
