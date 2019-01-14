@@ -79,4 +79,18 @@ abstract class BaseRepositoryEloquent implements BaseRepository
             }
         }
     }
+
+    public function findWhereGetFirst(array $where)
+    {
+        $this->applyConditions($where);
+        $model = $this->model->first();
+        return $model;
+    }
+
+    public function findWhere(array $where, $columns = ['*'])
+    {
+        $this->applyConditions($where);
+        $model = $this->model->get($columns);
+        return $model;
+    }
 }

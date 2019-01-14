@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use App\Repository\PostVoteRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
+use App\Repository\FollowRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
 use Illuminate\Session\Store as Session;
@@ -19,6 +20,7 @@ class PostService
     protected $commentRepository;
     protected $postVoteRepository;
     protected $session;
+    protected $followRepository;
 
     public function __construct()
     {
@@ -27,6 +29,7 @@ class PostService
         $this->session            = app(Session::class);
         $this->commentRepository  = app(CommentRepository::class);
         $this->postVoteRepository = app(PostVoteRepository::class);
+        $this->followRepository   = app(FollowRepository::class);
     }
 
     public function all()
@@ -53,10 +56,10 @@ class PostService
         $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
         $followed = 0;
-        foreach (Auth::user()->follows as $follow) {
-            if ($follow->follower_id == $post->user->id) {
-                $followed += 1;
-            }
+        $user     = Auth::user();
+        $author   = $post->user_id;
+        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $followed = 1;
         }
         return [$post, $tags, $comments, $followed];
     }
