@@ -20,10 +20,13 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::get('/', 'PostController@index');
         Route::get('/{id}', 'PostController@show');
         Route::post('/comment/{id}', 'PostController@comment');
+        Route::get('/vote/{id}', 'PostController@vote');
     });
 
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@index');
+        Route::get('/follow/{id}', 'UserController@follow');
+        Route::get('/unfollow/{id}', 'UserController@unfollow');
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index');
             Route::get('/create', 'PostController@create');

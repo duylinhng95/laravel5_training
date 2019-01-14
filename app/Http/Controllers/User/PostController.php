@@ -29,8 +29,8 @@ class PostController extends Controller
 
     public function show($id)
     {
-        list($post, $tags) = $this->postService->find($id);
-        return view('Post.detail', compact('post', 'tags'));
+        list($post, $tags, $comments, $followed) = $this->postService->find($id);
+        return view('Post.detail', compact('post', 'tags', 'comments', 'followed'));
     }
 
     public function create()

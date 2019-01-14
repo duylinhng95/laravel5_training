@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FollowService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 
 class UserController extends Controller
 {
     protected $userService;
+    protected $followService;
 
     public function __construct()
     {
-        $this->userService = app(UserService::class);
+        $this->userService   = app(UserService::class);
+        $this->followService = app(FollowService::class);
     }
 
     public function showRegister()
@@ -40,7 +43,7 @@ class UserController extends Controller
         $input  = $request->except('_token');
         $result = $this->userService->login($input);
         if ($result['code'] == 200) {
-            return redirect('/user');
+            return redirect('/');
         } else {
             return redirect('/auth/login')->with($result);
         }
@@ -48,11 +51,24 @@ class UserController extends Controller
 
     public function index()
     {
-        return redirect('/post');
+        $user = $this->userService->getInfo();
+        return view('User.index', compact('user'));
     }
 
     public function logout()
     {
         return $this->userService->logout();
+    }
+
+    public function follow($id)
+    {
+        $this->followService->followUser($id);
+        return redirect('/user');
+    }
+
+    public function unfollow($id)
+    {
+        $this->followService->unfollowUser($id);
+        return redirect('/user');
     }
 }

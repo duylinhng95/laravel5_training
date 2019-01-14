@@ -17,4 +17,6 @@ interface BaseRepository
     public function findByFields($fields, $value, $att, $columns);
 
     public function paginate($num);
+
+    public function deleteWhere(array $where);
 }

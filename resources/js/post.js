@@ -20,3 +20,15 @@ window.deletePost = function deletePost(id) {
 		}
 	})
 }
+
+window.votePost = function votePost(id){
+	$.ajax({
+		url: votePostURI + id,
+		type: "GET",
+		success: function(res){
+			value = $("#voteNum").html();
+			value++;
+			$('#voteNum').text(value);
+		}
+	})
+}

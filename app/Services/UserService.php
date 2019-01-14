@@ -54,4 +54,15 @@ class UserService
         }
         return redirect('/auth/login');
     }
+
+    public function followUser($id)
+    {
+        $userId = Auth::user()->id;
+        return $this->userRepository->followUser($id, $userId);
+    }
+
+    public function getInfo()
+    {
+        return $this->userRepository->getInfo();
+    }
 }

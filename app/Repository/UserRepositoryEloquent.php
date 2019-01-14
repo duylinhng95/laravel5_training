@@ -6,6 +6,7 @@ use App\Entities\User;
 use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
 use App\Traits\RocketTrait;
+use Auth;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
@@ -53,5 +54,10 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $user = $this->loginAPI($input);
         return $user;
+    }
+
+    public function getInfo()
+    {
+        return Auth::user();
     }
 }
