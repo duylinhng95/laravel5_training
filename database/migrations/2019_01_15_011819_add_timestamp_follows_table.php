@@ -26,7 +26,7 @@ class AddTimestampFollowsTable extends Migration
     public function down()
     {
         Schema::table('follows', function (Blueprint $table) {
-            //
+            $table->dropTimestamps();
         });
     }
 }

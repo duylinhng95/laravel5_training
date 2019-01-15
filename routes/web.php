@@ -69,3 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
         });
     });
 });
+
+Route::get('/test', function() {
+    return view('homepage');
+});

@@ -1,29 +1,54 @@
 @extends('Post.layout')
-@section('title')
-    Post List
+@section('search')
+    @include('Post.search')
 @endsection
 @section('content')
-    <div class="card-header">
-        <h2>Post</h2>
-        <a href="{{url('/user/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
-        <a href="{{url('/auth/logout')}}" class="btn btn-danger float-right">Logout</a>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-light text-dark">
-                <thead class="text-center">
-                <tr>
-                    <th>Title</th>
-                    <th>Created Date</th>
-                </tr>
-                </thead>
-                @foreach($posts as $post)
-                    <tr>
-                        <td style="width: 65%"><a href="{{url('post/'.$post->id)}}">{{$post->title}}</a></td>
-                        <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
-                    </tr>
+    <div class="row">
+        <!-- ARTICLE OVERVIEW SECTION -->
+        <div class="col-md-8 padding-20">
+            <div class="row">
+                <!-- ARTICLES -->
+                <div class="fb-heading">
+                    All Posts
+                </div>
+                <hr class="style-three">
+                @foreach ($posts as $post)
+                <div class="card post">
+                    <div class="article-heading-abb">
+                        <a href="{{url('post/'.$post->id)}}">
+                            <i class="fa fa-pencil-square-o"></i> {{$post->title}}</a>
+                    </div>
+                    <div class="article-info">
+                        <div class="art-date">
+                                <i class="fa fa-calendar-o"></i> {{date('d-m-Y', strtotime($post->created_at))}}
+                        </div>
+                        <div class="art-category">
+                            <a href="{{url('category/'.$post->category->id)}}">
+                                <i class="fa fa-folder"></i> {{$post->category->name}} </a>
+                        </div>
+                        <div class="art-comments">
+                                <i class="fa fa-comments-o"></i> {{count($post->comments)}}
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <p class="block-with-text">
+                            {!! str_limit($post->content, $limit = 60, $end = '...') !!}
+                        </p>
+                    </div>
+                    <div class="article-read-more">
+                        <a href="{{url('/post/'.$post->id)}}" class="btn btn-default btn-wide">Read more...</a>
+                    </div>
+                </div>
+                <!-- END ARTICLES -->
                 @endforeach
-            </table>
+                <!-- PAGINATION -->
+                <div class="text-center">
+                    {{$posts->links()}}
+                </div>
+                <!-- END PAGINATION -->
+            </div>
         </div>
+        <!-- END ARTICLES OVERVIEW SECTION-->
+        @include('Post.sidebar')
     </div>
 @endsection

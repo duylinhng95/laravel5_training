@@ -20,11 +20,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Title</td>
-                    <td>Category</td>
-                    <td>Author</td>
-                    <td>Action</td>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +48,7 @@
 
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    if(keycode == '13'){
-			    $("#searchBtn").click();
+			    $("#searchPostBtn").click();
 		    }
 
 	    });

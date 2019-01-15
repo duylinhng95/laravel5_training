@@ -26,7 +26,7 @@ class AddTimestampPostVotesTable extends Migration
     public function down()
     {
         Schema::table('post_votes', function (Blueprint $table) {
-            //
+            $table->dropTimestamps();
         });
     }
 }

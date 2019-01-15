@@ -34,7 +34,7 @@ class PostService
 
     public function all()
     {
-        return $this->postRepository->all();
+        return $this->postRepository->paginate(10);
     }
 
     public function create($input)
