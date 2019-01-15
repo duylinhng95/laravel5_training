@@ -116,4 +116,9 @@ class PostService
         $userId = Auth::user()->id;
         return $this->postVoteRepository->votePost($postId, $userId);
     }
+
+    public function search($keyword)
+    {
+        return $this->postRepository->search($keyword);
+    }
 }

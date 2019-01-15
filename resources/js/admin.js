@@ -179,3 +179,8 @@ window.searchUser = function searchUser() {
 	var input = $('#search').val();
 	window.location.href="/admin?keywords="+input;
 }
+
+window.searchPost = function searchPost() {
+	var input = $('#search').val();
+	window.location.href="/admin/post?keywords="+input;
+}
