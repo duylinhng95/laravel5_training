@@ -8,6 +8,7 @@ use App\Repository\RocketProfileRepository;
 use App\Traits\ResponseTrait;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class UserService
 {
@@ -47,12 +48,7 @@ class UserService
 
         try {
             $this->userRepository->update($rocket->user_id, $input);
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
 
-        try {
             $this->roleRepository->create(['role_id' => 1, 'user_id' => $rocket->user_id]);
         } catch (Exception $e) {
             DB::rollBack();

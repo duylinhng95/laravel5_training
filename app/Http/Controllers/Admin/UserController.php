@@ -21,20 +21,20 @@ class UserController extends Controller
     public function import()
     {
         $this->adminService->importUserDB();
-        return $this->success('Import User Successful');
+        return $this->json($this->success('Import User Successful'));
     }
 
     public function block(Request $request)
     {
         $id   = $request->input('id');
         $user = $this->adminService->block($id);
-        return $this->success('Block User Successful', $user);
+        return $this->json($this->success('Block User Successful', $user));
     }
 
     public function unblock(Request $request)
     {
         $id   = $request->input('id');
         $user = $this->adminService->unblock($id);
-        return $this->success('Unblock User Successful', $user);
+        return $this->json($this->success('Unblock User Successful', $user));
     }
 }

@@ -174,3 +174,8 @@ window.unBlockUser = function unBlockUser(id) {
 		}
 	})
 }
+
+window.searchUser = function searchUser() {
+	var input = $('#search').val();
+	window.location.href="/admin?keywords="+input;
+}

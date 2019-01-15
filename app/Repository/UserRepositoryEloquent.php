@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
 use App\Traits\RocketTrait;
 use Auth;
+use Illuminate\Database\Query\Builder;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
@@ -59,5 +60,14 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     public function getInfo()
     {
         return Auth::user();
+    }
+
+    public function search($keyword)
+    {
+        return $this->model->where(function ($query) use ($keyword) {
+            /** @var Builder $query */
+            $query->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('email', 'like', '%' . $keyword . '%');
+        })->paginate(50);
     }
 }

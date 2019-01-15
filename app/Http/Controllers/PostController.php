@@ -42,7 +42,7 @@ class PostController extends Controller
     {
         $input   = $request->except('_token');
         $comment = $this->postService->comment($postId, $input);
-        return $this->success('Add new comment successful', $comment);
+        return $this->json($this->success('Add new comment successful', $comment));
     }
 
     public function vote($postId)

@@ -42,12 +42,12 @@ class CategoryController extends Controller
         $input = $request->except('_token', 'categoryId');
         $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
-        return $this->success('Edit Category Successful');
+        return $this->json($this->success('Edit Category Successful'));
     }
 
     public function delete($id)
     {
         $this->categoryService->delete($id);
-        return $this->success('Delete Category Successful');
+        return $this->json($this->success('Delete Category Successful'));
     }
 }
