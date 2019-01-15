@@ -83,9 +83,8 @@
 <!-- END COPYRIGHT INFO -->
 
 <!-- LOADING MAIN JAVASCRIPT -->
+@stack('script')
 <script src="{{mix('/js/post.js')}}"></script>
-<script src="{{mix('/js/app.js')}}"></script>
-<script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
 </body>
 
 </html>
