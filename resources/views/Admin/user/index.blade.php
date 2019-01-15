@@ -36,7 +36,11 @@
                             @break
                         @endswitch
                     </td>
-                    <td>{{$user->role ? 'Admin' : 'User'}}</td>
+                    <td>
+                    @foreach($user->userRoles as $role)
+                        {{$role->role->name}},
+                    @endforeach
+                    </td>
                     <td>{{$user->rating}}</td>
                     <td id="action">
                         <button class="btn btn-danger" onclick='blockUser({{$user->id}})'

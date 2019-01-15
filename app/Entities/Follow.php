@@ -8,8 +8,6 @@ class Follow extends Model
 {
     protected $fillable = ['user_id', 'follower_id'];
 
-    public $timestamps = false;
-
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
