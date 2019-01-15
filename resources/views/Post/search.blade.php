@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-6 offset-3">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="What do you need help with?">
+                    <input type="text" class="form-control" id="keywords" placeholder="What do you need help with?">
                     <div class="input-group-append">
-                        <button class=" btn btn-info btn-lg">Search</button>
+                        <button class=" btn btn-info btn-lg" onclick="searchHome()">Search</button>
                     </div>
                 </div>
             </div>

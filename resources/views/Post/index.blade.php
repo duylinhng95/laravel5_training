@@ -27,6 +27,9 @@
                                 <i class="fa fa-folder"></i> {{$post->category->name}} </a>
                         </div>
                         <div class="art-comments">
+                            <i class="fa fa-user"></i> {{$post->user->name}}
+                        </div>
+                        <div class="art-comments">
                                 <i class="fa fa-comments-o"></i> {{count($post->comments)}}
                         </div>
                     </div>

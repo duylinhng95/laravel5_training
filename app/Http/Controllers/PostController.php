@@ -23,11 +23,14 @@ class PostController extends Controller
         $this->postTagService  = app(PostTagRepository::class);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $posts      = $this->postService->all();
         $categories = $this->categoryService->all();
         $tags       = $this->postTagService->all();
+        if ($request->input('keyword')) {
+            $posts = $this->postService->search($request->input('keyword'));
+        }
         return view('Post.index', compact('posts', 'categories', 'tags'));
     }
 
