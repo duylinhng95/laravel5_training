@@ -3,9 +3,12 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\FormatTrait;
 
 class Post extends Model
 {
+    use FormatTrait;
+
     protected $appends = [
         'popular_post',
         'latest_post',
@@ -54,11 +57,6 @@ class Post extends Model
     public function getCountCommentsAttribute()
     {
         return count($this->comments);
-    }
-
-    public function getFormatCreatedAttribute()
-    {
-        return date('d-m-Y', strtotime($this->created_at));
     }
 
     public function getEncodeContentAttribute()

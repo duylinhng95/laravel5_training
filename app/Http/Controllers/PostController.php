@@ -15,6 +15,7 @@ class PostController extends Controller
 
     protected $postService;
     protected $categoryService;
+    protected $postTagService;
 
     public function __construct()
     {

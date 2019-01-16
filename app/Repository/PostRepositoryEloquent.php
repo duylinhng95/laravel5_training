@@ -62,4 +62,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
                 });
         })->paginate(50);
     }
+
+    public function all()
+    {
+        return $this->makeModel()->orderBy('created_at', 'des')->paginate(10);
+    }
 }

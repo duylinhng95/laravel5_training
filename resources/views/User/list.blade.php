@@ -17,11 +17,11 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="article-heading-abb">
-                                    <i class="fa fa-pencil-square-o"></i> {{$user->name}}</a>
+                                    <i class="fa fa-pencil-square-o"></i> {{$user->name}}
                                 </div>
                                 <div class="article-info">
                                     <div class="art-date">
-                                        <i class="fa fa-calendar-o"></i> {{date('d-m-Y', strtotime($user->created_at))}}
+                                        <i class="fa fa-calendar-o"></i> {{$user->format_created}}
                                     </div>
                                     <div class="art-category">
                                         <i class="fa fa-book"></i> {{$user->count_post}}

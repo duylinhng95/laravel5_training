@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Traits\FormatTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -11,7 +12,7 @@ class User extends Authenticatable
     const STATUS = ['NOT_VERIFY' => 0, 'VERIFY' => 1, 'BLOCK' => 2];
 
     use Notifiable;
-
+    use FormatTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -37,7 +38,8 @@ class User extends Authenticatable
 
     protected $appends = [
         'count_follow',
-        'count_post'
+        'count_post',
+        'format_created'
     ];
 
     public function rocket()
