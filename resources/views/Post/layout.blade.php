@@ -19,9 +19,15 @@
                         <i class="fa fa-key"></i> Logout</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="{{url('/user/post')}}">
+                    <a href="{{url('/user/info')}}">
                         <i class="fa fa-user"></i> User</a>
                 </div>
+                @if(\Auth::user()->userRoles->contains('role_id', 2))
+                <div class="login-box border-left-1 border-right-1">
+                    <a href="{{url('/admin')}}">
+                        <i class="fa fa-lock"></i> Admin</a>
+                </div>
+                @endif
             </div>
         </div>
     </div>

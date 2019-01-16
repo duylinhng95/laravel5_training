@@ -35,7 +35,7 @@
                     </div>
                     <div class="article-content">
                         <p class="block-with-text">
-                            {!! str_limit($post->content, $limit = 60, $end = '...') !!}
+                            {!! str_limit(strip_tags($post->content), $limit = 60, $end = '...') !!}
                         </p>
                     </div>
                     <div class="article-read-more">

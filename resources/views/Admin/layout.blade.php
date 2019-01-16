@@ -35,6 +35,7 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 offset-3">
                                         <a href="{{url('/auth/logout')}}" class="connection-item"><i class="fa fa-key fa-3x"></i><span>Sign Out</span></a>
+                                        <a href="{{url('/')}}" class="connection-item"><i class="fa fa-arrow-circle-left fa-3x"></i><span>Back to Homepage</span></a>
                                     </div>
                                 </div>
                             </li>

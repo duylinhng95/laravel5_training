@@ -37,3 +37,8 @@ window.searchHome = function searchHome() {
 	var input = $('#keywords').val();
 	window.location.href="/post?keyword="+input;
 }
+
+window.searchUser = function searchUser() {
+	var input = $('#keywords').val();
+	window.location.href="/user?keyword="+input;
+}

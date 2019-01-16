@@ -24,9 +24,11 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', 'UserController@index');
+        Route::get('/', 'UserController@listUser');
+        Route::get('/info', 'UserController@index');
         Route::get('/follow/{id}', 'UserController@follow');
         Route::get('/unfollow/{id}', 'UserController@unfollow');
+
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index');
             Route::get('/create', 'PostController@create')->middleware('user.block');
@@ -36,6 +38,10 @@ Route::group(['middleware' => 'user.auth'], function () {
             Route::delete('/{id}', 'PostController@destroy');
             Route::put('/{id}', 'PostController@update');
         });
+    });
+
+    Route::group(['prefix' => 'category'], function () {
+       Route::get('/', 'CategoryController@index');
     });
 });
 
@@ -70,6 +76,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     });
 });
 
-Route::get('/test', function() {
+Route::get('/test', function () {
     return view('homepage');
 });
