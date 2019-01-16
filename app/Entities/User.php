@@ -35,6 +35,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['count_follow'];
+
     public function rocket()
     {
         return $this->hasOne(RocketProfile::class);
@@ -68,5 +70,20 @@ class User extends Authenticatable
     public function userRoles()
     {
         return $this->hasMany(UserRole::class);
+    }
+
+    public function getCountPostAttribute()
+    {
+        return count($this->posts);
+    }
+
+    public function getCountFollowAttribute()
+    {
+        return count($this->followings);
+    }
+
+    public function checkFollow($id)
+    {
+        return $this->follows->contains('follower_id', $id);
     }
 }

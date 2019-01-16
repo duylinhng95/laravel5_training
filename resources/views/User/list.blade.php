@@ -24,16 +24,16 @@
                                         <i class="fa fa-calendar-o"></i> {{date('d-m-Y', strtotime($user->created_at))}}
                                     </div>
                                     <div class="art-category">
-                                        <i class="fa fa-book"></i> {{count($user->posts)}}
+                                        <i class="fa fa-book"></i> {{$user->count_post}}
                                     </div>
                                     <div class="art-comments">
-                                        <i class="fa fa-thumbs-up"></i> {{count($user->followings)}}
+                                        <i class="fa fa-thumbs-up"></i> {{$user->count_follow}}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 @if(Auth::user()->id != $user->id)
-                                    @if(!Auth::user()->follows->contains('follower_id', $user->id))
+                                    @if(!Auth::user()->checkFollow($user->id))
                                         <a href="{{url('user/follow/'.$user->id)}}" class="btn btn-primary">Follow</a>
                                     @else
                                         <a href="{{url('user/unfollow/'.$user->id)}}" class="btn btn-danger">Unfollow</a>

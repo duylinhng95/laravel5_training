@@ -41,7 +41,6 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $request->validated();
         $input = $request->except('_token');
         $this->postService->create($input);
         return redirect('/user/post');
@@ -54,7 +53,7 @@ class PostController extends Controller
         return view('Post.edit', compact('post', 'categories', 'tags'));
     }
 
-    public function update($id, PostRequest $request)
+        public function update($id, PostRequest $request)
     {
         $input            = $request->except('_method', '_token');
         $this->postService->update($id, $input);
