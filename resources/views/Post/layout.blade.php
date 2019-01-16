@@ -19,7 +19,7 @@
                         <i class="fa fa-key"></i> Logout</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="{{url('/user')}}">
+                    <a href="{{url('/user/post')}}">
                         <i class="fa fa-user"></i> User</a>
                 </div>
             </div>

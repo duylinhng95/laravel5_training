@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Services\FollowService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -22,8 +23,9 @@ class UserController extends Controller
         return view('User.register');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
+        $request->validated();
         $input  = $request->except('_token');
         $result = $this->userService->register($input);
         if ($result['code'] != 200) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
@@ -24,8 +25,9 @@ class CategoryController extends Controller
         return view('Admin.category.index', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
+        $request->validated();
         $input = $request->except('_token');
         $this->categoryService->create($input);
         return $this->success('Create Category Successful');
@@ -37,8 +39,9 @@ class CategoryController extends Controller
         return $this->success('Retrive category successful', $category);
     }
 
-    public function save(Request $request)
+    public function save(CategoryRequest $request)
     {
+        $request->validated();
         $input = $request->except('_token', 'categoryId');
         $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PostService;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -39,8 +39,9 @@ class PostController extends Controller
         return view('Post.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
+        $request->validated();
         $input = $request->except('_token');
         $this->postService->create($input);
         return redirect('/user/post');
@@ -53,10 +54,9 @@ class PostController extends Controller
         return view('Post.edit', compact('post', 'categories', 'tags'));
     }
 
-    public function update($id, Request $request)
+    public function update($id, PostRequest $request)
     {
         $input            = $request->except('_method', '_token');
-        $input['content'] = $this->convertImg($input['content']);
         $this->postService->update($id, $input);
         return redirect('user/post');
     }
