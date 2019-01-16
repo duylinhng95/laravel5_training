@@ -20,7 +20,7 @@
                     </div>
                     <div class="article-info">
                         <div class="art-date">
-                                <i class="fa fa-calendar-o"></i> {{date('d-m-Y', strtotime($post->created_at))}}
+                                <i class="fa fa-calendar-o"></i> {{$post->format_created}}
                         </div>
                         <div class="art-category">
                             <a href="{{url('category/'.$post->category->id)}}">
@@ -30,12 +30,12 @@
                             <i class="fa fa-user"></i> {{$post->user->name}}
                         </div>
                         <div class="art-comments">
-                                <i class="fa fa-comments-o"></i> {{count($post->comments)}}
+                                <i class="fa fa-comments-o"></i> {{$post->count_comments}}
                         </div>
                     </div>
                     <div class="article-content">
                         <p class="block-with-text">
-                            {!! str_limit(strip_tags($post->content), $limit = 60, $end = '...') !!}
+                            {!! $post->encode_content !!}
                         </p>
                     </div>
                     <div class="article-read-more">

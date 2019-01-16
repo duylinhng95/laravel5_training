@@ -36,7 +36,8 @@
                                     @if(!Auth::user()->checkFollow($user->id))
                                         <a href="{{url('user/follow/'.$user->id)}}" class="btn btn-primary">Follow</a>
                                     @else
-                                        <a href="{{url('user/unfollow/'.$user->id)}}" class="btn btn-danger">Unfollow</a>
+                                        <a href="{{url('user/unfollow/'.$user->id)}}"
+                                           class="btn btn-danger">Unfollow</a>
                                     @endif
                                 @endif
                             </div>

@@ -22,7 +22,7 @@
                     <a href="{{url('/user/info')}}">
                         <i class="fa fa-user"></i> User</a>
                 </div>
-                @if(\Auth::user()->userRoles->contains('role_id', 2))
+                @if(\Auth::user()->checkRole(2))
                 <div class="login-box border-left-1 border-right-1">
                     <a href="{{url('/admin')}}">
                         <i class="fa fa-lock"></i> Admin</a>

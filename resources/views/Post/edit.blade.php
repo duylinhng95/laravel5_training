@@ -17,9 +17,9 @@
                 <input type="text" name="title" placeholder="{{$post->title}}" value="{{$post->title}}"
                        class="form-control">
                 @if($errors->has('title'))
-                <div class="text-danger">
-                    <span>* </span>{{$errors->first('title')}}
-                </div>
+                    <div class="text-danger">
+                        <span>* </span>{{$errors->first('title')}}
+                    </div>
                 @endif
             </div>
 

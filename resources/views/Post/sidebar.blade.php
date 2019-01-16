@@ -9,7 +9,7 @@
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
                 <ul>
-                    @foreach($post->orderBy('view', 'des')->limit(5)->get() as $post)
+                    @foreach($post->getPopularPost(5) as $post)
                         <li>
                             <a href="{{url('post/'.$post->id)}}">
                                 <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
@@ -28,7 +28,7 @@
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
                 <ul>
-                    @foreach($post->orderBy('created_at', 'des')->limit(5)->get() as $post)
+                    @foreach($post->getLatestPost(5) as $post)
                         <li>
                             <a href="{{url('/post/'.$post->id)}}">
                                 <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
