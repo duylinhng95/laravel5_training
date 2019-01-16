@@ -17,4 +17,9 @@ class PostTagService
     {
         $this->postTagRepository->createMany($array);
     }
+
+    public function all()
+    {
+        return $this->postTagRepository->paginate(15);
+    }
 }

@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use Illuminate\Container\Container as App;
 use App\Repository\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 abstract class BaseRepositoryEloquent implements BaseRepository
 {
-
+    /** @var Model|Builder $model */
     protected $model;
     protected $app;
 

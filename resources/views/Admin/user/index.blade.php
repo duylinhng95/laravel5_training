@@ -4,7 +4,20 @@
 @endsection
 @section('content')
     <div class="card-header">
-        <button onclick="importUser()" class="btn btn-primary"> Import User</button>
+        <div class="row">
+            <div class="col-6">
+                <button onclick="importUser()" class="btn btn-primary"> Import User</button>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" id="searchBtn" onclick="searchUser()"><i
+                                    class="fa fa-search "></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card-body table-responsive">
         <table class="table">
@@ -36,7 +49,11 @@
                             @break
                         @endswitch
                     </td>
-                    <td>{{$user->role ? 'Admin' : 'User'}}</td>
+                    <td>
+                        @foreach($user->userRoles as $role)
+                            {{$role->role->name}},
+                        @endforeach
+                    </td>
                     <td>{{$user->rating}}</td>
                     <td id="action">
                         <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
@@ -54,9 +71,18 @@
     </div>
 @endsection
 @push('script')
-<script>
-	var importUserURI = "{{url('/admin/user/import')}}";
-	var blockUserURI = "{{url('/admin/user/block')}}";
-	var unBlockUserURI = "{{url('/admin/user/unblock')}}";
-</script>
+    <script>
+        var importUserURI = "{{url('/admin/user/import')}}";
+        var blockUserURI = "{{url('/admin/user/block')}}";
+        var unBlockUserURI = "{{url('/admin/user/unblock')}}";
+
+        $(document).keypress(function(event){
+
+	        var keycode = (event.keyCode ? event.keyCode : event.which);
+	        if(keycode == '13'){
+		        $("#searchBtn").click();
+	        }
+
+        });
+    </script>
 @endpush

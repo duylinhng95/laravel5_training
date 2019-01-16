@@ -1,6 +1,6 @@
 @extends('Post.layout')
-@section('title')
-    Post List
+@section('search')
+    @include('Post.search')
 @endsection
 @section('content')
     <div class="card-header">

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entities\Post;
+use Illuminate\Database\Query\Builder;
 
 class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepository
 {
@@ -45,5 +46,20 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         $tags = $this->generateTagFromString($input);
         $post->update($input);
         return $tags;
+    }
+
+    public function search($keyword)
+    {
+        return $this->model->where(function ($query) use ($keyword) {
+            /** @var Builder $query, $subQuery */
+            $query->where('title', 'like', '%' . $keyword . '%')
+                ->orWhereHas('tags', function ($subQuery) use ($keyword) {
+                    $subQuery->where('name', 'like', '%' . $keyword . '%');
+                })->orWhereHas('category', function ($subQuery) use ($keyword) {
+                    $subQuery->where('name', 'like', '%' . $keyword . '%');
+                })->orWhereHas('user', function ($subQuery) use ($keyword) {
+                    $subQuery->where('name', 'like', '%' . $keyword . '%');
+                });
+        })->paginate(50);
     }
 }

@@ -18,9 +18,12 @@ class PostController extends Controller
         $this->postService  = app(PostService::class);
     }
 
-    public function all()
+    public function all(Request $request)
     {
         $posts = $this->postService->paginate(50);
+        if ($request->input('keywords')) {
+            $posts = $this->postService->search($request->input('keywords'));
+        }
         return view('Admin.post.index', compact('posts'));
     }
 

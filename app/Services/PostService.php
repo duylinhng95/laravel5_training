@@ -34,7 +34,7 @@ class PostService
 
     public function all()
     {
-        return $this->postRepository->all();
+        return $this->postRepository->paginate(10);
     }
 
     public function create($input)
@@ -115,5 +115,10 @@ class PostService
     {
         $userId = Auth::user()->id;
         return $this->postVoteRepository->votePost($postId, $userId);
+    }
+
+    public function search($keyword)
+    {
+        return $this->postRepository->search($keyword);
     }
 }

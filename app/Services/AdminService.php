@@ -53,5 +53,9 @@ class AdminService
     {
         return $this->userRepository->unBlocked($id);
     }
-    
+
+    public function searchUsers($keyword)
+    {
+        return $this->userRepository->search($keyword);
+    }
 }

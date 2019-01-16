@@ -29,7 +29,9 @@ class UpdateTablePosts extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            $table->string('description');
+            $table->dropColumn('view');
+            $table->dropColumn('user_id');
         });
     }
 }

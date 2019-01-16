@@ -21,14 +21,19 @@ window.deletePost = function deletePost(id) {
 	})
 }
 
-window.votePost = function votePost(id){
+window.votePost = function votePost(id) {
 	$.ajax({
 		url: votePostURI + id,
 		type: "GET",
-		success: function(res){
+		success: function (res) {
 			value = $("#voteNum").html();
 			value++;
 			$('#voteNum').text(value);
 		}
 	})
+}
+
+window.searchHome = function searchHome() {
+	var input = $('#keywords').val();
+	window.location.href="/post?keyword="+input;
 }

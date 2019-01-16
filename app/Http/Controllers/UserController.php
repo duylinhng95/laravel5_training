@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $input  = $request->except('_token');
         $result = $this->userService->register($input);
-        if (isset($result['code'])) {
+        if ($result['code'] != 200) {
             return view('User.register', compact('result'));
         }
         $this->userService->login($input);

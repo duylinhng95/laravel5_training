@@ -5,8 +5,19 @@ window.addComment = function addComment(id) {
 		url: addCommentURI + id,
 		type: "POST",
 		data: formData,
-		success: function (res) {
-			$(".comment-list").append('<div class=\"media\"><div class=\"media-body\"><h4 class=\"media-heading user_name\">' + res.user.name + '</h4>' + res.content + '</div></div>');
+		success: function (response) {
+			var res = response.data;
+			$(".comment-list").append('<div class="article-content">' +
+				'<div class="article-comment-top">' +
+				'<div class="comments-user">' +
+				'<div class="user-name">'
+				+ res.user.name +
+				'</div><div class="comment-post-date">Posted On ' +
+				'<span class="italics">'
+				+ res.created_at +
+				'</span></div></div><div class="comments-content">'
+				+res.content+
+				'</div></div></div>');
 		}
 	})
 }

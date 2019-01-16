@@ -28,7 +28,9 @@ class UpdateTableUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
+            $table->dropColumn('role');
+            $table->dropColumn('rating');
         });
     }
 }

@@ -8,8 +8,6 @@ class PostVote extends Model
 {
     protected $fillable = ['user_id', 'post_id'];
 
-    public $timestamps = false;
-
     public function user()
     {
         return $this->belongsTo(User::class);

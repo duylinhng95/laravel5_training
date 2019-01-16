@@ -18,6 +18,8 @@ use App\Repository\AdminRepositoryEloquent;
 use App\Repository\RocketProfileRepositoryEloquent;
 use App\Repository\PostRepositoryEloquent;
 use App\Repository\UserRepositoryEloquent;
+use App\Repository\UserRoleRepository;
+use App\Repository\UserRoleRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -47,5 +49,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CommentRepository::class, CommentRepositoryEloquent::class);
         $this->app->bind(FollowRepository::class, FollowRepositoryEloquent::class);
         $this->app->bind(PostVoteRepository::class, PostVoteRepositoryEloquent::class);
+        $this->app->bind(UserRoleRepository::class, UserRoleRepositoryEloquent::class);
     }
 }
