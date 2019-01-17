@@ -65,6 +65,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function all()
     {
-        return $this->makeModel()->orderBy('created_at', 'des')->paginate(10);
+        return $this->makeModel()->orderBy('created_at', 'desc')->paginate(10);
     }
 }

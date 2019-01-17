@@ -46,12 +46,12 @@ class Post extends Model
 
     public function getPopularPost($num)
     {
-        return $this->orderBy('view', 'des')->limit($num)->get();
+        return $this->orderBy('view', 'desc')->limit($num)->get();
     }
 
     public function getLatestPost($num)
     {
-        return $this->orderBy('created_at', 'des')->limit($num)->get();
+        return $this->orderBy('created_at', 'desc')->limit($num)->get();
     }
 
     public function getCountCommentsAttribute()
