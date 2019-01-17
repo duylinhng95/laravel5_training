@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoryRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;

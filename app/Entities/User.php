@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use App\Traits\FormatTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -12,7 +11,6 @@ class User extends Authenticatable
     const STATUS = ['NOT_VERIFY' => 0, 'VERIFY' => 1, 'BLOCK' => 2];
 
     use Notifiable;
-    use FormatTrait;
     /**
      * The attributes that are mass assignable.
      *

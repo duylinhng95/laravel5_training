@@ -20,7 +20,7 @@
                     </div>
                     <div class="article-info">
                         <div class="art-date">
-                                <i class="fa fa-calendar-o"></i> {{$post->formatDate($post->created_at)}}
+                                <i class="fa fa-calendar-o"></i> {{formatDate($post->created_at)}}
                         </div>
                         <div class="art-category">
                             <a href="{{url('category/'.$post->category->id)}}">

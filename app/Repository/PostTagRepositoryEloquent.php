@@ -19,6 +19,7 @@ class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTa
 
     public function updateMany($id, $array)
     {
+        $result = [];
         foreach ($array as $data) {
             $result[] = $this->makeModel()->firstOrCreate($data, $id);
         }

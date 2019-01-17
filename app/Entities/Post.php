@@ -3,11 +3,9 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\FormatTrait;
 
 class Post extends Model
 {
-    use FormatTrait;
 
     protected $appends = [
         'popular_post',

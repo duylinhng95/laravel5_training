@@ -19,7 +19,6 @@ class PostComposer
 
     public function compose(View $view)
     {
-        /**@var \Illuminate\View\View $view*/
         $tags  = $this->postTagRepository->paginate(15);
         $posts = $this->postRepository->all();
         $view->with('posts', $posts);

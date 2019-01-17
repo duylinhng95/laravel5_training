@@ -25,6 +25,11 @@ class AdminService
     public function importUserDB()
     {
         $arr = $this->adminRepository->getUser();
+        if ($arr['code']) {
+            throw new \Exception(['code' => $arr['code'], 'message' => $arr['message']]);
+        }
+
+        $users = [];
 
         foreach ($arr['users'] as $user) {
             $users[] = [
@@ -33,8 +38,15 @@ class AdminService
             ];
         }
 
-        $res    = $this->userRepository->createProfile($users);
-        $rocket = $this->rocketRepository->createProfile($res);
+        try {
+            \DB::beginTransaction();
+            $res    = $this->userRepository->createProfile($users);
+            $rocket = $this->rocketRepository->createProfile($res);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            throw $e;
+        }
+        \DB::commit();
 
         return $rocket;
     }
