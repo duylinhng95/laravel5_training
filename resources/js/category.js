@@ -15,6 +15,10 @@ window.submitCategory = function submitCategory() {
 					location.reload();
 				})
 			}
+		},
+		error: function (res) {
+			var error = res.responseJSON;
+			$('#error').append(error.errors.name[0]);
 		}
 	});
 }
@@ -23,7 +27,8 @@ window.editCategory = function editCategory(id) {
 	$.ajax({
 		url: editCategoryURI + id,
 		type: "GET",
-		success: function (res) {
+		success: function (response) {
+			var res = response.data;
 			$('#editModal').modal('show');
 			$('#editModal #edit').append("<input type='hidden' value=" + res.id + " name='categoryId'>");
 			$('#editModal #edit #name').val(res.name);
@@ -46,6 +51,10 @@ window.saveCategory = function saveCategory() {
 					location.reload();
 				})
 			}
+		},
+		error: function (res) {
+			var error = res.responseJSON;
+			$('#errorMsg').append(error.errors.name[0]);
 		}
 	});
 }

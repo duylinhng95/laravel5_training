@@ -21,7 +21,7 @@ class PostController extends Controller
     public function all(Request $request)
     {
         $posts = $this->postService->paginate(50);
-        if ($request->input('keywords')) {
+        if ($request->has('keywords')) {
             $posts = $this->postService->search($request->input('keywords'));
         }
         return view('Admin.post.index', compact('posts'));

@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
+    protected $appends = [
+        'popular_post',
+        'latest_post',
+        'count_comments',
+        'encode_content'
+    ];
+
     protected $fillable = ['title', 'content', 'user_id', 'category_id'];
 
     public function category()
@@ -31,5 +39,25 @@ class Post extends Model
     public function votes()
     {
         return $this->hasMany(PostVote::class);
+    }
+
+    public function getPopularPost($num)
+    {
+        return $this->orderBy('view', 'desc')->limit($num)->get();
+    }
+
+    public function getLatestPost($num)
+    {
+        return $this->orderBy('created_at', 'desc')->limit($num)->get();
+    }
+
+    public function getCountCommentsAttribute()
+    {
+        return count($this->comments);
+    }
+
+    public function getEncodeContentAttribute()
+    {
+        return str_limit(strip_tags($this->content), $limit = 60, $end = '...');
     }
 }

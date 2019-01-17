@@ -15,6 +15,7 @@ class PostController extends Controller
 
     protected $postService;
     protected $categoryService;
+    protected $postTagService;
 
     public function __construct()
     {
@@ -28,7 +29,7 @@ class PostController extends Controller
         $posts      = $this->postService->all();
         $categories = $this->categoryService->all();
         $tags       = $this->postTagService->all();
-        if ($request->input('keyword')) {
+        if ($request->has('keyword')) {
             $posts = $this->postService->search($request->input('keyword'));
         }
         return view('Post.index', compact('posts', 'categories', 'tags'));

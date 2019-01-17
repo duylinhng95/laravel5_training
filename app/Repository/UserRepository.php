@@ -11,4 +11,8 @@ interface UserRepository
     public function unblocked($id);
 
     public function loginRocket($input);
+
+    public function getInfo();
+
+    public function search($keyword);
 }

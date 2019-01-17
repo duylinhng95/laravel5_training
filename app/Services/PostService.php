@@ -34,13 +34,15 @@ class PostService
 
     public function all()
     {
-        return $this->postRepository->paginate(10);
+        return $this->postRepository->all();
     }
 
     public function create($input)
     {
         $input['user_id'] = Auth::user()->id;
-        $input['content'] = $this->convertImg($input['content']);
+        if (array_key_exists('files', $input)) {
+            $input['content'] = $this->convertImg($input['content']);
+        }
         return $this->postRepository->create($input);
     }
 
@@ -71,7 +73,9 @@ class PostService
 
     public function update($id, $input)
     {
-        $input['content'] = $this->convertImg($input['content']);
+        if (array_key_exists('files', $input)) {
+            $input['content'] = $this->convertImg($input['content']);
+        }
         $this->postRepository->update($id, $input);
         $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);
