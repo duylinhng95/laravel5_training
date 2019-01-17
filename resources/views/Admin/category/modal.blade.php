@@ -9,6 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="text-danger" id="error"></div>
                 <form id="create">
                     {{csrf_field()}}
                     <div class="form-group">
@@ -44,12 +45,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add new Category</h5>
+                <h5 class="modal-title">Edit Category</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div class="text-danger" id="errorMsg"></div>
                 <form id="edit">
                     {{csrf_field()}}
                     <div class="form-group">

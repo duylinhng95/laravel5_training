@@ -6,6 +6,8 @@ use App\Entities\User;
 use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
 use App\Traits\RocketTrait;
+use Auth;
+use Illuminate\Database\Query\Builder;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
@@ -41,9 +43,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $user = $this->makeModel()->find($id);
         if (!empty($user->email)) {
-            $user->status = 1;
+            $user->status = User::STATUS['VERIFY'];
         } else {
-            $user->status = 0;
+            $user->status = User::STATUS['NOT_VERIFY'];
         }
         $user->save();
         return $user;
@@ -53,5 +55,19 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $user = $this->loginAPI($input);
         return $user;
+    }
+
+    public function getInfo()
+    {
+        return Auth::user();
+    }
+
+    public function search($keyword)
+    {
+        return $this->model->where(function ($query) use ($keyword) {
+            /** @var Builder $query */
+            $query->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('email', 'like', '%' . $keyword . '%');
+        })->paginate(50);
     }
 }

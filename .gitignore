@@ -1,6 +1,6 @@
 /node_modules
 /public/hot
-/public/storage
+/public/storage/*
 /storage/*.key
 /vendor
 .env
@@ -15,3 +15,6 @@ composer.lock
 /public/mix-manifest.json
 /public/js/*
 /public/css/*
+/public/fonts/*
+/public/images/*
+/storage/debugbar/

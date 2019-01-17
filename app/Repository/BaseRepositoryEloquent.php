@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use Illuminate\Container\Container as App;
 use App\Repository\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 abstract class BaseRepositoryEloquent implements BaseRepository
 {
-
+    /** @var Model|Builder $model */
     protected $model;
     protected $app;
 
@@ -59,5 +61,38 @@ abstract class BaseRepositoryEloquent implements BaseRepository
     public function paginate($num)
     {
         return $this->makeModel()->paginate($num);
+    }
+
+    public function deleteWhere(array $where)
+    {
+        $this->applyConditions($where);
+        $deleted = $this->model->delete();
+        return $deleted;
+    }
+
+    protected function applyConditions(array $where)
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                $this->model = $this->model->where($field, $condition, $val);
+            } else {
+                $this->model = $this->model->where($field, '=', $value);
+            }
+        }
+    }
+
+    public function findWhereGetFirst(array $where)
+    {
+        $this->applyConditions($where);
+        $model = $this->model->first();
+        return $model;
+    }
+
+    public function findWhere(array $where, $columns = ['*'])
+    {
+        $this->applyConditions($where);
+        $model = $this->model->get($columns);
+        return $model;
     }
 }

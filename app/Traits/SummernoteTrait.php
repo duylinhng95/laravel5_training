@@ -6,7 +6,7 @@ trait SummernoteTrait
 {
     public function convertImg($detail)
     {
-        $dom    = new \DOMDocument();
+        $dom = new \DOMDocument();
         $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName("img");
         foreach ($images as $key => $image) {
@@ -18,10 +18,10 @@ trait SummernoteTrait
             $data = base64_decode($data);
 
             $imageName = "/storage/" . time() . $key . '.png';
-            $path = public_path() . $imageName;
+            $path      = public_path() . $imageName;
 
-            if (!file_exists(public_path()."/storage/")) {
-                mkdir(public_path()."/storage/", 0777, true);
+            if (!file_exists(public_path() . "/storage/")) {
+                mkdir(public_path() . "/storage/", 0777, true);
             }
 
             file_put_contents($path, $data);

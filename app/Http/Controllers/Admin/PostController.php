@@ -20,6 +20,7 @@ class PostController extends Controller
 
     public function all(Request $request)
     {
+
         $posts = $this->postService->paginateWithTrashed(50);
         if ($request->has('keywords')) {
             $posts = $this->postService->search($request->input('keywords'));

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class RocketProfile extends Model
 {
     public $timestamps = false;
-    protected $table = "rocket_profiles";
+
+    protected $table    = "rocket_profiles";
     protected $fillable = [
         'auth_token',
         'owner_id',

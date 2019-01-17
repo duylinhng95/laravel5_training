@@ -1,6 +1,6 @@
 @extends('Post.layout')
-@section('title')
-    Post List
+@section('search')
+    @include('Post.search')
 @endsection
 @section('content')
     <div class="card-header">
@@ -14,13 +14,19 @@
                 <tr>
                     <th>Title</th>
                     <th>Created Date</th>
+                    <th>Views</th>
+                    <th>Vote</th>
+                    <th>Comment</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 @foreach($posts as $post)
                     <tr>
-                        <td style="width: 65%">{{$post->title}}</td>
+                        <td style="width: 65%"><a href="{{url('user/post/' . $post->id)}}">{{$post->title}}</a></td>
                         <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
+                        <td>{{$post->view}}</td>
+                        <td>{{count($post->votes)}}</td>
+                        <td>{{count($post->comments)}}</td>
                         <td style="width: 15%">
                             <a href="{{url('/user/post/'.$post->id)}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
                                 View</a>

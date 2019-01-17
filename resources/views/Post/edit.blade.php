@@ -3,6 +3,7 @@
     Edit {{$post->title}} Post
 @endsection
 @section('content')
+    @include('Post.error')
     <div class="card-header">
         <h2><i class="fa fa-pen"></i> Edit {{$post->title}} Post</h2>
         <a href="{{url('/user/post')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
@@ -15,6 +16,11 @@
                 <label for="title">Title</label>
                 <input type="text" name="title" placeholder="{{$post->title}}" value="{{$post->title}}"
                        class="form-control">
+                @if($errors->has('title'))
+                    <div class="text-danger">
+                        <span>* </span>{{$errors->first('title')}}
+                    </div>
+                @endif
             </div>
 
             <div class="form-group">
@@ -29,11 +35,21 @@
             <div class="form-group">
                 <label for="tag">Tags</label>
                 <input type="text" name="tags" class="form-control" data-role="tagsinput" value="{{$tags}}">
+                @if($errors->has('tags'))
+                    <div class="text-danger">
+                        <span>* </span>{{$errors->first('tags')}}
+                    </div>
+                @endif
             </div>
 
             <div class="form-group">
                 <label for="title">Content</label>
                 <textarea name="content" class="form-control" id="texteditor">{{$post->content}}</textarea>
+                @if($errors->has('content'))
+                    <div class="text-danger">
+                        <span>* </span>{{$errors->first('content')}}
+                    </div>
+                @endif
             </div>
         </div>
         <div class="card-footer">

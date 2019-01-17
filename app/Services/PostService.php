@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Repository\PostRepository;
+use App\Repository\PostVoteRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
+use App\Repository\FollowRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
 use Illuminate\Session\Store as Session;
@@ -16,13 +18,18 @@ class PostService
     protected $postRepository;
     protected $postTagRepository;
     protected $commentRepository;
+    protected $postVoteRepository;
+    protected $session;
+    protected $followRepository;
 
     public function __construct()
     {
-        $this->postRepository    = app(PostRepository::class);
-        $this->postTagRepository = app(PostTagRepository::class);
-        $this->session           = app(Session::class);
-        $this->commentRepository = app(CommentRepository::class);
+        $this->postRepository     = app(PostRepository::class);
+        $this->postTagRepository  = app(PostTagRepository::class);
+        $this->session            = app(Session::class);
+        $this->commentRepository  = app(CommentRepository::class);
+        $this->postVoteRepository = app(PostVoteRepository::class);
+        $this->followRepository   = app(FollowRepository::class);
     }
 
     public function all()
@@ -33,7 +40,9 @@ class PostService
     public function create($input)
     {
         $input['user_id'] = Auth::user()->id;
-        $input['content'] = $this->convertImg($input['content']);
+        if (array_key_exists('files', $input)) {
+            $input['content'] = $this->convertImg($input['content']);
+        }
         return $this->postRepository->create($input);
     }
 
@@ -48,7 +57,13 @@ class PostService
         $post     = $this->postRepository->find($id);
         $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
-        return [$post, $tags, $comments];
+        $followed = 0;
+        $user     = Auth::user();
+        $author   = $post->user_id;
+        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $followed = 1;
+        }
+        return [$post, $tags, $comments, $followed];
     }
 
     public function delete($id)
@@ -58,7 +73,9 @@ class PostService
 
     public function update($id, $input)
     {
-        $input['content'] = $this->convertImg($input['content']);
+        if (array_key_exists('files', $input)) {
+            $input['content'] = $this->convertImg($input['content']);
+        }
         $this->postRepository->update($id, $input);
         $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);

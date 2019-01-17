@@ -39,4 +39,29 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(PostVote::class);
+    }
+
+    public function getPopularPost($num)
+    {
+        return $this->orderBy('view', 'desc')->limit($num)->get();
+    }
+
+    public function getLatestPost($num)
+    {
+        return $this->orderBy('created_at', 'desc')->limit($num)->get();
+    }
+
+    public function getCountCommentsAttribute()
+    {
+        return count($this->comments);
+    }
+
+    public function getEncodeContentAttribute()
+    {
+        return str_limit(strip_tags($this->content), $limit = 60, $end = '...');
+    }
 }

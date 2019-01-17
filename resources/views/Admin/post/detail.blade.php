@@ -27,7 +27,7 @@
         <div class="card text-black-50">
             <div class="card-header"><h4>Content</h4></div>
             <div class="card-body ">
-                {{$post->content}}
+                {!! $post->content !!}
             </div>
         </div>
     </div>

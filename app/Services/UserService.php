@@ -3,23 +3,32 @@
 namespace App\Services;
 
 use App\Repository\UserRepository;
+use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
+use App\Traits\ResponseTrait;
 use Auth;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class UserService
 {
+    use ResponseTrait;
+
     protected $userRepository;
     protected $rocketRepository;
+    protected $roleRepository;
 
     public function __construct()
     {
         $this->userRepository   = app(UserRepository::class);
         $this->rocketRepository = app(RocketProfileRepository::class);
+        $this->roleRepository   = app(UserRoleRepository::class);
     }
 
     /**
      * @param $input
      * @return array
+     * @throws \Exception
      */
     public function register($input)
     {
@@ -27,23 +36,35 @@ class UserService
         if (isset($user['code'])) {
             return $user;
         }
+
         $rocket = $this->rocketRepository->findByFields('owner_id', $user['data']['userId'])->first();
         if (Auth::attempt($input)) {
             Auth::logout();
-            return ['code' => 409, 'message' => 'User are already registered. Pleas login'];
+            return $this->error('409', 'User are already registered. Please login');
         }
+
         $input['password'] = bcrypt($input['password']);
-        $input['status']   = 1;
-        $res               = $this->userRepository->update($rocket->user_id, 'id', $input);
-        return $res;
+        DB::beginTransaction();
+
+        try {
+            $this->userRepository->update($rocket->user_id, $input);
+
+            $this->roleRepository->create(['role_id' => 1, 'user_id' => $rocket->user_id]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+        return $this->success('User register successful');
     }
 
     public function login($input)
     {
         if ($user = Auth::guard()->attempt($input)) {
-            return ['code' => 200, 'message' => 'Login successful'];
+            return $this->success('Login Successful');
         } else {
-            return ['code' => 401, 'message' => 'Wrong Credential'];
+            return $this->error('401', 'Wrong Credentials');
         }
     }
 
@@ -53,5 +74,26 @@ class UserService
             Auth::logout();
         }
         return redirect('/auth/login');
+    }
+
+    public function followUser($id)
+    {
+        $userId = Auth::id();
+        return $this->userRepository->followUser($id, $userId);
+    }
+
+    public function getInfo()
+    {
+        return $this->userRepository->getInfo();
+    }
+
+    public function paginate($num)
+    {
+        return $this->userRepository->paginate($num);
+    }
+
+    public function search($input)
+    {
+        return $this->userRepository->search($input);
     }
 }

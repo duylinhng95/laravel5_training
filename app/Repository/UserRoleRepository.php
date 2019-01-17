@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-interface CategoryService
+interface UserRoleRepository
 {
 
 }

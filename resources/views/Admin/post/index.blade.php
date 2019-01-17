@@ -4,15 +4,27 @@
 @endsection
 @section('content')
     <div class="card-header">
-        Posts list
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" id="searchPostBtn" onclick="searchPost()"><i
+                                    class="fa fa-search "></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card-body table-responsive">
         <table class="table">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Title</td>
-                    <td>Action</td>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +32,8 @@
                 <tr>
                     <td>{{++$index}}</td>
                     <td>{{$post->title}}</td>
+                    <td>{{$post->category->name}}</td>
+                    <td>{{$post->user->name}}</td>
                     <td><a href="{{url('admin/post/'.$post->id)}}" class="btn btn-primary">View</a></td>
                 </tr>
                 @endforeach
@@ -28,3 +42,15 @@
         </table>
     </div>
 @endsection
+@push('script')
+    <script>
+	    $(document).keypress(function(event){
+
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    if(keycode == '13'){
+			    $("#searchPostBtn").click();
+		    }
+
+	    });
+    </script>
+@endpush

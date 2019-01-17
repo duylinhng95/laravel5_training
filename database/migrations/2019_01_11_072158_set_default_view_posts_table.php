@@ -26,7 +26,7 @@ class SetDefaultViewPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            $table->integer('view')->unsigned()->change();
         });
     }
 }
