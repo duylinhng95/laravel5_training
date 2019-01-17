@@ -39,7 +39,6 @@ class User extends Authenticatable
     protected $appends = [
         'count_follow',
         'count_post',
-        'format_created'
     ];
 
     public function rocket()

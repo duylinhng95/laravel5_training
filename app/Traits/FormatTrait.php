@@ -4,8 +4,8 @@ namespace App\Traits;
 
 trait FormatTrait
 {
-    public function getFormatCreatedAttribute($model)
+    public function formatDate($date)
     {
-        return date('d-m-Y', strtotime($model->created_at));
+        return date('d-m-Y', strtotime($date));
     }
 }

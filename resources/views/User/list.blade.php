@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="article-info">
                                     <div class="art-date">
-                                        <i class="fa fa-calendar-o"></i> {{$user->format_created}}
+                                        <i class="fa fa-calendar-o"></i> {{$user->formatDate($user->created_at)}}
                                     </div>
                                     <div class="art-category">
                                         <i class="fa fa-book"></i> {{$user->count_post}}

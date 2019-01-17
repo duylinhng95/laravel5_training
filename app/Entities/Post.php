@@ -13,7 +13,6 @@ class Post extends Model
         'popular_post',
         'latest_post',
         'count_comments',
-        'format_created',
         'encode_content'
     ];
 
