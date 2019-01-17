@@ -27,7 +27,6 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $request->validated();
         $input = $request->except('_token');
         $this->categoryService->create($input);
         return $this->success('Create Category Successful');
@@ -41,7 +40,6 @@ class CategoryController extends Controller
 
     public function save(CategoryRequest $request)
     {
-        $request->validated();
         $input = $request->except('_token', 'categoryId');
         $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
