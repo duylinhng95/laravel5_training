@@ -31,7 +31,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     public function blocked($id)
     {
         $user         = $this->makeModel()->find($id);
-        $user->status = 2;
+        $user->status = User::STATUS['BLOCK'];
         $user->save();
 
         return $user;

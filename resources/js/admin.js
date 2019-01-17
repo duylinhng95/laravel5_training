@@ -144,7 +144,8 @@ window.blockUser = function blockUser(id) {
 		url: blockUserURI,
 		type: "GET",
 		data: {id: id},
-		success: function (res) {
+		success: function (response) {
+			var res = response.data;
 			$('#' + res.id).find('#status').text('Block');
 			$('#' + res.id).find('#action').html('');
 			$('#' + res.id).find('#action').append(
@@ -160,7 +161,8 @@ window.unBlockUser = function unBlockUser(id) {
 		url: unBlockUserURI,
 		type: "GET",
 		data: {id: id},
-		success: function (res) {
+		success: function (response) {
+			var res = response.data;
 			if (res.status == 1) {
 				$('#' + res.id).find('#status').text('Active');
 			} else {

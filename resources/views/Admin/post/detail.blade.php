@@ -13,7 +13,15 @@
                 </ul>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-danger btn-lg">Block</button>
+                @if($post->deleted_at == null)
+                <form method="post" action="{{url('/admin/post/'.$post->id)}}">
+                    {!! method_field('delete') !!}
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-danger">Permanently Delete</button>
+                </form>
+                @else
+                <a href="{{url('/admin/post/restore/'.$post->id)}}" class="btn btn-primary">Restore post</a>
+                @endif
             </div>
         </div>
         <div class="card text-black-50">

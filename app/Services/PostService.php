@@ -45,8 +45,8 @@ class PostService
 
     public function find($id)
     {
-        $post = $this->postRepository->find($id);
-        $tags = implode(',', $post->tags->pluck('name')->toArray());
+        $post     = $this->postRepository->find($id);
+        $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
         return [$post, $tags, $comments];
     }
@@ -90,11 +90,51 @@ class PostService
 
     public function comment($postId, $input)
     {
-        $userId = Auth::user()->id;
+        $userId           = Auth::user()->id;
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
-        $comment = $this->commentRepository->create($input);
-        $user = $comment->user;
+        $comment          = $this->commentRepository->create($input);
+        $user             = $comment->user;
         return $comment;
+    }
+
+    public function vote($postId)
+    {
+        $userId = Auth::user()->id;
+        return $this->postVoteRepository->votePost($postId, $userId);
+    }
+
+    public function search($keyword)
+    {
+        return $this->postRepository->search($keyword);
+    }
+
+    public function deleteNorTags($id)
+    {
+        return $this->postRepository->destroy($id);
+    }
+
+    public function paginateWithTrashed($num)
+    {
+        return $this->postRepository->paginateWithTrashed($num);
+    }
+
+    public function findWithTrashed($id)
+    {
+        $post     = $this->postRepository->findWithTrashed($id);
+        $tags     = implode(',', $post->tags->pluck('name')->toArray());
+        $comments = $post->comments;
+        $followed = 0;
+        $user     = Auth::user();
+        $author   = $post->user_id;
+        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $followed = 1;
+        }
+        return [$post, $tags, $comments, $followed];
+    }
+
+    public function restorePost($id)
+    {
+        return $this->postRepository->restore($id);
     }
 }

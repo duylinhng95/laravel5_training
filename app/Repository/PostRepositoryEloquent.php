@@ -22,7 +22,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function delete($id)
     {
         $post = $this->makeModel()->find($id);
-        $post->tags()->delete();
         $post->delete();
 
         return ['code' => 200, 'message' => 'Delete Post Successful'];
@@ -45,5 +44,29 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         unset($input['tags']);
 
         return $tags;
+    }
+
+    public function destroy($id)
+    {
+        $post = $this->makeModel()->find($id);
+        $post->tags()->delete();
+        $post->forceDelete();
+
+        return ['code' => 200, 'message' => 'Delete Post Successful'];
+    }
+
+    public function paginateWithTrashed($num)
+    {
+        return $this->makeModel()->withTrashed()->paginate($num);
+    }
+
+    public function findWithTrashed($id)
+    {
+        return $this->makeModel()->withTrashed()->find($id);
+    }
+
+    public function restore($id)
+    {
+        return $this->makeModel()->withTrashed()->find($id)->restore();
     }
 }
