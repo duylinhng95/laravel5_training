@@ -10,6 +10,7 @@ window.submitCategory = function submitCategory() {
 			if (res.code == 200) {
 				$('#createModal').modal('hide');
 				$('#notification').modal('show');
+				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
 				$('#notification .modal-body .alert').html(res.message);
 				$('#notification').on('hidden.bs.modal', function () {
 					location.reload();
@@ -46,6 +47,7 @@ window.saveCategory = function saveCategory() {
 			if (res.code == 200) {
 				$('#editModal').modal('hide');
 				$('#notification').modal('show');
+				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
 				$('#notification .modal-body .alert').html(res.message);
 				$('#notification').on('hidden.bs.modal', function () {
 					location.reload();
@@ -63,14 +65,19 @@ window.deleteCategory = function deleteCategory(id) {
 	$.ajax({
 		url: deleteCategoryURI + id,
 		type: "DELETE",
-		data: {_token: "{{csrf_token()}}"},
+		data: {_token: csrfToken},
 		success: function (res) {
 			if (res.code == 200) {
 				$('#notification').modal('show');
+				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
 				$('#notification .modal-body .alert').html(res.message);
 				$('#notification').on('hidden.bs.modal', function () {
 					location.reload();
 				})
+			} else {
+				$('#notification').modal('show');
+				$('#notification .modal-body .alert').removeClass('alert-success').addClass('alert-danger');
+				$('#notification .modal-body .alert').html(res.message);
 			}
 		}
 	})

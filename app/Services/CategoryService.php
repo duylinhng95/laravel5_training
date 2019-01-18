@@ -37,4 +37,13 @@ class CategoryService
     {
         return $this->categoryRepository->delete($id);
     }
+
+    public function checkPosts($id)
+    {
+        $category = $this->categoryRepository->find($id);
+        if (count($category->posts) != 0) {
+            return false;
+        }
+        return true;
+    }
 }
