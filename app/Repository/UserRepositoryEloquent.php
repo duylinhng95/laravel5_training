@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entities\User;
-use App\Repository\UserRepository;
-use App\Repository\BaseRepositoryEloquent;
 use App\Traits\RocketTrait;
 use Auth;
 use Illuminate\Database\Query\Builder;

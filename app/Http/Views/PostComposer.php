@@ -19,7 +19,7 @@ class PostComposer
 
     public function compose(View $view)
     {
-        $tags  = $this->postTagRepository->paginate(15);
+        $tags  = $this->postTagRepository->getPopularTags();
         $posts = $this->postRepository->all();
         $view->with('posts', $posts);
         $view->with('tags', $tags);

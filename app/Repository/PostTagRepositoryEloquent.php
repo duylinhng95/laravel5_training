@@ -25,4 +25,9 @@ class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTa
         }
         return $result;
     }
+
+    public function getPopularTags()
+    {
+        return $this->makeModel()->popular_tags;
+    }
 }

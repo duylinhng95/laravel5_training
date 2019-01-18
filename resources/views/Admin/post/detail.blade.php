@@ -5,21 +5,20 @@
 @section('content')
     <div class="card-body text-white bg-dark ">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <ul>
                     <li>Author: {{$post->user->name}}</li>
                     <li>Cateogry: {{$post->category->name}}</li>
                     <li>Tags: {{$tags}}</li>
                 </ul>
             </div>
-            <div class="col-md-2">
-                @if($post->deleted_at == null)
-                <form method="post" action="{{url('/admin/post/'.$post->id)}}">
+            <div class="col-md-4">
+                <form method="post" action="{{url('/admin/post/'.$post->id)}}" class="">
                     {!! method_field('delete') !!}
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Permanently Delete</button>
                 </form>
-                @else
+                @if($post->deleted_at != null)
                 <a href="{{url('/admin/post/restore/'.$post->id)}}" class="btn btn-primary">Restore post</a>
                 @endif
             </div>
