@@ -21,9 +21,18 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Author</th>
+                    <th>Title
+                        <button onclick="sortPost('title')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                    </th>
+                    <th>Category
+                        <button onclick="sortPost('category')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                    </th>
+                    <th>Author
+                        <button onclick="sortPost('user')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                    </th>
+                    <th>Status
+                        <button onclick="sortPost('deleted_at')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -34,6 +43,11 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->category->name}}</td>
                     <td>{{$post->user->name}}</td>
+                    @if($post->deleted_at != null)
+                    <td class="text text-danger">Deleted</td>
+                    @else
+                    <td class="text text-success">Available</td>
+                    @endif
                     <td><a href="{{url('admin/post/'.$post->id)}}" class="btn btn-primary">View</a></td>
                 </tr>
                 @endforeach

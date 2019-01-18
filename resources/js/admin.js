@@ -179,10 +179,43 @@ window.unBlockUser = function unBlockUser(id) {
 
 window.searchUser = function searchUser() {
 	var input = $('#search').val();
-	window.location.href="/admin?keywords="+input;
+	window.location.href = "/admin?keywords=" + input;
 }
 
 window.searchPost = function searchPost() {
 	var input = $('#search').val();
-	window.location.href="/admin/post?keywords="+input;
+	window.location.href = "/admin/post?keywords=" + input;
+}
+
+function getUrlParameter(sParam) {
+	var sPageURL = window.location.search.substring(1),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+	for (i = 0; i < sURLVariables.length; i++) {
+		sParameterName = sURLVariables[i].split('=');
+
+		if (sParameterName[0] === sParam) {
+			return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+		}
+	}
+}
+
+window.sortUser = function sortUser(section) {
+	var sortOrder = getUrlParameter('order');
+	if (sortOrder == 'desc') {
+		window.location.href = "/admin?sort=" + section + "&order=asc";
+	} else {
+		window.location.href = "/admin?sort=" + section + "&order=desc";
+	}
+}
+
+window.sortPost = function sortPost(section) {
+	var sortOrder = getUrlParameter('order');
+	if (sortOrder == 'desc') {
+		window.location.href = "/admin/post?sort=" + section + "&order=asc";
+	} else {
+		window.location.href = "/admin/post?sort=" + section + "&order=desc";
+	}
 }

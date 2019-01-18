@@ -154,4 +154,9 @@ class PostService
     {
         return $this->postRepository->restore($id);
     }
+
+    public function sort($section, $order)
+    {
+        return $this->postRepository->sort($section, $order);
+    }
 }

@@ -68,4 +68,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
                 ->orWhere('email', 'like', '%' . $keyword . '%');
         })->paginate(50);
     }
+
+    public function sort($section, $order)
+    {
+        return $this->model->orderBy($section, $order)->paginate(50);
+    }
 }

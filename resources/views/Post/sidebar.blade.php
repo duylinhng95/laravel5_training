@@ -9,7 +9,7 @@
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
                 <ul>
-                    @foreach($post->getPopularPost(5) as $post)
+                    @foreach($posts as $post)
                         <li>
                             <a href="{{url('post/'.$post->id)}}">
                                 <i class="fa fa-file-text-o"></i> {{$post->title}}</a>

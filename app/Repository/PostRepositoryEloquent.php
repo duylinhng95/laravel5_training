@@ -50,7 +50,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function search($keyword)
     {
         return $this->model->where(function ($query) use ($keyword) {
-            /** @var Builder $query, $subQuery */
+            /** @var Builder $query , $subQuery */
             $query->where('title', 'like', '%' . $keyword . '%')
                 ->orWhereHas('tags', function ($subQuery) use ($keyword) {
                     $subQuery->where('name', 'like', '%' . $keyword . '%');
@@ -89,5 +89,33 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function restore($id)
     {
         return $this->makeModel()->withTrashed()->find($id)->restore();
+    }
+
+    public function getPopularPosts()
+    {
+        return $this->makeModel()->getPopularPost(5);
+    }
+
+    public function sort($section, $order)
+    {
+        switch ($section) {
+            case 'category':
+                return $this->sortRelationship('categories', $order);
+                break;
+            case 'user':
+                return $this->sortRelationship('users', $order);
+                break;
+            default:
+                return $this->makeModel()->orderBy($section, $order)->withTrashed()->paginate(50);
+        }
+    }
+
+    private function sortRelationship($section, $order)
+    {
+        return $this->makeModel()
+            ->leftJoin($section, 'posts.category_id', $section.'.id')
+            ->orderBy('name', $order)
+            ->withTrashed()
+            ->paginate(50);
     }
 }

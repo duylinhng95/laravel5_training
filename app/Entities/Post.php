@@ -12,10 +12,9 @@ class Post extends Model
     protected $dates = ['deleted_at'];
 
     protected $appends = [
-        'popular_post',
-        'latest_post',
         'count_comments',
-        'encode_content'
+        'encode_content',
+        'count_votes'
     ];
 
     protected $fillable = ['title', 'content', 'user_id', 'category_id'];

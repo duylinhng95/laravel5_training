@@ -49,7 +49,7 @@
                 {{--Author--}}
                 <div class="card post">
                     <div class="article-heading">
-                        <i class="fa fa-user"></i> Author
+                        <i class="fa fa-user"></i> Author:  {{$post->user->name}}
                         @if(Auth::user()->id != $post->user->id)
                             @if($followed == 0)
                                 <a href="{{url('user/follow/'.$post->user->id)}}" class="btn btn-primary">Follow</a>
@@ -62,7 +62,7 @@
                 <!-- COMMENTS  -->
                 <div class="card post">
                     <div class="article-heading">
-                        <i class="fa fa-comments-o"></i> Comments ({{count($post->comments)}})
+                        <i class="fa fa-comments-o"></i> Comments (<span id="commentNum">{{count($post->comments)}}</span>)
                     </div>
                     <div class="comment-list">
                         @foreach($post->comments as $comment)

@@ -25,6 +25,10 @@ class PostController extends Controller
         if ($request->has('keywords')) {
             $posts = $this->postService->search($request->input('keywords'));
         }
+
+        if ($request->has('sort')) {
+            $posts = $this->postService->sort($request->input('sort'), $request->input('order'));
+        }
         return view('Admin.post.index', compact('posts'));
     }
 

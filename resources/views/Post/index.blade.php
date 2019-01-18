@@ -32,6 +32,9 @@
                         <div class="art-comments">
                                 <i class="fa fa-comments-o"></i> {{$post->count_comments}}
                         </div>
+                        <div class="art-category">
+                                <i class="fa fa-eye"></i> {{$post->view}}
+                        </div>
                     </div>
                     <div class="article-content">
                         <p class="block-with-text">

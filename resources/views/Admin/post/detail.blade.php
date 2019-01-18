@@ -10,6 +10,7 @@
                     <li>Author: {{$post->user->name}}</li>
                     <li>Cateogry: {{$post->category->name}}</li>
                     <li>Tags: {{$tags}}</li>
+                    <li>Created date: {{$post->created_at}}</li>
                 </ul>
             </div>
             <div class="col-md-4">
