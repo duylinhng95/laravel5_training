@@ -70,4 +70,9 @@ class AdminService
     {
         return $this->userRepository->search($keyword);
     }
+
+    public function sort($section, $order)
+    {
+        return $this->userRepository->sort($section, $order);
+    }
 }

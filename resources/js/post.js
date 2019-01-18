@@ -8,6 +8,14 @@ $(document).ready(function () {
 	$('#texteditor').summernote();
 });
 
+if($("#btnSearch").length != 0){
+	$(document).on('keypress', function (e) {
+		if (e.which == 13) {
+			$('#btnSearch').click();
+		}
+	});
+}
+
 window.deletePost = function deletePost(id) {
 	$.ajax({
 		url: deletePostURI + id,

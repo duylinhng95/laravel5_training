@@ -11,7 +11,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="keywords" placeholder="What do you need help with?">
                     <div class="input-group-append">
-                        <button class=" btn btn-info btn-lg" onclick="searchHome()">Search</button>
+                        <button class=" btn btn-info btn-lg" onclick="searchHome()" id="btnSearch">Search</button>
                     </div>
                 </div>
             </div>

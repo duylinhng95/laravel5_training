@@ -20,16 +20,32 @@ class PostController extends Controller
 
     public function all(Request $request)
     {
-        $posts = $this->postService->paginate(50);
+
+        $posts = $this->postService->paginateWithTrashed(50);
         if ($request->has('keywords')) {
             $posts = $this->postService->search($request->input('keywords'));
+        }
+
+        if ($request->has('sort')) {
+            $posts = $this->postService->sort($request->input('sort'), $request->input('order'));
         }
         return view('Admin.post.index', compact('posts'));
     }
 
     public function show($id)
     {
-        list($post, $tags) = $this->postService->find($id);
+        list($post, $tags) = $this->postService->findWithTrashed($id);
         return view('Admin.post.detail', compact('post', 'tags', 'user'));
+    }
+
+    public function delete($id)
+    {
+        return $this->postService->deleteNorTags($id);
+    }
+
+    public function restore($id)
+    {
+        $this->postService->restorePost($id);
+        return redirect('/admin/post/' . $id);
     }
 }

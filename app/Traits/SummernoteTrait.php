@@ -6,7 +6,8 @@ trait SummernoteTrait
 {
     public function convertImg($detail)
     {
-        $dom = new \DOMDocument();
+        $dom    = new \DOMDocument();
+        $detail = mb_convert_encoding($detail, 'HTML-ENTITIES', 'UTF-8');
         $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName("img");
         foreach ($images as $key => $image) {
@@ -28,6 +29,6 @@ trait SummernoteTrait
             $image->removeAttribute('src');
             $image->setAttribute('src', $imageName);
         }
-        return $detail = $dom->saveHTML();
+        return $detail = $dom->saveHTML($dom->documentElement);
     }
 }

@@ -125,4 +125,38 @@ class PostService
     {
         return $this->postRepository->search($keyword);
     }
+
+    public function deleteNorTags($id)
+    {
+        return $this->postRepository->destroy($id);
+    }
+
+    public function paginateWithTrashed($num)
+    {
+        return $this->postRepository->paginateWithTrashed($num);
+    }
+
+    public function findWithTrashed($id)
+    {
+        $post     = $this->postRepository->findWithTrashed($id);
+        $tags     = implode(',', $post->tags->pluck('name')->toArray());
+        $comments = $post->comments;
+        $followed = 0;
+        $user     = Auth::user();
+        $author   = $post->user_id;
+        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $followed = 1;
+        }
+        return [$post, $tags, $comments, $followed];
+    }
+
+    public function restorePost($id)
+    {
+        return $this->postRepository->restore($id);
+    }
+
+    public function sort($section, $order)
+    {
+        return $this->postRepository->sort($section, $order);
+    }
 }

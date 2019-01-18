@@ -6,6 +6,17 @@ window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
 jQuery(document).ready(function ($) {
 	'use strict';
 
+	var urlParams = new URLSearchParams(window.location.search);
+	var order = urlParams.getAll('order');
+	var section = urlParams.get('sort');
+	if (order == 'desc') {
+		$('#' + section).removeClass('fa-arrow-up');
+		$('#' + section).addClass('fa-arrow-down');
+	} else {
+		$('#' + section).removeClass('fa-arrow-down');
+		$('#' + section).addClass('fa-arrow-up');
+	}
+
 	// ==============================================================
 	// Notification list
 	// ==============================================================
@@ -144,7 +155,8 @@ window.blockUser = function blockUser(id) {
 		url: blockUserURI,
 		type: "GET",
 		data: {id: id},
-		success: function (res) {
+		success: function (response) {
+			var res = response.data;
 			$('#' + res.id).find('#status').text('Block');
 			$('#' + res.id).find('#action').html('');
 			$('#' + res.id).find('#action').append(
@@ -160,7 +172,8 @@ window.unBlockUser = function unBlockUser(id) {
 		url: unBlockUserURI,
 		type: "GET",
 		data: {id: id},
-		success: function (res) {
+		success: function (response) {
+			var res = response.data;
 			if (res.status == 1) {
 				$('#' + res.id).find('#status').text('Active');
 			} else {
@@ -177,10 +190,32 @@ window.unBlockUser = function unBlockUser(id) {
 
 window.searchUser = function searchUser() {
 	var input = $('#search').val();
-	window.location.href="/admin?keywords="+input;
+	window.location.href = "/admin?keywords=" + input;
 }
 
 window.searchPost = function searchPost() {
 	var input = $('#search').val();
-	window.location.href="/admin/post?keywords="+input;
+	window.location.href = "/admin/post?keywords=" + input;
+}
+
+window.sortUser = function sortUser(section) {
+	var url = window.location.search;
+	var sortOrder = new URLSearchParams(url);
+
+	if (sortOrder.get('order') == 'desc') {
+		window.location.href = "/admin?sort=" + section + "&order=asc";
+	} else {
+		window.location.href = "/admin?sort=" + section + "&order=desc";
+	}
+}
+
+window.sortPost = function sortPost(section) {
+	var url = window.location.search;
+	var sortOrder = new URLSearchParams(url);
+
+	if (sortOrder.get('order') == 'desc') {
+		window.location.href = "/admin/post?sort=" + section + "&order=asc";
+	} else {
+		window.location.href = "/admin/post?sort=" + section + "&order=desc";
+	}
 }

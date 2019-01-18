@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entities\User;
-use App\Repository\UserRepository;
-use App\Repository\BaseRepositoryEloquent;
 use App\Traits\RocketTrait;
 use Auth;
 use Illuminate\Database\Query\Builder;
@@ -33,7 +31,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     public function blocked($id)
     {
         $user         = $this->makeModel()->find($id);
-        $user->status = User::STATUS['block'];
+        $user->status = User::STATUS['BLOCK'];
         $user->save();
 
         return $user;
@@ -69,5 +67,10 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
             $query->where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('email', 'like', '%' . $keyword . '%');
         })->paginate(50);
+    }
+
+    public function sort($section, $order)
+    {
+        return $this->model->orderBy($section, $order)->paginate(50);
     }
 }

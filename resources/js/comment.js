@@ -18,6 +18,10 @@ window.addComment = function addComment(id) {
 				'</span></div></div><div class="comments-content">'
 				+res.content+
 				'</div></div></div>');
+			$("#commentContent").val("");
+			value = $("#commentNum").html();
+			value++;
+			$('#commentNum').text(value);
 		}
 	})
 }

@@ -72,6 +72,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all');
             Route::get('/{id}', 'PostController@show');
+            Route::delete('/{id}','PostController@delete');
+            Route::get('/restore/{id}', 'PostController@restore');
         });
     });
 });

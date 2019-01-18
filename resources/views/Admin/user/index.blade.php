@@ -23,11 +23,16 @@
         <table class="table">
             <thead>
             <td>#</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Status</td>
+            <td>Name
+                <button onclick="sortUser('name')" class="btn btn-xs"><i class="fa fa-arrow-down" id="name"></i></button>
+            </td>
+            <td>Email
+                <button onclick="sortUser('email')" class="btn btn-xs"><i class="fa fa-arrow-down" id="email"></i></button>
+            </td>
+            <td>Status
+                <button onclick="sortUser('status')" class="btn btn-xs"><i class="fa fa-arrow-down" id="status"></i></button>
+            </td>
             <td>Role</td>
-            <td>Rating</td>
             <td>Action</td>
             </thead>
             <tbody>
@@ -54,7 +59,6 @@
                             {{$role->role->name}},
                         @endforeach
                     </td>
-                    <td>{{$user->rating}}</td>
                     <td id="action">
                         <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
                                 @if($user->status == 2) disabled @endif>Block User
@@ -72,17 +76,17 @@
 @endsection
 @push('script')
     <script>
-        var importUserURI = "{{url('/admin/user/import')}}";
-        var blockUserURI = "{{url('/admin/user/block')}}";
-        var unBlockUserURI = "{{url('/admin/user/unblock')}}";
+			var importUserURI = "{{url('/admin/user/import')}}";
+			var blockUserURI = "{{url('/admin/user/block')}}";
+			var unBlockUserURI = "{{url('/admin/user/unblock')}}";
 
-        $(document).keypress(function(event){
+			$(document).keypress(function (event) {
 
-	        var keycode = (event.keyCode ? event.keyCode : event.which);
-	        if(keycode == '13'){
-		        $("#searchBtn").click();
-	        }
+				var keycode = (event.keyCode ? event.keyCode : event.which);
+				if (keycode == '13') {
+					$("#searchBtn").click();
+				}
 
-        });
+			});
     </script>
 @endpush
