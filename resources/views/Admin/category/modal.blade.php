@@ -35,7 +35,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success"></div>
+                <div class="alert"></div>
             </div>
         </div>
     </div>
@@ -70,7 +70,8 @@
 
 <script>
 	var submitCategoryURI = "{{url('/admin/category')}}";
-	var editCategoryURI   = "{{url('/admin/category')}}/";
-	var saveCategoryURI   = "{{url('/admin/category')}}";
+	var editCategoryURI = "{{url('/admin/category')}}/";
+	var saveCategoryURI = "{{url('/admin/category')}}";
 	var deleteCategoryURI = "{{url('/admin/category')}}/";
+	var csrfToken = "{{csrf_token()}}";
 </script>

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entities\Post;
 use Illuminate\Database\Query\Builder;
+use DB;
 
 class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepository
 {
@@ -69,9 +70,19 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function destroy($id)
     {
-        $post = $this->makeModel()->find($id);
-        $post->tags()->delete();
-        $post->forceDelete();
+        $post = $this->makeModel()->withTrashed()->find($id);
+        try {
+            DB::beginTransaction();
+            $post->comments()->delete();
+            $post->votes()->delete();
+            $post->tags()->delete();
+            $post->forceDelete();
+            $this->model->findOrFail($post->title);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
 
         return ['code' => 200, 'message' => 'Delete Post Successful'];
     }
@@ -112,8 +123,8 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     private function sortRelationship($section, $childId, $order)
     {
-        return $this->makeModel()
-            ->leftJoin($childId, 'posts.' . $section . '_id', $childId . '.id')
+        return $this->makeModel()->select('posts.*')
+            ->leftJoin($childId, $childId . '.id', 'posts.' . $section . '_id')
             ->orderBy('name', $order)
             ->withTrashed()
             ->paginate(50);

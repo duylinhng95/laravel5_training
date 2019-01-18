@@ -26,7 +26,7 @@
                     <td>{{$category->name}}</td>
                     <td>
                         <button onclick="editCategory({{$category->id}})" class="btn btn-success">Edit</button>
-                        <button onclick="deleteCategory({{$category->id}})" class="btn btn-warning">Delete</button>
+                        <button onclick="deleteCategory({{$category->id}})" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             @endforeach

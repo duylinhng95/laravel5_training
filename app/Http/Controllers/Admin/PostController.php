@@ -40,7 +40,8 @@ class PostController extends Controller
 
     public function delete($id)
     {
-        return $this->postService->deleteNorTags($id);
+         $this->postService->deleteNorTags($id);
+         return redirect('/admin/post');
     }
 
     public function restore($id)
