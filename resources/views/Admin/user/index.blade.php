@@ -24,13 +24,13 @@
             <thead>
             <td>#</td>
             <td>Name
-                <button onclick="sortUser('name')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                <button onclick="sortUser('name')" class="btn btn-xs"><i class="fa fa-arrow-down" id="name"></i></button>
             </td>
             <td>Email
-                <button onclick="sortUser('email')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                <button onclick="sortUser('email')" class="btn btn-xs"><i class="fa fa-arrow-down" id="email"></i></button>
             </td>
             <td>Status
-                <button onclick="sortUser('status')" class="btn btn-xs"><i class="fa fa-arrow-down"></i></button>
+                <button onclick="sortUser('status')" class="btn btn-xs"><i class="fa fa-arrow-down" id="status"></i></button>
             </td>
             <td>Role</td>
             <td>Action</td>

@@ -100,20 +100,20 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         switch ($section) {
             case 'category':
-                return $this->sortRelationship('categories', $order);
+                return $this->sortRelationship($section, 'categories', $order);
                 break;
             case 'user':
-                return $this->sortRelationship('users', $order);
+                return $this->sortRelationship($section, 'users', $order);
                 break;
             default:
                 return $this->makeModel()->orderBy($section, $order)->withTrashed()->paginate(50);
         }
     }
 
-    private function sortRelationship($section, $order)
+    private function sortRelationship($section, $childId, $order)
     {
         return $this->makeModel()
-            ->leftJoin($section, 'posts.category_id', $section.'.id')
+            ->leftJoin($childId, 'posts.' . $section . '_id', $childId . '.id')
             ->orderBy('name', $order)
             ->withTrashed()
             ->paginate(50);

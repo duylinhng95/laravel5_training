@@ -6,6 +6,17 @@ window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
 jQuery(document).ready(function ($) {
 	'use strict';
 
+	var urlParams = new URLSearchParams(window.location.search);
+	var order = urlParams.getAll('order');
+	var section = urlParams.get('sort');
+	if (order == 'desc') {
+		$('#' + section).removeClass('fa-arrow-up');
+		$('#' + section).addClass('fa-arrow-down');
+	} else {
+		$('#' + section).removeClass('fa-arrow-down');
+		$('#' + section).addClass('fa-arrow-up');
+	}
+
 	// ==============================================================
 	// Notification list
 	// ==============================================================
@@ -187,24 +198,11 @@ window.searchPost = function searchPost() {
 	window.location.href = "/admin/post?keywords=" + input;
 }
 
-function getUrlParameter(sParam) {
-	var sPageURL = window.location.search.substring(1),
-		sURLVariables = sPageURL.split('&'),
-		sParameterName,
-		i;
-
-	for (i = 0; i < sURLVariables.length; i++) {
-		sParameterName = sURLVariables[i].split('=');
-
-		if (sParameterName[0] === sParam) {
-			return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-		}
-	}
-}
-
 window.sortUser = function sortUser(section) {
-	var sortOrder = getUrlParameter('order');
-	if (sortOrder == 'desc') {
+	var url = window.location.search;
+	var sortOrder = new URLSearchParams(url);
+
+	if (sortOrder.get('order') == 'desc') {
 		window.location.href = "/admin?sort=" + section + "&order=asc";
 	} else {
 		window.location.href = "/admin?sort=" + section + "&order=desc";
@@ -212,8 +210,10 @@ window.sortUser = function sortUser(section) {
 }
 
 window.sortPost = function sortPost(section) {
-	var sortOrder = getUrlParameter('order');
-	if (sortOrder == 'desc') {
+	var url = window.location.search;
+	var sortOrder = new URLSearchParams(url);
+
+	if (sortOrder.get('order') == 'desc') {
 		window.location.href = "/admin/post?sort=" + section + "&order=asc";
 	} else {
 		window.location.href = "/admin/post?sort=" + section + "&order=desc";
