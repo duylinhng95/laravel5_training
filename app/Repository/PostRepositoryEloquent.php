@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entities\Post;
 use Illuminate\Database\Query\Builder;
+use DB;
 
 class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepository
 {
@@ -71,16 +72,17 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $post = $this->makeModel()->withTrashed()->find($id);
         try {
-            \DB::beginTransaction();
+            DB::beginTransaction();
             $post->comments()->delete();
             $post->votes()->delete();
             $post->tags()->delete();
             $post->forceDelete();
+            $this->model->findOrFail($post->title);
         } catch (\Exception $e) {
-            \DB::rollback;
+            DB::rollback();
             throw $e;
         }
-        \DB::commit();
+        DB::commit();
 
         return ['code' => 200, 'message' => 'Delete Post Successful'];
     }
