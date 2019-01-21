@@ -19,9 +19,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     public function createProfile($users)
     {
         $rockets = [];
-        foreach ($users as $u) {
-            $id                = $this->makeModel()->firstOrCreate($u['user'])->id;
-            $rocket            = $u['rocket'];
+        foreach ($users as $user) {
+            $id                = $this->makeModel()->firstOrCreate($user['user'])->id;
+            $rocket            = $user['rocket'];
             $rocket['user_id'] = $id;
             $rockets[]         = $rocket;
         }
@@ -31,9 +31,8 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     public function blocked($id)
     {
         $user         = $this->makeModel()->find($id);
-        $user->status = User::STATUS['BLOCK'];
+        $user->status = $user->statusName['block'];
         $user->save();
-
         return $user;
     }
 
@@ -41,9 +40,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $user = $this->makeModel()->find($id);
         if (!empty($user->email)) {
-            $user->status = User::STATUS['VERIFY'];
+            $user->status = $user->statusName['verify'];
         } else {
-            $user->status = User::STATUS['NOT_VERIFY'];
+            $user->status = $user->statusName['not_verify'];
         }
         $user->save();
         return $user;
@@ -59,17 +58,25 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         return Auth::user();
     }
 
-    public function search($keyword)
+    public function getUsers($request)
     {
-        return $this->model->where(function ($query) use ($keyword) {
-            /** @var Builder $query */
-            $query->where('name', 'like', '%' . $keyword . '%')
-                ->orWhere('email', 'like', '%' . $keyword . '%');
-        })->paginate(50);
-    }
+        /** @var Builder $query */
+        $query = $this->makeModel();
+        if ($request->has('keywords')) {
+            $keyword = $request->input('keywords');
+            $query = $query->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('email', 'like', '%' . $keyword . '%');
+            });
+        }
 
-    public function sort($section, $order)
-    {
-        return $this->model->orderBy($section, $order)->paginate(50);
+        if ($request->has('sort')) {
+            $section = $request->input('sort');
+            $order = $request->input('order');
+            $query = $query->orderBy($section, $order);
+        }
+
+        $users = $query->paginate(50);
+        return $users;
     }
 }

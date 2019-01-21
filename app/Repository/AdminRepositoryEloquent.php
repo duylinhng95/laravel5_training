@@ -14,19 +14,23 @@ class AdminRepositoryEloquent implements AdminRepository
 
     public function getUser()
     {
-        $params  = ['email' => config('rocket.username'), 'password' => config('rocket.password')];
-        $user    = $this->loginAPI($params);
-        $headers = [
-            'X-Auth-Token' => $user['data']['authToken'],
-            'X-User-Id'    => $user['data']['userId'],
-        ];
-        $request = new Client();
-        try {
-            $res = $request->get('https://neolab.wc.calling.fun/api/v1/users.list?count=0', ['headers' => $headers]);
-        } catch (Exception $e) {
-            return [false ,'code' => $e->getCode(), 'message' => $e->getMessage()];
+        $params = ['email' => config('rocket.username'), 'password' => config('rocket.password')];
+        list($status, $code, $message, $user) = $this->loginAPI($params);
+        if ($status) {
+            $headers = [
+                'X-Auth-Token' => $user['authToken'],
+                'X-User-Id'    => $user['userId'],
+            ];
+            $request = new Client();
+            try {
+                $res = $request->get(config("rocket.url").'/users.list?count=0', ['headers' => $headers]);
+            } catch (Exception $e) {
+                return [false, 'code' => $e->getCode(), 'message' => $e->getMessage()];
+            }
+            $res = json_decode($res->getBody()->getContents(), true);
+            return [true, 200, 'Retrieve users Successful', $res['users']];
+        } else {
+            return [$status, $code, $message];
         }
-        $res = json_decode($res->getBody()->getContents(), true);
-        return [true, 200, 'Retrieve users Successful', $res['users']];
     }
 }
