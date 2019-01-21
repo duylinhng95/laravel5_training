@@ -6,5 +6,5 @@ interface PostRepository
 {
     public function generateTagFromString($input);
 
-    public function search($keyword);
+    public function paginateWithTrashed($request, $num);
 }

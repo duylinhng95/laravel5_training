@@ -8,3 +8,14 @@ function checkRole($roleName)
     }
     return in_array($roleName, $userRoles);
 }
+
+function checkStatus()
+{
+    $user = Auth::user();
+    return $user->status != $user->statusName['block'];
+}
+
+function checkOwner($id)
+{
+    return Auth::user()->id == $id;
+}

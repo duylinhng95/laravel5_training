@@ -73,7 +73,7 @@ class PostService
 
     public function update($id, $input)
     {
-        if (array_key_exists('files', $input)) {
+        if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
         $this->postRepository->update($id, $input);

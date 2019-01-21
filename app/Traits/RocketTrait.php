@@ -17,7 +17,7 @@ trait RocketTrait
         ]);
         $request  = new Client();
         try {
-            $res = $request->post("https://neolab.wc.calling.fun/api/v1/login", [
+            $res = $request->post(config('rocket.url')."/login", [
                 'headers' => ['Content-Type' => 'application/json'],
                 'body'    => $body
             ]);

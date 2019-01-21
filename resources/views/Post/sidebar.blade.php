@@ -9,12 +9,14 @@
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
                 <ul>
-                    @foreach($posts as $post)
-                        <li>
-                            <a href="{{url('post/'.$post->id)}}">
-                                <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
-                        </li>
-                    @endforeach
+                    @if(count($posts) != 0)
+                        @foreach($posts as $post)
+                            <li>
+                                <a href="{{url('post/'.$post->id)}}">
+                                    <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
@@ -28,12 +30,14 @@
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
                 <ul>
+                    @if(count($posts) != 0)
                     @foreach($post->getLatestPost(5) as $post)
                         <li>
                             <a href="{{url('/post/'.$post->id)}}">
                                 <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
                         </li>
                     @endforeach
+                    @endif
                 </ul>
             </div>
         </div>

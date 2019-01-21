@@ -12,7 +12,9 @@ class PostController extends Controller
 {
     use ResponseTrait;
 
+    /** @var PostService */
     protected $postService;
+    /** @var CategoryService */
     protected $categoryService;
 
     public function __construct()
@@ -63,6 +65,6 @@ class PostController extends Controller
     public function destroy($id)
     {
         $this->postService->delete($id);
-        return $this->json($this->success('Delete Post Successful'));
+        return $this->success('Delete Post Successful');
     }
 }

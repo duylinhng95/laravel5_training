@@ -12,7 +12,9 @@ class UserController extends Controller
 {
     use ResponseTrait;
 
+    /** @var UserService  */
     protected $userService;
+    /** @var FollowService  */
     protected $followService;
 
     public function __construct()
@@ -45,12 +47,12 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $input  = $request->except('_token');
-        list($status, $message) = $this->userService->login($input);
-        $response = $this->success($message);
+        list($status, $code, $message) = $this->userService->login($input);
         if ($status) {
             return redirect('/');
         } else {
-            return redirect('/auth/login')->with($response);
+            return redirect('/auth/login')
+                ->with(['code' => $code, 'message' => $message]);
         }
     }
 

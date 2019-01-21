@@ -48,8 +48,8 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $checked = $this->categoryService->checkPosts($id);
-        if ($checked == false) {
-            return $this->json($this->error('400', 'Category still contains Post'));
+        if (!$checked) {
+            return $this->error('400', 'Category still contains Post');
         }
         $this->categoryService->delete($id);
         return $this->success('Delete Category Successful');

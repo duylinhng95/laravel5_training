@@ -61,7 +61,7 @@ class UserService
     public function login($input)
     {
         if ($user = Auth::guard()->attempt($input)) {
-            return [true, 'Login Successful'];
+            return [true, 200, 'Login Successful'];
         } else {
             return [false, 401, 'Wrong Credentials'];
         }

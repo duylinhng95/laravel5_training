@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Repository\AdminRepository;
 use App\Repository\UserRepository;
 use App\Repository\RocketProfileRepository;
-use Illuminate\Support\Facades\Cache;
 
 class AdminService
 {
@@ -42,6 +41,7 @@ class AdminService
         } else {
             $users = cache('users');
         }
+
         try {
             \DB::beginTransaction();
             $res    = $this->userRepository->createProfile($users);
@@ -50,7 +50,7 @@ class AdminService
             \DB::rollback();
             throw $e;
         }
-        Cache::put('users', $users, 3600);
+        cache(['users' => $users], 3600);
         \DB::commit();
         return $rocket;
     }

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Repository\UserRepository;
 use Illuminate\Http\Request;
-use App\Traits\ResponseTrait;
 
 class AdminController extends Controller
 {
-    use ResponseTrait;
     /** @var UserRepository */
     protected $userRepository;
 

@@ -22,9 +22,7 @@ window.deletePost = function deletePost(id) {
 		type: "DELETE",
 		data: {_token: csrf_token},
 		success: function (res) {
-			if (res.code == 200) {
 				location.reload();
-			}
 		}
 	})
 }

@@ -50,7 +50,7 @@
         ],
         "files": [
             "app/Http/Helpers/FormatHelpers.php",
-            "app/Http/Helpers/CheckRole.php"
+            "app/Http/Helpers/CheckingHelpers.php"
         ]
     },
     "autoload-dev": {

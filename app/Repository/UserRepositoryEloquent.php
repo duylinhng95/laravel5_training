@@ -62,6 +62,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         /** @var Builder $query */
         $query = $this->makeModel();
+
         if ($request->has('keywords')) {
             $keyword = $request->input('keywords');
             $query = $query->where(function ($query) use ($keyword) {

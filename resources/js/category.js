@@ -7,15 +7,13 @@ window.submitCategory = function submitCategory() {
 		type: "POST",
 		data: formData,
 		success: function (res) {
-			if (res.code == 200) {
-				$('#createModal').modal('hide');
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
-				})
-			}
+			$('#createModal').modal('hide');
+			$('#notification').modal('show');
+			$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
+			$('#notification .modal-body .alert').html(res.message);
+			$('#notification').on('hidden.bs.modal', function () {
+				location.reload();
+			})
 		},
 		error: function (res) {
 			var error = res.responseJSON;
@@ -44,15 +42,13 @@ window.saveCategory = function saveCategory() {
 		type: "PUT",
 		data: formData,
 		success: function (res) {
-			if (res.code == 200) {
-				$('#editModal').modal('hide');
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
-				})
-			}
+			$('#editModal').modal('hide');
+			$('#notification').modal('show');
+			$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
+			$('#notification .modal-body .alert').html(res.message);
+			$('#notification').on('hidden.bs.modal', function () {
+				location.reload();
+			})
 		},
 		error: function (res) {
 			var error = res.responseJSON;
@@ -67,18 +63,18 @@ window.deleteCategory = function deleteCategory(id) {
 		type: "DELETE",
 		data: {_token: csrfToken},
 		success: function (res) {
-			if (res.code == 200) {
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
-				})
-			} else {
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-success').addClass('alert-danger');
-				$('#notification .modal-body .alert').html(res.message);
-			}
+			$('#notification').modal('show');
+			$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
+			$('#notification .modal-body .alert').html(res.message);
+			$('#notification').on('hidden.bs.modal', function () {
+				location.reload();
+			})
+		},
+		error: function (res) {
+			var error = res.responseJSON;
+			$('#notification').modal('show');
+			$('#notification .modal-body .alert').removeClass('alert-success').addClass('alert-danger');
+			$('#notification .modal-body .alert').html(error.message);
 		}
 	})
 }

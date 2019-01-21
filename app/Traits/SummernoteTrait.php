@@ -11,6 +11,7 @@ trait SummernoteTrait
         $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName("img");
         foreach ($images as $key => $image) {
+            dd($image);
             $data = $image->getAttribute('src');
 
             list($type, $data) = array_pad(explode(';', $data), -2, null);
