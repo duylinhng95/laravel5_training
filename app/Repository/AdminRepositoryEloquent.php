@@ -24,9 +24,9 @@ class AdminRepositoryEloquent implements AdminRepository
         try {
             $res = $request->get('https://neolab.wc.calling.fun/api/v1/users.list?count=0', ['headers' => $headers]);
         } catch (Exception $e) {
-            return ['code' => $e->getCode(), 'message' => $e->getMessage()];
+            return [false ,'code' => $e->getCode(), 'message' => $e->getMessage()];
         }
-
-        return json_decode($res->getBody()->getContents(), true);
+        $res = json_decode($res->getBody()->getContents(), true);
+        return [true, 200, 'Retrieve users Successful', $res['users']];
     }
 }

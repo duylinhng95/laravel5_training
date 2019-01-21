@@ -21,7 +21,7 @@ class UserController extends Controller
     public function import()
     {
         $this->adminService->importUserDB();
-        return $this->json($this->success('Import User Successful'));
+        return $this->success('Import User Successful');
     }
 
     public function block(Request $request)

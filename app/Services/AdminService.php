@@ -24,14 +24,13 @@ class AdminService
 
     public function importUserDB()
     {
-        $arr = $this->adminRepository->getUser();
-        if ($arr['code']) {
-            throw new \Exception(['code' => $arr['code'], 'message' => $arr['message']]);
+        list($status, $code, $message, $data) = $this->adminRepository->getUser();
+        if (!$status) {
+            throw new \Exception(['code' => $code, 'message' => $message]);
         }
 
         $users = [];
-
-        foreach ($arr['users'] as $user) {
+        foreach ($data as $user) {
             $users[] = [
                 'user'   => ['name' => $user['name']],
                 'rocket' => ['owner_id' => $user['_id'], 'username' => $user['username']],

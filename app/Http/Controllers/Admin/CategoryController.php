@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $input = $request->except('_token', 'categoryId');
         $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
-        return $this->json($this->success('Edit Category Successful'));
+        return $this->success('Edit Category Successful');
     }
 
     public function delete($id)
@@ -52,6 +52,6 @@ class CategoryController extends Controller
             return $this->json($this->error('400', 'Category still contains Post'));
         }
         $this->categoryService->delete($id);
-        return $this->json($this->success('Delete Category Successful'));
+        return $this->success('Delete Category Successful');
     }
 }

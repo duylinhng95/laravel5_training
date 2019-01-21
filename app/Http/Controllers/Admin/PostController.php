@@ -9,7 +9,9 @@ use App\Services\PostService;
 
 class PostController extends Controller
 {
+    /** @var  AdminService */
     protected $adminService;
+    /** @var  PostService */
     protected $postService;
 
     public function __construct()

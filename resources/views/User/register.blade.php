@@ -5,8 +5,8 @@
 @section('content')
     <div class="card-header">
         <h2>Register</h2>
-        @if(isset($result))
-            <div class="alert alert-danger">{{$result['code']}} {{$result['message']}}</div>
+        @if(isset($status))
+            <div class="alert alert-danger">{{$code}} {{$message}}</div>
         @endif
         @if ($errors->any())
             <div class="alert alert-danger">

@@ -4,23 +4,18 @@ namespace App\Traits;
 
 trait ResponseTrait
 {
-    public function response($code, $message, $data)
-    {
-        return ['code' => $code, 'message' => $message, 'data' => $data];
-    }
-
     public function success($message, $data = null, $code = 200)
     {
-        return $this->response($code, $message, $data);
+        return $this->response(true, $code, $message, $data);
+    }
+
+    public function response($status, $code, $message, $data)
+    {
+        return response()->json([$status, 'message' => $message, 'data' => $data], $code);
     }
 
     public function error($code, $message, $data = null)
     {
-        return $this->response($code, $message, $data);
-    }
-
-    public function json($response)
-    {
-        return response()->json($response);
+        return $this->response(false, $code, $message, $data);
     }
 }

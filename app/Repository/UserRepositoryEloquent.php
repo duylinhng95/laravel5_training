@@ -51,8 +51,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
     public function loginRocket($input)
     {
-        $user = $this->loginAPI($input);
-        return $user;
+        return $this->loginAPI($input);
     }
 
     public function getInfo()

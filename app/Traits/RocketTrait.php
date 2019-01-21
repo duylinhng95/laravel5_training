@@ -22,9 +22,9 @@ trait RocketTrait
                 'body'    => $body
             ]);
         } catch (ClientException $e) {
-            return ['code' => $e->getCode(), 'message' => 'Not Neolaber'];
+            return [false, $e->getCode(), 'Not Neolaber', ''];
         }
-
-        return json_decode($res->getBody()->getContents(), true);
+        $res = json_decode($res->getBody()->getContents(), true);
+        return [true, 200, 'Login via API success', $res['data']];
     }
 }
