@@ -25,11 +25,11 @@
                     <td>{{++$index}}</td>
                     <td>{{$category->name}}</td>
                     <td>
-                        <button class="btn btn-success showEditCategoryBtn">
+                        <button class="btn btn-success btn-show-edit-category">
                             <input type="hidden" name="categoryId" id="categoryId" value="{{$category->id}}">
                             Edit
                         </button>
-                        <button class="btn btn-danger deleteCategoryBtn">
+                        <button class="btn btn-danger btn-delete-category">
                             <input type="hidden" name="categoryId" id="categoryId" value="{{$category->id}}">
                             {{csrf_field()}}
                             Delete

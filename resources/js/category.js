@@ -1,6 +1,10 @@
 import {Notification} from "./notification.js"
 
 class Category {
+	constructor() {
+		this.init();
+	}
+
 	init() {
 		this.config();
 		this.listen();
@@ -15,9 +19,9 @@ class Category {
 				edit: $("#edit"),
 			},
 			btnSubmitCreate: $("#btnSubmitAddCategory"),
-			btnShowEdit: $(".showEditCategoryBtn"),
+			btnShowEdit: $(".btn-show-edit-category"),
 			btnSubmitEdit: $("#btnSubmitEditCategory"),
-			btnDelete: $(".deleteCategoryBtn"),
+			btnDelete: $(".btn-delete-category"),
 		};
 		this.notification = new Notification();
 		this.notification.init();
@@ -141,7 +145,4 @@ class Category {
 		})
 	}
 }
-
-var category = new Category();
-
-category.init();
+new Category();
