@@ -14,5 +14,5 @@ interface UserRepository
 
     public function getInfo();
 
-    public function search($keyword);
+    public function getUsers($request);
 }

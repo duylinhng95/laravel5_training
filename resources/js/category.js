@@ -1,84 +1,148 @@
-require('./bootstrap.js')
+import {Notification} from "./notification.js"
 
-window.submitCategory = function submitCategory() {
-	var formData = $('#create').serialize();
-	$.ajax({
-		url: submitCategoryURI,
-		type: "POST",
-		data: formData,
-		success: function (res) {
-			if (res.code == 200) {
-				$('#createModal').modal('hide');
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
+class Category {
+	constructor() {
+		this.init();
+	}
+
+	init() {
+		this.config();
+		this.listen();
+	}
+
+	config() {
+		this.element = {
+			create: $("#createModal"),
+			edit: $("#editModal"),
+			form: {
+				create: $("#form-create"),
+				edit: $("#edit"),
+			},
+			btnSubmitCreate: $("#btnSubmitAddCategory"),
+			btnShowEdit: $(".btn-show-edit-category"),
+			btnSubmitEdit: $("#btnSubmitEditCategory"),
+			btnDelete: $(".btn-delete-category"),
+		};
+		this.notification = new Notification();
+		this.notification.init();
+		this.apiURL = location.origin;
+	}
+
+	listen() {
+		this.submitAddCategory();
+		this.showEditCategory();
+		this.submitEditCategory();
+		this.deleteCategory();
+	}
+
+	submitAddCategory() {
+		let url = `${this.apiURL}/admin/category`;
+		let createModal = this.element.create;
+		let formData = this.element.form.create;
+		let notification = this.notification.element;
+		formData.validate({
+			rules: {
+				"name": {
+					required: true,
+					maxlength: 25
+				}
+			},
+			messages: {
+				name: {
+					required: "Name is required",
+					maxlength: "Name must be less than 25 characters"
+				}
+			}
+		});
+		this.element.btnSubmitCreate.on('click', function (event) {
+			if (formData.valid()) {
+				$.ajax({
+					url: url,
+					type: "POST",
+					data: formData.serialize(),
+					success: function (res) {
+						createModal.modal('hide');
+						notification.success(res.message)
+					}
 				})
 			}
-		},
-		error: function (res) {
-			var error = res.responseJSON;
-			$('#error').append(error.errors.name[0]);
-		}
-	});
-}
+		})
+	}
 
-window.editCategory = function editCategory(id) {
-	$.ajax({
-		url: editCategoryURI + id,
-		type: "GET",
-		success: function (response) {
-			var res = response.data;
-			$('#editModal').modal('show');
-			$('#editModal #edit').append("<input type='hidden' value=" + res.id + " name='categoryId'>");
-			$('#editModal #edit #name').val(res.name);
-		}
-	})
-}
+	showEditCategory() {
+		let editModal = this.element.edit;
+		let editForm = this.element.form.edit;
+		const url = `${this.apiURL}`
+		this.element.btnShowEdit.on('click', function (event) {
+			let input = event.target;
+			let id = input.children.categoryId.value
+			var urlAPI = `${url}/admin/category/${id}`
+			$.ajax({
+				url: urlAPI,
+				type: "GET",
+				success: function (res) {
+					editModal.modal('show');
+					editForm.append(`<input type="hidden" value="${res.data.id}" name="categoryId">`);
+					editForm.find('input[name=name]').val(res.data.name);
+				}
+			})
+		})
+	}
 
-window.saveCategory = function saveCategory() {
-	var formData = $('#edit').serialize();
-	$.ajax({
-		url: saveCategoryURI,
-		type: "PUT",
-		data: formData,
-		success: function (res) {
-			if (res.code == 200) {
-				$('#editModal').modal('hide');
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
+	submitEditCategory() {
+		let url = `${this.apiURL}/admin/category`;
+		let editModal = this.element.edit;
+		let editForm = this.element.form.edit;
+		let notification = this.notification.element;
+		editForm.validate({
+			rules: {
+				"name": {
+					required: true,
+					maxlength: 25
+				}
+			},
+			messages: {
+				required: "Name is required",
+				maxLength: "Name must be less than 25 characters"
+			}
+		})
+		this.element.btnSubmitEdit.on('click', function () {
+			if (editForm.valid()) {
+				let formData = editForm.serialize();
+				$.ajax({
+					url: url,
+					type: "PUT",
+					data: formData,
+					success: function (res) {
+						editModal.modal('hide');
+						notification.success(res.message)
+					}
 				})
 			}
-		},
-		error: function (res) {
-			var error = res.responseJSON;
-			$('#errorMsg').append(error.errors.name[0]);
-		}
-	});
-}
+		})
+	}
 
-window.deleteCategory = function deleteCategory(id) {
-	$.ajax({
-		url: deleteCategoryURI + id,
-		type: "DELETE",
-		data: {_token: csrfToken},
-		success: function (res) {
-			if (res.code == 200) {
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(res.message);
-				$('#notification').on('hidden.bs.modal', function () {
-					location.reload();
-				})
-			} else {
-				$('#notification').modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-success').addClass('alert-danger');
-				$('#notification .modal-body .alert').html(res.message);
-			}
-		}
-	})
+	deleteCategory() {
+		const url = `${this.apiURL}/admin/category`;
+		let notification = this.notification.element;
+		this.element.btnDelete.on('click', function (event) {
+			let input = event.target;
+			let id = input.children.categoryId.value
+			let token = input.children[1].value
+			let urlAPI = `${url}/${id}`
+			$.ajax({
+				url: urlAPI,
+				type: "DELETE",
+				data: {_token: token},
+				success: function (res) {
+					notification.success(res.message);
+				},
+				error: function (res) {
+					var error = res.responseJSON;
+					notification.error(error.message);
+				}
+			})
+		})
+	}
 }
+new Category();

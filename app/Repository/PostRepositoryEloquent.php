@@ -48,21 +48,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $tags;
     }
 
-    public function search($keyword)
-    {
-        return $this->model->where(function ($query) use ($keyword) {
-            /** @var Builder $query , $subQuery */
-            $query->where('title', 'like', '%' . $keyword . '%')
-                ->orWhereHas('tags', function ($subQuery) use ($keyword) {
-                    $subQuery->where('name', 'like', '%' . $keyword . '%');
-                })->orWhereHas('category', function ($subQuery) use ($keyword) {
-                    $subQuery->where('name', 'like', '%' . $keyword . '%');
-                })->orWhereHas('user', function ($subQuery) use ($keyword) {
-                    $subQuery->where('name', 'like', '%' . $keyword . '%');
-                });
-        })->paginate(50);
-    }
-
     public function all()
     {
         return $this->makeModel()->orderBy('created_at', 'desc')->paginate(10);
@@ -77,19 +62,57 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             $post->votes()->delete();
             $post->tags()->delete();
             $post->forceDelete();
-            $this->model->findOrFail($post->title);
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
         DB::commit();
-
         return ['code' => 200, 'message' => 'Delete Post Successful'];
     }
 
-    public function paginateWithTrashed($num)
+
+    private function sortRelationship($query, $section, $childId, $order)
     {
-        return $this->makeModel()->withTrashed()->paginate($num);
+        return $query = $query->select('posts.*')
+            ->leftJoin($childId, $childId . '.id', 'posts.' . $section . '_id')
+            ->orderBy('name', $order);
+    }
+
+
+    public function paginateWithTrashed($request, $num)
+    {
+        $mainQuery = $this->makeModel();
+
+        if ($request->has('keywords')) {
+            $keyword = $request->input('keywords');
+            $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
+                /** @var Builder $query */
+                $query->where('title', 'like', '%' . $keyword . '%')
+                    ->orWhereHas('tags', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    })->orWhereHas('category', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    })->orWhereHas('user', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    });
+            });
+        }
+
+        if ($request->has('sort')) {
+            $section = $request->input('sort');
+            $order   = $request->input('order');
+            switch ($section) {
+                case 'category':
+                    $this->sortRelationship($mainQuery, $section, 'categories', $order);
+                    break;
+                case 'user':
+                    $this->sortRelationship($mainQuery, $section, 'users', $order);
+                    break;
+                default:
+                    $mainQuery = $mainQuery->orderBy($section, $order);
+            }
+        }
+        return $mainQuery->paginate($num);
     }
 
     public function findWithTrashed($id)
@@ -105,28 +128,5 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function getPopularPosts()
     {
         return $this->makeModel()->getPopularPost(5);
-    }
-
-    public function sort($section, $order)
-    {
-        switch ($section) {
-            case 'category':
-                return $this->sortRelationship($section, 'categories', $order);
-                break;
-            case 'user':
-                return $this->sortRelationship($section, 'users', $order);
-                break;
-            default:
-                return $this->makeModel()->orderBy($section, $order)->withTrashed()->paginate(50);
-        }
-    }
-
-    private function sortRelationship($section, $childId, $order)
-    {
-        return $this->makeModel()->select('posts.*')
-            ->leftJoin($childId, $childId . '.id', 'posts.' . $section . '_id')
-            ->orderBy('name', $order)
-            ->withTrashed()
-            ->paginate(50);
     }
 }

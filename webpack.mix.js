@@ -21,12 +21,12 @@ mix.js('resources/js/post.js', 'public/js/post.js')
 	 .sass('resources/sass/post.scss', 'public/css')
 	 .version()
 
-mix.copyDirectory('resources/images', 'public/images');
-mix.copyDirectory('resources/fonts', 'public/fonts');
-mix.autoload({
-	jquery: ['$', 'window.jQuery', 'jQuery'],
-	'popper.js/dist/umd/popper.js': ['Popper']
-});
+// mix.copyDirectory('resources/images', 'public/images');
+// mix.copyDirectory('resources/fonts', 'public/fonts');
+// mix.autoload({
+// 	jquery: ['$', 'window.jQuery', 'jQuery'],
+// 	'popper.js/dist/umd/popper.js': ['Popper']
+// });
 
 // mix.autoload({
 // 	jquery: ['$', 'window.jQuery', 'jQuery'],

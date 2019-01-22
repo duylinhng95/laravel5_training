@@ -6,10 +6,15 @@ use App\Http\Requests\RegisterRequest;
 use App\Services\FollowService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Traits\ResponseTrait;
 
 class UserController extends Controller
 {
+    use ResponseTrait;
+
+    /** @var UserService  */
     protected $userService;
+    /** @var FollowService  */
     protected $followService;
 
     public function __construct()
@@ -25,11 +30,10 @@ class UserController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $request->validated();
         $input  = $request->except('_token');
-        $result = $this->userService->register($input);
-        if ($result['code'] != 200) {
-            return view('User.register', compact('result'));
+        list($status, $code, $message) = $this->userService->register($input);
+        if (!$status) {
+            return view('User.register', compact('status', 'code', 'message'));
         }
         $this->userService->login($input);
         return redirect('/user');
@@ -43,11 +47,12 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $input  = $request->except('_token');
-        $result = $this->userService->login($input);
-        if ($result['code'] == 200) {
+        list($status, $code, $message) = $this->userService->login($input);
+        if ($status) {
             return redirect('/');
         } else {
-            return redirect('/auth/login')->with($result);
+            return redirect('/auth/login')
+                ->with(['code' => $code, 'message' => $message]);
         }
     }
 

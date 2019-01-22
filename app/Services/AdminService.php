@@ -5,37 +5,41 @@ namespace App\Services;
 use App\Repository\AdminRepository;
 use App\Repository\UserRepository;
 use App\Repository\RocketProfileRepository;
-use App\Repository\PostRepository;
 
 class AdminService
 {
+    /** @var AdminRepository */
     protected $adminRepository;
+    /** @var UserRepository */
     protected $userRepository;
+    /** @var RocketProfileRepository */
     protected $rocketRepository;
-    protected $postRepository;
 
     public function __construct()
     {
         $this->adminRepository  = app(AdminRepository::class);
         $this->userRepository   = app(UserRepository::class);
         $this->rocketRepository = app(RocketProfileRepository::class);
-        $this->postRepository   = app(PostRepository::class);
     }
 
     public function importUserDB()
     {
-        $arr = $this->adminRepository->getUser();
-        if ($arr['code']) {
-            throw new \Exception(['code' => $arr['code'], 'message' => $arr['message']]);
-        }
+        $checkCached = $this->checkCached();
+        if (!$checkCached) {
+            list($status, $code, $message, $data) = $this->adminRepository->getUser();
+            if (!$status) {
+                throw new \Exception(['code' => $code, 'message' => $message]);
+            }
 
-        $users = [];
-
-        foreach ($arr['users'] as $user) {
-            $users[] = [
-                'user'   => ['name' => $user['name']],
-                'rocket' => ['owner_id' => $user['_id'], 'username' => $user['username']],
-            ];
+            $users = [];
+            foreach ($data as $user) {
+                $users[] = [
+                    'user'   => ['name' => $user['name']],
+                    'rocket' => ['owner_id' => $user['_id'], 'username' => $user['username']],
+                ];
+            }
+        } else {
+            $users = cache('users');
         }
 
         try {
@@ -46,33 +50,13 @@ class AdminService
             \DB::rollback();
             throw $e;
         }
+        cache(['users' => $users], 3600);
         \DB::commit();
-
         return $rocket;
     }
 
-    public function getUsers()
+    private function checkCached()
     {
-        return $this->userRepository->paginate(50);
-    }
-
-    public function block($id)
-    {
-        return $this->userRepository->blocked($id);
-    }
-
-    public function unblock($id)
-    {
-        return $this->userRepository->unBlocked($id);
-    }
-
-    public function searchUsers($keyword)
-    {
-        return $this->userRepository->search($keyword);
-    }
-
-    public function sort($section, $order)
-    {
-        return $this->userRepository->sort($section, $order);
+        return cache()->has('users');
     }
 }

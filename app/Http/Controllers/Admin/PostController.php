@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repository\PostRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -9,26 +10,23 @@ use App\Services\PostService;
 
 class PostController extends Controller
 {
+    /** @var  AdminService */
     protected $adminService;
+    /** @var  PostService */
     protected $postService;
+    /** @var PostRepository */
+    protected $postRepository;
 
     public function __construct()
     {
-        $this->adminService = app(AdminService::class);
-        $this->postService  = app(PostService::class);
+        $this->adminService   = app(AdminService::class);
+        $this->postService    = app(PostService::class);
+        $this->postRepository = app(PostRepository::class);
     }
 
     public function all(Request $request)
     {
-
-        $posts = $this->postService->paginateWithTrashed(50);
-        if ($request->has('keywords')) {
-            $posts = $this->postService->search($request->input('keywords'));
-        }
-
-        if ($request->has('sort')) {
-            $posts = $this->postService->sort($request->input('sort'), $request->input('order'));
-        }
+        $posts = $this->postRepository->paginateWithTrashed($request, 50);
         return view('Admin.post.index', compact('posts'));
     }
 
@@ -40,8 +38,8 @@ class PostController extends Controller
 
     public function delete($id)
     {
-         $this->postService->deleteNorTags($id);
-         return redirect('/admin/post');
+        $this->postService->deleteNorTags($id);
+        return redirect('/admin/post');
     }
 
     public function restore($id)

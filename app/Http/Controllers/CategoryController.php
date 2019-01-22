@@ -6,16 +6,16 @@ use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
-    protected $categorySerivce;
+    protected $categoryService;
 
     public function __construct()
     {
-        $this->categorySerivce = app(CategoryService::class);
+        $this->categoryService = app(CategoryService::class);
     }
 
     public function index()
     {
-        $categories = $this->categorySerivce->all();
+        $categories = $this->categoryService->all();
         return view('Category.index', compact('categories'));
     }
 }

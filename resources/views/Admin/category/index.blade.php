@@ -25,8 +25,15 @@
                     <td>{{++$index}}</td>
                     <td>{{$category->name}}</td>
                     <td>
-                        <button onclick="editCategory({{$category->id}})" class="btn btn-success">Edit</button>
-                        <button onclick="deleteCategory({{$category->id}})" class="btn btn-danger">Delete</button>
+                        <button class="btn btn-success btn-show-edit-category">
+                            <input type="hidden" name="categoryId" id="categoryId" value="{{$category->id}}">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-delete-category">
+                            <input type="hidden" name="categoryId" id="categoryId" value="{{$category->id}}">
+                            {{csrf_field()}}
+                            Delete
+                        </button>
                     </td>
                 </tr>
             @endforeach

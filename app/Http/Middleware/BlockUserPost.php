@@ -17,8 +17,7 @@ class BlockUserPost
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
-        if ($user->status != User::STATUS['BLOCK']) {
+        if (checkStatus()) {
             return $next($request);
         } else {
             return redirect('/user')->with('error', 'You have been blocked to post');

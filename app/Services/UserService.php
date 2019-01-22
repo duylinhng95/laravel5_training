@@ -5,14 +5,12 @@ namespace App\Services;
 use App\Repository\UserRepository;
 use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
-use App\Traits\ResponseTrait;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
 class UserService
 {
-    use ResponseTrait;
 
     protected $userRepository;
     protected $rocketRepository;
@@ -32,15 +30,16 @@ class UserService
      */
     public function register($input)
     {
-        $user = $this->userRepository->loginRocket($input);
-        if (isset($user['code'])) {
-            return $user;
+        list($status, $code, $message, $data) = $this->userRepository->loginRocket($input);
+        if ($status) {
+            $rocket = $this->rocketRepository->findByFields('owner_id', $data['userId'])->first();
+        } else {
+            return [$status, $code, $message];
         }
 
-        $rocket = $this->rocketRepository->findByFields('owner_id', $user['data']['userId'])->first();
         if (Auth::attempt($input)) {
             Auth::logout();
-            return $this->error('409', 'User are already registered. Please login');
+            return [false, 409, 'User already registered. Please login'];
         }
 
         $input['password'] = bcrypt($input['password']);
@@ -56,15 +55,15 @@ class UserService
         }
 
         DB::commit();
-        return $this->success('User register successful');
+        return [true, 200, 'Register Successful'];
     }
 
     public function login($input)
     {
         if ($user = Auth::guard()->attempt($input)) {
-            return $this->success('Login Successful');
+            return [true, 200, 'Login Successful'];
         } else {
-            return $this->error('401', 'Wrong Credentials');
+            return [false, 401, 'Wrong Credentials'];
         }
     }
 

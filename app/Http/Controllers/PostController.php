@@ -7,7 +7,6 @@ use App\Services\PostService;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
-use Auth;
 
 class PostController extends Controller
 {
@@ -38,7 +37,7 @@ class PostController extends Controller
     public function show($id)
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
-        if (Auth::user()->id == $post->user->id) {
+        if (checkOwner($post->user->id)) {
             return redirect('/user/post/' . $id);
         }
         $this->postService->countView($post);
@@ -49,7 +48,7 @@ class PostController extends Controller
     {
         $input   = $request->except('_token');
         $comment = $this->postService->comment($postId, $input);
-        return $this->json($this->success('Add new comment successful', $comment));
+        return $this->success('Add new comment successful', $comment);
     }
 
     public function vote($postId)
