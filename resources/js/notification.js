@@ -1,4 +1,5 @@
 class Notification {
+
 	init(){
 		this.config();
 	}
@@ -6,22 +7,23 @@ class Notification {
 	config(){
 		this.element = {
 			modal: $("#notification"),
+			modalAlert: $("#notification .modal-body .alert"),
 			success: function (msg) {
 				this.modal.modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-danger').addClass('alert-success');
-				$('#notification .modal-body .alert').html(msg);
+				this.modalAlert.removeClass('alert-danger').addClass('alert-success');
+				this.modalAlert.html(msg);
 				this.modal.on('hidden.bs.modal', function() {
 					location.reload();
 				});
 			},
-			error: function () {
+			error: function (msg) {
 				this.modal.modal('show');
-				$('#notification .modal-body .alert').removeClass('alert-success').addClass('alert-danger');
-				$('#notification .modal-body .alert').html(msg);
+				this.modalAlert.removeClass('alert-success').addClass('alert-danger');
+				this.modalAlert.html(msg);
 			},
 		}
 
 	}
 }
 
-export {Notification}
+export default Notification

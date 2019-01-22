@@ -1,4 +1,4 @@
-import {Notification} from "./notification.js"
+import Notification from "./notification.js"
 
 class Category {
 	constructor() {
