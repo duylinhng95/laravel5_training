@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="text-danger" id="error"></div>
-                <form id="create">
+                <form id="form-create">
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="name"> Category Name</label>
@@ -19,7 +19,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="submitCategory()">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitAddCategory">Save changes</button>
                 </form>
             </div>
         </div>
@@ -56,22 +56,14 @@
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="name">Category Name</label>
-                        <input type="text" name="name" class="form-control" id="name">
+                        <input type="text" name="name" class="form-control">
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveCategory()">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitEditCategory">Save changes</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-	var submitCategoryURI = "{{url('/admin/category')}}";
-	var editCategoryURI = "{{url('/admin/category')}}/";
-	var saveCategoryURI = "{{url('/admin/category')}}";
-	var deleteCategoryURI = "{{url('/admin/category')}}/";
-	var csrfToken = "{{csrf_token()}}";
-</script>

@@ -126,6 +126,7 @@
 <!-- ============================================================== -->
 <!-- Optional JavaScript -->
 <script src="{{mix('js/admin.js')}}"></script>
+
 @stack('script')
 </body>
 
