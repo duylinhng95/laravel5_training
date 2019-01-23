@@ -38,9 +38,10 @@
                         <h2>
                             <small>Number of votes: <span id="voteNum">{{count($post->votes)}}</span></small>
                         </h2>
-                        <button type="button" onclick="votePost({{$post->id}})" class="btn btn-success"
-                                @if(Auth::user()->id == $post->user->id) disabled @endif>Vote <i
-                                    class="fa fa-thumbs-o-up"></i>
+                        <button type="button"  class="btn btn-success" id="btnVotePost"
+                                @if(Auth::user()->id == $post->user->id)  disabled @endif>
+                            <input type="hidden" id="postId" value="{{$post->id}}">
+                            Vote <i class="fa fa-thumbs-o-up"></i>
                         </button>
 
                     </div>

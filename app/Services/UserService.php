@@ -85,14 +85,4 @@ class UserService
     {
         return $this->userRepository->getInfo();
     }
-
-    public function paginate($num)
-    {
-        return $this->userRepository->paginate($num);
-    }
-
-    public function search($input)
-    {
-        return $this->userRepository->search($input);
-    }
 }

@@ -49,6 +49,6 @@ class PostController extends Controller
     {
         $this->postRepository->restore($id);
 
-        return redirect()->route('admin.show', ['id' => $id]);
+        return redirect()->route('admin.post.show', ['id' => $id]);
     }
 }

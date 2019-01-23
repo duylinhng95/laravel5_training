@@ -32,7 +32,7 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <a href="{{url('/user/post')}}" class="btn btn-success d-block">Post List</a>
+                <a href="{{route('user.post.index')}}" class="btn btn-success d-block">Post List</a>
             </div>
         </div>
         <div class="row">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
 use App\Services\FollowService;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -12,15 +14,18 @@ class UserController extends Controller
 {
     use ResponseTrait;
 
-    /** @var UserService  */
+    /** @var UserService */
     protected $userService;
-    /** @var FollowService  */
+    /** @var UserRepositoryEloquent */
+    protected $userRepository;
+    /** @var FollowService */
     protected $followService;
 
     public function __construct()
     {
-        $this->userService   = app(UserService::class);
-        $this->followService = app(FollowService::class);
+        $this->userService    = app(UserService::class);
+        $this->followService  = app(FollowService::class);
+        $this->userRepository = app(UserRepository::class);
     }
 
     public function showRegister()
@@ -30,7 +35,7 @@ class UserController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $input  = $request->except('_token');
+        $input = $request->except('_token');
         list($status, $code, $message) = $this->userService->register($input);
         if (!$status) {
             return view('User.register', compact('status', 'code', 'message'));
@@ -46,7 +51,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $input  = $request->except('_token');
+        $input = $request->except('_token');
         list($status, $code, $message) = $this->userService->login($input);
         if ($status) {
             return redirect()->route('post.index');
@@ -82,10 +87,8 @@ class UserController extends Controller
 
     public function listUser(Request $request)
     {
-        $users = $this->userService->paginate(10);
-        if ($request->has('keyword')) {
-            $users = $this->userService->search($request->input('keyword'));
-        }
+        $users = $this->userRepository->getUsers($request);
+
         return view('User.list', compact('users'));
     }
 }
