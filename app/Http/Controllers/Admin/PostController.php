@@ -27,24 +27,28 @@ class PostController extends Controller
     public function all(Request $request)
     {
         $posts = $this->postRepository->paginateWithTrashed($request, 50);
+
         return view('Admin.post.index', compact('posts'));
     }
 
     public function show($id)
     {
         list($post, $tags) = $this->postService->findWithTrashed($id);
-        return view('Admin.post.detail', compact('post', 'tags', 'user'));
+
+        return view('Admin.post.detail', compact('post', 'tags'));
     }
 
     public function delete($id)
     {
-        $this->postService->deleteNorTags($id);
-        return redirect('/admin/post');
+        $this->postRepository->destroy($id);
+
+        return redirect()->route('admin.post');
     }
 
     public function restore($id)
     {
-        $this->postService->restorePost($id);
-        return redirect('/admin/post/' . $id);
+        $this->postRepository->restore($id);
+
+        return redirect()->route('admin.show', ['id' => $id]);
     }
 }

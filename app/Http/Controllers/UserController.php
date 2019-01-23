@@ -36,7 +36,7 @@ class UserController extends Controller
             return view('User.register', compact('status', 'code', 'message'));
         }
         $this->userService->login($input);
-        return redirect('/user');
+        return redirect()->route('post.index');
     }
 
     public function showLogin()
@@ -49,9 +49,10 @@ class UserController extends Controller
         $input  = $request->except('_token');
         list($status, $code, $message) = $this->userService->login($input);
         if ($status) {
-            return redirect('/');
+            return redirect()->route('post.index');
         } else {
-            return redirect('/auth/login')
+            return redirect()
+                ->route('auth.login')
                 ->with(['code' => $code, 'message' => $message]);
         }
     }
@@ -70,13 +71,13 @@ class UserController extends Controller
     public function follow($id)
     {
         $this->followService->followUser($id);
-        return redirect('/user');
+        return redirect()->route('user.index');
     }
 
     public function unfollow($id)
     {
         $this->followService->unfollowUser($id);
-        return redirect('/user');
+        return redirect()->route('user.index');
     }
 
     public function listUser(Request $request)

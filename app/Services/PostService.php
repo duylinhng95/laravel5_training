@@ -32,11 +32,6 @@ class PostService
         $this->followRepository   = app(FollowRepository::class);
     }
 
-    public function all()
-    {
-        return $this->postRepository->all();
-    }
-
     public function create($input)
     {
         $input['user_id'] = Auth::user()->id;
@@ -55,20 +50,8 @@ class PostService
     public function find($id)
     {
         $post     = $this->postRepository->find($id);
-        $tags     = implode(',', $post->tags->pluck('name')->toArray());
-        $comments = $post->comments;
-        $followed = 0;
-        $user     = Auth::user();
-        $author   = $post->user_id;
-        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
-            $followed = 1;
-        }
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
         return [$post, $tags, $comments, $followed];
-    }
-
-    public function delete($id)
-    {
-        return $this->postRepository->delete($id);
     }
 
     public function update($id, $input)
@@ -81,11 +64,6 @@ class PostService
         $this->postTagRepository->deleteTags($tags, $id);
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
         return ['code' => 202, 'message' => "Update Post Success"];
-    }
-
-    public function paginate($num)
-    {
-        return $this->postRepository->paginate($num);
     }
 
     public function countView($post)
@@ -110,8 +88,7 @@ class PostService
         $userId           = Auth::user()->id;
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
-        $comment          = $this->commentRepository->create($input);
-        $user             = $comment->user;
+        $comment          = $this->commentRepository->create($input)->with('user');
         return $comment;
     }
 
@@ -121,24 +98,17 @@ class PostService
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
-    public function search($keyword)
-    {
-        return $this->postRepository->search($keyword);
-    }
-
-    public function deleteNorTags($id)
-    {
-        return $this->postRepository->destroy($id);
-    }
-
-    public function paginateWithTrashed($num)
-    {
-        return $this->postRepository->paginateWithTrashed($num);
-    }
 
     public function findWithTrashed($id)
     {
-        $post     = $this->postRepository->findWithTrashed($id);
+        $post   = $this->postRepository->findWithTrashed($id);
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
+
+        return [$post, $tags, $comments, $followed];
+    }
+
+    private function getPostInfo($post)
+    {
         $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
         $followed = 0;
@@ -147,16 +117,7 @@ class PostService
         if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
             $followed = 1;
         }
-        return [$post, $tags, $comments, $followed];
-    }
 
-    public function restorePost($id)
-    {
-        return $this->postRepository->restore($id);
-    }
-
-    public function sort($section, $order)
-    {
-        return $this->postRepository->sort($section, $order);
+        return [$tags, $comments, $followed];
     }
 }

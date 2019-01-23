@@ -17,22 +17,22 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/', 'PostController@index');
-        Route::get('/{id}', 'PostController@show');
-        Route::post('/comment/{id}', 'PostController@comment');
-        Route::get('/vote/{id}', 'PostController@vote');
+        Route::get('/', 'PostController@index')->name('post.index');
+        Route::get('/{id}', 'PostController@show')->name('post.show');
+        Route::post('/comment/{id}', 'PostController@comment')->name('post.comment');
+        Route::get('/vote/{id}', 'PostController@vote')->name('post.vote');
     });
 
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', 'UserController@listUser');
-        Route::get('/info', 'UserController@index');
-        Route::get('/follow/{id}', 'UserController@follow');
-        Route::get('/unfollow/{id}', 'UserController@unfollow');
+        Route::get('/', 'UserController@listUser')->name('user.list');
+        Route::get('/info', 'UserController@index')->name('user.index');
+        Route::get('/follow/{id}', 'UserController@follow')->name('user.follow');
+        Route::get('/unfollow/{id}', 'UserController@unfollow')->name('user.unfollow');
 
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
-            Route::get('/', 'PostController@index');
+            Route::get('/', 'PostController@index')->name('user.post.index');
             Route::get('/create', 'PostController@create')->middleware('user.block');
-            Route::get('/{id}', 'PostController@show');
+            Route::get('/{id}', 'PostController@show')->name('user.post.show');
             Route::post('/create', 'PostController@store')->middleware('user.block');
             Route::get('/{id}/edit', 'PostController@edit');
             Route::delete('/{id}', 'PostController@destroy');
@@ -48,7 +48,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('register', 'UserController@showRegister');
     Route::post('register', 'UserController@register');
-    Route::get('login', 'UserController@showLogin');
+    Route::get('login', 'UserController@showLogin')->name('auth.login');
     Route::post('login', 'UserController@login')->name('auth.login');
     Route::get('logout', 'UserController@logout');
 });
@@ -70,8 +70,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
         });
 
         Route::group(['prefix' => 'post'], function () {
-            Route::get('/', 'PostController@all');
-            Route::get('/{id}', 'PostController@show');
+            Route::get('/', 'PostController@all')->name('admin.post');
+            Route::get('/{id}', 'PostController@show')->name('admin.show');
             Route::delete('/{id}','PostController@delete');
             Route::get('/restore/{id}', 'PostController@restore');
         });
