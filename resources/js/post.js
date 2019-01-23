@@ -1,10 +1,12 @@
 require('./bootstrap.js')
 window.Summernote = require('summernote/dist/summernote-bs4');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
+import Comment from './comment.js'
 
 class Post {
 	constructor() {
 		this.init()
+		new Comment()
 	}
 
 	init() {
@@ -90,5 +92,4 @@ class Post {
 }
 
 new Post()
-
 export default Post

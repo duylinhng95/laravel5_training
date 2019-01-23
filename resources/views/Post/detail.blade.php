@@ -29,7 +29,8 @@
                         <div class="article-tags">
                             <b>Tags:</b>
                             @foreach($post->tags as $tag)
-                            <a href="{{url('/post?keyword='.$tag->name)}}" class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
+                                <a href="{{url('/post?keyword='.$tag->name)}}"
+                                   class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
                             @endforeach
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                         <h2>
                             <small>Number of votes: <span id="voteNum">{{count($post->votes)}}</span></small>
                         </h2>
-                        <button type="button"  class="btn btn-success" id="btnVotePost"
+                        <button type="button" class="btn btn-success" id="btnVotePost"
                                 @if(Auth::user()->id == $post->user->id)  disabled @endif>
                             <input type="hidden" id="postId" value="{{$post->id}}">
                             Vote <i class="fa fa-thumbs-o-up"></i>
@@ -50,7 +51,7 @@
                 {{--Author--}}
                 <div class="card post">
                     <div class="article-heading">
-                        <i class="fa fa-user"></i> Author:  {{$post->user->name}}
+                        <i class="fa fa-user"></i> Author: {{$post->user->name}}
                         @if(Auth::user()->id != $post->user->id)
                             @if($followed == 0)
                                 <a href="{{route('user.follow',['id' => $post->user->id])}}" class="btn btn-primary">Follow</a>
@@ -63,10 +64,11 @@
                 <!-- COMMENTS  -->
                 <div class="card post">
                     <div class="article-heading">
-                        <i class="fa fa-comments-o"></i> Comments (<span id="commentNum">{{$post->count_comments}}</span>)
+                        <i class="fa fa-comments-o"></i> Comments (<span
+                                id="commentNum">{{$post->count_comments}}</span>)
                     </div>
                     <div class="comment-list">
-                        @foreach($post->comments as $comment)
+                    @foreach($post->comments as $comment)
                         <!-- COMMENT  -->
                             <div class="article-content">
                                 <div class="article-comment-top">
@@ -95,12 +97,14 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="commentContent" name="content">
                             </div>
-                            <div class="form-group float-right">
-                                <button type="button" class="btn btn-wide btn-primary" onclick="addComment({{$post->id}})"
-                                        id="btnComment">Post Comment
-                                </button>
-                            </div>
                         </form>
+                        <div class="float-right">
+                            <button type="button" class="btn btn-wide btn-primary"
+                                    id="btnComment">
+                                <input type="hidden" name="postId" id="postId" value="{{$post->id}}">
+                                Post Comment
+                            </button>
+                        </div>
                     </div>
                     <!-- END LEAVE A REPLY SECTION -->
                 </div>
@@ -110,15 +114,4 @@
         @include('Post.sidebar')
     </div>
 @endsection
-@push('script')
-    <script>
-			var addCommentURI = "{{url('/post/comment')}}/";
-
-			$(document).on('keypress', function (e) {
-				if (e.which == 13) {
-					$('#btnComment').click();
-				}
-			});
-    </script>
-    <script src="{{mix('js/comment.js')}}"></script>
-@endpush
+<script src="{{mix('js/comment.js')}}"></script>
