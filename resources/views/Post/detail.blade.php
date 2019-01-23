@@ -113,7 +113,6 @@
 @push('script')
     <script>
 			var addCommentURI = "{{url('/post/comment')}}/";
-			var votePostURI = "{{url('/post/vote')}}/";
 
 			$(document).on('keypress', function (e) {
 				if (e.which == 13) {

@@ -26,7 +26,7 @@
                                 <ul>
                                     @foreach($category->posts->take(5) as $post)
                                         <li>
-                                            <a href="{{url('post/' . $post->id)}}">
+                                            <a href="{{route('post.show', ['id' => $post->id])}}">
                                                 <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
                                         </li>
                                     @endforeach

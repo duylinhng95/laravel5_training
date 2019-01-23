@@ -18,7 +18,7 @@
             </div>
         @endif
     </div>
-    <form action="{{url('/auth/register')}}" method="post">
+    <form action="{{route('auth.register')}}" method="post">
         {{csrf_field()}}
         <div class="card-body">
             <div class="form-group">

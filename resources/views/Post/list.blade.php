@@ -45,9 +45,3 @@
         </div>
     </div>
 @endsection
-@push('script')
-    <script>
-	    var deletePostURI = "{{url('user/post/')}}/";
-	    var csrf_token = "{{csrf_token()}}";
-    </script>
-@endpush

@@ -15,16 +15,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="login-box border-right-1">
-                    <a href="{{url('/auth/logout')}}">
+                    <a href="{{route('auth.logout')}}">
                         <i class="fa fa-key"></i> Logout</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="{{url('/user/info')}}">
+                    <a href="{{route('user.index')}}">
                         <i class="fa fa-user"></i> User</a>
                 </div>
                 @if(\Auth::user()->checkRole(2))
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="{{url('/admin')}}">
+                    <a href="{{route('admin.index')}}">
                         <i class="fa fa-lock"></i> Admin</a>
                 </div>
                 @endif
@@ -50,15 +50,15 @@
             <ul class="topnav">
                 <li></li>
                 <li>
-                    <a href="{{url('/post')}}">
+                    <a href="{{route('post.index')}}">
                         <i class="fa fa-home"></i> Home</a>
                 </li>
                 <li>
-                    <a href="{{url('/category')}}">
+                    <a href="{{route('category.index')}}">
                         <i class="fa fa-book"></i> Category</a>
                 </li>
                 <li>
-                    <a href="{{url('/user')}}">
+                    <a href="{{route('user.list')}}">
                         <i class="fa fa-users"></i> Users</a>
                 </li>
             </ul>

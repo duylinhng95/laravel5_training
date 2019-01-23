@@ -19,3 +19,8 @@ function checkOwner($id)
 {
     return Auth::user()->id == $id;
 }
+
+function checkLogin()
+{
+    return Auth::user() && Auth::user() != null;
+}

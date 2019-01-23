@@ -22,6 +22,10 @@ class AdminService
         $this->rocketRepository = app(RocketProfileRepository::class);
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function importUserDB()
     {
         $checkCached = $this->checkCached();
@@ -55,6 +59,10 @@ class AdminService
         return $rocket;
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     private function checkCached()
     {
         return cache()->has('users');
