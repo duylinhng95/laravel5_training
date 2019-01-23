@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Repository\CategoryRepository;
+use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use App\Services\PostService;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
@@ -18,9 +20,9 @@ class PostController extends Controller
     protected $postService;
     /** @var CategoryService */
     protected $categoryService;
-    /** @var CategoryRepository */
+    /** @var CategoryRepositoryEloquent */
     protected $categoryRepository;
-    /** @var PostRepository */
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
 
     public function __construct()

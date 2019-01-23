@@ -59,6 +59,11 @@ class Post extends Model
         return count($this->comments);
     }
 
+    public function getCountVotesAttribute()
+    {
+        return count($this->votes);
+    }
+
     public function getEncodeContentAttribute()
     {
         return str_limit(strip_tags($this->content), $limit = 60, $end = '...');

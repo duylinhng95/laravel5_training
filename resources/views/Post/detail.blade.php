@@ -13,7 +13,7 @@
                     </div>
                     <div class="article-info">
                         <div class="art-date">
-                            <i class="fa fa-calendar-o"></i> {{date('d-m-Y', strtotime($post->created_at))}}
+                            <i class="fa fa-calendar-o"></i> {{formatDate($post->created_at)}}
                         </div>
                         <div class="art-category">
                             <i class="fa fa-folder"></i> {{$post->category->name}}
@@ -52,9 +52,9 @@
                         <i class="fa fa-user"></i> Author:  {{$post->user->name}}
                         @if(Auth::user()->id != $post->user->id)
                             @if($followed == 0)
-                                <a href="{{url('user/follow/'.$post->user->id)}}" class="btn btn-primary">Follow</a>
+                                <a href="{{route('user.follow',['id' => $post->user->id])}}" class="btn btn-primary">Follow</a>
                             @else
-                                <a href="{{url('user/unfollow/'.$post->user->id)}}" class="btn btn-danger">Unfollow</a>
+                                <a href="{{route('user.unfollow',['id' => $post->user->id])}}" class="btn btn-danger">Unfollow</a>
                             @endif
                         @endif
                     </div>
@@ -62,7 +62,7 @@
                 <!-- COMMENTS  -->
                 <div class="card post">
                     <div class="article-heading">
-                        <i class="fa fa-comments-o"></i> Comments (<span id="commentNum">{{count($post->comments)}}</span>)
+                        <i class="fa fa-comments-o"></i> Comments (<span id="commentNum">{{$post->count_comments}}</span>)
                     </div>
                     <div class="comment-list">
                         @foreach($post->comments as $comment)

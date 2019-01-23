@@ -31,17 +31,17 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index')->name('user.post.index');
-            Route::get('/create', 'PostController@create')->middleware('user.block');
+            Route::get('/create', 'PostController@create')->name('user.post.create')->middleware('user.block');
             Route::get('/{id}', 'PostController@show')->name('user.post.show');
-            Route::post('/create', 'PostController@store')->middleware('user.block');
-            Route::get('/{id}/edit', 'PostController@edit');
-            Route::delete('/{id}', 'PostController@destroy');
-            Route::put('/{id}', 'PostController@update');
+            Route::post('/create', 'PostController@store')->name('user.post.store')->middleware('user.block');
+            Route::get('/{id}/edit', 'PostController@edit')->name('user.post.edit');
+            Route::delete('/{id}', 'PostController@destroy')->name('user.post.delete');
+            Route::put('/{id}', 'PostController@update')->name('user.post.update');
         });
     });
 
     Route::group(['prefix' => 'category'], function () {
-       Route::get('/', 'CategoryController@index');
+        Route::get('/', 'CategoryController@index');
     });
 });
 
@@ -71,9 +71,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all')->name('admin.post');
-            Route::get('/{id}', 'PostController@show')->name('admin.show');
-            Route::delete('/{id}','PostController@delete');
-            Route::get('/restore/{id}', 'PostController@restore');
+            Route::get('/{id}', 'PostController@show')->name('admin.post.show');
+            Route::delete('/{id}', 'PostController@delete')->name('admin.post.delete');
+            Route::get('/restore/{id}', 'PostController@restore')->name('admin.post.restore');
         });
     });
 });
