@@ -6,9 +6,9 @@
     @include('Post.error')
     <div class="card-header">
         <h2><i class="fa fa-plus"></i> Create Post</h2>
-        <a href="{{url('/user/post')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
+        <a href="{{route('user.post.index')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
     </div>
-    <form action="{{url('user/post/create')}}" method="POST" enctype="multipart/form-data" novalidate>
+    <form action="{{route('user.post.store')}}" method="POST" enctype="multipart/form-data" novalidate>
         <div class="card-body">
             {{csrf_field()}}
             <div class="form-group">
@@ -54,7 +54,7 @@
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-outline-primary">Submit</button>
-            <a href="{{url('/post')}}" class="btn btn-outline-secondary">Cancel</a>
+            <a href="{{route('user.post.index')}}" class="btn btn-outline-secondary">Cancel</a>
         </div>
     </form>
 @endsection

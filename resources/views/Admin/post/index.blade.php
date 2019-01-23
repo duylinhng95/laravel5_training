@@ -52,7 +52,7 @@
                     @else
                         <td class="text text-success">Available</td>
                     @endif
-                    <td><a href="{{url('admin/post/'.$post->id)}}" class="btn btn-primary">View</a></td>
+                    <td><a href="{{route('admin.post.show', ['id'=>$post->id])}}" class="btn btn-primary">View</a></td>
                 </tr>
             @endforeach
             {{$posts->links()}}

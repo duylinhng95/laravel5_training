@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repository\CategoryRepository;
+use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\CommentRepositoryEloquent;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
@@ -50,5 +52,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(FollowRepository::class, FollowRepositoryEloquent::class);
         $this->app->bind(PostVoteRepository::class, PostVoteRepositoryEloquent::class);
         $this->app->bind(UserRoleRepository::class, UserRoleRepositoryEloquent::class);
+        $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
     }
 }

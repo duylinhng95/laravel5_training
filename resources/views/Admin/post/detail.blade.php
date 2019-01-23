@@ -8,19 +8,19 @@
             <div class="col-md-8">
                 <ul>
                     <li>Author: {{$post->user->name}}</li>
-                    <li>Cateogry: {{$post->category->name}}</li>
+                    <li>Category: {{$post->category->name}}</li>
                     <li>Tags: {{$tags}}</li>
                     <li>Created date: {{$post->created_at}}</li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <form method="post" action="{{url('/admin/post/'.$post->id)}}" class="">
+                <form method="post" action="{{route('admin.post.delete', ['id' => $post->id])}}" class="">
                     {!! method_field('delete') !!}
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Permanently Delete</button>
                 </form>
                 @if($post->deleted_at != null)
-                <a href="{{url('/admin/post/restore/'.$post->id)}}" class="btn btn-primary">Restore post</a>
+                <a href="{{route('admin.post.restore', ['id' =>$post->id])}}" class="btn btn-primary">Restore post</a>
                 @endif
             </div>
         </div>

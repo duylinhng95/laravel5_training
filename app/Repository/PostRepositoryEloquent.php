@@ -48,9 +48,41 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $tags;
     }
 
-    public function all()
+    public function getPosts($request)
     {
-        return $this->makeModel()->orderBy('created_at', 'desc')->paginate(10);
+        $mainQuery = $this->makeModel();
+
+        if ($request->has('keywords')) {
+            $keyword = $request->input('keywords');
+            $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
+                /** @var Builder $query */
+                $query->where('title', 'like', '%' . $keyword . '%')
+                    ->orWhereHas('tags', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    })->orWhereHas('category', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    })->orWhereHas('user', function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'like', '%' . $keyword . '%');
+                    });
+            });
+        }
+
+        if ($request->has('sort')) {
+            $section = $request->input('sort');
+            $order   = $request->input('order');
+            switch ($section) {
+                case 'category':
+                    $this->sortRelationship($mainQuery, $section, 'categories', $order);
+                    break;
+                case 'user':
+                    $this->sortRelationship($mainQuery, $section, 'users', $order);
+                    break;
+                default:
+                    $mainQuery = $mainQuery->orderBy($section, $order);
+            }
+        }
+
+        return $mainQuery->orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function destroy($id)
@@ -112,7 +144,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
                     $mainQuery = $mainQuery->orderBy($section, $order);
             }
         }
-        return $mainQuery->paginate($num);
+        return $mainQuery->withTrashed()->paginate($num);
     }
 
     public function findWithTrashed($id)

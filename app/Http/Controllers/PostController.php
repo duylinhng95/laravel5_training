@@ -2,45 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\PostTagRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\PostRepository;
 use App\Services\PostService;
-use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     use ResponseTrait;
-
+    /** @var PostService */
     protected $postService;
-    protected $categoryService;
-    protected $postTagService;
+    /** @var PostRepository */
+    protected $postRepository;
+    /** @var CategoryRepository */
+    protected $categoryRepository;
 
     public function __construct()
     {
-        $this->postService     = app(PostService::class);
-        $this->categoryService = app(CategoryService::class);
-        $this->postTagService  = app(PostTagRepository::class);
+        $this->postService        = app(PostService::class);
+        $this->postRepository     = app(PostRepository::class);
+        $this->categoryRepository = app(CategoryRepository::class);
     }
 
     public function index(Request $request)
     {
-        $posts      = $this->postService->all();
-        $categories = $this->categoryService->all();
-        $tags       = $this->postTagService->all();
-        if ($request->has('keyword')) {
-            $posts = $this->postService->search($request->input('keyword'));
-        }
-        return view('Post.index', compact('posts', 'categories', 'tags'));
+        $posts      = $this->postRepository->getPosts($request);
+        $categories = $this->categoryRepository->all();
+
+        return view('Post.index', compact('posts', 'categories'));
     }
 
     public function show($id)
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
         if (checkOwner($post->user->id)) {
-            return redirect('/user/post/' . $id);
+            return redirect()->route('user.post.show', ['id' => $id]);
         }
         $this->postService->countView($post);
+
         return view('Post.detail', compact('post', 'tags', 'comments', 'followed'));
     }
 
@@ -48,6 +48,7 @@ class PostController extends Controller
     {
         $input   = $request->except('_token');
         $comment = $this->postService->comment($postId, $input);
+
         return $this->success('Add new comment successful', $comment);
     }
 
