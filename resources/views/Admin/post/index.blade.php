@@ -22,20 +22,24 @@
             <tr>
                 <th>#</th>
                 <th>Title
-                    <button onclick="sortPost('title')" class="btn btn-xs"><i class="fa fa-arrow-down" id="title"></i>
+                    <button class="btn btn-xs" id="titleSort"><i class="fa fa-arrow-down" id="title"></i><input
+                                type="hidden" value="title">
                     </button>
                 </th>
                 <th>Category
-                    <button onclick="sortPost('category')" class="btn btn-xs"><i class="fa fa-arrow-down"
-                                                                                 id="category"></i></button>
+                    <button class="btn btn-xs" id="categorySort"><i class="fa fa-arrow-down"
+                                                                    id="category"></i><input
+                                type="hidden" value="category"></button>
                 </th>
                 <th>Author
-                    <button onclick="sortPost('user')" class="btn btn-xs"><i class="fa fa-arrow-down" id="user"></i>
+                    <button class="btn btn-xs" id="userSort"><i class="fa fa-arrow-down" id="user"></i><input
+                                type="hidden" value="user">
                     </button>
                 </th>
                 <th>Status
-                    <button onclick="sortPost('deleted_at')" class="btn btn-xs"><i class="fa fa-arrow-down"
-                                                                                   id="deleted_at"></i></button>
+                    <button class="btn btn-xs" id="deletedAtSort"><i class="fa fa-arrow-down"
+                                                                     id="deleted_at"></i><input
+                                type="hidden" value="deleted_at"></button>
                 </th>
                 <th>Action</th>
             </tr>

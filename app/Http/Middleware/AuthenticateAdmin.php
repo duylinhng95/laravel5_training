@@ -16,9 +16,12 @@ class AuthenticateAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (!checkRole('admin')) {
-            return redirect('/user')->with('error', "You don't have permission to proceed");
+        if (Auth::check()) {
+            if (!checkRole('admin')) {
+                return redirect()->route('user.list')->with('error', "You don't have permission to proceed");
+            }
+            return $next($request);
         }
-        return $next($request);
+        return redirect()->route('auth.login');
     }
 }

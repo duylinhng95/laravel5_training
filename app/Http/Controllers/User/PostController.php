@@ -75,7 +75,7 @@ class PostController extends Controller
         $input = $request->except('_method', '_token');
         $this->postService->update($id, $input);
 
-        return redirect('user/post');
+        return redirect()->route('user.post.index');
     }
 
     public function destroy($id)

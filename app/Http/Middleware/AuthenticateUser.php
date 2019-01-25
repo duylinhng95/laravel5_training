@@ -16,10 +16,10 @@ class AuthenticateUser
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() && Auth::user() != null) {
+        if (Auth::check()) {
             return $next($request);
         } else {
-            return redirect("/auth/login");
+            return redirect()->route('auth.login');
         }
     }
 }

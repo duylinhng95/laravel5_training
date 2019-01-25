@@ -6,8 +6,9 @@ use App\Repository\UserRepository;
 use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
 use Auth;
-use Illuminate\Support\Facades\DB;
+use DB;
 use Exception;
+use Hash;
 
 class UserService
 {
@@ -42,19 +43,19 @@ class UserService
             return [false, 409, 'User already registered. Please login'];
         }
 
-        $input['password'] = bcrypt($input['password']);
-        DB::beginTransaction();
+        $input['password'] = Hash::make($input['password']);
 
         try {
+            DB::beginTransaction();
             $this->userRepository->update($rocket->user_id, $input);
 
             $this->roleRepository->create(['role_id' => 1, 'user_id' => $rocket->user_id]);
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
-        DB::commit();
         return [true, 200, 'Register Successful'];
     }
 
@@ -69,7 +70,7 @@ class UserService
 
     public function logout()
     {
-        if (Auth::user() && Auth::user() != null) {
+        if (checkLogin()) {
             Auth::logout();
         }
         return redirect('/auth/login');
@@ -84,15 +85,5 @@ class UserService
     public function getInfo()
     {
         return $this->userRepository->getInfo();
-    }
-
-    public function paginate($num)
-    {
-        return $this->userRepository->paginate($num);
-    }
-
-    public function search($input)
-    {
-        return $this->userRepository->search($input);
     }
 }

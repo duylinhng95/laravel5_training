@@ -18,7 +18,7 @@
             </div>
         @endif
     </div>
-    <form action="{{url('/auth/register')}}" method="post">
+    <form action="{{route('auth.register')}}" method="post">
         {{csrf_field()}}
         <div class="card-body">
             <div class="form-group">
@@ -42,6 +42,8 @@
         </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-success">Register</button>
+        <a class="btn btn-secondary" href="{{route('auth.login')}}">Login</a>
+        <a class="btn btn-primary" href="{{route('post.index')}}">Back to homepage</a>
     </div>
     </form>
 @endsection

@@ -88,9 +88,4 @@ class User extends Authenticatable
     {
         return $this->follows->contains('follower_id', $id);
     }
-
-    public function checkRole($roleId)
-    {
-        return $this->userRoles->contains('role_id', $roleId);
-    }
 }

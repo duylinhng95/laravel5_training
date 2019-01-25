@@ -10,14 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return redirect('/post');
-});
+Route::get('/', 'PostController@index')->name('post.index');
 
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/', 'PostController@index')->name('post.index');
         Route::get('/{id}', 'PostController@show')->name('post.show');
         Route::post('/comment/{id}', 'PostController@comment')->name('post.comment');
         Route::get('/vote/{id}', 'PostController@vote')->name('post.vote');
@@ -41,20 +37,20 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     Route::group(['prefix' => 'category'], function () {
-        Route::get('/', 'CategoryController@index');
+        Route::get('/', 'CategoryController@index')->name('category.index');
     });
 });
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('register', 'UserController@showRegister');
-    Route::post('register', 'UserController@register');
+Route::group(['prefix' => '/'], function () {
+    Route::get('register', 'UserController@showRegister')->name('auth.register');
+    Route::post('register', 'UserController@register')->name('auth.register');
     Route::get('login', 'UserController@showLogin')->name('auth.login');
     Route::post('login', 'UserController@login')->name('auth.login');
-    Route::get('logout', 'UserController@logout');
+    Route::get('logout', 'UserController@logout')->name('auth.logout');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
-    Route::get('/', 'AdminController@index');
+    Route::get('/', 'AdminController@index')->name('admin.index');
     Route::group(['namespace' => 'Admin'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('import', 'UserController@import');
@@ -76,8 +72,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
             Route::get('/restore/{id}', 'PostController@restore')->name('admin.post.restore');
         });
     });
-});
-
-Route::get('/test', function () {
-    return view('homepage');
+    Route::get('/password', 'AdminController@showPassword')->name('admin.password');
+    Route::post('/password', 'AdminController@storePassword')->name('admin.password.store');
 });

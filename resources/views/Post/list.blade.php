@@ -33,8 +33,10 @@
                             <a href="{{route('user.post.edit',['id' => $post->id])}}" class="btn btn-info"><i
                                         class="fa fa-pen"></i>
                                 Edit</a>
-                            <button onclick="deletePost({{$post->id}})" class="btn btn-danger"><i
-                                        class="fa fa-trash"></i> Delete
+                            <button id="btnDeletePost" class="btn btn-danger">
+                                <input type="hidden" id="postId" value="{{$post->id}}">
+                                {{csrf_field()}}
+                                <i class="fa fa-trash"></i> Delete
                             </button>
                         </td>
                     </tr>
@@ -43,9 +45,3 @@
         </div>
     </div>
 @endsection
-@push('script')
-    <script>
-	    var deletePostURI = "{{url('user/post/')}}/";
-	    var csrf_token = "{{csrf_token()}}";
-    </script>
-@endpush

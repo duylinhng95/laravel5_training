@@ -12,7 +12,7 @@
                     @if(count($posts) != 0)
                         @foreach($posts as $post)
                             <li>
-                                <a href="{{url('post/'.$post->id)}}">
+                                <a href="{{route('post.show',['id' => $post->id])}}">
                                     <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
                             </li>
                         @endforeach
@@ -31,12 +31,12 @@
             <div class="fat-content-small padding-left-10">
                 <ul>
                     @if(count($posts) != 0)
-                    @foreach($post->getLatestPost(5) as $post)
-                        <li>
-                            <a href="{{url('/post/'.$post->id)}}">
-                                <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
-                        </li>
-                    @endforeach
+                        @foreach($post->getLatestPost(5) as $post)
+                            <li>
+                                <a href="{{route('post.show',['id' => $post->id])}}">
+                                    <i class="fa fa-file-text-o"></i> {{$post->title}}</a>
+                            </li>
+                        @endforeach
                     @endif
                 </ul>
             </div>
@@ -52,7 +52,8 @@
             <hr class="style-three">
             <div class="fat-content-tags padding-left-10">
                 @foreach($tags as $tag)
-                    <a href="{{url('/post?keyword='.$tag->name)}}" class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
+                    <a href="{{url('/post?keyword='.$tag->name)}}"
+                       class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
                 @endforeach
             </div>
         </div>

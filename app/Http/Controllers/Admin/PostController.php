@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -14,7 +15,7 @@ class PostController extends Controller
     protected $adminService;
     /** @var  PostService */
     protected $postService;
-    /** @var PostRepository */
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
 
     public function __construct()
@@ -49,6 +50,6 @@ class PostController extends Controller
     {
         $this->postRepository->restore($id);
 
-        return redirect()->route('admin.show', ['id' => $id]);
+        return redirect()->route('admin.post.show', ['id' => $id]);
     }
 }

@@ -88,7 +88,9 @@ class PostService
         $userId           = Auth::user()->id;
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
-        $comment          = $this->commentRepository->create($input)->with('user');
+        $comment          = $this->commentRepository->create($input);
+        $comment->user;
+
         return $comment;
     }
 
