@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['Post.sidebar'], PostComposer::class);
+        Schema::defaultStringLength(191);
     }
 
     /**
