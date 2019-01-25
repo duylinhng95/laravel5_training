@@ -1,221 +1,105 @@
-require('./bootstrap');
+require('./vendor/template.js')
 
-window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
-
-
-jQuery(document).ready(function ($) {
-	'use strict';
-
-	var urlParams = new URLSearchParams(window.location.search);
-	var order = urlParams.getAll('order');
-	var section = urlParams.get('sort');
-	if (order == 'desc') {
-		$('#' + section).removeClass('fa-arrow-up');
-		$('#' + section).addClass('fa-arrow-down');
-	} else {
-		$('#' + section).removeClass('fa-arrow-down');
-		$('#' + section).addClass('fa-arrow-up');
+class Admin {
+	constructor() {
+		this.init()
 	}
 
-	// ==============================================================
-	// Notification list
-	// ==============================================================
-	if ($(".notification-list").length) {
-
-		$('.notification-list').slimScroll({
-			height: '250px'
-		});
-
+	init() {
+		this.config()
+		this.listen()
 	}
 
-	// ==============================================================
-	// Menu Slim Scroll List
-	// ==============================================================
+	config() {
+		this.element = {
+			btnImportUser: $("#btnImportUser"),
+			btnSearchUser: $("#searchBtnUser"),
+			btnSearchPost: $("#searchPostBtn"),
+			searchField: $("#search"),
+			params: location.search,
+		}
+		this.section = {
+			title: $("#titleSort"),
+			category: $("#categorySort"),
+			user: $("#userSort"),
+			deleted_at: $("#deletedAtSort"),
+			email: $("#emailSort"),
+			status: $("#statusSort"),
+			name: $("#nameSort"),
 
-
-	if ($(".menu-list").length) {
-		$('.menu-list').slimScroll({});
+		}
+		this.apiURL = location.href
+		this.originURL = location.origin
 	}
 
-	// ==============================================================
-	// Sidebar scrollnavigation
-	// ==============================================================
+	listen() {
+		this.buttonSort()
+		this.importUser()
+		this.btnSearchEnter(this.element.btnSearchPost)
+		this.onSearch(this.element.btnSearchPost)
+		this.btnSearchEnter(this.element.btnSearchUser)
+		this.onSearch(this.element.btnSearchUser)
+		this.sortButtonPress()
+	}
 
-	if ($(".sidebar-nav-fixed a").length) {
-		$('.sidebar-nav-fixed a')
-		// Remove links that don't actually link to anything
-
-			.click(function (event) {
-				// On-page links
-				if (
-					location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
-					location.hostname == this.hostname
-				) {
-					// Figure out element to scroll to
-					var target = $(this.hash);
-					target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-					// Does a scroll target exist?
-					if (target.length) {
-						// Only prevent default if animation is actually gonna happen
-						event.preventDefault();
-						$('html, body').animate({
-							scrollTop: target.offset().top - 90
-						}, 1000, function () {
-							// Callback after animation
-							// Must change focus!
-							var $target = $(target);
-							$target.focus();
-							if ($target.is(":focus")) { // Checking if the target was focused
-								return false;
-							} else {
-								$target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-								$target.focus(); // Set focus again
-							}
-						});
-					}
+	importUser() {
+		let url = `${this.apiURL}/user/import`
+		this.element.btnImportUser.on('click', function () {
+			$.ajax({
+				url: url,
+				type: "GET",
+				success: function () {
+					location.reload();
 				}
-				$('.sidebar-nav-fixed a').each(function () {
-					$(this).removeClass('active');
-				})
-				$(this).addClass('active');
-			});
-
+			})
+		})
 	}
 
-	// ==============================================================
-	// tooltip
-	// ==============================================================
-	if ($('[data-toggle="tooltip"]').length) {
-
-		$('[data-toggle="tooltip"]').tooltip()
-
+	onSearch(name) {
+		let input = this.element.searchField
+		name.on('click', function (event) {
+			let url = location.pathname
+			input = input.val()
+			window.location.href = `${url}?keywords=${input}`
+		})
 	}
 
-	// ==============================================================
-	// popover
-	// ==============================================================
-	if ($('[data-toggle="popover"]').length) {
-		$('[data-toggle="popover"]').popover()
-
-	}
-	// ==============================================================
-	// Chat List Slim Scroll
-	// ==============================================================
-
-
-	if ($('.chat-list').length) {
-		$('.chat-list').slimScroll({
-			color: 'false',
-			width: '100%'
-
-
-		});
-	}
-	// ==============================================================
-	// dropzone script
-	// ==============================================================
-
-	//     if ($('.dz-clickable').length) {
-	//            $(".dz-clickable").dropzone({ url: "/file/post" });
-	// }
-
-}); // AND OF JQUERY
-
-
-// $(function() {
-//     "use strict";
-
-
-// var monkeyList = new List('test-list', {
-//    valueNames: ['name']
-
-// });
-// var monkeyList = new List('test-list-2', {
-//    valueNames: ['name']
-
-// });
-
-
-// });
-
-window.importUser = function importUser() {
-	$.ajax(
-		{
-			url: importUserURI,
-			type: "GET",
-			success: function (res) {
-				location.reload();
+	btnSearchEnter(name) {
+		let btnSearch = name
+		this.element.searchField.keypress(function (event) {
+			if (event.which === 13) {
+				btnSearch.click()
 			}
+		})
+	}
+
+	sortButtonPress(){
+		let params = new URLSearchParams(this.element.params)
+		$.each(this.section, function(key, value) {
+			value.on('click', function(event) {
+				let section = event.currentTarget.children[1].value
+				if (params.get('order') == 'desc') {
+					window.location.href = "/admin?sort=" + section + "&order=asc";
+				} else {
+					window.location.href = "/admin?sort=" + section + "&order=desc";
+				}
+			})
+		})
+	}
+
+	buttonSort() {
+		let urlParams = new URLSearchParams(window.location.search);
+		let order = urlParams.getAll('order');
+		let section = urlParams.get('sort');
+		let button = $('#' + section)
+		if (order == 'desc') {
+			button.removeClass('fa-arrow-up');
+			button.addClass('fa-arrow-down');
+		} else {
+			button.removeClass('fa-arrow-down');
+			button.addClass('fa-arrow-up');
 		}
-	);
-};
-
-window.blockUser = function blockUser(id) {
-	$.ajax({
-		url: blockUserURI,
-		type: "GET",
-		data: {id: id},
-		success: function (response) {
-			var res = response.data;
-			$('#' + res.id).find('#status').text('Block');
-			$('#' + res.id).find('#action').html('');
-			$('#' + res.id).find('#action').append(
-				"<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' disabled>Block User</button>" +
-				" <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")'>Unblock User</button>"
-			)
-		}
-	});
-}
-
-window.unBlockUser = function unBlockUser(id) {
-	$.ajax({
-		url: unBlockUserURI,
-		type: "GET",
-		data: {id: id},
-		success: function (response) {
-			var res = response.data;
-			if (res.status == 1) {
-				$('#' + res.id).find('#status').text('Active');
-			} else {
-				$('#' + res.id).find('#status').text('Not Active');
-			}
-			$('#' + res.id).find('#action').html('');
-			$('#' + res.id).find('#action').append(
-				"<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' >Block User</button>" +
-				" <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")' disabled>Unblock User</button>"
-			)
-		}
-	})
-}
-
-window.searchUser = function searchUser() {
-	var input = $('#search').val();
-	window.location.href = "/admin?keywords=" + input;
-}
-
-window.searchPost = function searchPost() {
-	var input = $('#search').val();
-	window.location.href = "/admin/post?keywords=" + input;
-}
-
-window.sortUser = function sortUser(section) {
-	var url = window.location.search;
-	var sortOrder = new URLSearchParams(url);
-
-	if (sortOrder.get('order') == 'desc') {
-		window.location.href = "/admin?sort=" + section + "&order=asc";
-	} else {
-		window.location.href = "/admin?sort=" + section + "&order=desc";
 	}
 }
 
-window.sortPost = function sortPost(section) {
-	var url = window.location.search;
-	var sortOrder = new URLSearchParams(url);
-
-	if (sortOrder.get('order') == 'desc') {
-		window.location.href = "/admin/post?sort=" + section + "&order=asc";
-	} else {
-		window.location.href = "/admin/post?sort=" + section + "&order=desc";
-	}
-}
+new Admin()

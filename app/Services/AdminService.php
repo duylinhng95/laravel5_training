@@ -5,12 +5,15 @@ namespace App\Services;
 use App\Repository\AdminRepository;
 use App\Repository\UserRepository;
 use App\Repository\RocketProfileRepository;
+use App\Repository\UserRepositoryEloquent;
+use Hash;
+use Auth;
 
 class AdminService
 {
     /** @var AdminRepository */
     protected $adminRepository;
-    /** @var UserRepository */
+    /** @var UserRepositoryEloquent */
     protected $userRepository;
     /** @var RocketProfileRepository */
     protected $rocketRepository;
@@ -66,5 +69,26 @@ class AdminService
     private function checkCached()
     {
         return cache()->has('users');
+    }
+
+    public function updatePassword($input)
+    {
+        $adminPwd = Auth::user()->password;
+        $oldPwd   = $input['oldPwd'];
+        $newPwd   = Hash::make($input['newPwd']);
+
+        if ($this->checkOldPassword($adminPwd, $oldPwd)) {
+            $id = Auth::user()->id;
+            $this->userRepository->update($id, ['password' => $newPwd]);
+
+            return [true, 200, 'Password update successful'];
+        }
+
+        return [false, 401, 'Password not match'];
+    }
+
+    private function checkOldPassword($old, $input)
+    {
+        return Hash::check($input, $old);
     }
 }

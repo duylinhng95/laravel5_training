@@ -14,19 +14,27 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="login-box border-right-1">
-                    <a href="{{route('auth.logout')}}">
-                        <i class="fa fa-key"></i> Logout</a>
-                </div>
+                {{checkLogin()}}
+                @if(checklogin())
+                    <div class="login-box border-right-1">
+                        <a href="{{route('auth.logout')}}">
+                            <i class="fa fa-key"></i> Logout</a>
+                    </div>
+                @else
+                    <div class="login-box border-right-1">
+                        <a href="{{route('auth.login')}}">
+                            <i class="fa fa-key"></i> Login</a>
+                    </div>
+                @endif
                 <div class="login-box border-left-1 border-right-1">
                     <a href="{{route('user.index')}}">
                         <i class="fa fa-user"></i> User</a>
                 </div>
-                @if(\Auth::user()->checkRole(2))
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="{{route('admin.index')}}">
-                        <i class="fa fa-lock"></i> Admin</a>
-                </div>
+                @if(checkRole('admin'))
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="{{route('admin.index')}}">
+                            <i class="fa fa-lock"></i> Admin</a>
+                    </div>
                 @endif
             </div>
         </div>
