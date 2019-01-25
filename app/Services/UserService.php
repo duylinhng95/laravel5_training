@@ -9,6 +9,7 @@ use Auth;
 use DB;
 use Exception;
 use Hash;
+use App\Entities\User;
 
 class UserService
 {
@@ -48,7 +49,7 @@ class UserService
         }
 
         $input['password'] = Hash::make($input['password']);
-        $input['status']   = 1;
+        $input['status']   = config('constant.user.status.verify');
 
         try {
             DB::beginTransaction();
