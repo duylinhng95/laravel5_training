@@ -78,7 +78,7 @@ class AdminService
         $newPwd   = Hash::make($input['newPwd']);
 
         if ($this->checkOldPassword($adminPwd, $oldPwd)) {
-            $id = Auth::user()->id;
+            $id = Auth::id();
             $this->userRepository->update($id, ['password' => $newPwd]);
 
             return [true, 200, 'Password update successful'];

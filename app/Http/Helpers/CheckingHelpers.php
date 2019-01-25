@@ -24,11 +24,6 @@ function checkOwner($id)
     return Auth::user()->id == $id;
 }
 
-function checkLogin()
-{
-    return !is_null(Auth::user());
-}
-
 function checkAdmin($user, $roleName)
 {
     $result = false;
