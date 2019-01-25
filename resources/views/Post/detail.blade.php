@@ -92,12 +92,10 @@
                         <div class="article-heading">
                             <i class="fa fa-comment-o"></i> Leave a Reply
                         </div>
-                        <form id="comment" class="comment-form">
-                            {{csrf_field()}}
                             <div class="form-group">
+                                <input type="hidden" name="token" value="{{csrf_token()}}" id="csrf_token">
                                 <input type="text" class="form-control" id="commentContent" name="content">
                             </div>
-                        </form>
                         <div class="float-right">
                             <button type="button" class="btn btn-wide btn-primary"
                                     id="btnComment">

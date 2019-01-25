@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Entities\User;
+use Auth;
 
 class AuthenticateAdmin
 {

@@ -48,7 +48,7 @@ class Post {
 
 	onSearch(name) {
 		let input = this.element.keywords
-		name.on('click', function (event) {
+		name.on('click', function () {
 			let url = location.pathname
 			input = input.val()
 			window.location.href = `${url}?keywords=${input}`
@@ -64,7 +64,7 @@ class Post {
 				url: `${url}/${id}`,
 				type: "DELETE",
 				data: {_token: token},
-				success: function (res) {
+				success: function () {
 					location.reload();
 				}
 			})
@@ -80,7 +80,7 @@ class Post {
 			$.ajax({
 				url: `${url}/${id}`,
 				type: "GET",
-				success: function (res) {
+				success: function () {
 					indexNum = voteNum.html();
 					indexNum++;
 					voteNum.text(indexNum);
@@ -92,4 +92,3 @@ class Post {
 }
 
 new Post()
-export default Post
