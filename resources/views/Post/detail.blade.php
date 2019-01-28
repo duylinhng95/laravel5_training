@@ -29,7 +29,7 @@
                         <div class="article-tags">
                             <b>Tags:</b>
                             @foreach($post->tags as $tag)
-                                <a href="{{url('/post?keyword='.$tag->name)}}"
+                                <a href="{{url('/?keyword='.$tag->name)}}"
                                    class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
                             @endforeach
                         </div>
