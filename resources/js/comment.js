@@ -31,6 +31,7 @@ class Comment {
 		let content = this.element.contentComment
 		let token = this.element.token
 		let error_msg = this.element.error_message
+		let comment_num = this.element.num
 		this.element.btnComment.on('click', function (event) {
 			let id = event.target.children.postId.value
 			let data = {
@@ -43,6 +44,8 @@ class Comment {
 				data: data,
 				success: function (response) {
 					let res = response.data
+					let value = comment_num.html()
+					value++
 					commentList.append(
 						`<div class="article-content">
               <div class="article-comment-top">
@@ -57,6 +60,7 @@ class Comment {
                   </div>
               </div>
           </div>`)
+					comment_num.text(value)
 				},
 				error: function(res){
 					let response = res.responseJSON
