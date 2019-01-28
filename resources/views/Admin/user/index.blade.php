@@ -60,7 +60,7 @@
                         </td>
                         <td>
                             @foreach($user->userRoles as $role)
-                                {{$role->role->name}},
+                                {{ucwords($role->role->name)}}
                             @endforeach
                         </td>
                         <td id="action">
