@@ -9,6 +9,7 @@ use Auth;
 use DB;
 use Exception;
 use Hash;
+use App\Entities\User;
 
 class UserService
 {
@@ -32,8 +33,12 @@ class UserService
     public function register($input)
     {
         list($status, $code, $message, $data) = $this->userRepository->loginRocket($input);
+
         if ($status) {
             $rocket = $this->rocketRepository->findByFields('owner_id', $data['userId'])->first();
+            if (is_null($rocket)) {
+                return [false, 404, 'User not found'];
+            }
         } else {
             return [$status, $code, $message];
         }
@@ -44,6 +49,7 @@ class UserService
         }
 
         $input['password'] = Hash::make($input['password']);
+        $input['status']   = config('constant.user.status.verify');
 
         try {
             DB::beginTransaction();
@@ -70,10 +76,10 @@ class UserService
 
     public function logout()
     {
-        if (checkLogin()) {
+        if (Auth::check()) {
             Auth::logout();
         }
-        return redirect('/auth/login');
+        return redirect('/login');
     }
 
     public function followUser($id)

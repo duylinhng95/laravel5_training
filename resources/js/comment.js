@@ -10,9 +10,9 @@ class Comment {
 
 	config() {
 		this.element = {
-			formData: $("#comment"),
+			contentComment: $("#commentContent"),
+			token: $("#csrf_token"),
 			btnComment: $("#btnComment"),
-			content: $("#commentContent"),
 			num: $("#commentNum"),
 			commentList: $(".comment-list"),
 		}
@@ -21,23 +21,27 @@ class Comment {
 
 	listen() {
 		this.addComment()
+		this.btnCommentEnter()
 	}
 
 	addComment() {
-		let data = this.element.formData
-		let btn = this.element.btnComment
 		let url = `${this.apiURL}/post/comment`
-		let comment = this.element.commentList
-		btn.on('click', function (event) {
+		let commentList = this.element.commentList
+		let content = this.element.contentComment
+		let token = this.element.token
+		this.element.btnComment.on('click', function (event) {
 			let id = event.target.children.postId.value
-			data = data.serialize()
+			let data = {
+				content: content.val(),
+				_token: token.val()
+			}
 			$.ajax({
 				url: `${url}/${id}`,
 				type: "POST",
 				data: data,
 				success: function (response) {
-					var res = response.data
-					comment.append(
+					let res = response.data
+					commentList.append(
 						`<div class="article-content">
               <div class="article-comment-top">
                   <div class="comments-user">
@@ -55,6 +59,13 @@ class Comment {
 			})
 		})
 	}
+	btnCommentEnter() {
+		let btnComment = this.element.btnComment
+		this.element.contentComment.keypress(function (event) {
+			if(event.which === 13) {
+				btnComment.click()
+			}
+		})
+	}
 }
-
 export default Comment

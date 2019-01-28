@@ -14,11 +14,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {{checkLogin()}}
-                @if(checklogin())
+                @if(Auth::check())
                     <div class="login-box border-right-1">
                         <a href="{{route('auth.logout')}}">
                             <i class="fa fa-key"></i> Logout</a>
+                    </div>
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="{{route('user.index')}}">
+                            <i class="fa fa-user"></i> User</a>
                     </div>
                 @else
                     <div class="login-box border-right-1">
@@ -26,10 +29,6 @@
                             <i class="fa fa-key"></i> Login</a>
                     </div>
                 @endif
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="{{route('user.index')}}">
-                        <i class="fa fa-user"></i> User</a>
-                </div>
                 @if(checkRole('admin'))
                     <div class="login-box border-left-1 border-right-1">
                         <a href="{{route('admin.index')}}">

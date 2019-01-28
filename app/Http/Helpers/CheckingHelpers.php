@@ -21,7 +21,7 @@ function checkStatus()
 
 function checkOwner($id)
 {
-    return Auth::user()->id == $id;
+    return Auth::id() == $id;
 }
 
 function checkAdmin($user, $roleName)

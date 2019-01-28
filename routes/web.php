@@ -10,15 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'PostController@index')->name('post.index');
 
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
         Route::get('/{id}', 'PostController@show')->name('post.show');
         Route::post('/comment/{id}', 'PostController@comment')->name('post.comment');
-        Route::get('/vote/{id}', 'PostController@vote')->name('post.vote');
+        Route::post('/vote/{id}', 'PostController@vote')->name('post.vote');
     });
-
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@listUser')->name('user.list');
         Route::get('/info', 'UserController@index')->name('user.index');
@@ -35,10 +33,6 @@ Route::group(['middleware' => 'user.auth'], function () {
             Route::put('/{id}', 'PostController@update')->name('user.post.update');
         });
     });
-
-    Route::group(['prefix' => 'category'], function () {
-        Route::get('/', 'CategoryController@index')->name('category.index');
-    });
 });
 
 Route::group(['prefix' => '/'], function () {
@@ -47,6 +41,13 @@ Route::group(['prefix' => '/'], function () {
     Route::get('login', 'UserController@showLogin')->name('auth.login');
     Route::post('login', 'UserController@login')->name('auth.login');
     Route::get('logout', 'UserController@logout')->name('auth.logout');
+    Route::get('/', 'PostController@index')->name('post.index');
+    Route::group(['prefix' => 'post'], function () {
+        Route::get('/{id}', 'PostController@show')->name('post.show');
+    });
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', 'CategoryController@index')->name('category.index');
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {

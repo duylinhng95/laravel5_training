@@ -7,6 +7,7 @@ use App\Repository\PostRepository;
 use App\Services\PostService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Auth;
 
 class PostController extends Controller
 {
@@ -36,8 +37,10 @@ class PostController extends Controller
     public function show($id)
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
-        if (checkOwner($post->user->id)) {
-            return redirect()->route('user.post.show', ['id' => $id]);
+        if (Auth::check()) {
+            if (checkOwner($post->user->id)) {
+                return redirect()->route('user.post.show', ['id' => $id]);
+            }
         }
         $this->postService->countView($post);
 

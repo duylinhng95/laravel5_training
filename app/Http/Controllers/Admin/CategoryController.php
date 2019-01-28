@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
+use App\Repository\CategoryRepository;
 use App\Services\CategoryService;
 use App\Traits\ResponseTrait;
 
@@ -12,15 +13,17 @@ class CategoryController extends Controller
     use ResponseTrait;
 
     protected $categoryService;
+    protected $categoryRepository;
 
     public function __construct()
     {
         $this->categoryService = app(CategoryService::class);
+        $this->categoryRepository = app(CategoryRepository::class);
     }
 
     public function index()
     {
-        $categories = $this->categoryService->all();
+        $categories = $this->categoryRepository->all();
         return view('Admin.category.index', compact('categories'));
     }
 

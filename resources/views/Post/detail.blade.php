@@ -39,11 +39,13 @@
                         <h2>
                             <small>Number of votes: <span id="voteNum">{{count($post->votes)}}</span></small>
                         </h2>
+                        @if(Auth::check())
                         <button type="button" class="btn btn-success" id="btnVotePost"
-                                @if(Auth::user()->id == $post->user->id)  disabled @endif>
+                                @if(Auth::id() == $post->user->id)  disabled @endif>
                             <input type="hidden" id="postId" value="{{$post->id}}">
                             Vote <i class="fa fa-thumbs-o-up"></i>
                         </button>
+                        @endif
 
                     </div>
                 </div>
@@ -52,11 +54,13 @@
                 <div class="card post">
                     <div class="article-heading">
                         <i class="fa fa-user"></i> Author: {{$post->user->name}}
-                        @if(Auth::user()->id != $post->user->id)
-                            @if($followed == 0)
-                                <a href="{{route('user.follow',['id' => $post->user->id])}}" class="btn btn-primary">Follow</a>
-                            @else
-                                <a href="{{route('user.unfollow',['id' => $post->user->id])}}" class="btn btn-danger">Unfollow</a>
+                        @if(Auth::check())
+                            @if(Auth::id() != $post->user->id)
+                                @if($followed == 0)
+                                    <a href="{{route('user.follow',['id' => $post->user->id])}}" class="btn btn-primary">Follow</a>
+                                @else
+                                    <a href="{{route('user.unfollow',['id' => $post->user->id])}}" class="btn btn-danger">Unfollow</a>
+                                @endif
                             @endif
                         @endif
                     </div>
@@ -88,16 +92,15 @@
                     </div>
                     <hr class="style-three">
                     <!-- LEAVE A REPLY SECTION -->
+                    @if(Auth::check())
                     <div class="panel-transparent">
                         <div class="article-heading">
                             <i class="fa fa-comment-o"></i> Leave a Reply
                         </div>
-                        <form id="comment" class="comment-form">
-                            {{csrf_field()}}
                             <div class="form-group">
+                                <input type="hidden" name="token" value="{{csrf_token()}}" id="csrf_token">
                                 <input type="text" class="form-control" id="commentContent" name="content">
                             </div>
-                        </form>
                         <div class="float-right">
                             <button type="button" class="btn btn-wide btn-primary"
                                     id="btnComment">
@@ -107,6 +110,7 @@
                         </div>
                     </div>
                     <!-- END LEAVE A REPLY SECTION -->
+                    @endif
                 </div>
                 <!-- END COMMENTS -->
             </div>

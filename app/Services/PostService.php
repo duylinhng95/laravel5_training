@@ -49,9 +49,25 @@ class PostService
 
     public function find($id)
     {
-        $post     = $this->postRepository->find($id);
+        $post = $this->postRepository->find($id);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
         return [$post, $tags, $comments, $followed];
+    }
+
+    private function getPostInfo($post)
+    {
+        $tags     = implode(',', $post->tags->pluck('name')->toArray());
+        $comments = $post->comments;
+        $followed = 0;
+        $author = $post->user_id;
+        $followed = 0;
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+                $followed = 1;
+            }
+        }
+        return [$tags, $comments, $followed];
     }
 
     public function update($id, $input)
@@ -100,26 +116,11 @@ class PostService
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
-
     public function findWithTrashed($id)
     {
-        $post   = $this->postRepository->findWithTrashed($id);
+        $post = $this->postRepository->findWithTrashed($id);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
-    }
-
-    private function getPostInfo($post)
-    {
-        $tags     = implode(',', $post->tags->pluck('name')->toArray());
-        $comments = $post->comments;
-        $followed = 0;
-        $user     = Auth::user();
-        $author   = $post->user_id;
-        if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
-            $followed = 1;
-        }
-
-        return [$tags, $comments, $followed];
     }
 }

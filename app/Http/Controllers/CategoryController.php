@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CategoryService;
+use App\Repository\CategoryRepository;
 
 class CategoryController extends Controller
 {
-    protected $categoryService;
+    protected $categoryRepository;
 
     public function __construct()
     {
-        $this->categoryService = app(CategoryService::class);
+        $this->categoryRepository = app(CategoryRepository::class);
     }
 
     public function index()
     {
-        $categories = $this->categoryService->all();
+        $categories = $this->categoryRepository->all();
         return view('Category.index', compact('categories'));
     }
 }
