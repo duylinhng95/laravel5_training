@@ -52,7 +52,7 @@
             <hr class="style-three">
             <div class="fat-content-tags padding-left-10">
                 @foreach($tags as $tag)
-                    <a href="{{url('?keyword='.$tag->name)}}"
+                    <a href="{{url('?tags='.$tag->name)}}"
                        class="btn btn-default btn-o btn-sm">{{$tag->name}}</a>
                 @endforeach
             </div>
