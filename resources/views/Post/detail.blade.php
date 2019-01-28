@@ -97,8 +97,9 @@
                         <div class="article-heading">
                             <i class="fa fa-comment-o"></i> Leave a Reply
                         </div>
-                            <div class="form-group">
+                            <div class="form-group offset-1 col-10">
                                 <input type="hidden" name="token" value="{{csrf_token()}}" id="csrf_token">
+                                <div class="text-danger" id="error_message"></div>
                                 <input type="text" class="form-control" id="commentContent" name="content">
                             </div>
                         <div class="float-right">

@@ -15,6 +15,7 @@ class Comment {
 			btnComment: $("#btnComment"),
 			num: $("#commentNum"),
 			commentList: $(".comment-list"),
+			error_message: $("#error_message"),
 		}
 		this.apiURL = location.origin
 	}
@@ -29,6 +30,7 @@ class Comment {
 		let commentList = this.element.commentList
 		let content = this.element.contentComment
 		let token = this.element.token
+		let error_msg = this.element.error_message
 		this.element.btnComment.on('click', function (event) {
 			let id = event.target.children.postId.value
 			let data = {
@@ -55,13 +57,19 @@ class Comment {
                   </div>
               </div>
           </div>`)
+				},
+				error: function(res){
+					let response = res.responseJSON
+					error_msg.html(response.message)
 				}
 			})
 		})
 	}
 	btnCommentEnter() {
 		let btnComment = this.element.btnComment
+		let error_msg = this.element.error_message
 		this.element.contentComment.keypress(function (event) {
+			error_msg.html('')
 			if(event.which === 13) {
 				btnComment.click()
 			}
