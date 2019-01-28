@@ -1,5 +1,5 @@
 class Follow {
-	constructor(){
+	constructor() {
 		this.init()
 	}
 
@@ -8,53 +8,49 @@ class Follow {
 		this.listen()
 	}
 
-	config(){
-		this.btnFollow = $("#followUser")
-		this.btnUnfollow= $("#unfollowUser")
-		this.userId = $("#userId")
+	config() {
+		this.element = {
+			btnFollow: $(".btn-follow"),
+			btnUnfollow: $(".btn-unfollow")
+		}
+		this.sectionFollow = $(".section-follow")
 		this.apiUrl = location.origin
 	}
 
-	listen(){
+	listen() {
 		this.followUser()
-		this.unFollowUser()
+		this.unfollowUser()
 	}
 
-	followUser()
-	{
-		let btn = this.btnFollow
-		let userId = this.userId.val()
+	followUser() {
 		let url = `${this.apiUrl}`
-		btn.on('click', function() {
+		let btnFollow = this.element.btnFollow
+
+		btnFollow.on('click', function () {
+			let userId = $(this).attr('data-user-id')
+
 			$.ajax({
 				url: `${url}/user/follow/${userId}`,
 				type: "GET",
-				success: function(){
-					btn.id = "unfollowUser"
-					btn.removeClass('btn-primary')
-					btn.addClass('btn-danger')
-					btn.html('')
-					btn.text('Unfollow')
+				success: function () {
+					$(`.btn-follow[data-user-id=${userId}]`).addClass('d-none')
+					$(`.btn-unfollow[data-user-id=${userId}]`).removeClass('d-none')
 				}
 			})
 		})
 	}
 
-	unFollowUser()
-	{
-		let btn = this.btnUnfollow
-		let userId = this.userId.val()
+	unfollowUser() {
 		let url = `${this.apiUrl}`
-		btn.on('click', function() {
+		let btnUnfollow = this.element.btnUnfollow
+		btnUnfollow.on('click', function () {
+			let userId = $(this).attr('data-user-id')
 			$.ajax({
-				url: `${url}/user/unfollow/${userId}`,
+				url: `${url}/user/follow/${userId}`,
 				type: "GET",
-				success: function(){
-					btn.id = "followUser"
-					btn.removeClass('btn-danger')
-					btn.addClass('btn-primary')
-					btn.html('')
-					btn.text('Follow')
+				success: function () {
+					$(`.btn-unfollow[data-user-id=${userId}]`).addClass('d-none')
+					$(`.btn-follow[data-user-id=${userId}]`).removeClass('d-none')
 				}
 			})
 		})

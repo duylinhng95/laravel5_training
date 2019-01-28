@@ -77,13 +77,7 @@ class UserController extends Controller
     public function follow($id)
     {
         $this->followService->followUser($id);
-        return $this->success('Follow Success');
-    }
-
-    public function unfollow($id)
-    {
-        $this->followService->unfollowUser($id);
-        return $this->success('Unfollow Success');
+        return $this->success('Follow Success', $id);
     }
 
     public function listUser(Request $request)

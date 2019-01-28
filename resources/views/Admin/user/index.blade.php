@@ -59,9 +59,7 @@
                             @endswitch
                         </td>
                         <td>
-                            @foreach($user->getRoles() as $role)
-                                {{ucwords($role)}}
-                            @endforeach
+                            {{implode(' ',$user->getRoles())}}
                         </td>
                         <td id="action">
                             <button class="btn btn-danger" onclick='blockUser({{$user->id}})'

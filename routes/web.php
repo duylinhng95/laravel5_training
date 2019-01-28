@@ -21,7 +21,6 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::get('/', 'UserController@listUser')->name('user.list');
         Route::get('/info', 'UserController@index')->name('user.index');
         Route::get('/follow/{id}', 'UserController@follow')->name('user.follow');
-        Route::get('/unfollow/{id}', 'UserController@unfollow')->name('user.unfollow');
 
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index')->name('user.post.index');

@@ -94,7 +94,7 @@ class User extends Authenticatable
         $userRoles = $this->userRoles;
         $roles     = [];
         foreach ($userRoles as $role) {
-            $roles = $role->role->pluck('name');
+            $roles = $role->role->pluck('name')->toArray();
         }
         return $roles;
     }

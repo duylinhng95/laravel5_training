@@ -40,11 +40,11 @@
                             <small>Number of votes: <span id="voteNum">{{count($post->votes)}}</span></small>
                         </h2>
                         @if(Auth::check())
-                        <button type="button" class="btn btn-success" id="btnVotePost"
-                                @if(Auth::id() == $post->user->id)  disabled @endif>
-                            <input type="hidden" id="postId" value="{{$post->id}}">
-                            Vote <i class="fa fa-thumbs-o-up"></i>
-                        </button>
+                            <button type="button" class="btn btn-success" id="btnVotePost"
+                                    @if(Auth::id() == $post->user->id)  disabled @endif>
+                                <input type="hidden" id="postId" value="{{$post->id}}">
+                                Vote <i class="fa fa-thumbs-o-up"></i>
+                            </button>
                         @endif
 
                     </div>
@@ -54,16 +54,18 @@
                 <div class="card post">
                     <div class="article-heading">
                         <i class="fa fa-user"></i> Author: {{$post->user->name}}
-                        <input type="hidden" id="userId" value="{{$post->user->id}}">
-                        @if(Auth::check())
-                            @if(Auth::id() != $post->user->id)
-                                @if($followed == 0)
-                                    <button id="followUser" class="btn btn-primary">Follow</button>
-                                @else
-                                    <button id="unfollowUser" class="btn btn-danger">Unfollow</button>
+                        <div class="section-follow">
+                            @if(Auth::check())
+                                @if(Auth::id() != $post->user->id)
+                                        <button class="btn btn-primary btn-follow @if($followed === 1) d-none @endif" data-user-id="{{$post->user->id}}">
+                                            Follow
+                                        </button>
+                                        <button class="btn btn-danger btn-unfollow @if($followed === 0) d-none @endif" data-user-id="{{$post->user->id}}">
+                                            Unfollow
+                                        </button>
                                 @endif
                             @endif
-                        @endif
+                        </div>
                     </div>
                 </div>
                 <!-- COMMENTS  -->
@@ -94,24 +96,24 @@
                     <hr class="style-three">
                     <!-- LEAVE A REPLY SECTION -->
                     @if(Auth::check())
-                    <div class="panel-transparent">
-                        <div class="article-heading">
-                            <i class="fa fa-comment-o"></i> Leave a Reply
-                        </div>
+                        <div class="panel-transparent">
+                            <div class="article-heading">
+                                <i class="fa fa-comment-o"></i> Leave a Reply
+                            </div>
                             <div class="form-group offset-1 col-10">
                                 <input type="hidden" name="token" value="{{csrf_token()}}" id="csrf_token">
                                 <div class="text-danger" id="error_message"></div>
                                 <input type="text" class="form-control" id="commentContent" name="content">
                             </div>
-                        <div class="float-right">
-                            <button type="button" class="btn btn-wide btn-primary"
-                                    id="btnComment">
-                                <input type="hidden" name="postId" id="postId" value="{{$post->id}}">
-                                Post Comment
-                            </button>
+                            <div class="float-right">
+                                <button type="button" class="btn btn-wide btn-primary"
+                                        id="btnComment">
+                                    <input type="hidden" name="postId" id="postId" value="{{$post->id}}">
+                                    Post Comment
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END LEAVE A REPLY SECTION -->
+                        <!-- END LEAVE A REPLY SECTION -->
                     @endif
                 </div>
                 <!-- END COMMENTS -->
