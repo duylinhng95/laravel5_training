@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
 
 class AdminController extends Controller
 {
-    /** @var UserRepository */
+    /** @var UserRepositoryEloquent */
     protected $userRepository;
     protected $adminService;
 

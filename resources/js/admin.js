@@ -43,13 +43,13 @@ class Admin {
 	}
 
 	importUser() {
-		let url = `${this.apiURL}/user/import`
+		let url = `${this.originURL}/admin/user/import`
 		this.element.btnImportUser.on('click', function () {
 			$.ajax({
 				url: url,
 				type: "GET",
 				success: function () {
-					location.reload();
+
 				}
 			})
 		})

@@ -46,7 +46,7 @@
                     </div>
                     <!-- END ARTICLES -->
                     @endif
-            @endforeach
+                @endforeach
             <!-- PAGINATION -->
                 <div class="text-center">
                     {{$users->links()}}

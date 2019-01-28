@@ -65,7 +65,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
         if ($request->has('keywords')) {
             $keyword = $request->input('keywords');
-            $query = $query->where(function ($query) use ($keyword) {
+            $query   = $query->where(function ($query) use ($keyword) {
                 $query->where('name', 'like', '%' . $keyword . '%')
                     ->orWhere('email', 'like', '%' . $keyword . '%');
             });
@@ -73,10 +73,13 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
         if ($request->has('sort')) {
             $section = $request->input('sort');
-            $order = $request->input('order');
-            $query = $query->orderBy($section, $order);
+            $order   = $request->input('order');
+            $query   = $query->orderBy($section, $order);
         }
-
+        $query = $query->whereDoesntHave('userRoles', function ($subQuery) {
+            $adminId = config('constant.user.role.admin');
+            $subQuery->where('role_id', $adminId);
+        });
         $users = $query->paginate(50);
         return $users;
     }

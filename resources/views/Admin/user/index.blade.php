@@ -41,9 +41,8 @@
             </thead>
             <tbody>
             @foreach($users as $index => $user)
-                @if(!checkAdmin($user, 'admin'))
                     <tr id="{{$user->id}}">
-                        <td>{{$index++}}</td>
+                        <td>{{++$index}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                         <td id="status">
@@ -73,7 +72,6 @@
                             </button>
                         </td>
                     </tr>
-                @endif
             @endforeach
             {{$users->links()}}
             </tbody>
