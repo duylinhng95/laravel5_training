@@ -13,6 +13,7 @@
                 </div>
                 <hr class="style-three">
                 @foreach ($users as $user)
+                    @if(!checkAdmin($user, 'admin'))
                     <div class="card post">
                         <div class="row">
                             <div class="col-6">
@@ -44,6 +45,7 @@
                         </div>
                     </div>
                     <!-- END ARTICLES -->
+                    @endif
             @endforeach
             <!-- PAGINATION -->
                 <div class="text-center">
