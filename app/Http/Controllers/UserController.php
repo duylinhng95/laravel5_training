@@ -77,13 +77,13 @@ class UserController extends Controller
     public function follow($id)
     {
         $this->followService->followUser($id);
-        return redirect()->route('user.index');
+        return back();
     }
 
     public function unfollow($id)
     {
         $this->followService->unfollowUser($id);
-        return redirect()->route('user.index');
+        return back();
     }
 
     public function listUser(Request $request)
