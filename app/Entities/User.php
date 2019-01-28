@@ -92,7 +92,7 @@ class User extends Authenticatable
     public function getRoles()
     {
         $userRoles = $this->userRoles;
-        $roles = [];
+        $roles     = [];
         foreach ($userRoles as $role) {
             $roles = $role->role->pluck('name');
         }
