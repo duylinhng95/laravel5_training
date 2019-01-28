@@ -30,6 +30,7 @@ class Admin {
 		}
 		this.apiURL = location.href
 		this.originURL = location.origin
+		this.pathName = location.pathname
 	}
 
 	listen() {
@@ -75,13 +76,18 @@ class Admin {
 
 	sortButtonPress(){
 		let params = new URLSearchParams(this.element.params)
+		let url = `${this.pathName}?`
 		$.each(this.section, function(key, value) {
 			value.on('click', function(event) {
 				let section = event.currentTarget.children[1].value
 				if (params.get('order') == 'desc') {
-					window.location.href = "/admin?sort=" + section + "&order=asc";
+					params.set('sort', section)
+					params.set('order', 'asc')
+					location.href = url + params.toString()
 				} else {
-					window.location.href = "/admin?sort=" + section + "&order=desc";
+					params.set('sort', section)
+					params.set('order', 'desc')
+					location.href = url + params.toString()
 				}
 			})
 		})
