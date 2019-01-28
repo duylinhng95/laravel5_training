@@ -20,7 +20,7 @@ class BlockUserPost
         if (checkStatus()) {
             return $next($request);
         } else {
-            return redirect()->route('user.list')->with('error', 'You have been blocked to post');
+            return redirect()->route('user.index')->with('error', 'You have been blocked to post');
         }
     }
 }
