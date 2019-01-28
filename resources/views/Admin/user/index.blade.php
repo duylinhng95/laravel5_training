@@ -59,8 +59,8 @@
                             @endswitch
                         </td>
                         <td>
-                            @foreach($user->userRoles as $role)
-                                {{ucwords($role->role->name)}}
+                            @foreach($user->getRoles() as $role)
+                                {{ucwords($role)}}
                             @endforeach
                         </td>
                         <td id="action">
