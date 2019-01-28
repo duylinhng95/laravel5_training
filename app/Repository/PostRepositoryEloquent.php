@@ -17,6 +17,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $post = $this->makeModel()->create($input);
         $tags = $this->generateTagFromString($input);
+        unset($input['tags']);
         $post->tags()->createMany($tags);
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
@@ -27,7 +28,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         foreach ($tags as $key => $tag) {
             $tags[$key] = ['name' => $tag];
         }
-        unset($input['tags']);
 
         return $tags;
     }
@@ -44,6 +44,10 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $post = $this->makeModel()->where($att, $id)->first();
         $tags = $this->generateTagFromString($input);
+        unset($input['tags']);
+        foreach ($tags as $tag) {
+            $post->tags()->firstOrCreate($tag);
+        }
         $post->update($input);
         return $tags;
     }
