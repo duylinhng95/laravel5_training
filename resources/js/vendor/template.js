@@ -126,40 +126,4 @@ jQuery(document).ready(function ($) {
 
 
 // });
-window.blockUser = function blockUser(id) {
-	$.ajax({
-		url: blockUserURI,
-		type: "GET",
-		data: {id: id},
-		success: function (response) {
-			var res = response.data;
-			$('#' + res.id).find('#status').text('Block');
-			$('#' + res.id).find('#action').html('');
-			$('#' + res.id).find('#action').append(
-				"<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' disabled>Block User</button>" +
-				" <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")'>Unblock User</button>"
-			)
-		}
-	});
-}
-
-window.unBlockUser = function unBlockUser(id) {
-	$.ajax({
-		url: unBlockUserURI,
-		type: "GET",
-		data: {id: id},
-		success: function (response) {
-			var res = response.data;
-			if (res.status == 1) {
-				$('#' + res.id).find('#status').text('Active');
-			} else {
-				$('#' + res.id).find('#status').text('Not Active');
-			}
-			$('#' + res.id).find('#action').html('');
-			$('#' + res.id).find('#action').append(
-				"<button class='btn btn-danger' onclick='blockUser(" + res.id + ")' >Block User</button>" +
-				" <button class='btn btn-success' onclick='unBlockUser(" + res.id + ")' disabled>Unblock User</button>"
-			)
-		}
-	})
 }

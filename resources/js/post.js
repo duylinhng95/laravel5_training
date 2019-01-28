@@ -2,11 +2,13 @@ require('./bootstrap.js')
 window.Summernote = require('summernote/dist/summernote-bs4');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
 import Comment from './comment.js'
+import Follow from './follow.js'
 
 class Post {
 	constructor() {
 		this.init()
 		new Comment()
+		new Follow()
 	}
 
 	init() {

@@ -54,12 +54,13 @@
                 <div class="card post">
                     <div class="article-heading">
                         <i class="fa fa-user"></i> Author: {{$post->user->name}}
+                        <input type="hidden" id="userId" value="{{$post->user->id}}">
                         @if(Auth::check())
                             @if(Auth::id() != $post->user->id)
                                 @if($followed == 0)
-                                    <a href="{{route('user.follow',['id' => $post->user->id])}}" class="btn btn-primary">Follow</a>
+                                    <button id="followUser" class="btn btn-primary">Follow</button>
                                 @else
-                                    <a href="{{route('user.unfollow',['id' => $post->user->id])}}" class="btn btn-danger">Unfollow</a>
+                                    <button id="unfollowUser" class="btn btn-danger">Unfollow</button>
                                 @endif
                             @endif
                         @endif
