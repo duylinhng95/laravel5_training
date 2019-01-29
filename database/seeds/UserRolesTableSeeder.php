@@ -11,11 +11,28 @@ class UserRolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $userId = \DB::table('users')->select('id')->where('name', 'Admin')->first();
-        $roleId = \DB::table('roles')->select('id')->where('name', 'admin')->first();
+        $userId = \DB::table('users')
+            ->select('id')
+            ->where('name', 'Admin')
+            ->orWhere('name', 'like', '%Hoàng%')->get();
+
+        $roleId = \DB::table('roles')
+            ->select('id')
+            ->where('name', 'admin')
+            ->orWhere('name', 'user')->get();
+
         \DB::table('user_roles')->insert([
-            'user_id' => $userId->id,
-            'role_id' => $roleId->id,
+            'user_id' => $userId[0]->id,
+            'role_id' => $roleId[1]->id,
         ]);
+
+        unset($userId[0]);
+
+        foreach ($userId as $user) {
+            DB::table('user_roles')->insert([
+                'user_id' => $user->id,
+                'role_id' => $roleId[0]->id
+            ]);
+        }
     }
 }

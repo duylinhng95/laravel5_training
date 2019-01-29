@@ -25,15 +25,23 @@ class UserService
         $this->roleRepository   = app(UserRoleRepository::class);
     }
 
+    public function register($input)
+    {
+        if (Auth::attempt($input)) {
+            Auth::logout();
+            return [false, 409, 'User already registered. Please login'];
+        }
+        return $this->checkRocketChatAndCreateAccount($input);
+    }
+
     /**
      * @param $input
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public function register($input)
+    private function checkRocketChatAndCreateAccount($input)
     {
         list($status, $code, $message, $data) = $this->userRepository->loginRocket($input);
-
         if ($status) {
             $rocket = $this->rocketRepository->findByFields('owner_id', $data['userId'])->first();
             if (is_null($rocket)) {
@@ -41,11 +49,6 @@ class UserService
             }
         } else {
             return [$status, $code, $message];
-        }
-
-        if (Auth::attempt($input)) {
-            Auth::logout();
-            return [false, 409, 'User already registered. Please login'];
         }
 
         $input['password'] = Hash::make($input['password']);
@@ -62,16 +65,20 @@ class UserService
             throw $e;
         }
 
-        return [true, 200, 'Register Successful'];
+        return [true, 200, 'Login via RocketChat Successful'];
     }
 
+    /**
+     * @param $input
+     * @return array
+     * @throws Exception
+     */
     public function login($input)
     {
         if ($user = Auth::guard()->attempt($input)) {
             return [true, 200, 'Login Successful'];
-        } else {
-            return [false, 401, 'Wrong Credentials'];
         }
+        return $this->checkRocketChatAndCreateAccount($input);
     }
 
     public function logout()

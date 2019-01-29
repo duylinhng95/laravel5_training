@@ -22,7 +22,7 @@ trait RocketTrait
                 'body'    => $body
             ]);
         } catch (ClientException $e) {
-            return [false, $e->getCode(), 'Not Neolaber', ''];
+            return [false, $e->getCode(), 'Wrong credential please check your credential again', ''];
         }
         $res = json_decode($res->getBody()->getContents(), true);
         return [true, 200, 'Login via API success', $res['data']];
