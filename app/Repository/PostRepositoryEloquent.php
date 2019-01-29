@@ -17,6 +17,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $post = $this->makeModel()->create($input);
         $tags = $this->generateTagFromString($input);
+        unset($input['tags']);
         $post->tags()->createMany($tags);
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
@@ -27,7 +28,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         foreach ($tags as $key => $tag) {
             $tags[$key] = ['name' => $tag];
         }
-        unset($input['tags']);
 
         return $tags;
     }
@@ -44,6 +44,10 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $post = $this->makeModel()->where($att, $id)->first();
         $tags = $this->generateTagFromString($input);
+        unset($input['tags']);
+        foreach ($tags as $tag) {
+            $post->tags()->firstOrCreate($tag);
+        }
         $post->update($input);
         return $tags;
     }
@@ -53,17 +57,22 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         $mainQuery = $this->makeModel();
 
         if ($request->has('keywords')) {
-            $keyword = $request->input('keywords');
+            $keyword   = $request->input('keywords');
             $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
                 /** @var Builder $query */
                 $query->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhereHas('tags', function ($subQuery) use ($keyword) {
-                        $subQuery->where('name', 'like', '%' . $keyword . '%');
-                    })->orWhereHas('category', function ($subQuery) use ($keyword) {
+                    ->orWhereHas('category', function ($subQuery) use ($keyword) {
                         $subQuery->where('name', 'like', '%' . $keyword . '%');
                     })->orWhereHas('user', function ($subQuery) use ($keyword) {
                         $subQuery->where('name', 'like', '%' . $keyword . '%');
                     });
+            });
+        }
+
+        if ($request->has('tags')) {
+            $keyword   = $request->input('tags');
+            $mainQuery = $mainQuery->WhereHas('tags', function ($subQuery) use ($keyword) {
+                $subQuery->where('name', 'like', '%' . $keyword . '%');
             });
         }
 
@@ -85,6 +94,13 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $mainQuery->orderBy('created_at', 'desc')->paginate(10);
     }
 
+    private function sortRelationship($query, $section, $childId, $order)
+    {
+        return $query = $query->select('posts.*')
+            ->leftJoin($childId, $childId . '.id', 'posts.' . $section . '_id')
+            ->orderBy('name', $order);
+    }
+
     public function destroy($id)
     {
         $post = $this->makeModel()->withTrashed()->find($id);
@@ -102,21 +118,12 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return ['code' => 200, 'message' => 'Delete Post Successful'];
     }
 
-
-    private function sortRelationship($query, $section, $childId, $order)
-    {
-        return $query = $query->select('posts.*')
-            ->leftJoin($childId, $childId . '.id', 'posts.' . $section . '_id')
-            ->orderBy('name', $order);
-    }
-
-
     public function paginateWithTrashed($request, $num)
     {
         $mainQuery = $this->makeModel();
 
         if ($request->has('keywords')) {
-            $keyword = $request->input('keywords');
+            $keyword   = $request->input('keywords');
             $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
                 /** @var Builder $query */
                 $query->where('title', 'like', '%' . $keyword . '%')

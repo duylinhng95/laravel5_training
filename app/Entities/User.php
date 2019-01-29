@@ -88,4 +88,14 @@ class User extends Authenticatable
     {
         return $this->follows->contains('follower_id', $id);
     }
+
+    public function getRoles()
+    {
+        $userRoles = $this->userRoles;
+        $roles = [];
+        foreach ($userRoles as $role) {
+            $roles[] = $role->role->name;
+        }
+        return $roles;
+    }
 }

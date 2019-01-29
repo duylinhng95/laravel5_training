@@ -19,10 +19,4 @@ class FollowService
         $userId = Auth::user()->id;
         return $this->followRepository->follow($id, $userId);
     }
-
-    public function unfollowUser($id)
-    {
-        $userId = Auth::user()->id;
-        return $this->followRepository->unfollow($id, $userId);
-    }
 }

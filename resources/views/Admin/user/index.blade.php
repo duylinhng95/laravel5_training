@@ -41,9 +41,8 @@
             </thead>
             <tbody>
             @foreach($users as $index => $user)
-                @if(!checkAdmin($user, 'admin'))
                     <tr id="{{$user->id}}">
-                        <td>{{$index++}}</td>
+                        <td>{{++$index}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                         <td id="status">
@@ -60,9 +59,7 @@
                             @endswitch
                         </td>
                         <td>
-                            @foreach($user->userRoles as $role)
-                                {{$role->role->name}},
-                            @endforeach
+                            {{implode(' ',$user->getRoles())}}
                         </td>
                         <td id="action">
                             <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
@@ -73,7 +70,6 @@
                             </button>
                         </td>
                     </tr>
-                @endif
             @endforeach
             {{$users->links()}}
             </tbody>

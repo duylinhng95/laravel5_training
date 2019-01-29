@@ -49,7 +49,10 @@ class PostController extends Controller
 
     public function comment($postId, Request $request)
     {
-        $input   = $request->except('_token');
+        $input = $request->except('_token');
+        if (is_null($input['content'])) {
+            return $this->error(400, "The comment is empty");
+        }
         $comment = $this->postService->comment($postId, $input);
 
         return $this->success('Add new comment successful', $comment);

@@ -12,16 +12,35 @@
                 </div>
             </div>
         @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
     <form action="{{route('auth.login')}}" method="post">
         <div class="card-body">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="name">Email</label>
+                @if($errors->has('email'))
+                    <div class="text-danger">
+                        {{$errors->first('email')}}
+                    </div>
+                @endif
                 <input type="email" name="email" class="form-control">
             </div>
             <div class="form-group">
                 <label for="name">Password</label>
+                @if($errors->has('password'))
+                    <div class="text-danger">
+                        {{$errors->first('password')}}
+                    </div>
+                @endif
                 <input type="password" name="password" class="form-control">
             </div>
         </div>

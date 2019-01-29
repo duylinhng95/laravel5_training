@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
@@ -49,7 +50,7 @@ class UserController extends Controller
         return view('User.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $input = $request->except('_token');
         list($status, $code, $message) = $this->userService->login($input);
@@ -76,13 +77,7 @@ class UserController extends Controller
     public function follow($id)
     {
         $this->followService->followUser($id);
-        return redirect()->route('user.index');
-    }
-
-    public function unfollow($id)
-    {
-        $this->followService->unfollowUser($id);
-        return redirect()->route('user.index');
+        return $this->success('Follow Success', $id);
     }
 
     public function listUser(Request $request)

@@ -58,7 +58,6 @@ class PostService
     {
         $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
-        $followed = 0;
         $author = $post->user_id;
         $followed = 0;
         if (Auth::check()) {
