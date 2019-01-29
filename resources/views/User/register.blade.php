@@ -22,6 +22,16 @@
         {{csrf_field()}}
         <div class="card-body">
             <div class="form-group">
+                <label for="name">Full Name</label>
+                @if($errors->has('email'))
+                    <div class="text-danger">
+                        {{$errors->first('name')}}
+                    </div>
+                @endif
+                <input type="text" name="name" class="form-control">
+            </div>
+
+            <div class="form-group">
                 <label for="email">Email</label>
                 @if($errors->has('email'))
                     <div class="text-danger">
@@ -38,6 +48,10 @@
                     </div>
                 @endif
                 <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password Confirm</label>
+                <input type="password" name="password_confirmation" class="form-control">
             </div>
         </div>
     <div class="card-footer">

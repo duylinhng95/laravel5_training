@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
 use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
 use Auth;
@@ -13,7 +14,7 @@ use App\Entities\User;
 
 class UserService
 {
-
+    /** @var UserRepositoryEloquent */
     protected $userRepository;
     protected $rocketRepository;
     protected $roleRepository;
@@ -25,12 +26,35 @@ class UserService
         $this->roleRepository   = app(UserRoleRepository::class);
     }
 
+    /**
+     * @param $input
+     * @return array
+     * @throws Exception
+     */
     public function register($input)
     {
         if (Auth::attempt($input)) {
             Auth::logout();
             return [false, 409, 'User already registered. Please login'];
         }
+        $user = $this->userRepository->findByFields('email', $input['email']);
+
+        if (count($user) === 0) {
+            $input['password'] = Hash::make($input['password']);
+            $input['status']   = config('constant.user.status.verify');
+            try {
+                DB::beginTransaction();
+                $userId = $this->userRepository->create($input);
+                $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+
+            return [true, 200, 'Register Successful'];
+        }
+
         return $this->checkRocketChatAndCreateAccount($input);
     }
 
