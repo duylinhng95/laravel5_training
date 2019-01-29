@@ -54,10 +54,10 @@
                 <input type="password" name="password_confirmation" class="form-control">
             </div>
         </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-success">Register</button>
-        <a class="btn btn-secondary" href="{{route('auth.login')}}">Login</a>
-        <a class="btn btn-primary" href="{{route('post.index')}}">Back to homepage</a>
-    </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Register</button>
+            <a class="btn btn-secondary" href="{{route('auth.login')}}">Login</a>
+            <a class="btn btn-primary" href="{{route('post.index')}}">Back to homepage</a>
+        </div>
     </form>
 @endsection

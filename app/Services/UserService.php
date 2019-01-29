@@ -37,9 +37,9 @@ class UserService
             Auth::logout();
             return [false, 409, 'User already registered. Please login'];
         }
-        $user = $this->userRepository->findByFields('email', $input['email']);
+        $status = strpos($input['email'], '@neo-lab.vn');
 
-        if (count($user) === 0) {
+        if ($status === false) {
             $input['password'] = Hash::make($input['password']);
             $input['status']   = config('constant.user.status.verify');
             try {
@@ -55,7 +55,7 @@ class UserService
             return [true, 200, 'Register Successful'];
         }
 
-        return $this->checkRocketChatAndCreateAccount($input);
+        return [false, 409, 'User already registered as NeoLab. Please login'];
     }
 
     /**

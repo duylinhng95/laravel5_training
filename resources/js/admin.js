@@ -17,6 +17,7 @@ class Admin {
 			btnSearchPost: $("#searchPostBtn"),
 			searchField: $("#search"),
 			params: location.search,
+			loader: $("#loader"),
 		}
 		this.section = {
 			title: $("#titleSort"),
@@ -45,12 +46,14 @@ class Admin {
 
 	importUser() {
 		let url = `${this.originURL}/admin/user/import`
+		let self = this
 		this.element.btnImportUser.on('click', function () {
+			self.element.loader.modal('show')
 			$.ajax({
 				url: url,
 				type: "GET",
 				success: function () {
-
+					location.reload()
 				}
 			})
 		})

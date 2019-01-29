@@ -3,6 +3,7 @@
     <h2 class="pageheader-title">List Users </h2>
 @endsection
 @section('content')
+    @include('Admin.loader')
     <div class="card-header">
         <div class="row">
             <div class="col-6">
