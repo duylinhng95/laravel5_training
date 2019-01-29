@@ -33,29 +33,41 @@ class UserService
      */
     public function register($input)
     {
-        if (Auth::attempt($input)) {
-            Auth::logout();
-            return [false, 409, 'User already registered. Please login'];
-        }
-        $status = strpos($input['email'], '@neo-lab.vn');
-
+        $status     = strpos($input['email'], '@neo-lab.vn');
+        $checkEmail = $this->userRepository->findByFields('email', $input['email']);
         if ($status === false) {
-            $input['password'] = Hash::make($input['password']);
-            $input['status']   = config('constant.user.status.verify');
-            try {
-                DB::beginTransaction();
-                $userId = $this->userRepository->create($input);
-                $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollBack();
-                throw $e;
-            }
+            if (count($checkEmail) === 0) {
+                $input['password'] = Hash::make($input['password']);
+                $input['status']   = config('constant.user.status.verify');
+                try {
+                    DB::beginTransaction();
+                    $userId = $this->userRepository->create($input);
+                    $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollBack();
+                    throw $e;
+                }
 
-            return [true, 200, 'Register Successful'];
+                return [true, 200, 'Register Successful'];
+            }
+            return [false, 409, 'User already registered. Please login'];
         }
 
         return [false, 409, 'User already registered as NeoLab. Please login'];
+    }
+
+    /**
+     * @param $input
+     * @return array
+     * @throws Exception
+     */
+    public function login($input)
+    {
+        if ($user = Auth::guard()->attempt($input)) {
+            return [true, 200, 'Login Successful'];
+        }
+        return $this->checkRocketChatAndCreateAccount($input);
     }
 
     /**
@@ -90,19 +102,6 @@ class UserService
         }
 
         return [true, 200, 'Login via RocketChat Successful'];
-    }
-
-    /**
-     * @param $input
-     * @return array
-     * @throws Exception
-     */
-    public function login($input)
-    {
-        if ($user = Auth::guard()->attempt($input)) {
-            return [true, 200, 'Login Successful'];
-        }
-        return $this->checkRocketChatAndCreateAccount($input);
     }
 
     public function logout()
