@@ -3,7 +3,6 @@
     <h2 class="pageheader-title">List Users </h2>
 @endsection
 @section('content')
-    @include('Admin.loader')
     <div class="card-header">
         <div class="row">
             <div class="col-6">
@@ -40,7 +39,7 @@
             <td>Role</td>
             <td>Action</td>
             </thead>
-            <tbody>
+            <tbody id="loader">
             @foreach($users as $index => $user)
                     <tr id="{{$user->id}}">
                         <td>{{++$index}}</td>

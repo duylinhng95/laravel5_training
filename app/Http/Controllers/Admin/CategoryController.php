@@ -45,7 +45,8 @@ class CategoryController extends Controller
         $input = $request->except('_token', 'categoryId');
         $id    = $request->input('categoryId');
         $this->categoryService->update($id, $input);
-        return $this->success('Edit Category Successful');
+        $category = $this->categoryRepository->find($id);
+        return $this->success('Edit Category Successful', $category);
     }
 
     public function delete($id)

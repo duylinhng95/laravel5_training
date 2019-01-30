@@ -48,7 +48,11 @@ class Admin {
 		let url = `${this.originURL}/admin/user/import`
 		let self = this
 		this.element.btnImportUser.on('click', function () {
-			self.element.loader.modal('show')
+			self.element.loader.html(`
+						<td colspan="6" align="center">
+                <span class="dashboard-spinner spinner-primary spinner-lg"></span>
+            </td>
+			`)
 			$.ajax({
 				url: url,
 				type: "GET",
@@ -77,11 +81,11 @@ class Admin {
 		})
 	}
 
-	sortButtonPress(){
+	sortButtonPress() {
 		let params = new URLSearchParams(this.element.params)
 		let url = `${this.pathName}?`
-		$.each(this.section, function(key, value) {
-			value.on('click', function(event) {
+		$.each(this.section, function (key, value) {
+			value.on('click', function (event) {
 				let section = event.currentTarget.children[1].value
 				if (params.get('order') == 'desc') {
 					params.set('sort', section)

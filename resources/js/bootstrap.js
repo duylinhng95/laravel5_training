@@ -12,6 +12,7 @@ try {
     window.$ = window.jQuery = require('jquery');
     window.validate = require('jquery-validation');
     require('bootstrap');
+    window.toastr = require('toastr');
 } catch (e) {}
 
 /**
