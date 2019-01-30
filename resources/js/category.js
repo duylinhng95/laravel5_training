@@ -1,4 +1,3 @@
-import Notification from "./notification.js"
 
 class Category {
 	constructor() {
@@ -23,8 +22,13 @@ class Category {
 			btnSubmitEdit: $("#btnSubmitEditCategory"),
 			btnDelete: $(".btn-delete-category"),
 		};
-		this.notification = new Notification();
-		this.notification.init();
+		this.notification = window.toastr;
+		this.notification.options = {
+			"preventDuplicates": true,
+			"showDuration": "1",
+			"hideDuration": "1",
+			"timeOut": "600",
+		}
 		this.apiURL = location.origin;
 	}
 
@@ -39,7 +43,8 @@ class Category {
 		let url = `${this.apiURL}/admin/category`;
 		let createModal = this.element.create;
 		let formData = this.element.form.create;
-		let notification = this.notification.element;
+		let notification = this.notification;
+
 		formData.validate({
 			rules: {
 				"name": {
@@ -61,7 +66,8 @@ class Category {
 					type: "POST",
 					data: formData.serialize(),
 					success: function (res) {
-						createModal.modal('hide');
+						createModal.modal('hide')
+						notification.options.onHidden = function() { location.reload() }
 						notification.success(res.message)
 					}
 				})
@@ -91,9 +97,9 @@ class Category {
 
 	submitEditCategory() {
 		let url = `${this.apiURL}/admin/category`;
-		let editModal = this.element.edit;
-		let editForm = this.element.form.edit;
-		let notification = this.notification.element;
+		let editModal = this.element.edit
+		let editForm = this.element.form.edit
+		let notification = this.notification
 		editForm.validate({
 			rules: {
 				"name": {
@@ -106,7 +112,7 @@ class Category {
 				maxLength: "Name must be less than 25 characters"
 			}
 		})
-		this.element.btnSubmitEdit.on('click', function () {
+		this.element.btnSubmitEdit.on('click', function (event) {
 			if (editForm.valid()) {
 				let formData = editForm.serialize();
 				$.ajax({
@@ -114,7 +120,8 @@ class Category {
 					type: "PUT",
 					data: formData,
 					success: function (res) {
-						editModal.modal('hide');
+						notification.options.onHidden = function() { location.reload() }
+						editModal.modal('hide')
 						notification.success(res.message)
 					}
 				})
@@ -124,9 +131,11 @@ class Category {
 
 	deleteCategory() {
 		const url = `${this.apiURL}/admin/category`;
-		let notification = this.notification.element;
+		let notification = this.notification
 		this.element.btnDelete.on('click', function (event) {
 			let input = event.target;
+			let currentNode = input.parentNode.parentNode
+			let tbody = currentNode.parentNode
 			let id = input.children.categoryId.value
 			let token = input.children[1].value
 			let urlAPI = `${url}/${id}`
@@ -135,6 +144,7 @@ class Category {
 				type: "DELETE",
 				data: {_token: token},
 				success: function (res) {
+					tbody.removeChild(currentNode)
 					notification.success(res.message);
 				},
 				error: function (res) {
