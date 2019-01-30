@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
 use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
 use Auth;
@@ -13,7 +14,7 @@ use App\Entities\User;
 
 class UserService
 {
-
+    /** @var UserRepositoryEloquent */
     protected $userRepository;
     protected $rocketRepository;
     protected $roleRepository;
@@ -28,12 +29,54 @@ class UserService
     /**
      * @param $input
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function register($input)
     {
-        list($status, $code, $message, $data) = $this->userRepository->loginRocket($input);
+        $status = strpos($input['email'], '@neo-lab.vn');
+        if ($status === false) {
+            $input['password'] = Hash::make($input['password']);
+            $input['status']   = config('constant.user.status.verify');
+            try {
+                DB::beginTransaction();
+                $userId = $this->userRepository->create($input);
+                $this->roleRepository->create([
+                    'role_id' => config('constant.user.role.user'),
+                    'user_id' => $userId->id
+                ]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
 
+            return [true, 200, 'Register Successful'];
+        }
+
+        return [false, 409, 'User already registered as NeoLab. Please login'];
+    }
+
+    /**
+     * @param $input
+     * @return array
+     * @throws Exception
+     */
+    public function login($input)
+    {
+        if ($user = Auth::guard()->attempt($input)) {
+            return [true, 200, 'Login Successful'];
+        }
+        return $this->checkRocketChatAndCreateAccount($input);
+    }
+
+    /**
+     * @param $input
+     * @return array
+     * @throws Exception
+     */
+    private function checkRocketChatAndCreateAccount($input)
+    {
+        list($status, $code, $message, $data) = $this->userRepository->loginRocket($input);
         if ($status) {
             $rocket = $this->rocketRepository->findByFields('owner_id', $data['userId'])->first();
             if (is_null($rocket)) {
@@ -41,11 +84,6 @@ class UserService
             }
         } else {
             return [$status, $code, $message];
-        }
-
-        if (Auth::attempt($input)) {
-            Auth::logout();
-            return [false, 409, 'User already registered. Please login'];
         }
 
         $input['password'] = Hash::make($input['password']);
@@ -62,16 +100,7 @@ class UserService
             throw $e;
         }
 
-        return [true, 200, 'Register Successful'];
-    }
-
-    public function login($input)
-    {
-        if ($user = Auth::guard()->attempt($input)) {
-            return [true, 200, 'Login Successful'];
-        } else {
-            return [false, 401, 'Wrong Credentials'];
-        }
+        return [true, 200, 'Login via RocketChat Successful'];
     }
 
     public function logout()

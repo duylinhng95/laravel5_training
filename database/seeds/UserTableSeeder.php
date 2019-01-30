@@ -12,9 +12,31 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         \DB::table('users')->insert([
-            'name'     => 'Admin',
-            'email'    => 'admin@neo-lab.vn',
-            'password' => bcrypt('password'),
+            [
+                'name'     => 'Admin',
+                'email'    => 'admin@neo-lab.vn',
+                'password' => bcrypt('password'),
+            ],
+            [
+                'name'     => 'Hoàng thượng',
+                'email'    => 'king@neo-lab.vn',
+                'password' => bcrypt('kingpass'),
+            ],
+            [
+                'name'     => 'Hoàng Kim',
+                'email'    => 'jewerly@neo-lab.vn',
+                'password' => bcrypt('jewerlypass'),
+            ],
+            [
+                'name'     => 'Hoàng Hà',
+                'email'    => 'river@neo-lab.vn',
+                'password' => bcrypt('riverpassword'),
+            ],
+            [
+                'name'     => 'Hoàng Sơn',
+                'email'    => 'm@neo-lab.vn',
+                'password' => bcrypt('mountainpassword'),
+            ]
         ]);
     }
 }
