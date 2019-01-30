@@ -33,25 +33,21 @@ class UserService
      */
     public function register($input)
     {
-        $status     = strpos($input['email'], '@neo-lab.vn');
-        $checkEmail = $this->userRepository->findByFields('email', $input['email']);
+        $status = strpos($input['email'], '@neo-lab.vn');
         if ($status === false) {
-            if (count($checkEmail) === 0) {
-                $input['password'] = Hash::make($input['password']);
-                $input['status']   = config('constant.user.status.verify');
-                try {
-                    DB::beginTransaction();
-                    $userId = $this->userRepository->create($input);
-                    $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollBack();
-                    throw $e;
-                }
-
-                return [true, 200, 'Register Successful'];
+            $input['password'] = Hash::make($input['password']);
+            $input['status']   = config('constant.user.status.verify');
+            try {
+                DB::beginTransaction();
+                $userId = $this->userRepository->create($input);
+                $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw $e;
             }
-            return [false, 409, 'User already registered. Please login'];
+
+            return [true, 200, 'Register Successful'];
         }
 
         return [false, 409, 'User already registered as NeoLab. Please login'];
