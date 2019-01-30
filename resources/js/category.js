@@ -25,8 +25,8 @@ class Category {
 		this.notification = window.toastr;
 		this.notification.options = {
 			"preventDuplicates": true,
-			"showDuration": "1",
-			"hideDuration": "1",
+			"showDuration": "3",
+			"hideDuration": "3",
 			"timeOut": "600",
 		}
 		this.apiURL = location.origin;
@@ -133,12 +133,15 @@ class Category {
 		const url = `${this.apiURL}/admin/category`;
 		let notification = this.notification
 		this.element.btnDelete.on('click', function (event) {
+			//Get current Node for remove category in view
 			let input = event.target;
 			let currentNode = input.parentNode.parentNode
 			let tbody = currentNode.parentNode
 			let id = input.children.categoryId.value
 			let token = input.children[1].value
 			let urlAPI = `${url}/${id}`
+
+			//Ajax request
 			$.ajax({
 				url: urlAPI,
 				type: "DELETE",
