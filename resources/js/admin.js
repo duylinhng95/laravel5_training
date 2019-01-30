@@ -42,6 +42,7 @@ class Admin {
 		this.btnSearchEnter(this.element.btnSearchUser)
 		this.onSearch(this.element.btnSearchUser)
 		this.sortButtonPress()
+		this.checkNoData()
 	}
 
 	importUser() {
@@ -111,6 +112,16 @@ class Admin {
 		} else {
 			button.removeClass('fa-arrow-down');
 			button.addClass('fa-arrow-up');
+		}
+	}
+
+	checkNoData() {
+		let tbody = $("tbody")
+		if(tbody.children().length == 0)
+		{
+			tbody.append(`<td colspan="6" align="center">
+                No data is found
+            </td>`)
 		}
 	}
 }
