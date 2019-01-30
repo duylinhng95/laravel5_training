@@ -40,7 +40,10 @@ class UserService
             try {
                 DB::beginTransaction();
                 $userId = $this->userRepository->create($input);
-                $this->roleRepository->create(['role_id' => 1, 'user_id' => $userId->id]);
+                $this->roleRepository->create([
+                    'role_id' => config('constant.user.role.user'),
+                    'user_id' => $userId->id
+                ]);
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
