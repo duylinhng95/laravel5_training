@@ -2073,7 +2073,8 @@ Pageheader
   color: #71748d;
   background-color: #fff;
   width: 100%;
-  /*position: absolute; bottom: 0;*/
+  position: absolute;
+  bottom: 1px;
 }
 
 .footer-links {}
@@ -6982,3 +6983,7 @@ Media Query
 }
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}
+
+.btn-search {
+  height: 38px;
+}

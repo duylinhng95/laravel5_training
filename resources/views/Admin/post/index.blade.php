@@ -9,7 +9,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="search">
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-primary" id="searchPostBtn" onclick="searchPost()"><i
+                        <button type="button" class="btn btn-primary btn-search" id="searchPostBtn" onclick="searchPost()"><i
                                     class="fa fa-search "></i></button>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
             </tbody>
         </table>
     </div>
+    {{$posts->links()}}
 @endsection
 @push('script')
     <script>
