@@ -43,6 +43,7 @@ class Admin {
 		this.onSearch(this.element.btnSearchUser)
 		this.sortButtonPress()
 		this.checkNoData()
+		this.setActiveClass()
 	}
 
 	importUser() {
@@ -123,6 +124,16 @@ class Admin {
                 No data is found
             </td>`)
 		}
+	}
+
+	setActiveClass() {
+		let url = location.href
+		$(".nav-link").each(function() {
+			if(this.href === url)
+			{
+				$(this).addClass('active')
+			}
+		})
 	}
 }
 

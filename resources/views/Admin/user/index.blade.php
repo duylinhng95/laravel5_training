@@ -12,7 +12,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="search">
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-primary" id="searchBtnUser"><i
+                        <button type="button" class="btn btn-primary btn-search" id="searchBtnUser"><i
                                     class="fa fa-search "></i></button>
                     </div>
                 </div>
