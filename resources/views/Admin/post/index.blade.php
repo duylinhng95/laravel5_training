@@ -63,6 +63,7 @@
             </tbody>
         </table>
     </div>
+    {{$posts->links()}}
 @endsection
 @push('script')
     <script>

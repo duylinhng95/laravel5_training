@@ -75,6 +75,7 @@
             </tbody>
         </table>
     </div>
+    {{$users->links()}}
 @endsection
 @push('script')
     <script>
