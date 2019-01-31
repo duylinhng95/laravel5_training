@@ -75,3 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     Route::get('/password', 'AdminController@showPassword')->name('admin.password');
     Route::post('/password', 'AdminController@storePassword')->name('admin.password.store');
 });
+
+Route::get('/test', function() {
+    return view('index');
+});
