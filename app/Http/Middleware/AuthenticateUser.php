@@ -19,7 +19,7 @@ class AuthenticateUser
         if (Auth::check()) {
             return $next($request);
         } else {
-            return redirect()->route('auth.login');
+            return redirect()->route('post.index');
         }
     }
 }

@@ -37,6 +37,7 @@ class Post {
 		this.onSearch(this.element.btnSearchUser)
 		this.deletePost()
 		this.votePost()
+		this.navTab()
 	}
 
 	btnSearchEnter(name) {
@@ -91,6 +92,25 @@ class Post {
 		})
 	}
 
+	navTab()
+	{
+
+		$('#sign-in').click(function (event) {
+			$("#signup").removeClass('active show')
+			$("#sign-in").parent('li').addClass('active')
+			$("#sign-up").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signin").tab('show')
+		})
+
+		$('#sign-up').click(function (event) {
+			$("#signin").removeClass('active show')
+			$("#sign-up").parent('li').addClass('active')
+			$("#sign-in").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signup").tab('show')
+		})
+	}
 }
 
 new Post()

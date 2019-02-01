@@ -22,6 +22,6 @@ class AuthenticateAdmin
             }
             return $next($request);
         }
-        return redirect()->route('auth.login');
+        return redirect()->route('post.index');
     }
 }

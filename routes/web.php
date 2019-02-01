@@ -35,9 +35,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 });
 
 Route::group(['prefix' => '/'], function () {
-    Route::get('register', 'UserController@showRegister')->name('auth.register');
     Route::post('register', 'UserController@register')->name('auth.register');
-    Route::get('login', 'UserController@showLogin')->name('auth.login');
     Route::post('login', 'UserController@login')->name('auth.login');
     Route::get('logout', 'UserController@logout')->name('auth.logout');
     Route::get('/', 'PostController@index')->name('post.index');

@@ -108,7 +108,7 @@ class UserService
         if (Auth::check()) {
             Auth::logout();
         }
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function followUser($id)
