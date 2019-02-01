@@ -55,6 +55,5 @@
             </div>
         </div>
         <!-- END ARTICLES OVERVIEW SECTION-->
-        @include('Post.sidebar')
     </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('Post.layout')
+@extends('User.layout')
 @section('title')
     Create Post
 @endsection

@@ -3,7 +3,7 @@
     <div class="header-top">
         <div class="container">
             <div class="col-md-9 col-sm-7 xs-view">
-                <a href="{{route('post.index')}}"><img class="logo" src="images/logo.png" alt="Logo"/></a>
+                <a href="{{route('post.index')}}"><img class="logo" src="{{asset('images/logo.png')}}" alt="Logo"/></a>
             </div>
             <div class="col-md-3 col-sm-5 xs-view-right">
             @yield('search')

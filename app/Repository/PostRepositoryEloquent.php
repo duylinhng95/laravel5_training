@@ -15,9 +15,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function create($input)
     {
-        $post = $this->makeModel()->create($input);
         $tags = $this->generateTagFromString($input);
         unset($input['tags']);
+        $post = $this->makeModel()->create($input);
         $post->tags()->createMany($tags);
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
