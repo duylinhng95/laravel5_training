@@ -16,14 +16,28 @@
                             <i class="fa fa-user author-icon"></i>
                         </a>
                         <ul class="dropdown-menu">
+                            @if(Auth::check())
+                            <div class="row">
+                                <li class="col-md-6">
+                                    <a class="sign" href="{{route('auth.logout')}}">sign out</a>
+                                </li>
+                                <li class="col-md-6">
+                                    <a class="sign" href="{{route('user.index')}}">user detail</a>
+                                </li>
+                            </div>
                             <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
+
+                            @else
+                            <ul class="nav nav-tabs text-center" role="tablist">
+
+
                                 <li class="nav-item active">
                                     <a class="sign nav-link" data-toggle="tab" id="sign-in">sign in</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="sign nav-link" data-toggle="tab" id="sign-up">sign up</a>
                                 </li>
+
                             </ul>
 
                             <!-- Tab panes -->
@@ -130,6 +144,7 @@
                                     </form>
                                 </div>
                             </div>
+                            @endif
                         </ul>
                     </li>
                 </div><!-- /#Sing up -->

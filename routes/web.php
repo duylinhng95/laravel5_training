@@ -44,6 +44,7 @@ Route::group(['prefix' => '/'], function () {
     });
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
+        Route::get('/{id}', 'CategoryController@show')->name('category.show');
     });
 });
 

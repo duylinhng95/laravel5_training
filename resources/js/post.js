@@ -38,12 +38,13 @@ class Post {
 		this.deletePost()
 		this.votePost()
 		this.navTab()
+		this.setActiveClass()
 	}
 
 	btnSearchEnter(name) {
 		let btnSearch = name
 		this.element.keywords.keypress(function (event) {
-			if(event.which === 13) {
+			if (event.which === 13) {
 				btnSearch.click()
 			}
 		})
@@ -78,7 +79,7 @@ class Post {
 		let voteNum = this.element.voteNum
 		let url = `${this.apiUrl}/post/vote`
 		let indexNum = 0;
-		this.element.btnVotePost.on('click', function(event) {
+		this.element.btnVotePost.on('click', function (event) {
 			let id = event.target.children.postId.value
 			$.ajax({
 				url: `${url}/${id}`,
@@ -92,8 +93,7 @@ class Post {
 		})
 	}
 
-	navTab()
-	{
+	navTab() {
 
 		$('#sign-in').click(function (event) {
 			$("#signup").removeClass('active show')
@@ -109,6 +109,15 @@ class Post {
 			$("#sign-in").parent('li').removeClass('active')
 			event.stopPropagation()
 			$("#signup").tab('show')
+		})
+	}
+
+	setActiveClass() {
+		let url = location.href
+		$(".collapsed").each(function () {
+			if (this.href === url) {
+				$(this).removeClass('collapsed')
+			}
 		})
 	}
 }
