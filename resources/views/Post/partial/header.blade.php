@@ -14,7 +14,7 @@
                         <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add new Post</a></li>
                     </ul>
                 </div>
-                <div class="col-md-6 col-sm-5 xs-view-right">
+                <div class="col-md-4 col-sm-5 xs-view-right col-md-offset-2">
                 @yield('search')
                 <!-- Author -->
                     <div class="author-form">

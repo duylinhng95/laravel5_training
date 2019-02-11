@@ -1,5 +1,5 @@
 require('./bootstrap.js')
-window.Summernote = require('summernote/dist/summernote-bs4');
+window.Summernote = require('summernote/dist/summernote');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
 import Comment from './comment.js'
 import Follow from './follow.js'
