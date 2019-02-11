@@ -3,11 +3,11 @@
     @include('Post.search')
 @endsection
 @section('content')
-    <div class="card-header">
+    <div class="panel-heading">
         <h2>Post</h2>
         <a href="{{url('/user/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
     </div>
-    <div class="card-body">
+    <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-light text-dark">
                 <thead class="text-center">

@@ -80,4 +80,7 @@
         </div><!-- main-content -->
     </div>
 @endsection
+@push('right-sidebar')
+    @include('Post.partial.right-sidebar')
+@endpush
 <script src="{{mix('js/comment.js')}}"></script>

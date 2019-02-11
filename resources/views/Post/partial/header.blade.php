@@ -180,8 +180,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
                         <li><a href="{{route('post.index')}}">home</a></li>
-                        <li><a href="about.html">about</a></li>
-                        <li><a href="contact.html">contact</a></li>
+                        <li><a href="{{route('user.list')}}">user</a></li>
+                        <li><a href="#">about</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-->

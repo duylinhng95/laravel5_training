@@ -1,25 +1,30 @@
 @extends('Post.layout')
-@section('search')
-    @include('User.search')
-@endsection
 @section('content')
-    <div class="row">
-        <!-- ARTICLE OVERVIEW SECTION -->
-        <div class="col-md-12 padding-20">
+    <!-- ARTICLE OVERVIEW SECTION -->
+    <div class="col-md-8">
+        <div class="search-section center-block searchfield">
+            <input type="text" class="form-control" placeholder="Search" id="keywords">
+            <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i></button>
+        </div>
+        <!-- ARTICLES -->
+        <div class="fb-heading">
+            All Users
+        </div>
+        @foreach ($users->split(2) as $split)
             <div class="row">
-                <!-- ARTICLES -->
-                <div class="fb-heading">
-                    All Users
-                </div>
-                <hr class="style-three">
-                @foreach ($users as $user)
+                @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
-                        <div class="card post">
+                        <div class="author-img">
+                            <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
+                                 alt="author"/>
+                        </div>
+                        <div class="panel col-md-5 user-panel">
+                            <div class="article-heading-abb">
+                                {{$user->name}}
+                            </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="article-heading-abb">
-                                        <i class="fa fa-pencil-square-o"></i> {{$user->name}}
-                                    </div>
+                                <div class="col-md-6">
+
                                     <div class="article-info">
                                         <div class="art-date">
                                             <i class="fa fa-calendar-o"></i> {{formatDate($user->created_at)}}
@@ -32,7 +37,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 section-follow">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 section-follow">
                                     @if(Auth::user()->id != $user->id)
                                         <button class="btn btn-primary btn-follow @if(Auth::user()->checkFollow($user->id)) d-none @endif"
                                                 data-user-id="{{$user->id}}">
@@ -47,15 +54,17 @@
                             </div>
                         </div>
                         <!-- END ARTICLES -->
-                @endif
-            @endforeach
-            <!-- PAGINATION -->
-                <div class="text-center">
-                    {{$users->links()}}
-                </div>
-                <!-- END PAGINATION -->
+                    @endif
+                @endforeach
             </div>
-        </div>
-        <!-- END ARTICLES OVERVIEW SECTION-->
+        @endforeach
     </div>
+    <!-- PAGINATION -->
+    <div class="text-center">
+        {{$users->links()}}
+    </div>
+    <!-- END PAGINATION -->
 @endsection
+@push('right-sidebar')
+    @include('Post.partial.right-sidebar')
+@endpush
