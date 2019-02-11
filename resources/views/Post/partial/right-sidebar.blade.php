@@ -3,7 +3,12 @@
     <div class="right-sidebar">
         <div class="righ-sidebar-body">
             <div class="item">
-                <h4 class="post-title slide-title text-black">popular posts</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-6">
+                        <h4 class="post-title slide-title text-black">popular posts</h4>
+                    </div>
+                </div>
+                <div class="row">
                 @foreach($posts as $post)
                     <div class="col-md-12 col-sm-6">
                         <div class="carousel-caption">
@@ -19,6 +24,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             </div>
             <div class="item">
                 <h4 class="post-title slide-title text-black">popular tags</h4>

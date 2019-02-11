@@ -58,15 +58,15 @@ button#btnSearchUser {
 }
 
 .author-icon {
-  background: #fff none repeat scroll 0 0;
-  color: #66bb6a;
+  background: #66bb6a none repeat scroll 0 0;
+  color: #fff;
 }
 
 .post-title {
-  color: #bdbdbd;
+  color: rgba(0, 0, 0, 0.75);
 }
 ul.list-inline li a {
-  padding: 22px 18px;
+  padding: 18px;
   text-transform: uppercase;
   color: #333333;
   font-size: 14px;
@@ -94,6 +94,15 @@ header {
   color: #333333
 }
 
-a.btn.btn-info.text-uppercase  {
+a.btn.text-uppercase  {
   margin-bottom: 9px;
+}
+
+.slide-title {
+  padding: unset;
+}
+
+#accordion .panel-heading .panel-title .collapsed {
+  background: #fff !important;
+  color: rgba(0, 0, 0, 0.75);
 }

@@ -75,6 +75,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     Route::post('/password', 'AdminController@storePassword')->name('admin.password.store');
 });
 
-Route::get('/test', function() {
-    return view('index');
+Route::get('/about', function() {
+    return view('about');
 });

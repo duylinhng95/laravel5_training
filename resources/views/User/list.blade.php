@@ -2,29 +2,28 @@
 @section('content')
     <!-- ARTICLE OVERVIEW SECTION -->
     <div class="col-md-8">
-        <div class="search-section center-block searchfield">
-            <input type="text" class="form-control" placeholder="Search" id="keywords">
-            <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i></button>
-        </div>
-        <!-- ARTICLES -->
-        <div class="fb-heading">
-            All Users
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-section center-block searchfield">
+                    <input type="text" class="form-control" placeholder="Search" id="keywords">
+                    <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
         </div>
         @foreach ($users->chunk(2) as $split)
             <div class="row">
                 @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
-                        <div class="author-img">
-                            <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
-                                 alt="author"/>
-                        </div>
-                        <div class="panel col-md-5 user-panel">
-                            <div class="article-heading-abb">
-                                {{$user->name}}
-                            </div>
+                        <div class="panel col-md-6 user-panel">
                             <div class="row">
-                                <div class="col-md-6">
-
+                                <div class="col-md-12">
+                                    <div class="author-img">
+                                        <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
+                                             alt="author"/>
+                                    </div>
+                                    <div class="article-heading-abb">
+                                        {{$user->name}}
+                                    </div>
                                     <div class="article-info">
                                         <div class="art-date">
                                             <i class="fa fa-calendar-o"></i> {{formatDate($user->created_at)}}

@@ -10,6 +10,7 @@
                     <li><a href="{{route('user.list')}}">user</a></li>
                     @endif
                     <li><a href="#">about</a></li>
+                    <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add new Post</a></li>
                 </ul>
             </div>
             <div class="col-md-3 col-sm-5 xs-view-right">
@@ -25,19 +26,16 @@
                         <ul class="dropdown-menu">
                             @if(Auth::check())
                             <div class="row text-center">
-                                <li>
-                                    <a class="sign" href="{{route('auth.logout')}}">sign out</a>
-                                </li>
+                                @if(checkRole( 'admin'))
+                                    <li>
+                                        <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin Panel</a>
+                                    </li>
+                                @endif
                                 <li>
                                     <a class="sign" href="{{route('user.index')}}">user detail</a>
                                 </li>
-                                @if(checkRole( 'admin'))
                                 <li>
-                                    <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin Panel</a>
-                                </li>
-                                @endif
-                                <li>
-                                    <a class="btn btn-warning text-uppercase" href="{{route('user.post.create')}}">Add new Post</a>
+                                    <a class="sign" href="{{route('auth.logout')}}">sign out</a>
                                 </li>
                             </div>
                             <!-- Nav tabs -->
