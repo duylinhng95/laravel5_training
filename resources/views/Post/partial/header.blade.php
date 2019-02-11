@@ -31,6 +31,11 @@
                                 <li>
                                     <a class="sign" href="{{route('user.index')}}">user detail</a>
                                 </li>
+                                @if(checkRole( 'admin'))
+                                <li>
+                                    <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin Panel</a>
+                                </li>
+                                @endif
                                 <li>
                                     <a class="btn btn-warning text-uppercase" href="{{route('user.post.create')}}">Add new Post</a>
                                 </li>
