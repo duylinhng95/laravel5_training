@@ -23,11 +23,11 @@
                 @foreach($posts as $post)
                     <tr>
                         <td style="width: 65%"><a href="{{route('user.post.edit',['id' => $post->id])}}">{{$post->title}}</a></td>
-                        <td style="width: 15%" class="text-center">{{$post->created_at}}</td>
+                        <td style="width: 10%" class="text-center">{{formatDate($post->created_at)}}</td>
                         <td>{{$post->view}}</td>
                         <td>{{$post->count_votes}}</td>
                         <td>{{$post->count_comments}}</td>
-                        <td style="width: 15%">
+                        <td style="width: 35%">
                             <a href="{{route('user.post.show',['id' => $post->id])}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
                                 View</a>
                             <a href="{{route('user.post.edit',['id' => $post->id])}}" class="btn btn-info"><i

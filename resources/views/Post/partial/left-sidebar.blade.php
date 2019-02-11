@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading" id="headingOne">
                     <h4 class="panel-title">
-                        <a class="collapsed" role="button" href="{{route('category.show', ['id'=>$category->id])}}" >{{$category->name}}</a>
+                        <a class="collapsed" role="button" href="{{url('?category='.$category->id)}}" >{{$category->name}}</a>
                     </h4>
                 </div>
             </div>

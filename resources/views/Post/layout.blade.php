@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>:: Author ::</title>
+    <title>:: NeoLog ::</title>
 
     <!-- Bootstrap -->
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
 </head>
 <body>
     <div class="wrapper">
-        @stack('header')
+        @include('Post.partial.header')
     <!--========================== Contant-Area================================-->
         <div class="contant-area">
             <div class="container">
@@ -36,7 +36,7 @@
                 </div>
             </div><!-- Container -->
         </div><!-- Content-area -->
-        @include('Post.partial.footer')
+        @includeWhen(isset($post), 'Post.partial.footer')
     </div><!-- /Wrapper -->
     <script src="{{mix('/js/post.js')}}"></script>
     <script src="{{asset('js/vendor/user/custom.js')}}"></script>

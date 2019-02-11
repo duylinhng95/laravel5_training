@@ -72,7 +72,14 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         if ($request->has('tags')) {
             $keyword   = $request->input('tags');
             $mainQuery = $mainQuery->WhereHas('tags', function ($subQuery) use ($keyword) {
-                $subQuery->where('name', 'like', '%' . $keyword . '%');
+                $subQuery->where('name', $keyword);
+            });
+        }
+
+        if ($request->has('category')) {
+            $keyword   = $request->input('category');
+            $mainQuery = $mainQuery->WhereHas('category', function ($subQuery) use ($keyword) {
+                $subQuery->where('name', $keyword);
             });
         }
 
