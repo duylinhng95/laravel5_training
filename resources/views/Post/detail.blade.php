@@ -6,7 +6,7 @@
     <div class="col-md-8 col-xs-12 col-sm-12">
         <div class="main-content">
             <article>
-                <h2 class="post-title">{{$post->title}}</h2>
+                <h2 class="post-title text-black">{{$post->title}}</h2>
                 @foreach($post->tags as $tag)
                 <a href="{{url('/?tags='.$tag->name)}}" class="btn btn-default btn-sm btn-tags " type="submit">{{$tag->name}}</a>
                 @endforeach

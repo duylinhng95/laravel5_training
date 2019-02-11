@@ -10,7 +10,7 @@
         <div class="fb-heading">
             All Users
         </div>
-        @foreach ($users->split(2) as $split)
+        @foreach ($users->chunk(2) as $split)
             <div class="row">
                 @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
@@ -41,11 +41,11 @@
                             <div class="row">
                                 <div class="col-md-6 section-follow">
                                     @if(Auth::user()->id != $user->id)
-                                        <button class="btn btn-primary btn-follow @if(Auth::user()->checkFollow($user->id)) d-none @endif"
+                                        <button class="btn btn-xs btn-primary btn-follow @if(Auth::user()->checkFollow($user->id)) d-none @endif"
                                                 data-user-id="{{$user->id}}">
                                             Follow
                                         </button>
-                                        <button class="btn btn-danger btn-unfollow @if(!Auth::user()->checkFollow($user->id)) d-none @endif"
+                                        <button class="btn btn-xs btn-danger btn-unfollow @if(!Auth::user()->checkFollow($user->id)) d-none @endif"
                                                 data-user-id="{{$user->id}}">
                                             Unfollow
                                         </button>

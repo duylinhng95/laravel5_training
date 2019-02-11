@@ -4,6 +4,13 @@
         <div class="container">
             <div class="col-md-9 col-sm-7 xs-view">
                 <a href="{{route('post.index')}}"><img class="logo" src="{{asset('images/logo.png')}}" alt="Logo"/></a>
+                <ul class="list-inline nav-header">
+                    <li><a href="{{route('post.index')}}">home</a></li>
+                    @if(Auth::check())
+                    <li><a href="{{route('user.list')}}">user</a></li>
+                    @endif
+                    <li><a href="#">about</a></li>
+                </ul>
             </div>
             <div class="col-md-3 col-sm-5 xs-view-right">
             @yield('search')
@@ -17,12 +24,15 @@
                         </a>
                         <ul class="dropdown-menu">
                             @if(Auth::check())
-                            <div class="row">
-                                <li class="col-md-6">
+                            <div class="row text-center">
+                                <li>
                                     <a class="sign" href="{{route('auth.logout')}}">sign out</a>
                                 </li>
-                                <li class="col-md-6">
+                                <li>
                                     <a class="sign" href="{{route('user.index')}}">user detail</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-warning text-uppercase" href="{{route('user.post.create')}}">Add new Post</a>
                                 </li>
                             </div>
                             <!-- Nav tabs -->
@@ -110,7 +120,7 @@
                                                         {{$errors->first('name')}}
                                                     </div>
                                                 @endif
-                                                <input type="email" class="form-control" name="name">
+                                                <input type="text" class="form-control" name="name">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email Address</label>
@@ -156,35 +166,4 @@
     </div>
     </div><!-- header-top -->
 
-    <!--========================== Header-Nav ================================-->
-    <div class="header-nav">
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <p class="pull-left visible-xs">
-                    <button type="button" class="navbar-toggle" data-toggle="offcanvas">
-                        <i class="fa fa-long-arrow-right"></i>
-                        <i class="fa fa-long-arrow-left"></i>
-                    </button>
-                </p>
-                <!--toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li><a href="{{route('post.index')}}">home</a></li>
-                        <li><a href="{{route('user.list')}}">user</a></li>
-                        <li><a href="#">about</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-->
-        </nav>
-    </div><!-- Header-Nav -->
 </header>

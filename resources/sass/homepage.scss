@@ -40,3 +40,56 @@ button#btnSearchUser {
   background: none;
   border: none;
 }
+
+.left-sidebar {
+  border-top: 8px solid #66bb6a;
+}
+
+.header-top {
+  background: #fff;
+  color: #fff;
+}
+
+.header-nav .navbar-left li a {
+  padding: 22px 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+}
+
+.author-icon {
+  background: #fff none repeat scroll 0 0;
+  color: #66bb6a;
+}
+
+.post-title {
+  color: #bdbdbd;
+}
+ul.list-inline li a {
+  padding: 22px 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+}
+
+ul.list-inline a:hover {
+  color: #66bb6a;
+}
+
+ul.list-inline {
+  margin: 0 auto;
+  display: inline-block;
+}
+
+header {
+  border-bottom: solid 3px #66bb6a;
+}
+
+.dropdown-menu a.sign:hover {
+  color: #66bb6a;
+  border-bottom: none;
+  display: inline-block;
+}
+.text-black{
+  color: #333333
+}

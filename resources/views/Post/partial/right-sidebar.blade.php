@@ -3,7 +3,7 @@
     <div class="right-sidebar">
         <div class="righ-sidebar-body">
             <div class="item">
-                <a href="#"><h4 class="post-title slide-title">popular posts</h4></a>
+                <h4 class="post-title slide-title text-black">popular posts</h4>
                 @foreach($posts as $post)
                     <div class="col-md-12 col-sm-6">
                         <div class="carousel-caption">
@@ -21,7 +21,7 @@
                 @endforeach
             </div>
             <div class="item">
-                <a href="#"><h4 class="post-title slide-title">popular tags</h4></a>
+                <h4 class="post-title slide-title text-black">popular tags</h4>
                 @foreach($tags as $tag)
                     <a href="{{url('?tags='.$tag->name)}}" class="btn btn-default btn-sm btn-tags"
                        type="submit">{{$tag->name}}</a>
