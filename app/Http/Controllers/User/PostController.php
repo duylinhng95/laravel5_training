@@ -51,7 +51,7 @@ class PostController extends Controller
     {
         $categories = $this->categoryRepository->all();
 
-        return view('Post.create', compact('categories'));
+        return view('Post.User.create', compact('categories'));
     }
 
     public function store(PostRequest $request)
@@ -67,7 +67,7 @@ class PostController extends Controller
         list($post, $tags) = $this->postService->find($id);
         $categories = $this->categoryRepository->all();
 
-        return view('Post.edit', compact('post', 'categories', 'tags'));
+        return view('Post.User.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update($id, PostRequest $request)

@@ -1,19 +1,20 @@
-@extends('User.layout')
+@extends('Post.layout')
 @section('title')
-    Create Post
+    Edit {{$post->title}} Post
 @endsection
 @section('content')
-    @include('Post.error')
+    @include('Post.User.error')
     <div class="card-header">
-        <h2><i class="fa fa-plus"></i> Create Post</h2>
+        <h2><i class="fa fa-pen"></i> Edit {{$post->title}} Post</h2>
         <a href="{{route('user.post.index')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
     </div>
-    <form action="{{route('user.post.store')}}" method="POST" enctype="multipart/form-data" novalidate>
+    <form action="{{route('user.post.update', ['id' => $post->id])}}" method="post">
         <div class="card-body">
+            @method('PUT')
             {{csrf_field()}}
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title"
+                <input type="text" name="title" placeholder="{{$post->title}}" value="{{$post->title}}"
                        class="form-control">
                 @if($errors->has('title'))
                     <div class="text-danger">
@@ -25,15 +26,15 @@
             <div class="form-group">
                 <label for="category_id">Category</label>
                 <select name="category_id" class="form-control">
-                    @foreach ($categories as $c)
-                        <option value="{{$c->id}}">{{$c->name}}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}" {{$post->category->id == $category->id ? 'selected="selected"' : ''}}>{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>
+
             <div class="form-group">
-                <label for="tags">Tags</label>
-                <input type="text" name="tags" class="form-control"
-                       data-role="tagsinput">
+                <label for="tag">Tags</label>
+                <input type="text" name="tags" class="form-control" data-role="tagsinput" value="{{$tags}}">
                 @if($errors->has('tags'))
                     <div class="text-danger">
                         <span>* </span>{{$errors->first('tags')}}
@@ -43,8 +44,7 @@
 
             <div class="form-group">
                 <label for="title">Content</label>
-                <textarea name="content" class="form-control"
-                          id="texteditor"></textarea>
+                <textarea name="content" class="form-control" id="texteditor">{{$post->content}}</textarea>
                 @if($errors->has('content'))
                     <div class="text-danger">
                         <span>* </span>{{$errors->first('content')}}
@@ -58,4 +58,3 @@
         </div>
     </form>
 @endsection
-

@@ -14,12 +14,14 @@ class Post {
 	init() {
 		this.config()
 		this.listen()
-		this.element.textEditor.summernote()
+		$('#texteditor').summernote({height: 300})
+		$('#tagsinput').tagsinput({
+			confirmKeys: [188, 32]
+		});
 	}
 
 	config() {
 		this.element = {
-			textEditor: $('#texteditor'),
 			btnSearchPost: $("#btnSearchPost"),
 			btnSearchUser: $("#btnSearchUser"),
 			keywords: $("#keywords"),

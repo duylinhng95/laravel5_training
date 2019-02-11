@@ -1,9 +1,14 @@
+@import '~summernote/dist/summernote-bs4.css';
+@import '~bootstrap4-tagsinput-douglasanpa/tagsinput.css';
+@import '~toastr/toastr.scss';
+
 #accordion .panel-heading .panel-title a:hover{
   background-color: #8ee293 !important;
 }
 
 .dropdown-menu>li>a:hover {
   background: none;
+  color: #fff;
 }
 
 .btn-tags {
