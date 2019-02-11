@@ -14,7 +14,7 @@
             <div class="row">
                 @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
-                        <div class="panel col-md-6 user-panel">
+                        <div class="panel col-md-5 user-panel">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="author-img">

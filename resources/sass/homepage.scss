@@ -28,6 +28,7 @@
 
 .user-panel{
   height: 125px;
+  margin-right: 8%;
 }
 
 .article-heading-abb {
@@ -42,7 +43,7 @@ button#btnSearchUser {
 }
 
 .left-sidebar {
-  border-top: 8px solid #66bb6a;
+  border-top: 8px solid #336835;
 }
 
 .header-top {
@@ -105,4 +106,14 @@ a.btn.text-uppercase  {
 #accordion .panel-heading .panel-title .collapsed {
   background: #fff !important;
   color: rgba(0, 0, 0, 0.75);
+}
+
+.user-name {
+  padding: 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+  display:inline-block;
+  margin: 12px 0;
+  font-weight: 600;
 }

@@ -57,7 +57,12 @@ class Post {
 		name.on('click', function () {
 			let url = location.pathname
 			input = input.val()
-			window.location.href = `${url}?keywords=${input}`
+			if(input === '')
+			{
+				alert("Search can't be empty")
+			} else {
+				window.location.href = `${url}?keywords=${input}`
+			}
 		})
 	}
 

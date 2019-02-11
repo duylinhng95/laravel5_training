@@ -196,6 +196,7 @@ p.pull-left .navbar-toggle.active i.fa-long-arrow-left{
 .header-top .search-section{
 	float:left;
 	position:relative;
+	margin-right: 15px;
 }
 .search-section .form-control{
 	background:#66bb6a;
@@ -262,13 +263,12 @@ a.author-icon{
 	box-shadow:none;
 	border-radius:0px;
 	margin:0px;
-	left:-50px;
 }
 .author-form ul.dropdown-menu:after{
 	top: -6px;
 	width: 0; 
 	height: 0;
-	right: 30px;
+	left: 18px;
 	content: " "; 
 	display: block; 
 	position: absolute;

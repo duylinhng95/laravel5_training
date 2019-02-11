@@ -36,7 +36,7 @@
                 </div>
             </div><!-- Container -->
         </div><!-- Content-area -->
-        @includeWhen(isset($post), 'Post.partial.footer')
+        @include('Post.partial.footer')
     </div><!-- /Wrapper -->
     <script src="{{mix('/js/post.js')}}"></script>
     <script src="{{asset('js/vendor/user/custom.js')}}"></script>

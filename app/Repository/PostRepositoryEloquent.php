@@ -175,4 +175,8 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         return $this->makeModel()->getPopularPost(5);
     }
+    public function getLatestPost()
+    {
+        return $this->makeModel()->getLatestPost(5);
+    }
 }
