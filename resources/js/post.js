@@ -153,7 +153,19 @@ class Post {
 				}
 			},
 			submitHandler: function (form) {
-				form.submit()
+				$.ajax({
+					url: location.origin + `/validateLogin`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function (res) {
+						form.submit(res)
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let input = $('#loginForm')
+						input.before(`<div class="alert alert-danger">` + data.message + `</div>`)
+					}
+				})
 			}
 		})
 	}

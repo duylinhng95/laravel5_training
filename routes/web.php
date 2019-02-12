@@ -37,6 +37,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 Route::group(['prefix' => '/'], function () {
     Route::post('register', 'UserController@register')->name('auth.register');
     Route::post('validateRegister', 'UserController@checkInputRegister')->name('validate.register');
+    Route::post('validateLogin', 'UserController@checkInputLogin')->name('validate.');
     Route::post('login', 'UserController@login')->name('auth.login');
     Route::get('logout', 'UserController@logout')->name('auth.logout');
     Route::get('/', 'PostController@index')->name('post.index');

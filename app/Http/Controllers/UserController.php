@@ -90,4 +90,14 @@ class UserController extends Controller
     {
         return $request;
     }
+
+    public function checkInputLogin(LoginRequest $request)
+    {
+        $input = $request->except('_token');
+        list($status, $code, $message) = $this->userService->login($input);
+        if ($status) {
+            return $this->success("Input Valid");
+        }
+        return $this->error($code, $message);
+    }
 }
