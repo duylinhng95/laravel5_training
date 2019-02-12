@@ -1,7 +1,7 @@
 @extends('Post.layout')
 @section('content')
     <!-- ARTICLE OVERVIEW SECTION -->
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
                 <div class="search-section center-block searchfield">
@@ -10,11 +10,11 @@
                 </div>
             </div>
         </div>
-        @foreach ($users->chunk(2) as $split)
+        @foreach ($users->chunk(3) as $split)
             <div class="row">
                 @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
-                        <div class="panel col-md-5 user-panel">
+                        <div class="panel col-md-3 user-panel">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="author-img">
@@ -64,6 +64,3 @@
         <!-- END PAGINATION -->
     </div>
 @endsection
-@push('right-sidebar')
-    @include('Post.partial.right-sidebar')
-@endpush

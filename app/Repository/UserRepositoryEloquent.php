@@ -80,7 +80,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
             $adminId = config('constant.user.role.admin');
             $subQuery->where('role_id', $adminId);
         });
-        $users = $query->paginate(50);
+        $users = $query->paginate(45);
         return $users;
     }
 }

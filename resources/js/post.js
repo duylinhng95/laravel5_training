@@ -53,10 +53,10 @@ class Post {
 	}
 
 	onSearch(name) {
-		let input = this.element.keywords
+		let keywords = this.element.keywords
 		name.on('click', function () {
 			let url = location.pathname
-			input = input.val()
+			let input = keywords.val()
 			if(input === '')
 			{
 				alert("Search can't be empty")

@@ -28,25 +28,43 @@
                                     <i class="fa fa-key author-icon"></i>
                                 @endif
                             </a>
-                            <ul class="dropdown-menu">
-                                @if(Auth::check())
+                            @if(Auth::check())
+                                <ul class="dropdown-menu login-success">
+
                                     <div class="row text-center">
                                         @if(checkRole( 'admin'))
-                                            <li>
-                                                <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin
-                                                    Panel</a>
+                                            <li class="row">
+                                                <div class="col-md-3 text-center border-right">
+                                                    <i class="fas fa-lock icon"></i>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <a class="sign" href="{{route('admin.index')}}">Admin
+                                                        Panel</a>
+                                                </div>
                                             </li>
                                         @endif
-                                        <li>
-                                            <a class="sign" href="{{route('user.index')}}">user detail</a>
+                                        <li class="row">
+                                            <div class="col-md-3 text-center border-right">
+                                                <i class="fas fa-home icon"></i>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <a class="sign" href="{{route('user.index')}}">user detail</a>
+                                            </div>
                                         </li>
-                                        <li>
-                                            <a class="sign" href="{{route('auth.logout')}}">sign out</a>
+                                        <li class="row">
+                                            <div class="col-md-3 text-center border-right">
+                                                <i class="fas fa-key icon"></i>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <a class="sign" href="{{route('auth.logout')}}">sign out</a>
+                                            </div>
                                         </li>
                                     </div>
                                     <!-- Nav tabs -->
+                                </ul>
 
-                                @else
+                            @else
+                                <ul class="dropdown-menu">
                                     <ul class="nav nav-tabs text-center" role="tablist">
 
 
@@ -163,8 +181,8 @@
                                             </form>
                                         </div>
                                     </div>
-                                @endif
-                            </ul>
+                                </ul>
+                            @endif
                         </li>
                     </div><!-- /#Sing up -->
                 </div><!-- /Tab-Content -->
