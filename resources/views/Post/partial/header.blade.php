@@ -19,7 +19,7 @@
                 @yield('search')
                 <!-- Author -->
                     <div class="author-form">
-                        <li class="dropdown pull-left">
+                        <li class="dropdown pull-right">
                             <a href="#" class="dropdown-toggle author-icon" data-toggle="dropdown" role="button"
                                data-display="static">
                                 @if(Auth::check())

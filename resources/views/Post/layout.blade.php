@@ -29,7 +29,7 @@
                 <div class="row row-offcanvas row-offcanvas-left">
                 @stack('left-sidebar')
                 <!--========================== main-content ================================-->
-                    @yield('content'),
+                    @yield('content')
                 @stack('right-sidebar')
                 </div>
             </div><!-- Container -->
