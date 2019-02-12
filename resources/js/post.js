@@ -28,6 +28,8 @@ class Post {
 			btnDeletePost: $("#btnDeletePost"),
 			btnVotePost: $("#btnVotePost"),
 			voteNum: $("#voteNum"),
+			loginForm: $("#loginForm"),
+			registerForm: $("#registerForm"),
 		}
 		this.apiUrl = location.origin
 	}
@@ -41,6 +43,8 @@ class Post {
 		this.votePost()
 		this.navTab()
 		this.setActiveClass()
+		this.validateLoginForm()
+		this.validateRegisterForm()
 	}
 
 	btnSearchEnter(name) {
@@ -57,8 +61,7 @@ class Post {
 		name.on('click', function () {
 			let url = location.pathname
 			let input = keywords.val()
-			if(input === '')
-			{
+			if (input === '') {
 				alert("Search can't be empty")
 			} else {
 				window.location.href = `${url}?keywords=${input}`
@@ -124,6 +127,85 @@ class Post {
 		$(".collapsed").each(function () {
 			if (this.href === url) {
 				$(this).removeClass('collapsed')
+			}
+		})
+	}
+
+	validateLoginForm() {
+		let form = this.element.loginForm
+		form.validate({
+			rules: {
+				email: {
+					required: true,
+					email: true,
+				},
+				password: {
+					required: true,
+				}
+			},
+			messages: {
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				}
+			},
+			submitHandler: function (form) {
+				form.submit()
+			}
+		})
+	}
+
+	validateRegisterForm() {
+		let form = this.element.registerForm
+		form.validate({
+			rules: {
+				name: "required",
+				email: {
+					required: true,
+					email: true,
+				},
+				password: "required",
+				password_confirmation: {
+					required: true,
+					equalTo: "#password",
+				},
+			},
+			messages: {
+				name: {
+					required: "Please enter your fullname"
+				},
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				},
+				password_confirmation: {
+					required: "Please confirm your password",
+					equalTo: "Your password confirm must match"
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: location.origin + `/validateRegister`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function (res) {
+						form.submit(res)
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let errors = data.errors
+						$.each(errors, function (index, value) {
+							let input = $('#registerForm').find(`[name="` + index + `"]`)
+							input.before(`<div class="text-danger">` + value + `</div>`)
+						})
+					}
+				})
 			}
 		})
 	}

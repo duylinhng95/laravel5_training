@@ -85,4 +85,9 @@ class UserController extends Controller
 
         return view('User.list', compact('users'));
     }
+
+    public function checkInputRegister(RegisterRequest $request)
+    {
+        return $request;
+    }
 }

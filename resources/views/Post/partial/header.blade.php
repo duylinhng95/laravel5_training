@@ -34,29 +34,22 @@
                                     <div class="row text-center">
                                         @if(checkRole( 'admin'))
                                             <li class="row">
-                                                <div class="col-md-3 text-center border-right">
-                                                    <i class="fas fa-lock icon"></i>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <a class="sign" href="{{route('admin.index')}}">Admin
+                                                <div class="col-md-12 text-left">
+                                                    <a class="sign" href="{{route('admin.index')}}"><i class="fas fa-lock icon"></i> Admin
                                                         Panel</a>
                                                 </div>
                                             </li>
                                         @endif
                                         <li class="row">
-                                            <div class="col-md-3 text-center border-right">
-                                                <i class="fas fa-home icon"></i>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <a class="sign" href="{{route('user.index')}}">user detail</a>
+                                            <div class="col-md-12 text-left">
+                                                <a class="sign" href="{{route('user.index')}}">
+                                                    <i class="fas fa-home icon"></i>user detail</a>
                                             </div>
                                         </li>
                                         <li class="row">
-                                            <div class="col-md-3 text-center border-right">
-                                                <i class="fas fa-key icon"></i>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <a class="sign" href="{{route('auth.logout')}}">sign out</a>
+                                            <div class="col-md-12 text-left">
+                                                <a class="sign" href="{{route('auth.logout')}}">
+                                                    <i class="fas fa-key icon"></i>sign out</a>
                                             </div>
                                         </li>
                                     </div>
@@ -94,7 +87,7 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form method="post" action="{{route('auth.login')}}">
+                                            <form method="post" action="{{route('auth.login')}}" id="loginForm">
                                                 {{csrf_field()}}
                                                 <div class="login-area">
                                                     <div class="form-group">
@@ -136,7 +129,7 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form method="post" action="{{route('auth.register')}}">
+                                            <form method="post" action="{{route('auth.register')}}" id="registerForm">
                                                 {{csrf_field()}}
                                                 <div class="login-area">
                                                     <div class=" form-group">
@@ -165,7 +158,7 @@
                                                             </div>
                                                         @endif
                                                         <input type="password" class="form-control"
-                                                               name="password">
+                                                               name="password" id="password">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="password_confirmation">Comfirm Password</label>
