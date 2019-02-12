@@ -11,7 +11,8 @@
                             <li><a href="{{route('user.list')}}">user</a></li>
                         @endif
                         <li><a href="#">about</a></li>
-                        <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add new Post</a></li>
+                        <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add
+                                new Post</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-sm-5 xs-view-right col-md-offset-2">
@@ -19,17 +20,21 @@
                 <!-- Author -->
                     <div class="author-form">
                         <li class="dropdown pull-left">
-
                             <a href="#" class="dropdown-toggle author-icon" data-toggle="dropdown" role="button"
                                data-display="static">
-                                <i class="fa fa-user author-icon"></i>
+                                @if(Auth::check())
+                                    <i class="fa fa-user author-icon"></i>
+                                @else
+                                    <i class="fa fa-key author-icon"></i>
+                                @endif
                             </a>
                             <ul class="dropdown-menu">
                                 @if(Auth::check())
                                     <div class="row text-center">
                                         @if(checkRole( 'admin'))
                                             <li>
-                                                <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin Panel</a>
+                                                <a class="btn btn-info text-uppercase" href="{{route('admin.index')}}">Admin
+                                                    Panel</a>
                                             </li>
                                         @endif
                                         <li>
@@ -59,9 +64,7 @@
                                         <div class="tab-pane active" id="signin">
                                             @if(session('code'))
                                                 <div class="alert alert-danger">
-                                                    <div class="col-md-6">
-                                                        {{session('message')}}
-                                                    </div>
+                                                    {{session('message')}}
                                                 </div>
                                             @endif
                                             @if ($errors->any())
@@ -97,7 +100,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-submit">
-                                                    <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                                    <button type="submit" class="btn btn-success btn-block">Sign in
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div><!-- /#Sing in -->
@@ -153,7 +157,8 @@
 
                                                 </div>
                                                 <div class="form-submit">
-                                                    <button type="submit" class="btn btn-success btn-block">Sign up</button>
+                                                    <button type="submit" class="btn btn-success btn-block">Sign up
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
@@ -161,15 +166,10 @@
                                 @endif
                             </ul>
                         </li>
-                        @if(Auth::check())
-                            <li class="user-name">{{Auth::user()->name}}</li>
-                        @endif
                     </div><!-- /#Sing up -->
                 </div><!-- /Tab-Content -->
             </div>
         </div><!-- /Author -->
     </div>
-    </div>
-    </div><!-- header-top -->
 
 </header>

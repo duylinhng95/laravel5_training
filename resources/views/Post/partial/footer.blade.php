@@ -1,6 +1,5 @@
 <footer>
     <div class="footer-menu">
-        <div class="row">
             <div class="container">
                 <div class="col-md-4 col-sm-4 center-block">
                     <h3 class="footer-head">NeoLog</h3>
@@ -28,11 +27,8 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-12 text-center">
                 <p>&copy; 2019 Duy Linh Nguyen</p>
             </div>
-        </div>
     </div><!-- Footer-menu -->
 </footer>

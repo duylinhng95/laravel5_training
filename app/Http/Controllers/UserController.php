@@ -57,8 +57,7 @@ class UserController extends Controller
         if ($status) {
             return redirect()->route('post.index');
         } else {
-            return redirect()
-                ->route('auth.login')
+            return back()
                 ->with(['code' => $code, 'message' => $message]);
         }
     }

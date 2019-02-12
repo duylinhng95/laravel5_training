@@ -57,12 +57,12 @@
                 @endforeach
             </div>
         @endforeach
-    </div>
     <!-- PAGINATION -->
-    <div class="text-center">
-        {{$users->links()}}
+        <div class="text-center">
+            {{$users->links()}}
+        </div>
+        <!-- END PAGINATION -->
     </div>
-    <!-- END PAGINATION -->
 @endsection
 @push('right-sidebar')
     @include('Post.partial.right-sidebar')

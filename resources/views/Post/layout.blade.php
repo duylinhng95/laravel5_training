@@ -11,7 +11,6 @@
     <!-- Bootstrap -->
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
     <link href="{{asset('css/vendor/user/bootstrap.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/vendor/user/font-awesome.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('css/vendor/user/offcanvas.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('css/vendor/user/style.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{mix('css/homepage.css')}}"/>
@@ -31,7 +30,7 @@
                 <div class="row row-offcanvas row-offcanvas-left">
                 @stack('left-sidebar')
                 <!--========================== main-content ================================-->
-                    @yield('content')
+                    @yield('content'),
                 @stack('right-sidebar')
                 </div>
             </div><!-- Container -->

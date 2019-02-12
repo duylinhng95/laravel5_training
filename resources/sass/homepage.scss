@@ -1,6 +1,11 @@
 @import '~summernote/dist/summernote.css';
 @import '~bootstrap4-tagsinput-douglasanpa/tagsinput.css';
 @import '~toastr/toastr.scss';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+@import '~@fortawesome/fontawesome-free/scss/v4-shims.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
 
 #accordion .panel-heading .panel-title a:hover{
   background-color: #8ee293 !important;
