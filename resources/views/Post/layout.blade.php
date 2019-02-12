@@ -34,8 +34,8 @@
                 </div>
             </div><!-- Container -->
         </div><!-- Content-area -->
-        @include('Post.partial.footer')
     </div><!-- /Wrapper -->
+    @include('Post.partial.footer')
     <script src="{{mix('/js/post.js')}}"></script>
     <script src="{{asset('js/vendor/user/custom.js')}}"></script>
 </body>

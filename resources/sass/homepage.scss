@@ -122,3 +122,18 @@ a.btn.text-uppercase  {
   margin: 12px 0;
   font-weight: 600;
 }
+
+body {
+  position: relative;
+  padding-bottom: 169px;
+}
+
+.wrapper {
+  min-height: -webkit-fill-available;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
