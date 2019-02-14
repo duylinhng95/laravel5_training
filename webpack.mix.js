@@ -16,14 +16,17 @@ mix.js('resources/js/post.js', 'public/js/post.js')
 	 .js('resources/js/admin.js', 'public/js/admin.js')
 	 .js('resources/js/category.js', 'public/js/category.js')
 	 .js('resources/js/comment.js', 'public/js/comment.js')
+	 .js('resources/js/homepage.js', 'public/js/homepage.js')
 	 .sass('resources/sass/app.scss', 'public/css')
 	 .sass('resources/sass/admin.scss', 'public/css')
 	 .sass('resources/sass/post.scss', 'public/css')
+	 .sass('resources/sass/homepage.scss', 'public/css')
 	 .version()
 
 mix.copyDirectory('resources/images', 'public/images');
 mix.copyDirectory('resources/fonts', 'public/fonts');
 mix.copyDirectory('resources/js/vendor', 'public/js/vendor');
+mix.copyDirectory('resources/sass/vendor', 'public/css/vendor');
 // mix.autoload({
 // 	jquery: ['$', 'window.jQuery', 'jQuery'],
 // 	'popper.js/dist/umd/popper.js': ['Popper']

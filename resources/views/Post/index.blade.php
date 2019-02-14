@@ -2,59 +2,41 @@
 @section('search')
     @include('Post.search')
 @endsection
+@push('header')
+    @include('Post.partial.header')
+@endpush
+@push('left-sidebar')
+    @include('Post.partial.left-sidebar')
+@endpush
 @section('content')
-    <div class="row">
-        <!-- ARTICLE OVERVIEW SECTION -->
-        <div class="col-md-8 padding-20">
-            <div class="row">
-                <!-- ARTICLES -->
-                <div class="fb-heading">
-                    All Posts
-                </div>
-                <hr class="style-three">
-                @foreach ($posts as $post)
-                    <div class="card post">
-                        <div class="article-heading-abb">
-                            <a href="{{route('post.show', ['id' => $post->id])}}">
-                                <i class="fa fa-pencil-square-o"></i> {{$post->title}}</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <i class="fa fa-calendar-o"></i> {{formatDate($post->created_at)}}
-                            </div>
-                            <div class="art-category">
-                                <i class="fa fa-folder"></i> {{$post->category->name}}
-                            </div>
-                            <div class="art-comments">
-                                <i class="fa fa-user"></i> {{$post->user->name}}
-                            </div>
-                            <div class="art-comments">
-                                <i class="fa fa-comments-o"></i> {{$post->count_comments}}
-                            </div>
-                            <div class="art-category">
-                                <i class="fa fa-eye"></i> {{$post->view}}
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p class="block-with-text">
-                                {!! $post->encode_content !!}
-                            </p>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="{{route('post.show', ['id' => $post->id])}}" class="btn btn-default btn-wide">Read
-                                more...</a>
-                        </div>
-                    </div>
-                    <!-- END ARTICLES -->
-            @endforeach
-            <!-- PAGINATION -->
+    <div class="col-md-6 col-sm-8 col-xs-12">
+        <div class="main-content">
+            @if($posts->isEmpty())
                 <div class="text-center">
-                    {{$posts->links()}}
+                    <h4>There are no post can be found</h4>
                 </div>
-                <!-- END PAGINATION -->
-            </div>
-        </div>
-        <!-- END ARTICLES OVERVIEW SECTION-->
-        @include('Post.sidebar')
+            @endif
+            @foreach($posts as $post)
+            <article>
+                <a href="{{route('post.show', ['id' => $post->id])}}"><h2 class="post-title">{{$post->title}}</h2></a>
+                @foreach($post->tags as $tag)
+                    <a href="?tags={{$tag->name}}" class="btn btn-default btn-sm btn-category"
+                       type="submit">{{$tag->name}}</a>
+                @endforeach
+                <div class="post-meta">
+                    <span><i class="fa fa-eye post-meta-icon"></i> {{$post->view}} </span>
+                    <span><i class="fa fa-comments post-meta-icon"></i> {{$post->count_comments}} </span>
+                    <span><i class="fa fa-calendar-check-o post-meta-icon"></i> {{formatDate($post->created_at)}} </span>
+                </div>
+                <div class="post-content">
+                    {!! $post->encode_content !!}
+                </div>
+            </article>
+            @endforeach
+        </div><!-- main-content -->
+        {{$posts->links()}}
     </div>
 @endsection
+@push('right-sidebar')
+    @include('Post.partial.right-sidebar')
+@endpush

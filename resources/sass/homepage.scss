@@ -1,0 +1,162 @@
+@import '~summernote/dist/summernote.css';
+@import '~bootstrap4-tagsinput-douglasanpa/tagsinput.css';
+@import '~toastr/toastr.scss';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+@import '~@fortawesome/fontawesome-free/scss/v4-shims.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+
+#accordion .panel-heading .panel-title a:hover{
+  background-color: #8ee293 !important;
+}
+
+.dropdown-menu>li>a:hover {
+  background: none;
+  color: #fff;
+}
+
+.btn-tags {
+  margin-bottom: 10px;
+  color: #b2b2b2;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in-out 0s;
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  -moz-transition: all 0.5s ease-in-out 0s;
+  -o-transition: all 0.5s ease-in-out 0s;
+  -ms-transition: all 0.5s ease-in-out 0s;
+}
+
+.d-none {
+  display: none;
+}
+
+.user-panel{
+  padding: 5px;
+  margin: 15px 45px;
+  -webkit-box-shadow: 0 1px 50px rgba(0,0,0,.05);
+  box-shadow: 0 1px 50px rgba(0,0,0,.05);
+}
+
+.article-heading-abb {
+  font-weight:bold;
+}
+
+button#btnSearchUser {
+  position: absolute;
+  right: 3%;
+  background: none;
+  border: none;
+}
+
+.left-sidebar {
+  border-top: 8px solid #336835;
+}
+
+.header-top {
+  background: #fff;
+  color: #fff;
+}
+
+.header-nav .navbar-left li a {
+  padding: 22px 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+}
+
+.author-icon {
+  background: #66bb6a none repeat scroll 0 0;
+  color: #fff;
+}
+
+.post-title {
+  color: rgba(0, 0, 0, 0.75);
+}
+ul.list-inline li a {
+  padding: 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+}
+
+ul.list-inline a:hover {
+  color: #66bb6a;
+}
+
+ul.list-inline {
+  margin: 0 auto;
+  display: inline-block;
+}
+
+header {
+  border-bottom: solid 3px #66bb6a;
+}
+
+.dropdown-menu a.sign:hover {
+  color: #66bb6a;
+  border-bottom: none;
+  display: inline-block;
+}
+.text-black{
+  color: #333333
+}
+
+a.btn.text-uppercase  {
+  margin-bottom: 9px;
+}
+
+.slide-title {
+  padding: unset;
+}
+
+#accordion .panel-heading .panel-title .collapsed {
+  background: #fff !important;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.user-name {
+  padding: 18px;
+  text-transform: uppercase;
+  color: #333333;
+  font-size: 14px;
+  display:inline-block;
+  margin: 12px 0;
+  font-weight: 600;
+}
+
+body {
+  position: relative;
+  padding-bottom: 169px;
+}
+
+.wrapper {
+  min-height: -webkit-fill-available;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.login-success{
+  background: #fff !important;
+  color: #333333;
+  box-shadow: 0 1px 50px rgba(0, 0, 0,0.1) !important;
+  width: 200px !important;
+}
+
+.icon {
+  color: #9ba1a4;
+  padding: 10px 10px;
+  font-size: 16px;
+}
+
+.border-right {
+  border-right: solid 1px #9ba1a4;
+}
+
+.author-form ul.login-success:after {
+  border-bottom: 6px solid #fff;
+}

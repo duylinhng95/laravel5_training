@@ -39,7 +39,7 @@ class UserController extends Controller
         $input = $request->except('_token');
         list($status, $code, $message) = $this->userService->register($input);
         if (!$status) {
-            return view('User.register', compact('status', 'code', 'message'));
+            return $this->error($code, $message);
         }
         $this->userService->login($input);
         return redirect()->route('post.index');
@@ -57,8 +57,7 @@ class UserController extends Controller
         if ($status) {
             return redirect()->route('post.index');
         } else {
-            return redirect()
-                ->route('auth.login')
+            return back()
                 ->with(['code' => $code, 'message' => $message]);
         }
     }

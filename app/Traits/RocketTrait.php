@@ -12,7 +12,7 @@ trait RocketTrait
         $username = $input['email'];
         $password = $input['password'];
         $body     = json_encode([
-            'user' => $username,
+            'user'     => $username,
             'password' => $password
         ]);
         $request  = new Client();
@@ -26,6 +26,7 @@ trait RocketTrait
                 false,
                 $e->getCode(),
                 'Login via NeoLab error: Wrong credentials',
+                null,
             ];
         }
         $res = json_decode($res->getBody()->getContents(), true);

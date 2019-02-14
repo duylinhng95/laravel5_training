@@ -36,7 +36,6 @@
                     </div>
                 @endforeach
             </div>
-            @include('Post.sidebar')
         </div>
     </div>
     <!-- END MAIN SECTION -->

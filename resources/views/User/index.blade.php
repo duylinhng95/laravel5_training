@@ -2,15 +2,21 @@
 @section('title')
     User Detail
 @endsection
+@section('search')
+    @include('User.search')
+@endsection
+@push('header')
+    @include('Post.partial.header')
+@endpush
 @section('content')
     @if (session('error'))
-        <div class="card-header">
+        <div class="panel-heading">
             <div class="alert alert-danger">
                 {{session('error')}}
             </div>
         </div>
     @endif
-    <div class="card-body">
+    <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
                 <h3>Information</h3>
@@ -28,6 +34,10 @@
                         <th>Email:</th>
                         <td>{{$user->email}}</td>
                     </tr>
+                    <tr>
+                        <th>Follows:</th>
+                        <td>{{count($user->followings)}}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -36,7 +46,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h4>Followers</h4>
                 <table class="table table-bordered">
                     <thead>
@@ -53,29 +63,6 @@
                             </td>
                             <td>
                                 {{$follow->follower->name}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <h4>Following</h4>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($user->followings as $index => $following)
-                        <tr>
-                            <td>
-                                {{++$index}}
-                            </td>
-                            <td>
-                                {{$following->user->name}}
                             </td>
                         </tr>
                     @endforeach

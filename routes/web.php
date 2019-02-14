@@ -35,9 +35,9 @@ Route::group(['middleware' => 'user.auth'], function () {
 });
 
 Route::group(['prefix' => '/'], function () {
-    Route::get('register', 'UserController@showRegister')->name('auth.register');
     Route::post('register', 'UserController@register')->name('auth.register');
-    Route::get('login', 'UserController@showLogin')->name('auth.login');
+    Route::post('validateRegister', 'UserController@checkInputRegister')->name('validate.register');
+    Route::post('validateLogin', 'UserController@checkInputLogin')->name('validate.');
     Route::post('login', 'UserController@login')->name('auth.login');
     Route::get('logout', 'UserController@logout')->name('auth.logout');
     Route::get('/', 'PostController@index')->name('post.index');
@@ -46,6 +46,7 @@ Route::group(['prefix' => '/'], function () {
     });
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
+        Route::get('/{id}', 'CategoryController@show')->name('category.show');
     });
 });
 
@@ -74,4 +75,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     });
     Route::get('/password', 'AdminController@showPassword')->name('admin.password');
     Route::post('/password', 'AdminController@storePassword')->name('admin.password.store');
+});
+
+Route::get('/about', function() {
+    return view('about');
 });

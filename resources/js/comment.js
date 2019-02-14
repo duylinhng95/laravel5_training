@@ -47,28 +47,27 @@ class Comment {
 					let value = comment_num.html()
 					value++
 					commentList.append(
-						`<div class="article-content">
-              <div class="article-comment-top">
-                  <div class="comments-user">
-                      <div class="user-name">${res.user.name}</div>
-                      <div class="comment-post-date">Posted On
-                          <span class="italics">${res.created_at}</span>
-                      </div>
-                  </div>
-                  <div class="comments-content">
-                      ${res.content}
-                  </div>
-              </div>
-          </div>`)
+						`<div class="author-img">
+                <img class="img-responsive img-circle" src="../../images/avatar.png" alt="author"/>
+            </div>
+            <div class="author-post like-section">
+                <h4>${res.user.name}</h4>
+                <div class="post-meta comment">
+                    <span><i class="fa fa-calendar-check-o post-meta-icon"></i> ${res.created_at}</span>
+                </div>
+                <p>${res.content}</p>
+            </div>`)
 					comment_num.text(value)
+					content.val('')
 				},
-				error: function(res){
+				error: function (res) {
 					let response = res.responseJSON
 					error_msg.html(response.message)
 				}
 			})
 		})
 	}
+
 	btnCommentEnter() {
 		let btnComment = this.element.btnComment
 		let error_msg = this.element.error_message
@@ -80,4 +79,5 @@ class Comment {
 		})
 	}
 }
+
 export default Comment

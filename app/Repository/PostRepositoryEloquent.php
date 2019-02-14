@@ -15,9 +15,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function create($input)
     {
-        $post = $this->makeModel()->create($input);
         $tags = $this->generateTagFromString($input);
         unset($input['tags']);
+        $post = $this->makeModel()->create($input);
         $post->tags()->createMany($tags);
         return ['code' => 200, 'message' => 'Create Post Successful'];
     }
@@ -72,7 +72,14 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         if ($request->has('tags')) {
             $keyword   = $request->input('tags');
             $mainQuery = $mainQuery->WhereHas('tags', function ($subQuery) use ($keyword) {
-                $subQuery->where('name', 'like', '%' . $keyword . '%');
+                $subQuery->where('name', $keyword);
+            });
+        }
+
+        if ($request->has('category')) {
+            $keyword   = $request->input('category');
+            $mainQuery = $mainQuery->WhereHas('category', function ($subQuery) use ($keyword) {
+                $subQuery->where('id', $keyword);
             });
         }
 
@@ -167,5 +174,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function getPopularPosts()
     {
         return $this->makeModel()->getPopularPost(5);
+    }
+    public function getLatestPost()
+    {
+        return $this->makeModel()->getLatestPost(5);
     }
 }

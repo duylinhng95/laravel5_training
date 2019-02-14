@@ -18,4 +18,10 @@ class CategoryController extends Controller
         $categories = $this->categoryRepository->all();
         return view('Category.index', compact('categories'));
     }
+
+    public function show($id)
+    {
+        $posts = $this->categoryRepository->findPostByCategory($id);
+        return view('Category.show', compact('$posts'));
+    }
 }

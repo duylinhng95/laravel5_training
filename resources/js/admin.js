@@ -1,4 +1,5 @@
 require('./vendor/template.js')
+require('./bootstrap')
 
 class Admin {
 	constructor() {

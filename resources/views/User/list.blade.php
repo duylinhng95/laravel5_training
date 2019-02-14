@@ -1,24 +1,28 @@
 @extends('Post.layout')
-@section('search')
-    @include('User.search')
-@endsection
 @section('content')
-    <div class="row">
-        <!-- ARTICLE OVERVIEW SECTION -->
-        <div class="col-md-12 padding-20">
-            <div class="row">
-                <!-- ARTICLES -->
-                <div class="fb-heading">
-                    All Users
+    <!-- ARTICLE OVERVIEW SECTION -->
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-section center-block searchfield">
+                    <input type="text" class="form-control" placeholder="Search" id="keywords">
+                    <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i></button>
                 </div>
-                <hr class="style-three">
-                @foreach ($users as $user)
+            </div>
+        </div>
+        @foreach ($users->chunk(3) as $split)
+            <div class="row">
+                @foreach($split as $user)
                     @if(!checkAdmin($user, 'admin'))
-                        <div class="card post">
+                        <div class="panel col-md-3 user-panel">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-md-12">
+                                    <div class="author-img">
+                                        <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
+                                             alt="author"/>
+                                    </div>
                                     <div class="article-heading-abb">
-                                        <i class="fa fa-pencil-square-o"></i> {{$user->name}}
+                                        {{$user->name}}
                                     </div>
                                     <div class="article-info">
                                         <div class="art-date">
@@ -32,13 +36,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 section-follow">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 section-follow">
                                     @if(Auth::user()->id != $user->id)
-                                        <button class="btn btn-primary btn-follow @if(Auth::user()->checkFollow($user->id)) d-none @endif"
+                                        <button class="btn btn-xs btn-primary btn-follow @if(Auth::user()->checkFollow($user->id)) d-none @endif"
                                                 data-user-id="{{$user->id}}">
                                             Follow
                                         </button>
-                                        <button class="btn btn-danger btn-unfollow @if(!Auth::user()->checkFollow($user->id)) d-none @endif"
+                                        <button class="btn btn-xs btn-danger btn-unfollow @if(!Auth::user()->checkFollow($user->id)) d-none @endif"
                                                 data-user-id="{{$user->id}}">
                                             Unfollow
                                         </button>
@@ -47,15 +53,14 @@
                             </div>
                         </div>
                         <!-- END ARTICLES -->
-                @endif
-            @endforeach
-            <!-- PAGINATION -->
-                <div class="text-center">
-                    {{$users->links()}}
-                </div>
-                <!-- END PAGINATION -->
+                    @endif
+                @endforeach
             </div>
+        @endforeach
+    <!-- PAGINATION -->
+        <div class="text-center">
+            {{$users->links()}}
         </div>
-        <!-- END ARTICLES OVERVIEW SECTION-->
+        <!-- END PAGINATION -->
     </div>
 @endsection

@@ -1,5 +1,5 @@
 require('./bootstrap.js')
-window.Summernote = require('summernote/dist/summernote-bs4');
+window.Summernote = require('summernote/dist/summernote');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
 import Comment from './comment.js'
 import Follow from './follow.js'
@@ -14,18 +14,22 @@ class Post {
 	init() {
 		this.config()
 		this.listen()
-		this.element.textEditor.summernote()
+		$('#texteditor').summernote({height: 300})
+		$('#tagsinput').tagsinput({
+			confirmKeys: [188, 32]
+		});
 	}
 
 	config() {
 		this.element = {
-			textEditor: $('#texteditor'),
 			btnSearchPost: $("#btnSearchPost"),
 			btnSearchUser: $("#btnSearchUser"),
 			keywords: $("#keywords"),
 			btnDeletePost: $("#btnDeletePost"),
 			btnVotePost: $("#btnVotePost"),
 			voteNum: $("#voteNum"),
+			loginForm: $("#loginForm"),
+			registerForm: $("#registerForm"),
 		}
 		this.apiUrl = location.origin
 	}
@@ -37,23 +41,31 @@ class Post {
 		this.onSearch(this.element.btnSearchUser)
 		this.deletePost()
 		this.votePost()
+		this.navTab()
+		this.setActiveClass()
+		this.validateLoginForm()
+		this.validateRegisterForm()
 	}
 
 	btnSearchEnter(name) {
 		let btnSearch = name
 		this.element.keywords.keypress(function (event) {
-			if(event.which === 13) {
+			if (event.which === 13) {
 				btnSearch.click()
 			}
 		})
 	}
 
 	onSearch(name) {
-		let input = this.element.keywords
+		let keywords = this.element.keywords
 		name.on('click', function () {
 			let url = location.pathname
-			input = input.val()
-			window.location.href = `${url}?keywords=${input}`
+			let input = keywords.val()
+			if (input === '') {
+				alert("Search can't be empty")
+			} else {
+				window.location.href = `${url}?keywords=${input}`
+			}
 		})
 	}
 
@@ -77,7 +89,7 @@ class Post {
 		let voteNum = this.element.voteNum
 		let url = `${this.apiUrl}/post/vote`
 		let indexNum = 0;
-		this.element.btnVotePost.on('click', function(event) {
+		this.element.btnVotePost.on('click', function (event) {
 			let id = event.target.children.postId.value
 			$.ajax({
 				url: `${url}/${id}`,
@@ -91,6 +103,132 @@ class Post {
 		})
 	}
 
+	navTab() {
+
+		$('#sign-in').click(function (event) {
+			$("#signup").removeClass('active show')
+			$("#sign-in").parent('li').addClass('active')
+			$("#sign-up").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signin").tab('show')
+		})
+
+		$('#sign-up').click(function (event) {
+			$("#signin").removeClass('active show')
+			$("#sign-up").parent('li').addClass('active')
+			$("#sign-in").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signup").tab('show')
+		})
+	}
+
+	setActiveClass() {
+		let url = location.href
+		$(".collapsed").each(function () {
+			if (this.href === url) {
+				$(this).removeClass('collapsed')
+			}
+		})
+	}
+
+	validateLoginForm() {
+		let form = this.element.loginForm
+		form.validate({
+			rules: {
+				email: {
+					required: true,
+					email: true,
+				},
+				password: {
+					required: true,
+				}
+			},
+			messages: {
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: location.origin + `/api/check-login`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function (res) {
+						form.submit(res)
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let input = $('#loginForm')
+						let error_message = $("#error-message");
+						if (error_message.length != 0) {
+							error_message.remove()
+						}
+						input.before(`<div class="alert alert-danger" id="error-message">` + data.message + `</div>`)
+					}
+				})
+			}
+		})
+	}
+
+	validateRegisterForm() {
+		let form = this.element.registerForm
+		form.validate({
+			rules: {
+				name: "required",
+				email: {
+					required: true,
+					email: true,
+				},
+				password: "required",
+				password_confirmation: {
+					required: true,
+					equalTo: "#password",
+				},
+			},
+			messages: {
+				name: {
+					required: "Please enter your fullname"
+				},
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				},
+				password_confirmation: {
+					required: "Please confirm your password",
+					equalTo: "Your password confirm must match"
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: location.origin + `/api/check-register`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function () {
+						form.submit()
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let errors = data.errors
+						let error_message = $("#error-message");
+						if (error_message.length != 0) {
+							error_message.remove()
+						}
+						$.each(errors, function (index, value) {
+							let input = $('#registerForm').find(`[name="` + index + `"]`)
+							input.before(`<div class="text-danger" id="error_message">` + value + `</div>`)
+						})
+					}
+				})
+			}
+		})
+	}
 }
 
 new Post()

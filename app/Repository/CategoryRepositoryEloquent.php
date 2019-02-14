@@ -11,4 +11,10 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent
     {
         return Category::class;
     }
+
+    public function findPostByCategory($categoryId)
+    {
+        $category = $this->find($categoryId);
+        return $category->posts;
+    }
 }
