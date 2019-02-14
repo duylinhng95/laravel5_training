@@ -158,7 +158,7 @@ class Post {
 					type: "POST",
 					data: $(form).serialize(),
 					success: function (res) {
-						// form.submit(res)
+						form.submit(res)
 					},
 					error: function (res) {
 						let data = res.responseJSON
@@ -216,9 +216,13 @@ class Post {
 					error: function (res) {
 						let data = res.responseJSON
 						let errors = data.errors
+						let error_message = $("#error-message");
+						if (error_message.length != 0) {
+							error_message.remove()
+						}
 						$.each(errors, function (index, value) {
 							let input = $('#registerForm').find(`[name="` + index + `"]`)
-							input.before(`<div class="text-danger">` + value + `</div>`)
+							input.before(`<div class="text-danger" id="error_message">` + value + `</div>`)
 						})
 					}
 				})
