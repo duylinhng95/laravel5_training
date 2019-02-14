@@ -86,12 +86,13 @@ class UserService
             return [$status, $code, $message];
         }
 
-        $input['password'] = Hash::make($input['password']);
-        $input['status']   = config('constant.user.status.verify');
+        $params['email']    = $input['email'];
+        $params['password'] = Hash::make($input['password']);
+        $params['status']   = config('constant.user.status.verify');
 
         try {
             DB::beginTransaction();
-            $this->userRepository->update($rocket->user_id, $input);
+            $this->userRepository->update($rocket->user_id, $params);
 
             $this->roleRepository->create(['role_id' => 1, 'user_id' => $rocket->user_id]);
             DB::commit();
@@ -99,7 +100,7 @@ class UserService
             DB::rollBack();
             throw $e;
         }
-
+        Auth::guard()->attempt($input);
         return [true, 200, 'Login via RocketChat Successful'];
     }
 
@@ -124,19 +125,21 @@ class UserService
 
     public function checkLogin($input)
     {
-        $email      = $input['email'];
-        $password   = $input['password'];
-        $emailSplit = explode('@', $email);
-        if ($emailSplit[1] === 'neo-lab.vn') {
-            return $this->userRepository->loginRocket($input);
-        }
-
+        $email    = $input['email'];
+        $password = $input['password'];
+        //        Login via Database
         $response = $this->userRepository->findByFields('email', $email);
         if (count($response) === 0) {
+            $emailSplit = explode('@', $email);
+
+            if ($emailSplit[1] === 'neo-lab.vn') {
+                return $this->userRepository->loginRocket($input);
+            }
+
             return [false, 404, 'User not found'];
         }
-        $userPwd  = $response[0]->password;
-        $result   = Hash::check($password, $userPwd);
+        $userPwd = $response[0]->password;
+        $result  = Hash::check($password, $userPwd);
 
         if ($result) {
             return [$result, 200, 'Input is valid'];
