@@ -39,9 +39,12 @@ class Homepage {
 	onScrollDown() {
 		let self = this
 		$(window).on('scroll', function () {
-			let scrollPosition = $(window).height() + $(window).scrollTop()
-			let scrollLimit = $(".wrapper").height()
-			if ((scrollPosition / scrollLimit) >= 1 && self.lastPage === false) {
+
+			let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+			let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+			let clientHeight = document.documentElement.clientHeight || window.innerHeight;
+			let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+			if (scrolledToBottom && self.lastPage === false) {
 				self.postPage++
 				let page = self.postPage
 				self.loadArticle(page)
