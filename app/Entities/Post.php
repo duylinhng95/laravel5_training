@@ -17,7 +17,7 @@ class Post extends Model
         'count_votes'
     ];
 
-    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'tags'];
+    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
 
     public function category()
     {

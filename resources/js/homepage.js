@@ -12,6 +12,7 @@ class Homepage {
 		this.postPage = 1
 		this.lastPage = false
 		this.apiURL = location.origin + `/api`
+		this.currentURL = location.search
 	}
 
 	listen() {
@@ -21,7 +22,7 @@ class Homepage {
 	loadArticle(page) {
 		let self = this
 		$.ajax({
-			url: this.apiURL + `/load-post`,
+			url: this.apiURL + `/load-post`+this.currentURL,
 			type: `GET`,
 			data: {page: page},
 			success: function (res) {

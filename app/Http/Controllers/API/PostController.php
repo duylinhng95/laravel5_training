@@ -22,7 +22,7 @@ class PostController extends Controller
     public function getPost(Request $request)
     {
         $page  = $request->get('page');
-        $posts = $this->postRepository->paginate(10);
+        $posts = $this->postRepository->getPosts($request);
         if ($page > $posts->lastPage()) {
             return $this->error(400, 'Page not found', $posts->lastPage());
         }

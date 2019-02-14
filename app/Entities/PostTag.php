@@ -21,7 +21,7 @@ class PostTag extends Model
 
     public function getPopularTagsAttribute()
     {
-        $tags = $this->selectRaw("Count('name') as count, name")->groupBy('name')->orderByDesc('count')->get();
+        $tags = $this->selectRaw("Count('name') as count, name")->groupBy('name')->orderByDesc('count')->limit(5)->get();
         return $tags;
     }
 }
