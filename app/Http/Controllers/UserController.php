@@ -39,7 +39,7 @@ class UserController extends Controller
         $input = $request->except('_token');
         list($status, $code, $message) = $this->userService->register($input);
         if (!$status) {
-            return view('User.register', compact('status', 'code', 'message'));
+            return $this->error($code, $message);
         }
         $this->userService->login($input);
         return redirect()->route('post.index');
@@ -84,20 +84,5 @@ class UserController extends Controller
         $users = $this->userRepository->getUsers($request);
 
         return view('User.list', compact('users'));
-    }
-
-    public function checkInputRegister(RegisterRequest $request)
-    {
-        return $request;
-    }
-
-    public function checkInputLogin(LoginRequest $request)
-    {
-        $input = $request->except('_token');
-        list($status, $code, $message) = $this->userService->login($input);
-        if ($status) {
-            return $this->success("Input Valid");
-        }
-        return $this->error($code, $message);
     }
 }

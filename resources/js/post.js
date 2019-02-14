@@ -154,16 +154,20 @@ class Post {
 			},
 			submitHandler: function (form) {
 				$.ajax({
-					url: location.origin + `/validateLogin`,
+					url: location.origin + `/api/check-login`,
 					type: "POST",
 					data: $(form).serialize(),
 					success: function (res) {
-						form.submit(res)
+						// form.submit(res)
 					},
 					error: function (res) {
 						let data = res.responseJSON
 						let input = $('#loginForm')
-						input.before(`<div class="alert alert-danger">` + data.message + `</div>`)
+						let error_message = $("#error-message");
+						if (error_message.length != 0) {
+							error_message.remove()
+						}
+						input.before(`<div class="alert alert-danger" id="error-message">` + data.message + `</div>`)
 					}
 				})
 			}
@@ -203,11 +207,11 @@ class Post {
 			},
 			submitHandler: function (form) {
 				$.ajax({
-					url: location.origin + `/validateRegister`,
+					url: location.origin + `/api/check-register`,
 					type: "POST",
 					data: $(form).serialize(),
-					success: function (res) {
-						form.submit(res)
+					success: function () {
+						form.submit()
 					},
 					error: function (res) {
 						let data = res.responseJSON

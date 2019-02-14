@@ -121,4 +121,27 @@ class UserService
     {
         return $this->userRepository->getInfo();
     }
+
+    public function checkLogin($input)
+    {
+        $email      = $input['email'];
+        $password   = $input['password'];
+        $emailSplit = explode('@', $email);
+        if ($emailSplit[1] === 'neo-lab.vn') {
+            return $this->userRepository->loginRocket($input);
+        }
+
+        $response = $this->userRepository->findByFields('email', $email);
+        if (count($response) === 0) {
+            return [false, 404, 'User not found'];
+        }
+        $userPwd  = $response[0]->password;
+        $result   = Hash::check($password, $userPwd);
+
+        if ($result) {
+            return [$result, 200, 'Input is valid'];
+        } else {
+            return [$result, 401, 'Wrong password'];
+        }
+    }
 }
