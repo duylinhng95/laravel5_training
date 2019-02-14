@@ -39,8 +39,8 @@ class Homepage {
 		let self = this
 		$(window).on('scroll', function () {
 			let scrollPosition = $(window).height() + $(window).scrollTop()
-			let scrollHeight = $(document).height()
-			if ((scrollPosition / scrollHeight) * 100 > 93 && self.lastPage === false) {
+			let scrollLimit = $(".wrapper").height()
+			if ((scrollPosition / scrollLimit) >= 1 && self.lastPage === false) {
 				self.postPage++
 				let page = self.postPage
 				self.loadArticle(page)
