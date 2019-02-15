@@ -7,12 +7,12 @@
                     <a href="{{route('post.index')}}"><img class="logo" src="{{asset('images/logo.png')}}" alt="Logo"/></a>
                     <ul class="list-inline nav-header">
                         <li><a href="{{route('post.index')}}">home</a></li>
+                        <li><a href="#">about</a></li>
                         @if(Auth::check())
                             <li><a href="{{route('user.list')}}">user</a></li>
+                            <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add
+                                    new Post</a></li>
                         @endif
-                        <li><a href="#">about</a></li>
-                        <li><a class="btn btn-warning text-uppercase btn-xs" href="{{route('user.post.create')}}">Add
-                                new Post</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-sm-5 xs-view-right col-md-offset-2">

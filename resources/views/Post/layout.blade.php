@@ -37,6 +37,7 @@
     </div><!-- /Wrapper -->
     @include('Post.partial.footer')
     <script src="{{mix('/js/post.js')}}"></script>
+    <script src="{{mix('/js/homepage.js')}}"></script>
     <script src="{{asset('js/vendor/user/custom.js')}}"></script>
 </body>
 </html>
