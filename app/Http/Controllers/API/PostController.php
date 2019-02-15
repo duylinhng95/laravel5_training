@@ -21,13 +21,14 @@ class PostController extends Controller
 
     public function getPost(Request $request)
     {
-        $page  = $request->get('page');
-        $posts = $this->postRepository->getPosts($request);
+        $page     = $request->get('page');
+        $posts    = $this->postRepository->getPosts($request);
+        $lastPage = false;
         if ($page > $posts->lastPage()) {
-            return $this->error(400, 'Page not found', $posts->lastPage());
+            $lastPage = true;
         }
         $html = view('Post.Index.body', compact('posts'))->render();
 
-        return $this->success('Retrieve Post Success', $html);
+        return $this->success('Retrieve Post Success', ['view' => $html, 'lastPage' => $lastPage]);
     }
 }
