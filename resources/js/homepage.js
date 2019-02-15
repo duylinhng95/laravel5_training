@@ -36,7 +36,7 @@ class Homepage {
 
 	checkScrollToBottom() {
 		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-		let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+		let scrollHeight = $(".wrapper").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
 		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
