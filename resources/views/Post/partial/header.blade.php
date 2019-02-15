@@ -19,6 +19,18 @@
                 @yield('search')
                 <!-- Author -->
                     <div class="author-form">
+                        @if(Auth::check())
+                        <li class="dropdown pull-left">
+                            <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon" data-toggle="dropdown" role="button" data-display="static">
+                                <i class="fa fa-bell author-icon"></i>
+                                <input type="hidden" id="user_id" value="{{Auth::id()}}">
+                            </a>
+
+                            <ul class="dropdown-menu login-success notification" id="user_notification">
+
+                            </ul>
+                        </li>
+                        @endif
                         <li class="dropdown pull-right">
                             <a href="#" class="dropdown-toggle author-icon" data-toggle="dropdown" role="button"
                                data-display="static">

@@ -159,3 +159,39 @@ footer {
 .author-form ul.login-success:after {
   border-bottom: 6px solid #fff;
 }
+
+ul#user_notification {
+  width: 320px !important;
+  font-size: 6px;
+  left: -272px;
+}
+
+.notification a{
+  font-size: 12px !important;
+  color: #9ba1a4;
+  display: inline-block;
+}
+.notification i{
+  color: #66bb6a;
+}
+
+.notification-bell {
+  position: relative;
+}
+
+.badge:after{
+  position: absolute;
+  background: red;
+  height: 1rem;
+  top: 1rem;
+  right: 1rem;
+  width: 1rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 1rem;
+  border-radius: 50%;
+  color: white;
+  border: 1px solid red;
+  content: " ";
+  white-space: pre;
+}
