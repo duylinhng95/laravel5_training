@@ -90,7 +90,21 @@ class Homepage {
 					} else {
 						isAllRead = false
 					}
-					let content = `<div class="row">
+
+					let content = '';
+
+					if (res.href !== '#' || res.href)
+					{
+						content = `<div class="row">
+								            <div class="col-md-12 text-left">								            										            		
+								                <a class="notification_read" href="${location.origin + '/' + res.href}">
+																	<input type="hidden" value="${doc.id}" name="noti_id">
+																	${res.content} ${is_read} 
+																</a>
+								            </div>
+								        </div>`
+					} else {
+						content = `<div class="row">
 								            <div class="col-md-12 text-left">								            										            		
 								                <a class="notification_read" href="#">
 																	<input type="hidden" value="${doc.id}" name="noti_id">
@@ -98,6 +112,7 @@ class Homepage {
 																</a>
 								            </div>
 								        </div>`
+					}
 					self.element.notification.append(content)
 				})
 				if (isAllRead === false) {

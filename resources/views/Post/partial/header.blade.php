@@ -15,23 +15,26 @@
                         @endif
                     </ul>
                 </div>
-                <div class="col-md-4 col-sm-5 xs-view-right col-md-offset-2">
+                <div class="col-md-4 col-sm-5 xs-view-right">
                 @yield('search')
                 <!-- Author -->
+
+                </div><!-- /Tab-Content -->
+                <div class="col-md-2">
                     <div class="author-form">
                         @if(Auth::check())
-                        <li class="dropdown pull-left">
-                            <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon" data-toggle="dropdown" role="button" data-display="static">
-                                <i class="fa fa-bell author-icon"></i>
-                                <input type="hidden" id="user_id" value="{{Auth::id()}}">
-                            </a>
+                            <li class="dropdown pull-left">
+                                <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon" data-toggle="dropdown" role="button" data-display="static">
+                                    <i class="fa fa-bell author-icon"></i>
+                                    <input type="hidden" id="user_id" value="{{Auth::id()}}">
+                                </a>
 
-                            <ul class="dropdown-menu login-success notification" id="user_notification">
+                                <ul class="dropdown-menu login-success notification" id="user_notification">
 
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
                         @endif
-                        <li class="dropdown pull-right">
+                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle author-icon" data-toggle="dropdown" role="button"
                                data-display="static">
                                 @if(Auth::check())
@@ -190,7 +193,7 @@
                             @endif
                         </li>
                     </div><!-- /#Sing up -->
-                </div><!-- /Tab-Content -->
+                </div>
             </div>
         </div><!-- /Author -->
     </div>

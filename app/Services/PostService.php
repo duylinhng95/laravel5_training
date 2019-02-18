@@ -41,7 +41,7 @@ class PostService
             $input['content'] = $this->convertImg($input['content']);
         }
         $post = $this->postRepository->create($input);
-        $this->pushNotificationForFollower();
+        $this->pushNotificationForFollower($post['data']);
         return $post;
     }
 
@@ -127,7 +127,7 @@ class PostService
         return [$post, $tags, $comments, $followed];
     }
 
-    private function pushNotificationForFollower()
+    private function pushNotificationForFollower($post)
     {
         $user      = Auth::user();
         $followers = $user->followings;
@@ -138,6 +138,7 @@ class PostService
                 'created_at' => microtime(true)*1000,
                 'is_read' => false,
                 'user_id' => (string) $follower->user_id,
+                'href' => 'post/'.$post->id,
             ];
             $this->addData('notifications', $data);
         }

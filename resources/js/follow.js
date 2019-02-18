@@ -42,7 +42,8 @@ class Follow {
 						content: `You have been followed by an User`,
 						is_read: false,
 						user_id: res.data.follower_id,
-						created_at: new Date($.now()).getTime()
+						created_at: new Date($.now()).getTime(),
+						href: '#',
 					}
 					self.notification.db.collection('notifications').add(data)
 

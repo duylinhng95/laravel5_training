@@ -19,7 +19,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         unset($input['tags']);
         $post = $this->makeModel()->create($input);
         $post->tags()->createMany($tags);
-        return ['code' => 200, 'message' => 'Create Post Successful'];
+        return ['code' => 200, 'message' => 'Create Post Successful', 'data' => $post];
     }
 
     public function generateTagFromString($input)
