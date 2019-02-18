@@ -193,6 +193,7 @@ p.pull-left .navbar-toggle.active i.fa-long-arrow-left{
 	float:left;
 	position:relative;
 	margin-right: 15px;
+	width: 100%;
 }
 .search-section .form-control{
 	background:#66bb6a;
