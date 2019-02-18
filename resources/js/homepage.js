@@ -94,7 +94,7 @@ class Homepage {
 								            <div class="col-md-12 text-left">								            										            		
 								                <a class="notification_read" href="#">
 																	<input type="hidden" value="${doc.id}" name="noti_id">
-																	${res.content}${is_read} 
+																	${res.content} ${is_read} 
 																</a>
 								            </div>
 								        </div>`

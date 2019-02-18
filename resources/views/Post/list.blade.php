@@ -33,7 +33,7 @@
                             <a href="{{route('user.post.edit',['id' => $post->id])}}" class="btn btn-info"><i
                                         class="fa fa-pen"></i>
                                 Edit</a>
-                            <button id="btnDeletePost" class="btn btn-danger">
+                            <button class="btn btn-danger btn-delete-post">
                                 <input type="hidden" id="postId" value="{{$post->id}}">
                                 {{csrf_field()}}
                                 <i class="fa fa-trash"></i> Delete

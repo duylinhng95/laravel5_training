@@ -9,11 +9,13 @@ use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
 use Auth;
 use App\Traits\SummernoteTrait;
+use App\Traits\FireBaseTrait;
 use Illuminate\Session\Store as Session;
 
 class PostService
 {
     use SummernoteTrait;
+    use FirebaseTrait;
 
     protected $postRepository;
     protected $postTagRepository;
@@ -38,7 +40,9 @@ class PostService
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        return $this->postRepository->create($input);
+        $post = $this->postRepository->create($input);
+        $this->pushNotificationForFollower();
+        return $post;
     }
 
     public function listByUser()
@@ -58,7 +62,7 @@ class PostService
     {
         $tags     = implode(',', $post->tags->pluck('name')->toArray());
         $comments = $post->comments;
-        $author = $post->user_id;
+        $author   = $post->user_id;
         $followed = 0;
         if (Auth::check()) {
             $user = Auth::user();
@@ -121,5 +125,21 @@ class PostService
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
+    }
+
+    private function pushNotificationForFollower()
+    {
+        $user      = Auth::user();
+        $followers = $user->followings;
+        foreach ($followers as $follower) {
+            $data = [
+                'action' => 'create_post_follows',
+                'content' => $user->name.' have posted a new article',
+                'created_at' => microtime(true)*1000,
+                'is_read' => false,
+                'user_id' => (string) $follower->user_id,
+            ];
+            $this->addData('notifications', $data);
+        }
     }
 }

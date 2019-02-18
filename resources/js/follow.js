@@ -63,15 +63,7 @@ class Follow {
 			$.ajax({
 				url: `${url}/user/follow/${userId}`,
 				type: "GET",
-				success: function (res) {
-					let data = {
-						action: 'follows',
-						content: `You have been unfollowed by an User`,
-						is_read: false,
-						user_id: res.data.follower_id,
-						created_at: new Date($.now()).getTime()
-					}
-					self.notification.db.collection('notifications').add(data)
+				success: function () {
 					$(`.btn-unfollow[data-user-id=${userId}]`).addClass('d-none')
 					$(`.btn-follow[data-user-id=${userId}]`).removeClass('d-none')
 				}
