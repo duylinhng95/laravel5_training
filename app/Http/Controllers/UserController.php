@@ -75,8 +75,8 @@ class UserController extends Controller
 
     public function follow($id)
     {
-        $this->followService->followUser($id);
-        return $this->success('Follow Success', $id);
+        list ($userId, $followId) = $this->followService->followUser($id);
+        return $this->success('Follow Success', ['user_id' => $userId, 'follower_id' => $followId]);
     }
 
     public function listUser(Request $request)

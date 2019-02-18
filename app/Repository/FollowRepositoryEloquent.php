@@ -11,16 +11,20 @@ class FollowRepositoryEloquent extends BaseRepositoryEloquent implements FollowR
         return Follow::class;
     }
 
-    public function follow($followId, $userId)
+    public function follow($followerId, $userId)
     {
-        $row = $this->makeModel()->where('user_id', $userId)->where('follower_id', $followId)->get();
+        $row = $this->makeModel()->where('user_id', $userId)->where('follower_id', $followerId)->get();
         if (count($row) === 0) {
-            return $this->create([
+            $this->create([
                 "user_id"     => $userId,
-                "follower_id" => $followId,
+                "follower_id" => $followerId,
             ]);
+
+            return [$userId, $followerId];
         } else {
-            $this->deleteWhere(['user_id' => $userId, 'follower_id' => $followId]);
+            $this->deleteWhere(['user_id' => $userId, 'follower_id' => $followerId]);
+
+            return [$userId, $followerId];
         }
     }
 }

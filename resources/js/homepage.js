@@ -1,11 +1,13 @@
+import Notification from './notification.js'
+
 class Homepage {
 	constructor() {
 		this.init()
 	}
 
 	init() {
-		this.listen()
 		this.config()
+		this.listen()
 	}
 
 	config() {
@@ -14,10 +16,20 @@ class Homepage {
 		this.isActive = 0
 		this.apiURL = location.origin + `/api`
 		this.currentURL = location.search
+		this.notification = new Notification()
+		this.userId = $("#user_id").val()
+		this.element = {
+			userId: $("#user_id").val(),
+			notification: $("#user_notification"),
+			notificationIcon: $("#notification-icon"),
+		}
 	}
 
 	listen() {
 		this.onScrollDown()
+		if (this.element.userId !== undefined) {
+			this.showNotifications()
+		}
 	}
 
 	loadArticle(page) {
@@ -59,6 +71,77 @@ class Homepage {
 			if (scrolledToBottom && self.lastPage === false) {
 				self.checkActiveAPI()
 			}
+		})
+	}
+
+	showNotifications() {
+		let self = this
+		this.notification.db.collection('notifications')
+			.where("user_id", '==', this.element.userId)
+			.orderBy('created_at', 'desc')
+			.onSnapshot(function (querySnapshot) {
+				self.element.notification.children().remove()
+				let isAllRead = true
+				querySnapshot.forEach(function (doc) {
+					let res = doc.data()
+					let is_read = `<i class="fas fa-circle fa-xs"></i>`
+					if (res.is_read === true) {
+						is_read = ''
+					} else {
+						isAllRead = false
+					}
+
+					let content = '';
+
+					if (res.action !== 'follows')
+					{
+						let noti_title = res.title
+						if (noti_title.length > 30)
+						{
+							noti_title = noti_title.substring(0, 30) + "..."
+						}
+						content = `<div class="row">
+								            <div class="col-md-12 text-left notify-element">								            										            		
+								                <a class="notification_read" href="${location.origin + '/' + res.href}">
+																	<input type="hidden" value="${doc.id}" name="noti_id">
+																	${res.content} ${is_read}																	 
+																</a>
+																<div class="notify-title">"${noti_title}"</div>
+								            </div>
+								        </div>`
+					} else {
+						content = `<div class="row">
+								            <div class="col-md-12 text-left notify-element">								            										            		
+								                <a class="notification_read" href="#">
+																	<input type="hidden" value="${doc.id}" name="noti_id">
+																	${res.content} ${is_read} 
+																</a>
+								            </div>
+								        </div>`
+					}
+					self.element.notification.append(content)
+				})
+				if (isAllRead === false) {
+					self.element.notificationIcon.addClass('badge');
+				} else {
+					self.element.notificationIcon.removeClass('badge');
+				}
+				self.markReadNotification()
+			})
+	}
+
+	markReadNotification() {
+		let self = this
+		$('.notification').find('a').each(function (index, value) {
+			$(value).hover(function () {
+				let notification_id = $(value).find('input').val()
+
+				let notification = self.notification.db.collection('notifications').doc(notification_id)
+
+				notification.update(
+					{is_read: true}
+				)
+			})
 		})
 	}
 }

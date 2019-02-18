@@ -25,7 +25,7 @@ class Post {
 			btnSearchPost: $("#btnSearchPost"),
 			btnSearchUser: $("#btnSearchUser"),
 			keywords: $("#keywords"),
-			btnDeletePost: $("#btnDeletePost"),
+			btnDeletePost: $(".btn-delete-post"),
 			btnVotePost: $("#btnVotePost"),
 			voteNum: $("#voteNum"),
 			loginForm: $("#loginForm"),

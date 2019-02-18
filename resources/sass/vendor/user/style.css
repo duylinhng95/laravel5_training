@@ -23,15 +23,6 @@ a,button,span{
 	font-family: 'Raleway', sans-serif;
 	font-weight:600 !important;
 }
-.btn.active.focus,
- .btn.active:focus,
- .btn.focus,
- .btn.focus:active,
- .btn:active:focus,
- .btn:focus{
-	background:transparent;
-	outline:none;
-}
 /*Goto top*/
 #toTop{
 	position: fixed;
@@ -193,6 +184,7 @@ p.pull-left .navbar-toggle.active i.fa-long-arrow-left{
 	float:left;
 	position:relative;
 	margin-right: 15px;
+	width: 100%;
 }
 .search-section .form-control{
 	background:#66bb6a;
@@ -623,6 +615,7 @@ input[type="file"]:focus,
 	color:#000;
 	text-align:left;
 	padding:5px 0px 0px;
+	border-top: 1px solid #66bb6a;
 }
 .post-static .post-title{
 	padding-top:20px;

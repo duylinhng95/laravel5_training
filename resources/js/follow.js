@@ -1,3 +1,5 @@
+import Notification from './notification.js'
+
 class Follow {
 	constructor() {
 		this.init()
@@ -15,6 +17,7 @@ class Follow {
 		}
 		this.sectionFollow = $(".section-follow")
 		this.apiUrl = location.origin
+		this.notification = new Notification()
 	}
 
 	listen() {
@@ -25,6 +28,7 @@ class Follow {
 	followUser() {
 		let url = `${this.apiUrl}`
 		let btnFollow = this.element.btnFollow
+		let self = this
 
 		btnFollow.on('click', function () {
 			let userId = $(this).attr('data-user-id')
@@ -32,7 +36,17 @@ class Follow {
 			$.ajax({
 				url: `${url}/user/follow/${userId}`,
 				type: "GET",
-				success: function () {
+				success: function (res) {
+					let data = {
+						action: 'follows',
+						content: `You have been followed by an User`,
+						is_read: false,
+						user_id: res.data.follower_id,
+						created_at: new Date($.now()).getTime(),
+						href: '#',
+					}
+					self.notification.db.collection('notifications').add(data)
+
 					$(`.btn-follow[data-user-id=${userId}]`).addClass('d-none')
 					$(`.btn-unfollow[data-user-id=${userId}]`).removeClass('d-none')
 				}
@@ -43,6 +57,8 @@ class Follow {
 	unfollowUser() {
 		let url = `${this.apiUrl}`
 		let btnUnfollow = this.element.btnUnfollow
+		let self = this
+
 		btnUnfollow.on('click', function () {
 			let userId = $(this).attr('data-user-id')
 			$.ajax({
