@@ -131,7 +131,7 @@ body {
 }
 
 .wrapper {
-  min-height: -webkit-fill-available;
+  min-height: 949px;
 }
 
 footer {
@@ -194,4 +194,18 @@ ul#user_notification {
   border: 1px solid red;
   content: " ";
   white-space: pre;
+}
+
+.notify-element {
+  min-height: 50px;
+  border-bottom: 1px solid #66bb6a;
+  line-height: 50px;
+}
+
+.notify-title {
+  font-size: 10px !important;
+  text-align: center;
+  font-style: italic;
+  line-height: 10px;
+  margin-bottom: 10px;
 }

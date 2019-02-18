@@ -139,6 +139,7 @@ class PostService
                 'is_read' => false,
                 'user_id' => (string) $follower->user_id,
                 'href' => 'post/'.$post->id,
+                'title' => $post->title,
             ];
             $this->addData('notifications', $data);
         }

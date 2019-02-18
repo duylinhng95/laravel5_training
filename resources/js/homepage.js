@@ -93,19 +93,25 @@ class Homepage {
 
 					let content = '';
 
-					if (res.href !== '#' || res.href)
+					if (res.action !== 'follows')
 					{
+						let noti_title = res.title
+						if (noti_title.length > 30)
+						{
+							noti_title = noti_title.substring(0, 30) + "..."
+						}
 						content = `<div class="row">
-								            <div class="col-md-12 text-left">								            										            		
+								            <div class="col-md-12 text-left notify-element">								            										            		
 								                <a class="notification_read" href="${location.origin + '/' + res.href}">
 																	<input type="hidden" value="${doc.id}" name="noti_id">
-																	${res.content} ${is_read} 
+																	${res.content} ${is_read}																	 
 																</a>
+																<div class="notify-title">"${noti_title}"</div>
 								            </div>
 								        </div>`
 					} else {
 						content = `<div class="row">
-								            <div class="col-md-12 text-left">								            										            		
+								            <div class="col-md-12 text-left notify-element">								            										            		
 								                <a class="notification_read" href="#">
 																	<input type="hidden" value="${doc.id}" name="noti_id">
 																	${res.content} ${is_read} 
