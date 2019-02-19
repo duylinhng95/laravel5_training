@@ -24,7 +24,7 @@ class BannedWordsRequest extends FormRequest
     public function rules()
     {
         return [
-            'banned_words' => 'required|mimes:csv,txt'
+            'banned_words' => 'required'
         ];
     }
 
