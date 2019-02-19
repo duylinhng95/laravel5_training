@@ -53,6 +53,7 @@ class PostService
     public function create($input)
     {
         $input['user_id'] = Auth::id();
+        $input['status']  = 'new';
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -165,7 +166,7 @@ class PostService
      */
     private function checkViewed($post)
     {
-        $viewed = $this->session->get('viewed_post');
+        $viewed = $this->session->get('viewed_post', []);
         return in_array($post->id, $viewed);
     }
 

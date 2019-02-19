@@ -55,7 +55,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function getPosts($request)
     {
-        $mainQuery = $this->makeModel();
+        $mainQuery = $this->makeModel()->where("status", "=", null);
 
         if ($request->has('keywords')) {
             $keyword   = $request->input('keywords');
@@ -159,7 +159,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
                     $mainQuery = $mainQuery->orderBy($section, $order);
             }
         }
-        return $mainQuery->withTrashed()->paginate($num);
+        return $mainQuery->orderBy('created_at', 'desc')->withTrashed()->paginate($num);
     }
 
     public function findWithTrashed($id)
@@ -180,5 +180,13 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function getLatestPost()
     {
         return $this->makeModel()->getLatestPost(5);
+    }
+
+    public function publish($id)
+    {
+        $post         = $this->makeModel()->find($id);
+        $post->status = '';
+        $post->save();
+        return ['code' => 200, 'message' => 'Post Publish successful'];
     }
 }

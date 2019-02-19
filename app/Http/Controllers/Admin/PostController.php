@@ -79,4 +79,10 @@ class PostController extends Controller
             return redirect()->route('admin.post.words');
         }
     }
+
+    public function publishPost($id)
+    {
+        $this->postRepository->publish($id);
+        return redirect()->route('admin.post.show', ['id' => $id]);
+    }
 }

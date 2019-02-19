@@ -53,8 +53,10 @@
                     <td>{{$post->user->name}}</td>
                     @if($post->deleted_at != null)
                         <td class="text text-danger">Deleted</td>
-                    @else
+                    @elseif($post->status != 'new')
                         <td class="text text-success">Available</td>
+                    @else
+                        <td class="text text-warning">Pending</td>
                     @endif
                     <td><a href="{{route('admin.post.show', ['id'=>$post->id])}}" class="btn btn-primary">View</a></td>
                 </tr>

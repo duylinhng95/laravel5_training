@@ -14,14 +14,22 @@
                 </ul>
             </div>
             <div class="col-md-4">
-                <form method="post" action="{{route('admin.post.delete', ['id' => $post->id])}}" class="">
-                    {!! method_field('delete') !!}
-                    {{csrf_field()}}
-                    <button type="submit" class="btn btn-danger">Permanently Delete</button>
-                </form>
-                @if($post->deleted_at != null)
-                <a href="{{route('admin.post.restore', ['id' =>$post->id])}}" class="btn btn-primary">Restore post</a>
-                @endif
+                <div class="row m-b-10">
+                    <form method="post" action="{{route('admin.post.delete', ['id' => $post->id])}}" class="w-75">
+                        {!! method_field('delete') !!}
+                        {{csrf_field()}}
+                        <button type="submit" class="btn btn-danger w-100">Permanently Delete</button>
+                    </form>
+                </div>
+                <div class="row">
+                    @if($post->deleted_at != null)
+                        <a href="{{route('admin.post.restore', ['id' =>$post->id])}}" class="w-75 btn btn-primary">Restore
+                            post</a>
+                    @elseif($post->status == 'new')
+                        <a href="{{route('admin.post.publish', ['id' =>$post->id])}}" class="w-75 btn btn-success">Publish
+                            post</a>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="card text-black-50">
