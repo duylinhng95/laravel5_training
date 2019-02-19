@@ -48,6 +48,9 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
         Route::get('/{id}', 'CategoryController@show')->name('category.show');
     });
+
+    Route::get('/admin/login', 'AdminController@showLogin')->name('admin.login')->middleware('admin.login');
+    Route::post('/admin/login', 'AdminController@login')->name('admin.login');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
@@ -79,6 +82,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     Route::post('/password', 'AdminController@storePassword')->name('admin.password.store');
 });
 
-Route::get('/about', function() {
+Route::get('/about', function () {
     return view('about');
 })->name('about');

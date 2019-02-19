@@ -63,8 +63,14 @@ class UserService
      */
     public function login($input)
     {
-        if ($user = Auth::guard()->attempt($input)) {
-            return [true, 200, 'Login Successful'];
+        if (Auth::guard()->attempt($input)) {
+            $user = Auth::user();
+            if ($user->checkRole('admin')) {
+                Auth::logout();
+                return [false, 404, 'Wrong Credential'];
+            } else {
+                return [true, 200, 'Login Successful'];
+            }
         }
         return $this->checkRocketChatAndCreateAccount($input);
     }

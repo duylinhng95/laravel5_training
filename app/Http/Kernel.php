@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'user.auth' => \App\Http\Middleware\AuthenticateUser::class,
         'user.block' => \App\Http\Middleware\BlockUserPost::class,
         'admin.auth' => \App\Http\Middleware\AuthenticateAdmin::class,
+        'admin.login' => \App\Http\Middleware\AuthenticateAdminLoginForm::class,
     ];
 
     /**
