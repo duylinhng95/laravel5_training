@@ -53,7 +53,7 @@
                     <td>{{$post->user->name}}</td>
                     @if($post->deleted_at != null)
                         <td class="text text-danger">Deleted</td>
-                    @elseif($post->status != 'new')
+                    @elseif($post->status != config('constant.post.status.pending'))
                         <td class="text text-success">Available</td>
                     @else
                         <td class="text text-warning">Pending</td>

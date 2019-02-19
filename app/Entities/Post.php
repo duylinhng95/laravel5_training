@@ -21,6 +21,8 @@ class Post extends Model
         'count_votes'
     ];
 
+    public $statusName = ['Peding' => 0, 'Available' => 1,];
+
     protected $fillable = ['title', 'content', 'user_id', 'category_id', 'status'];
 
     public function category()

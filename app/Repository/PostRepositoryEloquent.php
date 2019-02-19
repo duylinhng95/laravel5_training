@@ -55,7 +55,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function getPosts($request)
     {
-        $mainQuery = $this->makeModel()->where("status", "=", null);
+        $mainQuery = $this->makeModel()->where("status", "=", config('constant.post.status.available'));
 
         if ($request->has('keywords')) {
             $keyword   = $request->input('keywords');
@@ -185,7 +185,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function publish($id)
     {
         $post         = $this->makeModel()->find($id);
-        $post->status = '';
+        $post->status = config('constant.post.status.available');
         $post->save();
         return ['code' => 200, 'message' => 'Post Publish successful'];
     }

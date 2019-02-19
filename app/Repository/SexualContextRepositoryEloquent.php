@@ -8,10 +8,11 @@ class SexualContextRepositoryEloquent extends BaseRepositoryEloquent implements 
 {
     public function getBannedWords($keywords = '')
     {
+        $query = $this->makeModel();
         if ($keywords != '') {
-            return $this->makeModel()->where('context', 'like', '%' . $keywords . '%')->get();
+            $query = $query->where('context', 'like', '%' . $keywords . '%');
         }
-        return $this->makeModel()->paginate(20);
+        return $query->paginate(20);
     }
 
     public function createBannedWords($data)

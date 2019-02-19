@@ -25,7 +25,7 @@
                     @if($post->deleted_at != null)
                         <a href="{{route('admin.post.restore', ['id' =>$post->id])}}" class="w-75 btn btn-primary">Restore
                             post</a>
-                    @elseif($post->status == 'new')
+                    @elseif($post->status == config('constant.post.status.pending'))
                         <a href="{{route('admin.post.publish', ['id' =>$post->id])}}" class="w-75 btn btn-success">Publish
                             post</a>
                     @endif

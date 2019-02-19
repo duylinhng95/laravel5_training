@@ -53,7 +53,7 @@ class PostService
     public function create($input)
     {
         $input['user_id'] = Auth::id();
-        $input['status']  = 'new';
+        $input['status']  = config('constant.post.status.pending');
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
