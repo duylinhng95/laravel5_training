@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\BannedWordsRequest;
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
 use App\Repository\SexualContextRepository;
@@ -68,7 +69,7 @@ class PostController extends Controller
         return view('Admin.post.banned', compact('words'));
     }
 
-    public function uploadBannedWords(Request $request)
+    public function uploadBannedWords(BannedWordsRequest $request)
     {
         $status = false;
         if ($request->hasFile('banned_words')) {

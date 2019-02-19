@@ -33,7 +33,12 @@
                                   enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 <div class="modal-body">
-                                    <input name="banned_words" type="file"/>
+                                    @if($errors->has('banned_words'))
+                                        <div class="text-danger">
+                                            <span>* </span>{{$errors->first('banned_words')}}
+                                        </div>
+                                    @endif
+                                    <input name="banned_words" type="file" accept=".csv"/>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Upload Compelete</button>

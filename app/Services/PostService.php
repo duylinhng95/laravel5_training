@@ -198,6 +198,7 @@ class PostService
     public function uploadBannedWords($file)
     {
         $data        = [];
+        $this->changeFileDelimiter($file);
         $file_handle = fopen($file, "r");
         while (!feof($file_handle)) {
             $row = fgetcsv($file_handle, '1000', ';');
@@ -205,11 +206,19 @@ class PostService
                 $data[]['context'] = $row[0];
             }
         }
-
         foreach ($data as $param) {
             $this->sexualContextRepository->createBannedWords($param);
         }
 
         return [true, 'Upload complete'];
+    }
+
+    private function changeFileDelimiter($file)
+    {
+        $delimiters = array('|', ',', '^', "\t");
+        $delimiter = ';';
+        $str = file_get_contents($file);
+        $str = str_replace($delimiters, $delimiter, $str);
+        file_put_contents($file, $str);
     }
 }
