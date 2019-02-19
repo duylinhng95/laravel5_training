@@ -1,5 +1,6 @@
 require('./vendor/template.js')
 require('./bootstrap')
+require('jquery-validation/dist/additional-methods')
 
 class Admin {
 	constructor() {
@@ -17,6 +18,8 @@ class Admin {
 			btnSearchUser: $("#searchBtnUser"),
 			btnSearchPost: $("#searchPostBtn"),
 			btnSearchWord: $("#searchWordsBtn"),
+			btnSubmitFileWord: $("#btnSubmitFileWord"),
+			fileForm: $("#submitFileForm"),
 			searchField: $("#search"),
 			params: location.search,
 			loader: $("#loader"),
@@ -48,6 +51,7 @@ class Admin {
 		this.sortButtonPress()
 		this.checkNoData()
 		this.setActiveClass()
+		this.validateFileWord()
 	}
 
 	importUser() {
@@ -122,8 +126,7 @@ class Admin {
 
 	checkNoData() {
 		let tbody = $("tbody")
-		if(tbody.children().length == 0)
-		{
+		if (tbody.children().length == 0) {
 			tbody.append(`<td colspan="6" align="center">
                 No data is found
             </td>`)
@@ -132,10 +135,30 @@ class Admin {
 
 	setActiveClass() {
 		let url = location.href
-		$(".nav-link").each(function() {
-			if(this.href === url)
-			{
+		$(".nav-link").each(function () {
+			if (this.href === url) {
 				$(this).addClass('active')
+			}
+		})
+	}
+
+	validateFileWord() {
+		let formData = this.element.fileForm
+		formData.validate({
+			rules: {
+				banned_words: {
+					required: true,
+					extension: "csv"
+				}
+			},
+			messages: {
+				banned_words: {
+					required: "File is required",
+					extension: "File must be csv extension"
+				}
+			},
+			submitHandler: function (form) {
+				form.submit();
 			}
 		})
 	}

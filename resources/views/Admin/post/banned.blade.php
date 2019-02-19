@@ -30,7 +30,7 @@
                             </div>
 
                             <form action="{{route('admin.post.words.upload')}}" method="post"
-                                  enctype="multipart/form-data">
+                                  enctype="multipart/form-data" id="submitFileForm">
                                 {{csrf_field()}}
                                 <div class="modal-body">
                                     @if($errors->has('banned_words'))
@@ -38,10 +38,10 @@
                                             <span>* </span>{{$errors->first('banned_words')}}
                                         </div>
                                     @endif
-                                    <input name="banned_words" type="file" accept=".csv"/>
+                                    <input name="banned_words" type="file" accept=".csv" id="file_csv"/>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Upload Compelete</button>
+                                    <button type="submit" class="btn btn-primary" id="btnSubmitFileWord">Upload Compelete</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </form>
