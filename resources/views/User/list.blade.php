@@ -13,7 +13,7 @@
         @foreach ($users->chunk(3) as $split)
             <div class="row">
                 @foreach($split as $user)
-                    @if(!checkAdmin($user, 'admin'))
+                    @if(!$user->checkRole('admin'))
                         <div class="panel col-md-3 user-panel">
                             <div class="row">
                                 <div class="col-md-12">

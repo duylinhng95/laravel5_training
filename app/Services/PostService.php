@@ -2,11 +2,19 @@
 
 namespace App\Services;
 
+use App\Entities\Post;
+use App\Repository\CommentRepositoryEloquent;
+use App\Repository\FollowRepositoryEloquent;
 use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
+use App\Repository\PostTagRepositoryEloquent;
 use App\Repository\PostVoteRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
+use App\Repository\PostVoteRepositoryEloquent;
+use App\Repository\SexualContextRepository;
+use App\Repository\SexualContextRepositoryEloquent;
 use Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
@@ -17,26 +25,34 @@ class PostService
     use SummernoteTrait;
     use FirebaseTrait;
 
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
+    /** @var PostTagRepositoryEloquent */
     protected $postTagRepository;
+    /** @var CommentRepositoryEloquent */
     protected $commentRepository;
+    /** @var PostVoteRepositoryEloquent */
     protected $postVoteRepository;
     protected $session;
+    /** @var FollowRepositoryEloquent */
     protected $followRepository;
+    /** @var SexualContextRepositoryEloquent */
+    protected $sexualContextRepository;
 
     public function __construct()
     {
-        $this->postRepository     = app(PostRepository::class);
-        $this->postTagRepository  = app(PostTagRepository::class);
-        $this->session            = app(Session::class);
-        $this->commentRepository  = app(CommentRepository::class);
-        $this->postVoteRepository = app(PostVoteRepository::class);
-        $this->followRepository   = app(FollowRepository::class);
+        $this->postRepository          = app(PostRepository::class);
+        $this->postTagRepository       = app(PostTagRepository::class);
+        $this->session                 = app(Session::class);
+        $this->commentRepository       = app(CommentRepository::class);
+        $this->postVoteRepository      = app(PostVoteRepository::class);
+        $this->followRepository        = app(FollowRepository::class);
+        $this->sexualContextRepository = app(SexualContextRepository::class);
     }
 
     public function create($input)
     {
-        $input['user_id'] = Auth::user()->id;
+        $input['user_id'] = Auth::id();
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -52,12 +68,12 @@ class PostService
 
     private function checkingSexualContent($input)
     {
-        $title = $input['title'];
-        $tags = $input['tags'];
-        $content = $input['content'];
+        $title        = $input['title'];
+        $tags         = $input['tags'];
+        $content      = $input['content'];
         $banned_words = $this->postRepository->getBannedWords();
         foreach ($banned_words as $word) {
-            if (strpos($tags, $word->context) || strpos($content, $word->context)|| strpos($title, $word->context)) {
+            if (strpos($tags, $word->context) || strpos($content, $word->context) || strpos($title, $word->context)) {
                 return [false, 'Title, Content or Tags must not have banned word: ' . $word->context];
             }
         }
@@ -85,7 +101,7 @@ class PostService
 
     public function listByUser()
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         return $this->postRepository->findByFields('user_id', $userId);
     }
 
@@ -103,8 +119,8 @@ class PostService
         $author   = $post->user_id;
         $followed = 0;
         if (Auth::check()) {
-            $user = Auth::user();
-            if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $userId = Auth::id();
+            if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $userId])) {
                 $followed = 1;
             }
         }
@@ -128,6 +144,10 @@ class PostService
         }
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     public function countView($post)
     {
         if (!$this->checkViewed($post)) {
@@ -139,15 +159,19 @@ class PostService
         return false;
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     private function checkViewed($post)
     {
-        $viewed = $this->session->get('viewed_post', []);
+        $viewed = $this->session->get('viewed_post');
         return in_array($post->id, $viewed);
     }
 
     public function comment($postId, $input)
     {
-        $userId           = Auth::user()->id;
+        $userId           = Auth::id();
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
         $comment          = $this->commentRepository->create($input);
@@ -158,7 +182,7 @@ class PostService
 
     public function vote($postId)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
@@ -182,7 +206,7 @@ class PostService
         }
 
         foreach ($data as $param) {
-            $this->postRepository->createBannedWords($param);
+            $this->sexualContextRepository->createBannedWords($param);
         }
 
         return [true, 'Upload complete'];

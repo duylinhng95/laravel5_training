@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Entities\User;
 use Closure;
 use Auth;
 
@@ -17,7 +16,8 @@ class BlockUserPost
      */
     public function handle($request, Closure $next)
     {
-        if (checkStatus()) {
+        $user = Auth::user();
+        if ($user->checkStatus()) {
             return $next($request);
         } else {
             return redirect()->route('user.index')->with('error', 'You have been blocked to post');

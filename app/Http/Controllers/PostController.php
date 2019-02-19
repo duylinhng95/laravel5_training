@@ -38,7 +38,8 @@ class PostController extends Controller
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
         if (Auth::check()) {
-            if (checkOwner($post->user->id)) {
+            $userId = Auth::id();
+            if ($post->checkOwner($userId)) {
                 return redirect()->route('user.post.show', ['id' => $id]);
             }
         }

@@ -51,8 +51,7 @@
             "database/factories"
         ],
         "files": [
-            "app/Http/Helpers/FormatHelpers.php",
-            "app/Http/Helpers/CheckingHelpers.php"
+            "app/Http/Helpers/FormatHelpers.php"
         ]
     },
     "autoload-dev": {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
+use App\Repository\SexualContextRepository;
+use App\Repository\SexualContextRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -17,12 +19,15 @@ class PostController extends Controller
     protected $postService;
     /** @var PostRepositoryEloquent */
     protected $postRepository;
+    /** @var SexualContextRepositoryEloquent */
+    protected $sexualContextRepository;
 
     public function __construct()
     {
-        $this->adminService   = app(AdminService::class);
-        $this->postService    = app(PostService::class);
-        $this->postRepository = app(PostRepository::class);
+        $this->adminService            = app(AdminService::class);
+        $this->postService             = app(PostService::class);
+        $this->postRepository          = app(PostRepository::class);
+        $this->sexualContextRepository = app(SexualContextRepository::class);
     }
 
     public function all(Request $request)
@@ -56,9 +61,9 @@ class PostController extends Controller
     public function showBannedWords(Request $request)
     {
         if ($request->has('keywords')) {
-            $words = $this->postRepository->getBannedWords(($request->input('keywords')));
+            $words = $this->sexualContextRepository->getBannedWords(($request->input('keywords')));
         } else {
-            $words = $this->postRepository->getBannedWords();
+            $words = $this->sexualContextRepository->getBannedWords();
         }
         return view('Admin.post.banned', compact('words'));
     }

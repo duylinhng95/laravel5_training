@@ -47,7 +47,7 @@
                                 <ul class="dropdown-menu login-success">
 
                                     <div class="row text-center">
-                                        @if(checkRole( 'admin'))
+                                        @if(Auth::user()->checkRole( 'admin'))
                                             <li class="row">
                                                 <div class="col-md-12 text-left">
                                                     <a class="sign" href="{{route('admin.index')}}"><i class="fas fa-lock icon"></i> Admin

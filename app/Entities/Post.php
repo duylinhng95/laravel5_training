@@ -5,6 +5,10 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed id
+ * @property int view
+ */
 class Post extends Model
 {
     use SoftDeletes;
@@ -67,5 +71,11 @@ class Post extends Model
     public function getEncodeContentAttribute()
     {
         return str_limit(strip_tags($this->content), $limit = 60, $end = '...');
+    }
+
+    public function checkOwner($userId)
+    {
+        $ownerId = $this->user->id;
+        return $ownerId == $userId;
     }
 }

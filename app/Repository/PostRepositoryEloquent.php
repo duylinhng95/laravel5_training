@@ -181,17 +181,4 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         return $this->makeModel()->getLatestPost(5);
     }
-
-    public function getBannedWords($keywords = '')
-    {
-        if ($keywords != '') {
-            return SexualContext::where('context', 'like', '%' . $keywords . '%')->get();
-        }
-        return SexualContext::all();
-    }
-
-    public function createBannedWords($data)
-    {
-        return SexualContext::firstOrCreate($data);
-    }
 }
