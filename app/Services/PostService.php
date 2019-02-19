@@ -71,7 +71,7 @@ class PostService
         $title        = $input['title'];
         $tags         = $input['tags'];
         $content      = $input['content'];
-        $banned_words = $this->postRepository->getBannedWords();
+        $banned_words = $this->sexualContextRepository->getBannedWords();
         foreach ($banned_words as $word) {
             if (strpos($tags, $word->context) || strpos($content, $word->context) || strpos($title, $word->context)) {
                 return [false, 'Title, Content or Tags must not have banned word: ' . $word->context];
