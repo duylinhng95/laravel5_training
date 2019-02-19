@@ -68,6 +68,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-sticky-note"></i>Posts list</a>
+                            <a class="nav-link" href="{{url('/admin/post/words')}}"><i class="fas fa-fw fa-sticky-note"></i>Posts Banned Words</a>
                         </li>
                         <li class="nav-divider">
                             Category

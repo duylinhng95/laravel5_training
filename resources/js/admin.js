@@ -16,6 +16,7 @@ class Admin {
 			btnImportUser: $("#btnImportUser"),
 			btnSearchUser: $("#searchBtnUser"),
 			btnSearchPost: $("#searchPostBtn"),
+			btnSearchWord: $("#searchWordsBtn"),
 			searchField: $("#search"),
 			params: location.search,
 			loader: $("#loader"),
@@ -38,6 +39,8 @@ class Admin {
 	listen() {
 		this.buttonSort()
 		this.importUser()
+		this.btnSearchEnter(this.element.btnSearchWord)
+		this.onSearch(this.element.btnSearchWord)
 		this.btnSearchEnter(this.element.btnSearchPost)
 		this.onSearch(this.element.btnSearchPost)
 		this.btnSearchEnter(this.element.btnSearchUser)

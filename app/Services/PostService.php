@@ -116,11 +116,16 @@ class PostService
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        $this->postRepository->update($id, $input);
-        $tags = $this->postRepository->generateTagFromString($input);
-        $this->postTagRepository->deleteTags($tags, $id);
-        $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-        return ['code' => 202, 'message' => "Update Post Success"];
+        list($status, $message) = $this->checkingSexualContent($input);
+        if ($status) {
+            $this->postRepository->update($id, $input);
+            $tags = $this->postRepository->generateTagFromString($input);
+            $this->postTagRepository->deleteTags($tags, $id);
+            $this->postTagRepository->updateMany(['post_id' => $id], $tags);
+            return [$status, $message];
+        } else {
+            return [$status, $message];
+        }
     }
 
     public function countView($post)

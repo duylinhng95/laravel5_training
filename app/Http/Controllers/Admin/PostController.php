@@ -53,9 +53,13 @@ class PostController extends Controller
         return redirect()->route('admin.post.show', ['id' => $id]);
     }
 
-    public function showBannedWords()
+    public function showBannedWords(Request $request)
     {
-        $words = $this->postRepository->getBannedWords();
+        if ($request->has('keywords')) {
+            $words = $this->postRepository->getBannedWords(($request->input('keywords')));
+        } else {
+            $words = $this->postRepository->getBannedWords();
+        }
         return view('Admin.post.banned', compact('words'));
     }
 
