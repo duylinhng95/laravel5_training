@@ -23,7 +23,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title">Upload banned words list CSV file</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -38,7 +38,7 @@
                                             <span>* </span>{{$errors->first('banned_words')}}
                                         </div>
                                     @endif
-                                    <input name="banned_words" type="file" accept=".csv" id="file_csv"/>
+                                    <input name="banned_words" type="file" id="file_csv"/>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary" id="btnSubmitFileWord">Upload Compelete</button>
@@ -68,6 +68,7 @@
                 </tr>
             @endforeach
             </tbody>
+            {{$words->links()}}
         </table>
     </div>
 @endsection
