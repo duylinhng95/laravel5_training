@@ -57,29 +57,9 @@ class PostService
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        list($status, $message) = $this->checkingSexualContent($input);
-        if ($status) {
             $post = $this->postRepository->create($input);
             $this->pushNotificationForFollower($post['data']);
-            return [$status, $message];
-        } else {
-            return [$status, $message];
-        }
-    }
-
-    private function checkingSexualContent($input)
-    {
-        $title        = $input['title'];
-        $tags         = $input['tags'];
-        $content      = $input['content'];
-        $banned_words = $this->sexualContextRepository->getBannedWords();
-        foreach ($banned_words as $word) {
-            if (strpos($tags, $word->context) || strpos($content, $word->context) || strpos($title, $word->context)) {
-                return [false, 'Title, Content or Tags must not have banned word: ' . $word->context];
-            }
-        }
-
-        return [true, 'Content is valid'];
+            return [true, 'Create post success'];
     }
 
     private function pushNotificationForFollower($post)
@@ -133,16 +113,11 @@ class PostService
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        list($status, $message) = $this->checkingSexualContent($input);
-        if ($status) {
             $this->postRepository->update($id, $input);
             $tags = $this->postRepository->generateTagFromString($input);
             $this->postTagRepository->deleteTags($tags, $id);
             $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-            return [$status, $message];
-        } else {
-            return [$status, $message];
-        }
+            return [false, 'Update is success'];
     }
 
     /**
