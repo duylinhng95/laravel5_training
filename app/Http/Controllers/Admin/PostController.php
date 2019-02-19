@@ -62,9 +62,9 @@ class PostController extends Controller
     public function showBannedWords(Request $request)
     {
         if ($request->has('keywords')) {
-            $words = $this->sexualContextRepository->getBannedWords(($request->input('keywords')));
+            $words = $this->sexualContextRepository->paginateBannedWords(($request->input('keywords')));
         } else {
-            $words = $this->sexualContextRepository->getBannedWords();
+            $words = $this->sexualContextRepository->paginateBannedWords();
         }
         return view('Admin.post.banned', compact('words'));
     }

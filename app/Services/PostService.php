@@ -197,7 +197,7 @@ class PostService
 
     public function uploadBannedWords($file)
     {
-        $data        = [];
+        $data = [];
         $this->changeFileDelimiter($file);
         $file_handle = fopen($file, "r");
         while (!feof($file_handle)) {
@@ -216,9 +216,9 @@ class PostService
     private function changeFileDelimiter($file)
     {
         $delimiters = array('|', ',', '^', "\t");
-        $delimiter = ';';
-        $str = file_get_contents($file);
-        $str = str_replace($delimiters, $delimiter, $str);
+        $delimiter  = ';';
+        $str        = file_get_contents($file);
+        $str        = str_replace($delimiters, $delimiter, $str);
         file_put_contents($file, $str);
     }
 }

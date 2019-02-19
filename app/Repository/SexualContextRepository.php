@@ -4,7 +4,9 @@ namespace App\Repository;
 
 interface SexualContextRepository
 {
-    public function getBannedWords($keywords);
+    public function paginateBannedWords($keywords = '');
+
+    public function getBannedWords();
 
     public function createBannedWords($data);
 }
