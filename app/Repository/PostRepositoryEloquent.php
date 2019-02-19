@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entities\Post;
+use App\Entities\SexualContext;
 use Illuminate\Database\Query\Builder;
 use DB;
 
@@ -178,5 +179,15 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function getLatestPost()
     {
         return $this->makeModel()->getLatestPost(5);
+    }
+
+    public function getBannedWords()
+    {
+        return SexualContext::all();
+    }
+
+    public function createBannedWords($data)
+    {
+        return SexualContext::firstOrCreate($data);
     }
 }

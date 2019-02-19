@@ -68,6 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all')->name('admin.post');
+            Route::get('/words', 'PostController@showBannedWords')->name('admin.post.words');
+            Route::post('/words', 'PostController@uploadBannedWords')->name('admin.post.words.upload');
             Route::get('/{id}', 'PostController@show')->name('admin.post.show');
             Route::delete('/{id}', 'PostController@delete')->name('admin.post.delete');
             Route::get('/restore/{id}', 'PostController@restore')->name('admin.post.restore');

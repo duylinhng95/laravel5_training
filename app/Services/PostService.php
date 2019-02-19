@@ -40,9 +40,47 @@ class PostService
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        $post = $this->postRepository->create($input);
-        $this->pushNotificationForFollower($post['data']);
-        return $post;
+        list($status, $message) = $this->checkingSexualContent($input);
+        if ($status) {
+            $post = $this->postRepository->create($input);
+            $this->pushNotificationForFollower($post['data']);
+            return [$status, $message];
+        } else {
+            return [$status, $message];
+        }
+    }
+
+    private function checkingSexualContent($input)
+    {
+        $title = $input['title'];
+        $tags = $input['tags'];
+        $content = $input['content'];
+        $banned_words = $this->postRepository->getBannedWords();
+        foreach ($banned_words as $word) {
+            if (strpos($tags, $word->context) || strpos($content, $word->context)|| strpos($title, $word->context)) {
+                return [false, 'Title, Content or Tags must not have banned word: ' . $word->context];
+            }
+        }
+
+        return [true, 'Content is valid'];
+    }
+
+    private function pushNotificationForFollower($post)
+    {
+        $user      = Auth::user();
+        $followers = $user->followings;
+        foreach ($followers as $follower) {
+            $data = [
+                'action'     => 'create_post_follows',
+                'content'    => $user->name . ' have posted a new article',
+                'created_at' => microtime(true) * 1000,
+                'is_read'    => false,
+                'user_id'    => (string)$follower->user_id,
+                'href'       => 'post/' . $post->id,
+                'title'      => $post->title,
+            ];
+            $this->addData('notifications', $data);
+        }
     }
 
     public function listByUser()
@@ -127,21 +165,21 @@ class PostService
         return [$post, $tags, $comments, $followed];
     }
 
-    private function pushNotificationForFollower($post)
+    public function uploadBannedWords($file)
     {
-        $user      = Auth::user();
-        $followers = $user->followings;
-        foreach ($followers as $follower) {
-            $data = [
-                'action' => 'create_post_follows',
-                'content' => $user->name.' have posted a new article',
-                'created_at' => microtime(true)*1000,
-                'is_read' => false,
-                'user_id' => (string) $follower->user_id,
-                'href' => 'post/'.$post->id,
-                'title' => $post->title,
-            ];
-            $this->addData('notifications', $data);
+        $data        = [];
+        $file_handle = fopen($file, "r");
+        while (!feof($file_handle)) {
+            $row = fgetcsv($file_handle, '1000', ';');
+            if ($row) {
+                $data[]['context'] = $row[0];
+            }
         }
+
+        foreach ($data as $param) {
+            $this->postRepository->createBannedWords($param);
+        }
+
+        return [true, 'Upload complete'];
     }
 }

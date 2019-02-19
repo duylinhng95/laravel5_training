@@ -52,4 +52,22 @@ class PostController extends Controller
 
         return redirect()->route('admin.post.show', ['id' => $id]);
     }
+
+    public function showBannedWords()
+    {
+        $words = $this->postRepository->getBannedWords();
+        return view('Admin.post.banned', compact('words'));
+    }
+
+    public function uploadBannedWords(Request $request)
+    {
+        $status = false;
+        if ($request->hasFile('banned_words')) {
+            $file = $request->file('banned_words')->getRealPath();
+            list($status, $message) = $this->postService->uploadBannedWords($file);
+        }
+        if ($status) {
+            return redirect()->route('admin.post.words');
+        }
+    }
 }

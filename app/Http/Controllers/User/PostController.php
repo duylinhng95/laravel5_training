@@ -57,9 +57,12 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $input = $request->except('_token');
-        $this->postService->create($input);
-
-        return redirect()->route('user.post.index');
+        list($status, $message) = $this->postService->create($input);
+        if ($status) {
+            return redirect()->route('user.post.index');
+        } else {
+            return back()->withErrors($message);
+        }
     }
 
     public function edit($id)
