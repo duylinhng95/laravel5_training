@@ -6,10 +6,20 @@
             <div class="col-md-12">
                 <div class="search-section center-block searchfield">
                     <input type="text" class="form-control" placeholder="Search" id="keywords">
-                    <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-default btn-xs" id="btnSearchUser"><i class="fa fa-search"></i>
+                    </button>
                 </div>
             </div>
         </div>
+        @if(count($users) == 0)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel user-panel text-center">
+                    <b>User not found</b>
+                </div>
+            </div>
+        </div>
+        @endif
         @foreach ($users->chunk(3) as $split)
             <div class="row">
                 @foreach($split as $user)
@@ -56,7 +66,7 @@
                     @endif
                 @endforeach
             </div>
-        @endforeach
+    @endforeach
     <!-- PAGINATION -->
         <div class="text-center">
             {{$users->links()}}

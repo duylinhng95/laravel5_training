@@ -105,11 +105,11 @@ class User extends Authenticatable
 
     public function checkRole($roleName)
     {
-        $roles = $this->userRoles;
+        $roles     = $this->userRoles;
+        $userRoles = [];
         foreach ($roles as $role) {
             $userRoles[] = $role->role->name;
         }
-
         return in_array($roleName, $userRoles);
     }
 }
