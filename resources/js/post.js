@@ -90,7 +90,7 @@ class Post {
 		let url = `${this.apiUrl}/post/vote`
 		let indexNum = 0;
 		this.element.btnVotePost.on('click', function (event) {
-			let id = event.target.children.postId.value
+			let id = $(event.currentTarget).data('postId')
 			$.ajax({
 				url: `${url}/${id}`,
 				type: "GET",

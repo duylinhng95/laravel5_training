@@ -20,9 +20,8 @@
                     {!! $post->content !!}
                 </div>
                 @if(Auth::check())
-                    <button type="button" class="btn btn-success" id="btnVotePost"
+                    <button type="button" class="btn btn-success" id="btnVotePost" data-post-id="{{$post->id}}"
                             @if(Auth::id() == $post->user->id)  disabled @endif>
-                        <input type="hidden" id="postId" value="{{$post->id}}">
                         Vote <i class="fa fa-thumbs-o-up"></i>
                     </button>
                 @endif
