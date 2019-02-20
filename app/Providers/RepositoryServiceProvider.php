@@ -12,8 +12,6 @@ use App\Repository\FollowRepositoryEloquent;
 use App\Repository\PostTagRepository;
 use App\Repository\PostVoteRepository;
 use App\Repository\PostVoteRepositoryEloquent;
-use App\Repository\SexualContextRepository;
-use App\Repository\SexualContextRepositoryEloquent;
 use App\Repository\UserRepository;
 use App\Repository\AdminRepository;
 use App\Repository\RocketProfileRepository;
@@ -55,6 +53,5 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PostVoteRepository::class, PostVoteRepositoryEloquent::class);
         $this->app->bind(UserRoleRepository::class, UserRoleRepositoryEloquent::class);
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
-        $this->app->bind(SexualContextRepository::class, SexualContextRepositoryEloquent::class);
     }
 }

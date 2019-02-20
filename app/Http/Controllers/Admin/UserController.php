@@ -23,6 +23,10 @@ class UserController extends Controller
         $this->userRepository = app(UserRepository::class);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function import()
     {
         $this->adminService->importUserDB();

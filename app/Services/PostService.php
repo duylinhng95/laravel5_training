@@ -13,8 +13,6 @@ use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
 use App\Repository\PostVoteRepositoryEloquent;
-use App\Repository\SexualContextRepository;
-use App\Repository\SexualContextRepositoryEloquent;
 use Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
@@ -36,8 +34,6 @@ class PostService
     protected $session;
     /** @var FollowRepositoryEloquent */
     protected $followRepository;
-    /** @var SexualContextRepositoryEloquent */
-    protected $sexualContextRepository;
 
     public function __construct()
     {
@@ -47,7 +43,6 @@ class PostService
         $this->commentRepository       = app(CommentRepository::class);
         $this->postVoteRepository      = app(PostVoteRepository::class);
         $this->followRepository        = app(FollowRepository::class);
-        $this->sexualContextRepository = app(SexualContextRepository::class);
     }
 
     public function create($input)
@@ -108,6 +103,12 @@ class PostService
         return [$tags, $comments, $followed];
     }
 
+    /**
+     * @param $id
+     * @param $input
+     * @return array
+     * @throws \Exception
+     */
     public function update($id, $input)
     {
         if (!is_null($input['files'])) {
@@ -141,7 +142,7 @@ class PostService
      */
     private function checkViewed($post)
     {
-        $viewed = $this->session->get('viewed_post', []);
+        $viewed = $this->session->get('viewed_post') ?? [];
         return in_array($post->id, $viewed);
     }
 
@@ -168,32 +169,5 @@ class PostService
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
-    }
-
-    public function uploadBannedWords($file)
-    {
-        $data = [];
-        $this->changeFileDelimiter($file);
-        $file_handle = fopen($file, "r");
-        while (!feof($file_handle)) {
-            $row = fgetcsv($file_handle, '1000', ';');
-            if ($row) {
-                $data[]['context'] = $row[0];
-            }
-        }
-        foreach ($data as $param) {
-            $this->sexualContextRepository->createBannedWords($param);
-        }
-
-        return [true, 'Upload complete'];
-    }
-
-    private function changeFileDelimiter($file)
-    {
-        $delimiters = array('|', ',', '^', "\t");
-        $delimiter  = ';';
-        $str        = file_get_contents($file);
-        $str        = str_replace($delimiters, $delimiter, $str);
-        file_put_contents($file, $str);
     }
 }

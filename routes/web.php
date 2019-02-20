@@ -71,8 +71,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all')->name('admin.post');
-            Route::get('/words', 'PostController@showBannedWords')->name('admin.post.words');
-            Route::post('/words', 'PostController@uploadBannedWords')->name('admin.post.words.upload');
             Route::get('/{id}', 'PostController@show')->name('admin.post.show');
             Route::get('/{id}/publish', 'PostController@publishPost')->name('admin.post.publish');
             Route::delete('/{id}', 'PostController@delete')->name('admin.post.delete');

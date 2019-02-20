@@ -103,5 +103,7 @@ class AdminService
                 return [false, 404, 'Wrong Credential'];
             }
         }
+
+        return [false, 400, 'Undefined error'];
     }
 }

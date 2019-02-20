@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SexualContext extends Model
 {
-    protected $fillable = ['context'];
-    public $timestamps = false;
+    public    $timestamps = false;
+    protected $fillable   = ['context'];
 }

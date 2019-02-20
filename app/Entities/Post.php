@@ -21,7 +21,7 @@ class Post extends Model
         'count_votes'
     ];
 
-    public $statusName = ['Peding' => 0, 'Available' => 1,];
+    public $statusName = ['Pending' => 0, 'Available' => 1,];
 
     protected $fillable = ['title', 'content', 'user_id', 'category_id', 'status'];
 
@@ -48,16 +48,6 @@ class Post extends Model
     public function votes()
     {
         return $this->hasMany(PostVote::class);
-    }
-
-    public function getPopularPost($num)
-    {
-        return $this->orderBy('view', 'desc')->limit($num)->get();
-    }
-
-    public function getLatestPost($num)
-    {
-        return $this->orderBy('created_at', 'desc')->limit($num)->get();
     }
 
     public function getCountCommentsAttribute()

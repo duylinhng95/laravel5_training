@@ -23,7 +23,8 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        $users = $this->userRepository->getUsers($request);
+        $params = $request->all();
+        $users  = $this->userRepository->getUsers($params);
         return view('Admin.user.index', compact('users'));
     }
 

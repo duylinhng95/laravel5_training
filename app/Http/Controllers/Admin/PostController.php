@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BannedWordsRequest;
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
 use App\Repository\SexualContextRepository;
@@ -33,7 +32,8 @@ class PostController extends Controller
 
     public function all(Request $request)
     {
-        $posts = $this->postRepository->paginateWithTrashed($request, 50);
+        $params = $request->all();
+        $posts  = $this->postRepository->paginateWithTrashed($params, 50);
 
         return view('Admin.post.index', compact('posts'));
     }
@@ -45,6 +45,11 @@ class PostController extends Controller
         return view('Admin.post.detail', compact('post', 'tags'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function delete($id)
     {
         $this->postRepository->destroy($id);
@@ -57,28 +62,6 @@ class PostController extends Controller
         $this->postRepository->restore($id);
 
         return redirect()->route('admin.post.show', ['id' => $id]);
-    }
-
-    public function showBannedWords(Request $request)
-    {
-        if ($request->has('keywords')) {
-            $words = $this->sexualContextRepository->paginateBannedWords(($request->input('keywords')));
-        } else {
-            $words = $this->sexualContextRepository->paginateBannedWords();
-        }
-        return view('Admin.post.banned', compact('words'));
-    }
-
-    public function uploadBannedWords(BannedWordsRequest $request)
-    {
-        $status = false;
-        if ($request->hasFile('banned_words')) {
-            $file = $request->file('banned_words')->getRealPath();
-            list($status, $message) = $this->postService->uploadBannedWords($file);
-        }
-        if ($status) {
-            return redirect()->route('admin.post.words');
-        }
     }
 
     public function publishPost($id)

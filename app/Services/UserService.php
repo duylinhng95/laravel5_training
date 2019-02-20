@@ -10,7 +10,6 @@ use Auth;
 use DB;
 use Exception;
 use Hash;
-use App\Entities\User;
 
 class UserService
 {

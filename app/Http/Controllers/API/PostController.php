@@ -19,6 +19,11 @@ class PostController extends Controller
         $this->postRepository = app(PostRepository::class);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     */
     public function getPost(Request $request)
     {
         $page     = $request->get('page');

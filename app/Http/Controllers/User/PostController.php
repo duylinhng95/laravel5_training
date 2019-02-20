@@ -84,6 +84,11 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function destroy($id)
     {
         $this->postRepository->delete($id);

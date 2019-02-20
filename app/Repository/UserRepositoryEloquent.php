@@ -58,25 +58,28 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
         return Auth::user();
     }
 
-    public function getUsers($request)
+    public function getUsers($params)
     {
-        /** @var Builder $query */
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = $this->makeModel();
 
-        if ($request->has('keywords')) {
-            $keyword = $request->input('keywords');
-            $query   = $query->where(function ($query) use ($keyword) {
-                $query->where('name', 'like', '%' . $keyword . '%')
+        if (key_exists('keywords', $params) && $params['keywords']) {
+            $keyword = $params['keywords'];
+            $query   = $query->where(function ($subQuery) use ($keyword) {
+                /** @var Builder $subQuery */
+                $subQuery->where('name', 'like', '%' . $keyword . '%')
                     ->orWhere('email', 'like', '%' . $keyword . '%');
             });
         }
 
-        if ($request->has('sort')) {
-            $section = $request->input('sort');
-            $order   = $request->input('order');
+        if (key_exists('sort', $params) && $params['sort'] && $params['order']) {
+            $section = $params['sort'];
+            $order   = $params['order'];
             $query   = $query->orderBy($section, $order);
         }
+
         $query = $query->whereDoesntHave('userRoles', function ($subQuery) {
+            /** @var Builder $subQuery */
             $adminId = config('constant.user.role.admin');
             $subQuery->where('role_id', $adminId);
         });

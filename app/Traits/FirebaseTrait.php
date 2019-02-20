@@ -6,8 +6,12 @@ use Google\Cloud\Firestore\FirestoreClient;
 
 trait FireBaseTrait
 {
+    /** @var FirestoreClient $db */
     protected $db;
 
+    /**
+     * @throws \Google\Cloud\Core\Exception\GoogleException
+     */
     public function initialize()
     {
         $config = [
@@ -17,6 +21,12 @@ trait FireBaseTrait
         $this->db = new FirestoreClient($config);
     }
 
+    /**
+     * @param $collection
+     * @param $data
+     * @return mixed
+     * @throws \Google\Cloud\Core\Exception\GoogleException
+     */
     public function addData($collection, $data)
     {
         $this->initialize();

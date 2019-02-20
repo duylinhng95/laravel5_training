@@ -8,7 +8,7 @@ class UserRole extends Model
 {
     public $timestamps = false;
 
-    protected $fillable   = ['role_id', 'user_id'];
+    protected $fillable = ['role_id', 'user_id'];
 
     public function user()
     {

@@ -14,7 +14,7 @@ class AddStatusPostTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('status')->nullable();
+            $table->string('status')->default(0);
         });
     }
 
