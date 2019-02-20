@@ -99,7 +99,7 @@ class PostService
         $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-        return [false, 'Update is success'];
+        return [true, 'Update is success'];
     }
 
     /**
