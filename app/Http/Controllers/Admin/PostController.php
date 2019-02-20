@@ -61,7 +61,7 @@ class PostController extends Controller
 
     public function publishPost($id)
     {
-        $this->postRepository->publish($id);
+        $this->postService->publish($id);
         return redirect()->route('admin.post.show', ['id' => $id]);
     }
 }

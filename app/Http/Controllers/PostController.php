@@ -41,6 +41,9 @@ class PostController extends Controller
     public function show($id)
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
+        if ($post->status != config('constant.post.status.available')) {
+            return redirect()->route('post.index');
+        }
         if (Auth::check()) {
             $userId = Auth::id();
             /** @var Post $post */

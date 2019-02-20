@@ -218,6 +218,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         $post         = $this->makeModel()->find($id);
         $post->status = config('constant.post.status.available');
         $post->save();
-        return ['code' => 200, 'message' => 'Post Publish successful'];
+        return [true, 'Post Publish successful', $post];
     }
 }
