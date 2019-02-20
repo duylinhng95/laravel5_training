@@ -37,12 +37,12 @@ class PostService
 
     public function __construct()
     {
-        $this->postRepository          = app(PostRepository::class);
-        $this->postTagRepository       = app(PostTagRepository::class);
-        $this->session                 = app(Session::class);
-        $this->commentRepository       = app(CommentRepository::class);
-        $this->postVoteRepository      = app(PostVoteRepository::class);
-        $this->followRepository        = app(FollowRepository::class);
+        $this->postRepository     = app(PostRepository::class);
+        $this->postTagRepository  = app(PostTagRepository::class);
+        $this->session            = app(Session::class);
+        $this->commentRepository  = app(CommentRepository::class);
+        $this->postVoteRepository = app(PostVoteRepository::class);
+        $this->followRepository   = app(FollowRepository::class);
     }
 
     public function create($input)
@@ -52,27 +52,8 @@ class PostService
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
-            $post = $this->postRepository->create($input);
-            $this->pushNotificationForFollower($post['data']);
-            return [true, 'Create post success'];
-    }
-
-    private function pushNotificationForFollower($post)
-    {
-        $user      = Auth::user();
-        $followers = $user->followings;
-        foreach ($followers as $follower) {
-            $data = [
-                'action'     => 'create_post_follows',
-                'content'    => $user->name . ' have posted a new article',
-                'created_at' => microtime(true) * 1000,
-                'is_read'    => false,
-                'user_id'    => (string)$follower->user_id,
-                'href'       => 'post/' . $post->id,
-                'title'      => $post->title,
-            ];
-            $this->addData('notifications', $data);
-        }
+        $this->postRepository->create($input);
+        return [true, 'Create post success'];
     }
 
     public function listByUser()
@@ -114,11 +95,11 @@ class PostService
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
-            $this->postRepository->update($id, $input);
-            $tags = $this->postRepository->generateTagFromString($input);
-            $this->postTagRepository->deleteTags($tags, $id);
-            $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-            return [false, 'Update is success'];
+        $this->postRepository->update($id, $input);
+        $tags = $this->postRepository->generateTagFromString($input);
+        $this->postTagRepository->deleteTags($tags, $id);
+        $this->postTagRepository->updateMany(['post_id' => $id], $tags);
+        return [false, 'Update is success'];
     }
 
     /**
@@ -169,5 +150,41 @@ class PostService
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws \Google\Cloud\Core\Exception\GoogleException
+     */
+    public function publish($id)
+    {
+        list($status, $message, $post) = $this->postRepository->publish($id);
+        if ($status) {
+            $this->pushNotificationForFollower($post);
+        }
+        return [$status, $message];
+    }
+
+    /**
+     * @param $post
+     * @throws \Google\Cloud\Core\Exception\GoogleException
+     */
+    private function pushNotificationForFollower($post)
+    {
+        $user      = $post->user;
+        $followers = $user->followings;
+        foreach ($followers as $follower) {
+            $data = [
+                'action'     => 'create_post_follows',
+                'content'    => $user->name . ' have posted a new article',
+                'created_at' => microtime(true) * 1000,
+                'is_read'    => false,
+                'user_id'    => (string)$follower->user_id,
+                'href'       => 'post/' . $post->id,
+                'title'      => $post->title,
+            ];
+            $this->addData('notifications', $data);
+        }
     }
 }
