@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
-use App\Http\Requests\AdminRequest;
 
 class AdminController extends Controller
 {
     /** @var UserRepositoryEloquent */
     protected $userRepository;
+    /** @var AdminService */
     protected $adminService;
 
     public function __construct()
@@ -22,7 +23,8 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        $users = $this->userRepository->getUsers($request);
+        $params = $request->all();
+        $users  = $this->userRepository->getUsers($params);
         return view('Admin.user.index', compact('users'));
     }
 
@@ -41,5 +43,22 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.password')->with(['code' => $code, 'message' => $message]);
+    }
+
+    public function showLogin()
+    {
+        return view('Admin.login');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $input = $request->except('_token');
+        list($status, $code, $message) = $this->adminService->login($input);
+        if ($status) {
+            return redirect()->route('admin.index');
+        } else {
+            return back()
+                ->with(['code' => $code, 'message' => $message]);
+        }
     }
 }

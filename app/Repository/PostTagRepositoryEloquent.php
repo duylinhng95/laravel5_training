@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Repository\BaseRepositoryEloquent;
 use App\Entities\PostTag;
 
 class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTagRepository
@@ -12,6 +11,12 @@ class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTa
         return PostTag::class;
     }
 
+    /**
+     * @param $array
+     * @param $id
+     * @return bool|int|null
+     * @throws \Exception
+     */
     public function deleteTags($array, $id)
     {
         return $this->makeModel()->where('post_id', $id)->whereNotIn('name', $array)->delete();

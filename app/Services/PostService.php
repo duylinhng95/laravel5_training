@@ -2,11 +2,17 @@
 
 namespace App\Services;
 
+use App\Entities\Post;
+use App\Repository\CommentRepositoryEloquent;
+use App\Repository\FollowRepositoryEloquent;
 use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
+use App\Repository\PostTagRepositoryEloquent;
 use App\Repository\PostVoteRepository;
 use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
+use App\Repository\PostVoteRepositoryEloquent;
 use Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
@@ -17,37 +23,61 @@ class PostService
     use SummernoteTrait;
     use FirebaseTrait;
 
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
+    /** @var PostTagRepositoryEloquent */
     protected $postTagRepository;
+    /** @var CommentRepositoryEloquent */
     protected $commentRepository;
+    /** @var PostVoteRepositoryEloquent */
     protected $postVoteRepository;
     protected $session;
+    /** @var FollowRepositoryEloquent */
     protected $followRepository;
 
     public function __construct()
     {
-        $this->postRepository     = app(PostRepository::class);
-        $this->postTagRepository  = app(PostTagRepository::class);
-        $this->session            = app(Session::class);
-        $this->commentRepository  = app(CommentRepository::class);
-        $this->postVoteRepository = app(PostVoteRepository::class);
-        $this->followRepository   = app(FollowRepository::class);
+        $this->postRepository          = app(PostRepository::class);
+        $this->postTagRepository       = app(PostTagRepository::class);
+        $this->session                 = app(Session::class);
+        $this->commentRepository       = app(CommentRepository::class);
+        $this->postVoteRepository      = app(PostVoteRepository::class);
+        $this->followRepository        = app(FollowRepository::class);
     }
 
     public function create($input)
     {
-        $input['user_id'] = Auth::user()->id;
+        $input['user_id'] = Auth::id();
+        $input['status']  = config('constant.post.status.pending');
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        $post = $this->postRepository->create($input);
-        $this->pushNotificationForFollower($post['data']);
-        return $post;
+            $post = $this->postRepository->create($input);
+            $this->pushNotificationForFollower($post['data']);
+            return [true, 'Create post success'];
+    }
+
+    private function pushNotificationForFollower($post)
+    {
+        $user      = Auth::user();
+        $followers = $user->followings;
+        foreach ($followers as $follower) {
+            $data = [
+                'action'     => 'create_post_follows',
+                'content'    => $user->name . ' have posted a new article',
+                'created_at' => microtime(true) * 1000,
+                'is_read'    => false,
+                'user_id'    => (string)$follower->user_id,
+                'href'       => 'post/' . $post->id,
+                'title'      => $post->title,
+            ];
+            $this->addData('notifications', $data);
+        }
     }
 
     public function listByUser()
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         return $this->postRepository->findByFields('user_id', $userId);
     }
 
@@ -65,26 +95,36 @@ class PostService
         $author   = $post->user_id;
         $followed = 0;
         if (Auth::check()) {
-            $user = Auth::user();
-            if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $user->id])) {
+            $userId = Auth::id();
+            if ($this->followRepository->findWhereGetFirst(['follower_id' => $author, 'user_id' => $userId])) {
                 $followed = 1;
             }
         }
         return [$tags, $comments, $followed];
     }
 
+    /**
+     * @param $id
+     * @param $input
+     * @return array
+     * @throws \Exception
+     */
     public function update($id, $input)
     {
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
-        $this->postRepository->update($id, $input);
-        $tags = $this->postRepository->generateTagFromString($input);
-        $this->postTagRepository->deleteTags($tags, $id);
-        $this->postTagRepository->updateMany(['post_id' => $id], $tags);
-        return ['code' => 202, 'message' => "Update Post Success"];
+            $this->postRepository->update($id, $input);
+            $tags = $this->postRepository->generateTagFromString($input);
+            $this->postTagRepository->deleteTags($tags, $id);
+            $this->postTagRepository->updateMany(['post_id' => $id], $tags);
+            return [false, 'Update is success'];
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     public function countView($post)
     {
         if (!$this->checkViewed($post)) {
@@ -96,15 +136,19 @@ class PostService
         return false;
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     private function checkViewed($post)
     {
-        $viewed = $this->session->get('viewed_post', []);
+        $viewed = $this->session->get('viewed_post') ?? [];
         return in_array($post->id, $viewed);
     }
 
     public function comment($postId, $input)
     {
-        $userId           = Auth::user()->id;
+        $userId           = Auth::id();
         $input['user_id'] = $userId;
         $input['post_id'] = $postId;
         $comment          = $this->commentRepository->create($input);
@@ -115,7 +159,7 @@ class PostService
 
     public function vote($postId)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
@@ -125,23 +169,5 @@ class PostService
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
-    }
-
-    private function pushNotificationForFollower($post)
-    {
-        $user      = Auth::user();
-        $followers = $user->followings;
-        foreach ($followers as $follower) {
-            $data = [
-                'action' => 'create_post_follows',
-                'content' => $user->name.' have posted a new article',
-                'created_at' => microtime(true)*1000,
-                'is_read' => false,
-                'user_id' => (string) $follower->user_id,
-                'href' => 'post/'.$post->id,
-                'title' => $post->title,
-            ];
-            $this->addData('notifications', $data);
-        }
     }
 }

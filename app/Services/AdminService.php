@@ -91,4 +91,19 @@ class AdminService
     {
         return Hash::check($input, $old);
     }
+
+    public function login($input)
+    {
+        if (Auth::guard()->attempt($input)) {
+            $user = Auth::user();
+            if ($user->checkRole('admin')) {
+                return [true, 200, 'Login Successful'];
+            } else {
+                Auth::logout();
+                return [false, 404, 'Wrong Credential'];
+            }
+        }
+
+        return [false, 400, 'Undefined error'];
+    }
 }

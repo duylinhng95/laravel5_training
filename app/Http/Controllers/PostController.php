@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Post;
 use App\Repository\CategoryRepository;
+use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use App\Services\PostService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -14,9 +17,9 @@ class PostController extends Controller
     use ResponseTrait;
     /** @var PostService */
     protected $postService;
-    /** @var PostRepository */
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
-    /** @var CategoryRepository */
+    /** @var CategoryRepositoryEloquent */
     protected $categoryRepository;
 
     public function __construct()
@@ -28,7 +31,8 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts      = $this->postRepository->getPosts($request);
+        $params     = $request->all();
+        $posts      = $this->postRepository->getPosts($params);
         $categories = $this->categoryRepository->all();
 
         return view('Post.index', compact('posts', 'categories'));
@@ -38,7 +42,9 @@ class PostController extends Controller
     {
         list($post, $tags, $comments, $followed) = $this->postService->find($id);
         if (Auth::check()) {
-            if (checkOwner($post->user->id)) {
+            $userId = Auth::id();
+            /** @var Post $post */
+            if ($post->checkOwner($userId)) {
                 return redirect()->route('user.post.show', ['id' => $id]);
             }
         }

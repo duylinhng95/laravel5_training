@@ -20,14 +20,15 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->adminService   = app(AdminService::class);
-        $this->postService    = app(PostService::class);
-        $this->postRepository = app(PostRepository::class);
+        $this->adminService            = app(AdminService::class);
+        $this->postService             = app(PostService::class);
+        $this->postRepository          = app(PostRepository::class);
     }
 
     public function all(Request $request)
     {
-        $posts = $this->postRepository->paginateWithTrashed($request, 50);
+        $params = $request->all();
+        $posts  = $this->postRepository->paginateWithTrashed($params, 50);
 
         return view('Admin.post.index', compact('posts'));
     }
@@ -39,6 +40,11 @@ class PostController extends Controller
         return view('Admin.post.detail', compact('post', 'tags'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function delete($id)
     {
         $this->postRepository->destroy($id);
@@ -50,6 +56,12 @@ class PostController extends Controller
     {
         $this->postRepository->restore($id);
 
+        return redirect()->route('admin.post.show', ['id' => $id]);
+    }
+
+    public function publishPost($id)
+    {
+        $this->postRepository->publish($id);
         return redirect()->route('admin.post.show', ['id' => $id]);
     }
 }

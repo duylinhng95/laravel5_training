@@ -179,7 +179,7 @@ ul#user_notification {
   position: relative;
 }
 
-.badge:after{
+a#notification-icon.badge:after{
   position: absolute;
   background: red;
   height: 1rem;
@@ -208,4 +208,10 @@ ul#user_notification {
   font-style: italic;
   line-height: 10px;
   margin-bottom: 10px;
+}
+
+.loading-post {
+  width: 30%;
+  margin: 0 auto;
+  display: block;
 }

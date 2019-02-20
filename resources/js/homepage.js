@@ -34,11 +34,13 @@ class Homepage {
 
 	loadArticle(page) {
 		let self = this
+		$("#indexContent").append(`<img class="loading-post" src="../images/loading-post.gif">`)
 		$.ajax({
 			url: this.apiURL + `/load-post` + this.currentURL,
 			type: `GET`,
 			data: {page: page},
 			success: function (res) {
+				$(".loading-post").remove()
 				$("#indexContent").append(res.data.view)
 				self.isActive = 0
 				self.lastPage = res.data.lastPage

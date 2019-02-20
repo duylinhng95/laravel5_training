@@ -14,5 +14,5 @@ interface UserRepository
 
     public function getInfo();
 
-    public function getUsers($request);
+    public function getUsers($params);
 }

@@ -12,5 +12,6 @@ $factory->define(App\Entities\Post::class, function (Faker $faker) {
         'category_id' => function () {
             return App\Entities\Category::inRandomOrder()->first()->id;
         },
+        'status' => config('constant.post.status.available'),
     ];
 });

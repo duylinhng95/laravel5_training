@@ -34,6 +34,11 @@ class UserController extends Controller
         return view('User.register');
     }
 
+    /**
+     * @param RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function register(RegisterRequest $request)
     {
         $input = $request->except('_token');
@@ -50,6 +55,11 @@ class UserController extends Controller
         return view('User.login');
     }
 
+    /**
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function login(LoginRequest $request)
     {
         $input = $request->except('_token');
@@ -81,7 +91,8 @@ class UserController extends Controller
 
     public function listUser(Request $request)
     {
-        $users = $this->userRepository->getUsers($request);
+        $params = $request->all();
+        $users  = $this->userRepository->getUsers($params);
 
         return view('User.list', compact('users'));
     }

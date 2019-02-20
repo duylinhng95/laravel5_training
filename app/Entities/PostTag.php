@@ -4,6 +4,9 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method selectRaw(string $string)
+ */
 class PostTag extends Model
 {
     public $timestamps = false;
@@ -21,7 +24,11 @@ class PostTag extends Model
 
     public function getPopularTagsAttribute()
     {
-        $tags = $this->selectRaw("Count('name') as count, name")->groupBy('name')->orderByDesc('count')->limit(5)->get();
+        $tags = $this->selectRaw("Count('name') as count, name")
+            ->groupBy('name')
+            ->orderByDesc('count')
+            ->limit(5)
+            ->get();
         return $tags;
     }
 }

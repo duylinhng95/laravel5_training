@@ -57,9 +57,12 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $input = $request->except('_token');
-        $this->postService->create($input);
-
-        return redirect()->route('user.post.index');
+        list($status, $message) = $this->postService->create($input);
+        if ($status) {
+            return redirect()->route('user.post.index');
+        } else {
+            return back()->withErrors($message);
+        }
     }
 
     public function edit($id)
@@ -73,11 +76,19 @@ class PostController extends Controller
     public function update($id, PostRequest $request)
     {
         $input = $request->except('_method', '_token');
-        $this->postService->update($id, $input);
-
-        return redirect()->route('user.post.index');
+        list($status, $message) = $this->postService->update($id, $input);
+        if ($status) {
+            return redirect()->route('user.post.index');
+        } else {
+            return back()->withErrors($message);
+        }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function destroy($id)
     {
         $this->postRepository->delete($id);

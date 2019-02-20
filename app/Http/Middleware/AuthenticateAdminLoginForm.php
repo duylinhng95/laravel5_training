@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class AuthenticateAdmin
+class AuthenticateAdminLoginForm
 {
     /**
      * Handle an incoming request.
@@ -16,13 +16,10 @@ class AuthenticateAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            if (!$user->checkRole('admin')) {
-                return redirect()->route('user.list')->with('error', "You don't have permission to proceed");
-            }
+        if (!Auth::check()) {
             return $next($request);
+        } else {
+            return redirect()->route('post.index');
         }
-        return redirect()->route('post.index');
     }
 }

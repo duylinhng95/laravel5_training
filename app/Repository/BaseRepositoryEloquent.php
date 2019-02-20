@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use Illuminate\Container\Container as App;
-use App\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 
@@ -63,6 +62,11 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         return $this->makeModel()->paginate($num);
     }
 
+    /**
+     * @param array $where
+     * @return bool|int|null
+     * @throws \Exception
+     */
     public function deleteWhere(array $where)
     {
         $this->applyConditions($where);

@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use App\Repository\AdminRepository;
-use App\Entities\User;
 use App\Traits\RocketTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException as Exception;

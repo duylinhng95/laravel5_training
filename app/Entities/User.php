@@ -91,10 +91,25 @@ class User extends Authenticatable
     public function getRoles()
     {
         $userRoles = $this->userRoles;
-        $roles = [];
+        $roles     = [];
         foreach ($userRoles as $role) {
             $roles[] = $role->role->name;
         }
         return $roles;
+    }
+
+    public function checkStatus()
+    {
+        return $this->status != $this->statusName['block'];
+    }
+
+    public function checkRole($roleName)
+    {
+        $roles     = $this->userRoles;
+        $userRoles = [];
+        foreach ($roles as $role) {
+            $userRoles[] = $role->role->name;
+        }
+        return in_array($roleName, $userRoles);
     }
 }

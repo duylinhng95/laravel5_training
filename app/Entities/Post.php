@@ -5,6 +5,10 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed id
+ * @property int view
+ */
 class Post extends Model
 {
     use SoftDeletes;
@@ -17,7 +21,9 @@ class Post extends Model
         'count_votes'
     ];
 
-    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
+    public $statusName = ['Pending' => 0, 'Available' => 1,];
+
+    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'status'];
 
     public function category()
     {
@@ -44,16 +50,6 @@ class Post extends Model
         return $this->hasMany(PostVote::class);
     }
 
-    public function getPopularPost($num)
-    {
-        return $this->orderBy('view', 'desc')->limit($num)->get();
-    }
-
-    public function getLatestPost($num)
-    {
-        return $this->orderBy('created_at', 'desc')->limit($num)->get();
-    }
-
     public function getCountCommentsAttribute()
     {
         return count($this->comments);
@@ -67,5 +63,11 @@ class Post extends Model
     public function getEncodeContentAttribute()
     {
         return str_limit(strip_tags($this->content), $limit = 60, $end = '...');
+    }
+
+    public function checkOwner($userId)
+    {
+        $ownerId = $this->user->id;
+        return $ownerId == $userId;
     }
 }
