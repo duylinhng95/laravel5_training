@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
-use App\Repository\SexualContextRepository;
-use App\Repository\SexualContextRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -19,15 +17,12 @@ class PostController extends Controller
     protected $postService;
     /** @var PostRepositoryEloquent */
     protected $postRepository;
-    /** @var SexualContextRepositoryEloquent */
-    protected $sexualContextRepository;
 
     public function __construct()
     {
         $this->adminService            = app(AdminService::class);
         $this->postService             = app(PostService::class);
         $this->postRepository          = app(PostRepository::class);
-        $this->sexualContextRepository = app(SexualContextRepository::class);
     }
 
     public function all(Request $request)
