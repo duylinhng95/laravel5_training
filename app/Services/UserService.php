@@ -162,15 +162,14 @@ class UserService
     public function handleProviderCallback($provider)
     {
         $providerUser = Socialite::driver($provider)->user();
-        $params = [];
-
-        $params['name']        = $providerUser->name;
-        $params['email']       = $providerUser->email;
-        $params['provider']    = $provider;
-        $params['provider_id'] = $providerUser->id;
-
+        $params       = [
+            'email'       => $providerUser->email,
+            'name'        => $providerUser->name,
+            'provider'    => $provider,
+            'provider_id' => $providerUser->id,
+        ];
         /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = $this->userRepository->firstOrCreate($params);
+        $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
 
         Auth::login($user);
 

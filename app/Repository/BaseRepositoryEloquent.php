@@ -101,8 +101,8 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         return $model;
     }
 
-    public function firstOrCreate($input)
+    public function firstOrCreate($needle, $input)
     {
-        return $this->model->firstOrCreate($input);
+        return $this->model->firstOrCreate($needle, $input);
     }
 }
