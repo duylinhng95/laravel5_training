@@ -24,7 +24,8 @@
                     <div class="author-form">
                         @if(Auth::check())
                             <li class="dropdown pull-left">
-                                <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon" data-toggle="dropdown" role="button" data-display="static">
+                                <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon"
+                                   data-toggle="dropdown" role="button" data-display="static">
                                     <i class="fa fa-bell author-icon"></i>
                                     <input type="hidden" id="user_id" value="{{Auth::id()}}">
                                 </a>
@@ -50,7 +51,8 @@
                                         @if(Auth::user()->checkRole( 'admin'))
                                             <li class="row">
                                                 <div class="col-md-12 text-left">
-                                                    <a class="sign" href="{{route('admin.index')}}"><i class="fas fa-lock icon"></i> Admin
+                                                    <a class="sign" href="{{route('admin.index')}}"><i
+                                                                class="fas fa-lock icon"></i> Admin
                                                         Panel</a>
                                                 </div>
                                             </li>
@@ -130,6 +132,12 @@
                                                     </button>
                                                 </div>
                                             </form>
+                                            <div class="login-social">
+                                                <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i class="fa fa-google"></i> Login
+                                                    with Google</a>
+                                                <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i class="fa fa-facebook-square"></i> Login
+                                                    with Facebook</a>
+                                            </div>
                                         </div><!-- /#Sing in -->
                                         <div class="tab-pane" id="signup">
                                             @if(isset($status))

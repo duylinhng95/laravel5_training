@@ -215,3 +215,20 @@ a#notification-icon.badge:after{
   margin: 0 auto;
   display: block;
 }
+
+
+.login-social a {
+  width: 100%;
+  display: block;
+  margin: 15px auto;
+  color: #fff;
+}
+
+.login-social i {
+  display: inline-block;
+  border-radius: 100%;
+  background: #66bb6a;
+  padding: 11px;
+  width: 35px;
+  margin-right:20px
+}

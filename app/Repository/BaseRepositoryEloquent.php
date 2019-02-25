@@ -5,10 +5,11 @@ namespace App\Repository;
 use Illuminate\Container\Container as App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Eloquent;
 
 abstract class BaseRepositoryEloquent implements BaseRepository
 {
-    /** @var Model|Builder $model */
+    /** @var Model|Builder|Eloquent $model */
     protected $model;
     protected $app;
 
@@ -98,5 +99,10 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         $this->applyConditions($where);
         $model = $this->model->get($columns);
         return $model;
+    }
+
+    public function firstOrCreate($input)
+    {
+        return $this->model->firstOrCreate($input);
     }
 }
