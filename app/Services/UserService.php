@@ -10,6 +10,7 @@ use Auth;
 use DB;
 use Exception;
 use Hash;
+use Socialite;
 
 class UserService
 {
@@ -151,5 +152,27 @@ class UserService
         } else {
             return [$result, 401, 'Wrong password'];
         }
+    }
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $providerUser = Socialite::driver($provider)->user();
+        $params       = [
+            'email'       => $providerUser->email,
+            'name'        => $providerUser->name,
+            'provider'    => $provider,
+            'provider_id' => $providerUser->id,
+        ];
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
+
+        Auth::login($user);
+
+        return [true, 200, 'User login Success'];
     }
 }

@@ -29,11 +29,6 @@ class UserController extends Controller
         $this->userRepository = app(UserRepository::class);
     }
 
-    public function showRegister()
-    {
-        return view('User.register');
-    }
-
     /**
      * @param RegisterRequest $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
@@ -48,11 +43,6 @@ class UserController extends Controller
         }
         $this->userService->login($input);
         return redirect()->route('post.index');
-    }
-
-    public function showLogin()
-    {
-        return view('User.login');
     }
 
     /**
@@ -95,5 +85,21 @@ class UserController extends Controller
         $users  = $this->userRepository->getUsers($params);
 
         return view('User.list', compact('users'));
+    }
+
+    public function redirectToProvider($provider)
+    {
+        return $this->userService->redirectToProvider($provider);
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        list($status, $code, $message) = $this->userService->handleProviderCallback($provider);
+        if ($status) {
+            return redirect()->route('post.index');
+        }
+
+        return back()
+            ->with(['code' => $code, 'message' => $message]);
     }
 }
