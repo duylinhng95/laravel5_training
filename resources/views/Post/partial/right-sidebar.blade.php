@@ -12,7 +12,7 @@
                 @foreach($posts as $post)
                     <div class="col-md-12 col-sm-6">
                         <div class="carousel-caption">
-                            <a href="{{route('post.show', ['id' => $post->id])}}"><h5 class="post-title">{{$post->title}}</h5></a>
+                            <a href="{{route('post.show', ['slug' => $post->slug])}}"><h5 class="post-title">{{$post->title}}</h5></a>
                             <div class="post-meta">
                                 <span><i class="fa fa-calendar-check-o post-meta-icon"></i> {{formatDate($post->created_at)}} </span>
                                 <span><i

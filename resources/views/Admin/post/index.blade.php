@@ -58,7 +58,7 @@
                     @else
                         <td class="text text-warning">Pending</td>
                     @endif
-                    <td><a href="{{route('admin.post.show', ['id'=>$post->id])}}" class="btn btn-primary">View</a></td>
+                    <td><a href="{{route('admin.post.show', ['slug'=>$post->slug])}}" class="btn btn-primary">View</a></td>
                 </tr>
             @endforeach
             {{$posts->links()}}
