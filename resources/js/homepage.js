@@ -17,7 +17,6 @@ class Homepage {
 		this.apiURL = location.origin + `/api`
 		this.currentURL = location.search
 		this.notification = new Notification()
-		this.userId = $("#user_id").val()
 		this.element = {
 			userId: $("#user_id").val(),
 			notification: $("#user_notification"),
@@ -34,7 +33,7 @@ class Homepage {
 
 	loadArticle(page) {
 		let self = this
-		$("#indexContent").append(`<img class="loading-post" src="../images/loading-post.gif">`)
+		$("#indexContent").append(`<img class="loading-post" src="../images/loading-post.gif" alt="Loading...">`)
 		$.ajax({
 			url: this.apiURL + `/load-post` + this.currentURL,
 			type: `GET`,
@@ -48,13 +47,11 @@ class Homepage {
 		})
 	}
 
-	checkScrollToBottom() {
+	static checkScrollToBottom() {
 		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 		let scrollHeight = $(".wrapper").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
-		return scrolledToBottom;
+		return Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 	}
 
 	checkActiveAPI() {
@@ -69,7 +66,7 @@ class Homepage {
 	onScrollDown() {
 		let self = this
 		$(window).on('scroll', function () {
-			let scrolledToBottom = self.checkScrollToBottom()
+			let scrolledToBottom = Homepage.checkScrollToBottom()
 			if (scrolledToBottom && self.lastPage === false) {
 				self.checkActiveAPI()
 			}

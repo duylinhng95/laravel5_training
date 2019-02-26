@@ -1,6 +1,6 @@
 @foreach($posts as $post)
     <article>
-        <a href="{{route('post.show', ['id' => $post->id])}}"><h2 class="post-title">{{$post->title}}</h2></a>
+        <a href="{{route('post.show', ['slug' => $post->slug])}}"><h2 class="post-title">{{$post->title}}</h2></a>
         @foreach($post->tags as $tag)
             <a href="?tags={{$tag->name}}" class="btn btn-default btn-sm btn-category"
                type="submit">{{$tag->name}}</a>

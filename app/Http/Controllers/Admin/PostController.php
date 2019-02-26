@@ -21,9 +21,9 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->adminService            = app(AdminService::class);
-        $this->postService             = app(PostService::class);
-        $this->postRepository          = app(PostRepository::class);
+        $this->adminService   = app(AdminService::class);
+        $this->postService    = app(PostService::class);
+        $this->postRepository = app(PostRepository::class);
     }
 
     public function all(Request $request)
@@ -60,13 +60,14 @@ class PostController extends Controller
         return redirect()->route('admin.post.show', ['slug' => $slug]);
     }
 
+    /**
+     * @param $slug
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws GoogleException
+     */
     public function publishPost($slug)
     {
-        try {
-            $this->postService->publish($slug);
-        } catch (GoogleException $e) {
-            return $e->getMessage();
-        }
+        $this->postService->publish($slug);
         return redirect()->route('admin.post.show', ['slug' => $slug]);
     }
 }

@@ -204,7 +204,7 @@ class PostService
                 'created_at' => microtime(true) * 1000,
                 'is_read'    => false,
                 'user_id'    => (string)$follower->user_id,
-                'href'       => 'post/' . $post->id,
+                'href'       => 'post/' . $post->slug,
                 'title'      => $post->title,
             ];
             $this->addData('notifications', $data);
