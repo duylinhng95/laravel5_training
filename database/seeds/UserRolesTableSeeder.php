@@ -21,6 +21,8 @@ class UserRolesTableSeeder extends Seeder
             ->where('name', 'admin')
             ->orWhere('name', 'user')->get();
 
+        DB::table('user_roles')->truncate();
+
         \DB::table('user_roles')->insert([
             'user_id' => $userId[0]->id,
             'role_id' => $roleId[1]->id,

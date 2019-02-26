@@ -13,5 +13,11 @@ $factory->define(App\Entities\Post::class, function (Faker $faker) {
             return App\Entities\Category::inRandomOrder()->first()->id;
         },
         'status' => config('constant.post.status.available'),
+        'created_at' => $faker->dateTime(),
     ];
+});
+
+$factory->afterCreating(App\Entities\Post::class, function ($post, $faker) {
+    $post->slug = str_slug($post->title. '-');
+    $post->save();
 });
