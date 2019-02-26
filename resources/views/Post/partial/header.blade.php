@@ -24,7 +24,7 @@
                     <div class="author-form">
                         @if(Auth::check())
                             <li class="dropdown pull-left">
-                                <a href="#" class="dropdown-toggle author-icon notification-bell" id="notification-icon"
+                                <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
                                    data-toggle="dropdown" role="button" data-display="static">
                                     <i class="fa fa-bell author-icon"></i>
                                     <input type="hidden" id="user_id" value="{{Auth::id()}}">
@@ -35,11 +35,11 @@
                                 </ul>
                             </li>
                         @endif
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle author-icon" data-toggle="dropdown" role="button"
+                        <li class="dropdown user-info">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                data-display="static">
                                 @if(Auth::check())
-                                    <i class="fa fa-user author-icon"></i>
+                                    <i class="fa fa-user author-icon"></i><h5 class="welcome-user">Welcome <span>{{Auth::user()->name}}</span></h5>
                                 @else
                                     <i class="fa fa-key author-icon"></i>
                                 @endif
@@ -133,9 +133,11 @@
                                                 </div>
                                             </form>
                                             <div class="login-social">
-                                                <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i class="fa fa-google"></i> Login
+                                                <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i
+                                                            class="fa fa-google"></i> Login
                                                     with Google</a>
-                                                <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i class="fa fa-facebook-square"></i> Login
+                                                <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i
+                                                            class="fa fa-facebook-square"></i> Login
                                                     with Facebook</a>
                                             </div>
                                         </div><!-- /#Sing in -->

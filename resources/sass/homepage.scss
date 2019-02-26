@@ -7,11 +7,11 @@
 @import '~@fortawesome/fontawesome-free/scss/v4-shims.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 
-#accordion .panel-heading .panel-title a:hover{
+#accordion .panel-heading .panel-title a:hover {
   background-color: #8ee293 !important;
 }
 
-.dropdown-menu>li>a:hover {
+.dropdown-menu > li > a:hover {
   background: none;
   color: #fff;
 }
@@ -31,15 +31,15 @@
   display: none;
 }
 
-.user-panel{
+.user-panel {
   padding: 5px;
   margin: 15px 45px;
-  -webkit-box-shadow: 0 1px 50px rgba(0,0,0,.05);
-  box-shadow: 0 1px 50px rgba(0,0,0,.05);
+  -webkit-box-shadow: 0 1px 50px rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 50px rgba(0, 0, 0, .05);
 }
 
 .article-heading-abb {
-  font-weight:bold;
+  font-weight: bold;
 }
 
 button#btnSearchUser {
@@ -68,11 +68,15 @@ button#btnSearchUser {
 .author-icon {
   background: #66bb6a none repeat scroll 0 0;
   color: #fff;
+  position: relative;
+  top: 1vh;
+  padding: 15px;
 }
 
 .post-title {
   color: rgba(0, 0, 0, 0.75);
 }
+
 ul.list-inline li a {
   padding: 18px;
   text-transform: uppercase;
@@ -98,11 +102,12 @@ header {
   border-bottom: none;
   display: inline-block;
 }
-.text-black{
+
+.text-black {
   color: #333333
 }
 
-a.btn.text-uppercase  {
+a.btn.text-uppercase {
   margin-bottom: 9px;
 }
 
@@ -120,7 +125,7 @@ a.btn.text-uppercase  {
   text-transform: uppercase;
   color: #333333;
   font-size: 14px;
-  display:inline-block;
+  display: inline-block;
   margin: 12px 0;
   font-weight: 600;
 }
@@ -139,10 +144,10 @@ footer {
   width: 100%;
 }
 
-.login-success{
+.login-success {
   background: #fff !important;
   color: #333333;
-  box-shadow: 0 1px 50px rgba(0, 0, 0,0.1) !important;
+  box-shadow: 0 1px 50px rgba(0, 0, 0, 0.1) !important;
   width: 200px !important;
 }
 
@@ -166,20 +171,22 @@ ul#user_notification {
   left: -272px;
 }
 
-.notification a{
+.notification a {
   font-size: 12px !important;
   color: #9ba1a4;
   display: inline-block;
 }
-.notification i{
+
+.notification i {
   color: #66bb6a;
 }
 
 .notification-bell {
   position: relative;
+  right: 58%;
 }
 
-a#notification-icon.badge:after{
+a#notification-icon.badge:after {
   position: absolute;
   background: red;
   height: 1rem;
@@ -230,5 +237,33 @@ a#notification-icon.badge:after{
   background: #66bb6a;
   padding: 11px;
   width: 35px;
-  margin-right:20px
+  margin-right: 20px
+}
+
+.welcome-user {
+  position: relative;
+  color: #333;
+  left: 30%;
+  bottom: 3vh;
+  width: 200px;
+}
+
+.welcome-user span {
+  color: #66bb6a;
+}
+
+.dropdown {
+  position: absolute;
+}
+
+.dropdown-toggle.fa-user {
+  position: relative;
+  top: 1.2vh;
+  text-align: center;
+  padding: 14px 15px;
+  left: 10px;
+}
+
+.user-info {
+  left: 20%;
 }
