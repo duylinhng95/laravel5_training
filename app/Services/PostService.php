@@ -13,7 +13,7 @@ use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
 use App\Repository\PostVoteRepositoryEloquent;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
 use Illuminate\Session\Store as Session;
@@ -63,9 +63,9 @@ class PostService
         return $this->postRepository->findByFields('user_id', $userId);
     }
 
-    public function find($id)
+    public function find($slug)
     {
-        $post = $this->postRepository->find($id);
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
         return [$post, $tags, $comments, $followed];
     }
@@ -93,21 +93,26 @@ class PostService
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @param $input
      * @return array
      * @throws \Exception
      */
-    public function update($id, $input)
+    public function update($slug, $input)
     {
         $input['slug'] = str_slug($input['title']);
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $id = $post->id;
+
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
         $this->postRepository->update($id, $input);
         $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);
+
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
+
         return [true, 'Update is success'];
     }
 

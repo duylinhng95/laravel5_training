@@ -22,7 +22,7 @@
                 </thead>
                 @foreach($posts as $post)
                     <tr>
-                        <td style="width: 60%"><a href="{{route('user.post.edit',['id' => $post->id])}}">{{$post->title}}</a></td>
+                        <td style="width: 60%"><a href="{{route('user.post.edit',['slug' => $post->slug])}}">{{$post->title}}</a></td>
                         <td style="width: 10%" class="text-center">{{formatDate($post->created_at)}}</td>
                         <td>{{$post->view}}</td>
                         <td>{{$post->count_votes}}</td>
@@ -30,11 +30,11 @@
                         <td style="width: 40%">
                             <a href="{{route('user.post.show',['slug' => $post->slug])}}" class="btn btn-primary"><i class="fa fa-info-circle"></i>
                                 View</a>
-                            <a href="{{route('user.post.edit',['id' => $post->id])}}" class="btn btn-info"><i
+                            <a href="{{route('user.post.edit',['slug' => $post->slug])}}" class="btn btn-info"><i
                                         class="fa fa-pen"></i>
                                 Edit</a>
                             <button class="btn btn-danger btn-delete-post">
-                                <input type="hidden" id="postId" value="{{$post->id}}">
+                                <input type="hidden" id="postId" value="{{$post->slug}}">
                                 {{csrf_field()}}
                                 <i class="fa fa-trash"></i> Delete
                             </button>

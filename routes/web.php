@@ -27,9 +27,9 @@ Route::group(['middleware' => 'user.auth'], function () {
             Route::get('/create', 'PostController@create')->name('user.post.create')->middleware('user.block');
             Route::get('/{slug}', 'PostController@show')->name('user.post.show');
             Route::post('/create', 'PostController@store')->name('user.post.store')->middleware('user.block');
-            Route::get('/{id}/edit', 'PostController@edit')->name('user.post.edit');
-            Route::delete('/{id}', 'PostController@destroy')->name('user.post.delete');
-            Route::put('/{id}', 'PostController@update')->name('user.post.update');
+            Route::get('/{slug}/edit', 'PostController@edit')->name('user.post.edit');
+            Route::delete('/{slug}', 'PostController@destroy')->name('user.post.delete');
+            Route::put('/{slug}', 'PostController@update')->name('user.post.update');
         });
     });
 });
