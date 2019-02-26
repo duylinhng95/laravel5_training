@@ -49,7 +49,7 @@ class PostService
     {
         $input['user_id'] = Auth::id();
         $input['status']  = config('constant.post.status.pending');
-        $input['slug'] = str_slug($input['title']);
+        $input['slug']    = str_slug($input['title']);
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -64,13 +64,6 @@ class PostService
     }
 
     public function find($slug)
-    {
-        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
-        list($tags, $comments, $followed) = $this->getPostInfo($post);
-        return [$post, $tags, $comments, $followed];
-    }
-
-    public function findBySlug($slug)
     {
         $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
@@ -92,6 +85,13 @@ class PostService
         return [$tags, $comments, $followed];
     }
 
+    public function findBySlug($slug)
+    {
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
+        return [$post, $tags, $comments, $followed];
+    }
+
     /**
      * @param $slug
      * @param $input
@@ -101,8 +101,8 @@ class PostService
     public function update($slug, $input)
     {
         $input['slug'] = str_slug($input['title']);
-        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
-        $id = $post->id;
+        $post          = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $id            = $post->id;
 
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
@@ -141,10 +141,13 @@ class PostService
         return in_array($post->id, $viewed);
     }
 
-    public function comment($postId, $input)
+    public function comment($slug, $input)
     {
         $userId           = Auth::id();
         $input['user_id'] = $userId;
+        $post             = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $postId           = $post->id;
+
         $input['post_id'] = $postId;
         $comment          = $this->commentRepository->create($input);
         $comment->user;
@@ -152,9 +155,11 @@ class PostService
         return $comment;
     }
 
-    public function vote($postId)
+    public function vote($slug)
     {
         $userId = Auth::id();
+        $post   = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $postId = $post->id;
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 

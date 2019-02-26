@@ -56,19 +56,19 @@ class PostController extends Controller
         return view('Post.detail', compact('post', 'tags', 'comments', 'followed'));
     }
 
-    public function comment($postId, Request $request)
+    public function comment($slug, Request $request)
     {
         $input = $request->except('_token');
         if (is_null($input['content'])) {
             return $this->error(400, "The comment is empty");
         }
-        $comment = $this->postService->comment($postId, $input);
+        $comment = $this->postService->comment($slug, $input);
 
         return $this->success('Add new comment successful', $comment);
     }
 
-    public function vote($postId)
+    public function vote($slug)
     {
-        return $this->postService->vote($postId);
+        return $this->postService->vote($slug);
     }
 }

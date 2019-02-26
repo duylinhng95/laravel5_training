@@ -20,7 +20,7 @@
                     {!! $post->content !!}
                 </div>
                 @if(Auth::check())
-                    <button type="button" class="btn btn-success" id="btnVotePost" data-post-id="{{$post->id}}"
+                    <button type="button" class="btn btn-success" id="btnVotePost" data-post-id="{{$post->slug}}"
                             @if(Auth::id() == $post->user->id)  disabled @endif>
                         Vote <i class="fa fa-thumbs-o-up"></i>
                     </button>
@@ -72,7 +72,7 @@
                     </div>
                     <button type="button" class="btn btn-success form-btn"
                             id="btnComment"> Submit
-                        <input type="hidden" name="postId" id="postId" value="{{$post->id}}">
+                        <input type="hidden" name="postId" id="postId" value="{{$post->slug}}">
                     </button>
                 @endif
             </div>

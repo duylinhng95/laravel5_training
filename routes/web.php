@@ -13,9 +13,9 @@
 
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/{id}', 'PostController@show')->name('post.show');
-        Route::post('/comment/{id}', 'PostController@comment')->name('post.comment');
-        Route::get('/vote/{id}', 'PostController@vote')->name('post.vote');
+        Route::get('/{slug}', 'PostController@show')->name('post.show');
+        Route::post('/comment/{slug}', 'PostController@comment')->name('post.comment');
+        Route::get('/vote/{slug}', 'PostController@vote')->name('post.vote');
     });
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@listUser')->name('user.list');
