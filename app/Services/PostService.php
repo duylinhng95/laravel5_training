@@ -49,6 +49,7 @@ class PostService
     {
         $input['user_id'] = Auth::id();
         $input['status']  = config('constant.post.status.pending');
+        $input['slug'] = str_slug($input['title']);
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -65,6 +66,13 @@ class PostService
     public function find($id)
     {
         $post = $this->postRepository->find($id);
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
+        return [$post, $tags, $comments, $followed];
+    }
+
+    public function findBySlug($slug)
+    {
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
         return [$post, $tags, $comments, $followed];
     }
@@ -92,6 +100,7 @@ class PostService
      */
     public function update($id, $input)
     {
+        $input['slug'] = str_slug($input['title']);
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }

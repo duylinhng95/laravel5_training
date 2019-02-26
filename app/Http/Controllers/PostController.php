@@ -38,9 +38,9 @@ class PostController extends Controller
         return view('Post.index', compact('posts', 'categories'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        list($post, $tags, $comments, $followed) = $this->postService->find($id);
+        list($post, $tags, $comments, $followed) = $this->postService->findBySlug($slug);
         if ($post->status != config('constant.post.status.available')) {
             return redirect()->route('post.index');
         }
@@ -48,7 +48,7 @@ class PostController extends Controller
             $userId = Auth::id();
             /** @var Post $post */
             if ($post->checkOwner($userId)) {
-                return redirect()->route('user.post.show', ['id' => $id]);
+                return redirect()->route('user.post.show', ['slug' => $slug]);
             }
         }
         $this->postService->countView($post);
