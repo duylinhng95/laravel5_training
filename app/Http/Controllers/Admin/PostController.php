@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
+use Google\Cloud\Core\Exception\GoogleException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -33,35 +34,39 @@ class PostController extends Controller
         return view('Admin.post.index', compact('posts'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        list($post, $tags) = $this->postService->findWithTrashed($id);
+        list($post, $tags) = $this->postService->findWithTrashed($slug);
 
         return view('Admin.post.detail', compact('post', 'tags'));
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function delete($id)
+    public function delete($slug)
     {
-        $this->postRepository->destroy($id);
+        $this->postRepository->destroy($slug);
 
         return redirect()->route('admin.post');
     }
 
-    public function restore($id)
+    public function restore($slug)
     {
-        $this->postRepository->restore($id);
+        $this->postRepository->restore($slug);
 
-        return redirect()->route('admin.post.show', ['id' => $id]);
+        return redirect()->route('admin.post.show', ['slug' => $slug]);
     }
 
-    public function publishPost($id)
+    public function publishPost($slug)
     {
-        $this->postService->publish($id);
-        return redirect()->route('admin.post.show', ['id' => $id]);
+        try {
+            $this->postService->publish($slug);
+        } catch (GoogleException $e) {
+            return $e->getMessage();
+        }
+        return redirect()->route('admin.post.show', ['slug' => $slug]);
     }
 }

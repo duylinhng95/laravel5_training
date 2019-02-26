@@ -73,10 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all')->name('admin.post');
-            Route::get('/{id}', 'PostController@show')->name('admin.post.show');
-            Route::get('/{id}/publish', 'PostController@publishPost')->name('admin.post.publish');
-            Route::delete('/{id}', 'PostController@delete')->name('admin.post.delete');
-            Route::get('/restore/{id}', 'PostController@restore')->name('admin.post.restore');
+            Route::get('/{slug}', 'PostController@show')->name('admin.post.show');
+            Route::get('/{slug}/publish', 'PostController@publishPost')->name('admin.post.publish');
+            Route::delete('/{slug}', 'PostController@delete')->name('admin.post.delete');
+            Route::get('/restore/{slug}', 'PostController@restore')->name('admin.post.restore');
         });
     });
     Route::get('/password', 'AdminController@showPassword')->name('admin.password');

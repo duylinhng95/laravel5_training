@@ -158,22 +158,26 @@ class PostService
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
-    public function findWithTrashed($id)
+    /**
+     * @param $slug
+     * @return array
+     */
+    public function findWithTrashed($slug)
     {
-        $post = $this->postRepository->findWithTrashed($id);
+        $post = $this->postRepository->findWithTrashed($slug);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return array
      * @throws \Google\Cloud\Core\Exception\GoogleException
      */
-    public function publish($id)
+    public function publish($slug)
     {
-        list($status, $message, $post) = $this->postRepository->publish($id);
+        list($status, $message, $post) = $this->postRepository->publish($slug);
         if ($status) {
             $this->pushNotificationForFollower($post);
         }
