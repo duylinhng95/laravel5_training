@@ -40,9 +40,9 @@ class PostController extends Controller
         return view('Post.list', compact('posts'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        list($post, $tags, $comments, $followed) = $this->postService->find($id);
+        list($post, $tags, $comments, $followed) = $this->postService->findBySlug($slug);
 
         return view('Post.detail', compact('post', 'tags', 'comments', 'followed'));
     }

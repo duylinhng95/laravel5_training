@@ -40,7 +40,7 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        list($post, $tags, $comments, $followed) = $this->postService->find($slug);
+        list($post, $tags, $comments, $followed) = $this->postService->findBySlug($slug);
         if ($post->status != config('constant.post.status.available')) {
             return redirect()->route('post.index');
         }

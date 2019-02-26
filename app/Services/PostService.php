@@ -62,7 +62,14 @@ class PostService
         return $this->postRepository->findByFields('user_id', $userId);
     }
 
-    public function find($slug)
+    public function find($id)
+    {
+        $post = $this->postRepository->find($id);
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
+        return [$post, $tags, $comments, $followed];
+    }
+
+    public function findBySlug($slug)
     {
         $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
