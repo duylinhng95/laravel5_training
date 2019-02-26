@@ -49,6 +49,7 @@ class PostService
     {
         $input['user_id'] = Auth::id();
         $input['status']  = config('constant.post.status.pending');
+        $input['slug'] = str_slug($input['title']);
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -99,6 +100,7 @@ class PostService
      */
     public function update($id, $input)
     {
+        $input['slug'] = str_slug($input['title']);
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
