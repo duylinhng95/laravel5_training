@@ -52,7 +52,7 @@
                         <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}" alt="author"/>
                     </div>
                     <div class="author-post like-section">
-                        <h4>{{$comment->user->name}}</h4>
+                        <h4>{{$comment->user->name or 'User'}}</h4>
                         <div class="post-meta comment">
                             <span><i class="fa fa-calendar-check-o post-meta-icon"></i> {{formatDate($comment->created_at)}}</span>
                         </div>
