@@ -23,7 +23,6 @@
 <body>
 
 <div class="container-fluid">
-
     <!-- Slider -->
     <div class="tp-banner-container">
         <div class="tp-banner">
@@ -70,175 +69,154 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
-                    {{--<div class="stnt pull-left">--}}
-                        {{--<form action="03_new_topic.html" method="post" class="form">--}}
-                            {{--<button class="btn btn-primary">Start New Topic</button>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                    {{--<div class="env pull-left">--}}
-                        {{--<a class="notification active dropdown-toggle" href="#" id="notification-icon"--}}
-                           {{--data-toggle="dropdown">--}}
-                            {{--<i class="fa fa-bell"></i>--}}
-                        {{--</a>--}}
-                        {{--<ul class="dropdown-menu dropdown-menu-right">--}}
-                            {{--<li><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>--}}
-                            {{--<li><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                    {{--<div class="avatar pull-left dropdown">--}}
-                        {{--<a data-toggle="dropdown" href="#"><img src="{{asset('images/avatar.png')}}" alt=""/><b--}}
-                                    {{--class="caret"></b></a>--}}
-                        {{--<ul class="dropdown-menu" role="menu">--}}
-                            {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>--}}
-                            {{--<li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>--}}
-                            {{--<li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>--}}
-                            {{--<li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create--}}
-                                    {{--account</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                    <div class="login-section">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           data-display="static">
-                            <i class="fa fa-key fa-2x"></i></a>
-                        <ul class="dropdown-menu">
-                            <ul class="nav nav-tabs text-center" role="tablist">
+                    @if(Auth::check())
+                        <div class="stnt pull-left">
+                            <form action="03_new_topic.html" method="post" class="form">
+                                <button class="btn btn-primary">Start New Topic</button>
+                            </form>
+                        </div>
+                        <div class="env pull-left">
+                            @if(Auth::check())
+                                <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
+                                   data-toggle="dropdown" role="button" data-display="static">
+                                    <i class="fa fa-bell author-icon"></i>
+                                    <input type="hidden" id="user_id" value="{{Auth::id()}}">
+                                </a>
 
+                                <ul class="dropdown-menu login-success notification" id="user_notification">
 
-                                <li class="nav-item active">
-                                    <a class="sign nav-link" data-toggle="tab" id="sign-in">sign in</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="sign nav-link" data-toggle="tab" id="sign-up">sign up</a>
-                                </li>
-
+                                </ul>
+                            @endif
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
+                                <li><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
                             </ul>
+                        </div>
+                        <div class="avatar pull-left dropdown">
+                            <a data-toggle="dropdown" href="#"><img src="{{asset('images/avatar.png')}}" alt=""/><b
+                                        class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                @if(Auth::user()->checkRole( 'admin'))
+                                    <li><a href="{{route('admin.index')}}">Admin Panel</a></li>
+                                @endif
+                                    <li><a href="{{route('user.index')}}">User Detail</a></li>
+                                    <li><a href="{{route('auth.logout')}}">Sign Out</a></li>
+                            </ul>
+                        </div>
+                    @else
+                        <div class="login-section">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               data-display="static">
+                                <i class="fa fa-key fa-2x"></i></a>
+                            <ul class="dropdown-menu">
+                                <ul class="nav nav-tabs text-center" role="tablist">
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="signin">
-                                    <form method="post" action="{{route('auth.login')}}" id="loginForm">
-                                        {{csrf_field()}}
-                                        <div class="login-area">
-                                            <div class="form-group">
-                                                <label for="email">Email</label>
-                                                @if($errors->has('email'))
-                                                    <div class="text-danger">
-                                                        {{$errors->first('email')}}
-                                                    </div>
-                                                @endif
-                                                <input type="email" class="form-control" name="email">
+
+                                    <li class="nav-item active">
+                                        <a class="sign nav-link" data-toggle="tab" id="sign-in">sign in</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="sign nav-link" data-toggle="tab" id="sign-up">sign up</a>
+                                    </li>
+
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="signin">
+                                        <form method="post" action="{{route('auth.login')}}" id="loginForm">
+                                            {{csrf_field()}}
+                                            <div class="login-area">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    @if($errors->has('email'))
+                                                        <div class="text-danger">
+                                                            {{$errors->first('email')}}
+                                                        </div>
+                                                    @endif
+                                                    <input type="email" class="form-control" name="email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Password</label>
+                                                    @if($errors->has('password'))
+                                                        <div class="text-danger">
+                                                            {{$errors->first('password')}}
+                                                        </div>
+                                                    @endif
+                                                    <input type="password" class="form-control"
+                                                           name="password">
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                @if($errors->has('password'))
-                                                    <div class="text-danger">
-                                                        {{$errors->first('password')}}
-                                                    </div>
-                                                @endif
-                                                <input type="password" class="form-control"
-                                                       name="password">
+                                            <div class="form-submit">
+                                                <button type="submit" class="btn btn-success btn-block">Sign in
+                                                </button>
                                             </div>
+                                        </form>
+                                        <div class="login-social">
+                                            <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i
+                                                        class="fa fa-google"></i> Login
+                                                with Google</a>
+                                            <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i
+                                                        class="fa fa-facebook-square"></i> Login
+                                                with Facebook</a>
                                         </div>
-                                        <div class="form-submit">
-                                            <button type="submit" class="btn btn-success btn-block">Sign in
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <div class="login-social">
-                                        <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i
-                                                    class="fa fa-google"></i> Login
-                                            with Google</a>
-                                        <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i
-                                                    class="fa fa-facebook-square"></i> Login
-                                            with Facebook</a>
+                                    </div><!-- /#Sing in -->
+                                    <div class="tab-pane" id="signup">
+                                        <form method="post" action="{{route('auth.register')}}" id="registerForm">
+                                            {{csrf_field()}}
+                                            <div class="login-area">
+                                                <div class=" form-group">
+                                                    <label for="name">Full Name</label>
+                                                    @if($errors->has('name'))
+                                                        <div class="text-danger">
+                                                            {{$errors->first('name')}}
+                                                        </div>
+                                                    @endif
+                                                    <input type="text" class="form-control" name="name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email Address</label>
+                                                    @if($errors->has('email'))
+                                                        <div class="text-danger">
+                                                            {{$errors->first('email')}}
+                                                        </div>
+                                                    @endif
+                                                    <input type="email" class="form-control" name="email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    @if($errors->has('password'))
+                                                        <div class="text-danger">
+                                                            {{$errors->first('password')}}
+                                                        </div>
+                                                    @endif
+                                                    <input type="password" class="form-control"
+                                                           name="password" id="password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password_confirmation">Comfirm Password</label>
+                                                    <input type="password" class="form-control"
+                                                           name="password_confirmation">
+                                                </div>
+
+                                            </div>
+                                            <div class="form-submit">
+                                                <button type="submit" class="btn btn-success btn-block">Sign up
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                </div><!-- /#Sing in -->
-                                <div class="tab-pane" id="signup">
-                                    <form method="post" action="{{route('auth.register')}}" id="registerForm">
-                                        {{csrf_field()}}
-                                        <div class="login-area">
-                                            <div class=" form-group">
-                                                <label for="name">Full Name</label>
-                                                @if($errors->has('name'))
-                                                    <div class="text-danger">
-                                                        {{$errors->first('name')}}
-                                                    </div>
-                                                @endif
-                                                <input type="text" class="form-control" name="name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email">Email Address</label>
-                                                @if($errors->has('email'))
-                                                    <div class="text-danger">
-                                                        {{$errors->first('email')}}
-                                                    </div>
-                                                @endif
-                                                <input type="email" class="form-control" name="email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password">Password</label>
-                                                @if($errors->has('password'))
-                                                    <div class="text-danger">
-                                                        {{$errors->first('password')}}
-                                                    </div>
-                                                @endif
-                                                <input type="password" class="form-control"
-                                                       name="password" id="password">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password_confirmation">Comfirm Password</label>
-                                                <input type="password" class="form-control"
-                                                       name="password_confirmation">
-                                            </div>
-
-                                        </div>
-                                        <div class="form-submit">
-                                            <button type="submit" class="btn btn-success btn-block">Sign up
-                                            </button>
-                                        </div>
-                                    </form>
                                 </div>
-                            </div>
-                        </ul>
-                    </div>
-
+                            </ul>
+                        </div>
+                    @endif
                     <div class="clearfix"></div>
                 </div>
             </div>
         </div>
     </div>
 
-
     <section class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-xs-12 col-md-8">
-                    <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                    <div class="pull-left">
-                        <ul class="paginationforum">
-                            <li class="hidden-xs"><a href="#">1</a></li>
-                            <li class="hidden-xs"><a href="#">2</a></li>
-                            <li class="hidden-xs"><a href="#">3</a></li>
-                            <li class="hidden-xs"><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li><a href="#" class="active">7</a></li>
-                            <li><a href="#">8</a></li>
-                            <li class="hidden-xs"><a href="#">9</a></li>
-                            <li class="hidden-xs"><a href="#">10</a></li>
-                            <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                            <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                            <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                            <li><a href="#">1586</a></li>
-                        </ul>
-                    </div>
-                    <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8">
@@ -247,8 +225,7 @@
                         <div class="wrap-ut pull-left">
                             <div class="userinfo pull-left">
                                 <div class="avatar">
-                                    <img src="images/avatar.jpg" alt=""/>
-                                    <div class="status green">&nbsp;</div>
+                                    <img src="{{asset('images/avatar.png')}}" alt=""/>
                                 </div>
 
                                 <div class="icons">
@@ -596,37 +573,6 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-xs-12">
-                    <div class="pull-left"><a href="#" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
-                    <div class="pull-left">
-                        <ul class="paginationforum">
-                            <li class="hidden-xs"><a href="#">1</a></li>
-                            <li class="hidden-xs"><a href="#">2</a></li>
-                            <li class="hidden-xs"><a href="#">3</a></li>
-                            <li class="hidden-xs"><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li><a href="#" class="active">7</a></li>
-                            <li><a href="#">8</a></li>
-                            <li class="hidden-xs"><a href="#">9</a></li>
-                            <li class="hidden-xs"><a href="#">10</a></li>
-                            <li class="hidden-xs hidden-md"><a href="#">11</a></li>
-                            <li class="hidden-xs hidden-md"><a href="#">12</a></li>
-                            <li class="hidden-xs hidden-sm hidden-md"><a href="#">13</a></li>
-                            <li><a href="#">1586</a></li>
-                        </ul>
-                    </div>
-                    <div class="pull-left"><a href="#" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-
-
     </section>
 
     <footer>

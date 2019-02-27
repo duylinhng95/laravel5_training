@@ -14,7 +14,7 @@
   display: block;
   position: relative;
   top: 2vh;
-  left: 65%;
+  left: 45%;
 }
 
 .logo a:hover {
@@ -50,15 +50,10 @@ a#notification-icon.active:after {
 
 }
 
-.login-section i {
-  background: #66bb6a;
-  padding: 8px;
-  border-radius: 50%;
-  font-size: 2.5rem;
-}
 .login-social a {
   width: 100%;
   display: block;
+  padding:10px;
 }
 
 .login-social i {
@@ -66,4 +61,44 @@ a#notification-icon.active:after {
   border-radius: 100%;
   background: #66bb6a;
   margin-right: 20px
+}
+
+.login-section i {
+  background: #66bb6a;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.login-section .dropdown-menu {
+  min-width: 320px;
+  padding: 30px;
+  line-height: 20px;
+  top: 50px;
+}
+
+.login-area {
+  margin-top: 15px;
+}
+
+.nav-item a {
+  text-transform: uppercase;
+  border: none !important;
+}
+
+ul.nav.nav-tabs {
+  border-bottom: none;
+}
+
+li.nav-item.active a {
+  background-color: #ccc;
+}
+
+.login-section .alert {
+  margin-top: 20px;
+}
+
+.content .container{
+  margin-top: 10px;
 }

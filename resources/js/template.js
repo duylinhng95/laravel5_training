@@ -131,9 +131,9 @@ class Template {
 					self.element.notification.append(content)
 				})
 				if (isAllRead === false) {
-					self.element.notificationIcon.addClass('badge');
+					self.element.notificationIcon.addClass('active');
 				} else {
-					self.element.notificationIcon.removeClass('badge');
+					self.element.notificationIcon.removeClass('active');
 				}
 				self.markReadNotification()
 			})
