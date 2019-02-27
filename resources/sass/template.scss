@@ -1,0 +1,44 @@
+@import '~summernote/dist/summernote.css';
+@import '~bootstrap4-tagsinput-douglasanpa/tagsinput.css';
+@import '~toastr/toastr.scss';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+@import '~@fortawesome/fontawesome-free/scss/v4-shims.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import 'vendor/template/custom.css';
+@import 'vendor/template/style.css';
+
+
+.home-icon {
+  display: block;
+  position: relative;
+  top: 2vh;
+  left: 65%;
+}
+
+.logo a:hover {
+  text-decoration: none;
+}
+
+.avatar a img {
+  width:40px;
+  height: 40px;
+}
+
+a#notification-icon.active:after {
+  position: absolute;
+  background: red;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  color: white;
+  border: 1px solid red;
+  content: " ";
+  white-space: pre;
+}
+
+.avatar .status {
+  width: 1rem;
+  height: 1rem;
+}
