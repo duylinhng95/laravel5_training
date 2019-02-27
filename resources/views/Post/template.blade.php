@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Forum :: Home Page</title>
 
     <!-- Bootstrap -->
@@ -14,13 +15,9 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <!-- fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-          rel='stylesheet' type='text/css'>
 
 </head>
 <body>
@@ -34,7 +31,8 @@
                 <!-- SLIDE  -->
                 <li data-transition="fade" data-slotamount="7" data-masterspeed="1500">
                     <!-- MAIN IMAGE -->
-                    <img src="http://neo-lab.vn/css/img/top/logo.png" alt="slidebg1" data-bgfit="contain" data-bgposition="center"
+                    <img src="{{asset('images/logo-slider.png')}}" alt="slidebg1" data-bgfit="contain"
+                         data-bgposition="center"
                          data-bgrepeat="no-repeat">
                     <!-- LAYERS -->
                 </li>
@@ -50,7 +48,7 @@
                         <i class="fa fa-home fa-2x home-icon"></i></a></div>
                 <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                     <div class="dropdown">
-                        <a data-toggle="dropdown" href="#">Category</a> <b class="caret"></b>
+                        <a data-toggle="dropdown" href="#">Category<b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation"><a role="menuitem" tabindex="1" href="#">Borderlands 1</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="2" href="#">Borderlands 2</a></li>
@@ -72,22 +70,135 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
-                    <div class="stnt pull-left">
-                        <form action="03_new_topic.html" method="post" class="form">
-                            <button class="btn btn-primary">Start New Topic</button>
-                        </form>
-                    </div>
-                    <div class="env pull-left"><a class="notification active" id="notification-icon"><i class="fa fa-bell"></i></a></div>
+                    {{--<div class="stnt pull-left">--}}
+                        {{--<form action="03_new_topic.html" method="post" class="form">--}}
+                            {{--<button class="btn btn-primary">Start New Topic</button>--}}
+                        {{--</form>--}}
+                    {{--</div>--}}
+                    {{--<div class="env pull-left">--}}
+                        {{--<a class="notification active dropdown-toggle" href="#" id="notification-icon"--}}
+                           {{--data-toggle="dropdown">--}}
+                            {{--<i class="fa fa-bell"></i>--}}
+                        {{--</a>--}}
+                        {{--<ul class="dropdown-menu dropdown-menu-right">--}}
+                            {{--<li><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>--}}
+                            {{--<li><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                    {{--<div class="avatar pull-left dropdown">--}}
+                        {{--<a data-toggle="dropdown" href="#"><img src="{{asset('images/avatar.png')}}" alt=""/><b--}}
+                                    {{--class="caret"></b></a>--}}
+                        {{--<ul class="dropdown-menu" role="menu">--}}
+                            {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>--}}
+                            {{--<li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>--}}
+                            {{--<li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>--}}
+                            {{--<li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create--}}
+                                    {{--account</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                    <div class="login-section">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           data-display="static">
+                            <i class="fa fa-key fa-2x"></i></a>
+                        <ul class="dropdown-menu">
+                            <ul class="nav nav-tabs text-center" role="tablist">
 
-                    <div class="avatar pull-left dropdown">
-                        <a data-toggle="dropdown" href="#"><img src="{{asset('images/avatar.png')}}" alt=""/><b
-                                    class="caret"></b></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create
-                                    account</a></li>
+
+                                <li class="nav-item active">
+                                    <a class="sign nav-link" data-toggle="tab" id="sign-in">sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="sign nav-link" data-toggle="tab" id="sign-up">sign up</a>
+                                </li>
+
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="signin">
+                                    <form method="post" action="{{route('auth.login')}}" id="loginForm">
+                                        {{csrf_field()}}
+                                        <div class="login-area">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                @if($errors->has('email'))
+                                                    <div class="text-danger">
+                                                        {{$errors->first('email')}}
+                                                    </div>
+                                                @endif
+                                                <input type="email" class="form-control" name="email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                @if($errors->has('password'))
+                                                    <div class="text-danger">
+                                                        {{$errors->first('password')}}
+                                                    </div>
+                                                @endif
+                                                <input type="password" class="form-control"
+                                                       name="password">
+                                            </div>
+                                        </div>
+                                        <div class="form-submit">
+                                            <button type="submit" class="btn btn-success btn-block">Sign in
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <div class="login-social">
+                                        <a href="{{route('login.social.provider', ['provider' => 'google'])}}"><i
+                                                    class="fa fa-google"></i> Login
+                                            with Google</a>
+                                        <a href="{{route('login.social.provider', ['provider' => 'facebook'])}}"><i
+                                                    class="fa fa-facebook-square"></i> Login
+                                            with Facebook</a>
+                                    </div>
+                                </div><!-- /#Sing in -->
+                                <div class="tab-pane" id="signup">
+                                    <form method="post" action="{{route('auth.register')}}" id="registerForm">
+                                        {{csrf_field()}}
+                                        <div class="login-area">
+                                            <div class=" form-group">
+                                                <label for="name">Full Name</label>
+                                                @if($errors->has('name'))
+                                                    <div class="text-danger">
+                                                        {{$errors->first('name')}}
+                                                    </div>
+                                                @endif
+                                                <input type="text" class="form-control" name="name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email Address</label>
+                                                @if($errors->has('email'))
+                                                    <div class="text-danger">
+                                                        {{$errors->first('email')}}
+                                                    </div>
+                                                @endif
+                                                <input type="email" class="form-control" name="email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                @if($errors->has('password'))
+                                                    <div class="text-danger">
+                                                        {{$errors->first('password')}}
+                                                    </div>
+                                                @endif
+                                                <input type="password" class="form-control"
+                                                       name="password" id="password">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password_confirmation">Comfirm Password</label>
+                                                <input type="password" class="form-control"
+                                                       name="password_confirmation">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-submit">
+                                            <button type="submit" class="btn btn-success btn-block">Sign up
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </ul>
                     </div>
 
@@ -538,7 +649,6 @@
     </footer>
 </div>
 <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
-<script src="{{mix('/js/post.js')}}"></script>
 <script src="{{mix('/js/template.js')}}"></script>
 <script type="text/javascript">
 
@@ -552,7 +662,6 @@
 				startwidth: 1200,
 				startheight: 278,
 				hideThumbs: 10,
-				fullWidth: "on"
 			});
 
 	});	//ready

@@ -29,6 +29,7 @@ mix.copyDirectory('resources/images', 'public/images');
 mix.copyDirectory('resources/fonts', 'public/fonts');
 mix.copyDirectory('resources/js/vendor', 'public/js/vendor');
 mix.copyDirectory('resources/sass/vendor', 'public/css/vendor');
+mix.disableNotifications();
 // mix.autoload({
 // 	jquery: ['$', 'window.jQuery', 'jQuery'],
 // 	'popper.js/dist/umd/popper.js': ['Popper']

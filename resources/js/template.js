@@ -1,3 +1,4 @@
+require('./bootstrap')
 require("./vendor/template/jquery.themepunch.plugins.min")
 require("./vendor/template/jquery.themepunch.revolution.min")
 import Notification from './notification.js'
@@ -13,6 +14,13 @@ class Template {
 	}
 
 	config() {
+		this.element = {
+			userId: $("#user_id").val(),
+			notification: $("#user_notification"),
+			notificationIcon: $("#notification-icon"),
+			loginForm: $("#loginForm"),
+			registerForm: $("#registerForm"),
+		}
 		this.postPage = 1
 		this.lastPage = false
 		this.isActive = 0
@@ -20,11 +28,6 @@ class Template {
 		this.currentURL = location.search
 		this.notification = new Notification()
 		this.userId = $("#user_id").val()
-		this.element = {
-			userId: $("#user_id").val(),
-			notification: $("#user_notification"),
-			notificationIcon: $("#notification-icon"),
-		}
 	}
 
 	listen() {
@@ -32,6 +35,10 @@ class Template {
 		if (this.element.userId !== undefined) {
 			this.showNotifications()
 		}
+		this.navTab()
+		this.setActiveClass()
+		this.validateLoginForm()
+		this.validateRegisterForm()
 	}
 
 	loadArticle(page) {
@@ -97,11 +104,9 @@ class Template {
 
 					let content = '';
 
-					if (res.action !== 'follows')
-					{
+					if (res.action !== 'follows') {
 						let noti_title = res.title
-						if (noti_title.length > 30)
-						{
+						if (noti_title.length > 30) {
 							noti_title = noti_title.substring(0, 30) + "..."
 						}
 						content = `<div class="row">
@@ -146,6 +151,145 @@ class Template {
 					{is_read: true}
 				)
 			})
+		})
+	}
+
+	navTab() {
+
+		$('#sign-in').click(function (event) {
+			$("#signup").removeClass('active show')
+			$("#sign-in").parent('li').addClass('active')
+			$("#sign-up").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signin").tab('show')
+		})
+
+		$('#sign-up').click(function (event) {
+			$("#signin").removeClass('active show')
+			$("#sign-up").parent('li').addClass('active')
+			$("#sign-in").parent('li').removeClass('active')
+			event.stopPropagation()
+			$("#signup").tab('show')
+		})
+	}
+
+	setActiveClass() {
+		let url = location.href
+		$(".collapsed").each(function () {
+			if (this.href === url) {
+				$(this).removeClass('collapsed')
+			}
+		})
+	}
+
+	validateLoginForm() {
+		let form = this.element.loginForm
+		form.validate({
+			rules: {
+				email: {
+					required: true,
+					email: true,
+				},
+				password: {
+					required: true,
+				}
+			},
+			messages: {
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: location.origin + `/api/check-login`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function (res) {
+						form.submit(res)
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let error_message = $("#error-message");
+						if (error_message.length !== 0) {
+							error_message.remove()
+						}
+						let loginForm = $('#loginForm')
+						loginForm.before(`<div class="alert alert-danger" id="error-message">` + data.message + `</div>`)
+						$(".login-section .dropdown-menu").show()
+					}
+				})
+			}
+		})
+		$('#loginForm button[type="submit"]').click(function(){
+			return $('#loginForm').valid();
+		})
+	}
+
+	validateRegisterForm() {
+		let form = this.element.registerForm
+		form.validate({
+			rules: {
+				name: "required",
+				email: {
+					required: true,
+					email: true,
+				},
+				password: "required",
+				password_confirmation: {
+					required: true,
+					equalTo: "#password",
+				},
+			},
+			messages: {
+				name: {
+					required: "Please enter your fullname"
+				},
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format",
+				},
+				password: {
+					required: "Please enter your password"
+				},
+				password_confirmation: {
+					required: "Please confirm your password",
+					equalTo: "Your password confirm must match"
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: location.origin + `/api/check-register`,
+					type: "POST",
+					data: $(form).serialize(),
+					success: function () {
+						form.submit()
+					},
+					error: function (res) {
+						let data = res.responseJSON
+						let error_message = $("#error_message");
+						let error_noti = $("#error_noti")
+						let errors = data.errors;
+						if (error_message.length !== 0) {
+							error_message.remove()
+							error_noti.remove()
+						}
+						$.each(errors, function (index, value) {
+							let input = $('#registerForm').find(`[name="` + index + `"]`)
+							input.before(`<div class="text-danger" id="error_message">` + value + `</div>`)
+						})
+						let registerForm = $('#registerForm')
+						registerForm.before(`<div class="alert alert-danger" id="error_noti">` + data.message + `</div>`)
+						$(".login-section .dropdown-menu").show()
+					}
+				})
+			}
+		})
+		$('#registerForm button[type="submit"]').click(function(){
+			return $('#registerForm').valid();
 		})
 	}
 }
