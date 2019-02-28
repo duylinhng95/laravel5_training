@@ -28,7 +28,7 @@
         <div class="tp-banner">
             <ul>
                 <!-- SLIDE  -->
-                <li data-transition="fade" data-slotamount="7" data-masterspeed="1500">
+                <li>
                     <!-- MAIN IMAGE -->
                     <img src="{{asset('images/logo-slider.png')}}" alt="slidebg1" data-bgfit="contain"
                          data-bgposition="center"
@@ -99,8 +99,8 @@
                                 @if(Auth::user()->checkRole( 'admin'))
                                     <li><a href="{{route('admin.index')}}">Admin Panel</a></li>
                                 @endif
-                                    <li><a href="{{route('user.index')}}">User Detail</a></li>
-                                    <li><a href="{{route('auth.logout')}}">Sign Out</a></li>
+                                <li><a href="{{route('user.index')}}">User Detail</a></li>
+                                <li><a href="{{route('auth.logout')}}">Sign Out</a></li>
                             </ul>
                         </div>
                     @else
@@ -221,163 +221,29 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="{{asset('images/avatar.png')}}" alt=""/>
+                    <div class="post row">
+                        <div class="wrap-ut col-md-8">
+                            <div class="row">
+                                <div class="userinfo col-md-2">
+                                    <div class="avatar">
+                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
+                                    </div>
                                 </div>
-
-                                <div class="icons">
-                                    <img src="images/icon1.jpg" alt=""/><img src="images/icon4.jpg" alt=""/>
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                                <p>It's one thing to subject yourself to a Halloween costume mishap because, hey, that's
-                                    your prerogative.</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    560
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar2.jpg" alt=""/>
-                                    <div class="status red">&nbsp;</div>
-                                </div>
-
-                                <div class="icons">
-                                    <img src="images/icon3.jpg" alt=""/><img src="images/icon4.jpg" alt=""/><img
-                                            src="images/icon5.jpg" alt=""/><img src="images/icon6.jpg" alt=""/>
+                                <div class="posttext col-md-10">
+                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
+                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
+                                        that's
+                                        your prerogative.</p>
                                 </div>
                             </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">What Instagram Ads Will Look Like</a></h2>
-                                <p>Instagram offered a first glimpse at what its ads will look like in a blog post
-                                    Thursday. The sample ad, which you can see below.</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    89
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 15 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar3.jpg" alt=""/>
-                                    <div class="status red">&nbsp;</div>
-                                </div>
-
-                                <div class="icons">
-                                    <img src="images/icon2.jpg" alt=""/><img src="images/icon4.jpg" alt=""/>
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">The Future of Magazines Is on Tablets</a></h2>
-                                <p>Eric Schmidt has seen the future of magazines, and it's on the tablet. At a Magazine
-                                    Publishers Association.</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    456
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 2 days</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar4.jpg" alt=""/>
-                                    <div class="status yellow">&nbsp;</div>
-                                </div>
-
-                                <div class="icons">
-                                    <img src="images/icon1.jpg" alt=""/><img src="images/icon4.jpg" alt=""/><img
-                                            src="images/icon6.jpg" alt=""/>
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">Pinterest Now Worth $3.8 Billion</a></h2>
-                                <p>Pinterest's valuation is closing in on $4 billion after its latest funding round of
-                                    $225 million, according to a report.</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    78
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar.jpg" alt=""/>
-                                    <div class="status green">&nbsp;</div>
-                                </div>
-
-                                <div class="icons">
-                                    <img src="images/icon1.jpg" alt=""/><img src="images/icon4.jpg" alt=""/>
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                                <p>It's one thing to subject yourself to a Halloween costume mishap because, hey, that's
-                                    your prerogative.</p>
+                            <div class="row">
+                                    <ul class="tags">
+                                        <li class="badge">Gaming</li>
+                                        <li class="badge">Studio</li>
+                                        <li class="badge">Keyboard</li>
+                                        <li class="badge">PHP</li>
+                                        <li class="badge">Laravel</li>
+                                    </ul>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -396,72 +262,41 @@
                     </div><!-- POST -->
 
 
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar2.jpg" alt=""/>
-                                    <div class="status red">&nbsp;</div>
+                    <div class="post row">
+                        <div class="wrap-ut col-md-8">
+                            <div class="row">
+                                <div class="userinfo col-md-2">
+                                    <div class="avatar">
+                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
+                                    </div>
                                 </div>
-
-                                <div class="icons">
-                                    <img src="images/icon3.jpg" alt=""/><img src="images/icon4.jpg" alt=""/><img
-                                            src="images/icon5.jpg" alt=""/><img src="images/icon6.jpg" alt=""/>
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">What Instagram Ads Will Look Like</a></h2>
-                                <p>Instagram offered a first glimpse at what its ads will look like in a blog post
-                                    Thursday. The sample ad, which you can see below.</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    89
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 15 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <!-- POST -->
-                    <div class="post">
-                        <div class="wrap-ut pull-left">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src="images/avatar3.jpg" alt=""/>
-                                    <div class="status red">&nbsp;</div>
-                                </div>
-
-                                <div class="icons">
-                                    <img src="images/icon2.jpg" alt=""/><img src="images/icon4.jpg" alt=""/>
+                                <div class="posttext col-md-10">
+                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
+                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
+                                        that's
+                                        your prerogative.</p>
                                 </div>
                             </div>
-                            <div class="posttext pull-left">
-                                <h2><a href="02_topic.html">The Future of Magazines Is on Tablets</a></h2>
-                                <p>Eric Schmidt has seen the future of magazines, and it's on the tablet. At a Magazine
-                                    Publishers Association.</p>
+                            <div class="row">
+                                <ul class="tags">
+                                    <li class="badge"><a href="#">Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                </ul>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="postinfo pull-left">
                             <div class="comments">
                                 <div class="commentbg">
-                                    456
+                                    560
                                     <div class="mark"></div>
                                 </div>
 
                             </div>
                             <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 2 days</div>
+                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
                         </div>
                         <div class="clearfix"></div>
                     </div><!-- POST -->
@@ -596,24 +431,6 @@
 </div>
 <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
 <script src="{{mix('/js/template.js')}}"></script>
-<script type="text/javascript">
-
-	var revapi;
-
-	jQuery(document).ready(function () {
-		"use strict";
-		revapi = jQuery('.tp-banner').revolution(
-			{
-				delay: 15000,
-				startwidth: 1200,
-				startheight: 278,
-				hideThumbs: 10,
-			});
-
-	});	//ready
-
-</script>
-
 <!-- END REVOLUTION SLIDER -->
 </body>
 </html>

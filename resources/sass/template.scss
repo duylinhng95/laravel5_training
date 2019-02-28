@@ -9,6 +9,9 @@
 @import 'vendor/template/custom.css';
 @import 'vendor/template/style.css';
 
+body a:hover{
+  text-decoration: none
+}
 
 .home-icon {
   display: block;
@@ -101,4 +104,30 @@ li.nav-item.active a {
 
 .content .container{
   margin-top: 10px;
+}
+
+.tp-banner img {
+  display: block;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.post .avatar {
+  top: 3vh;
+  left: 20%;
+}
+
+.post .avatar img {
+  display: block;
+  margin: 0 auto;
+}
+
+.post .tags {
+  border-top: solid 1px #f1f1f1;
+  padding-top: 7px;
+}
+
+li.badge a{
+  color: #fff;
+  text-decoration: none;
 }
