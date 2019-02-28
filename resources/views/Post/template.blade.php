@@ -217,91 +217,22 @@
     </div>
 
     <section class="content">
+        <div class="container-fluid">
+            <div class="row category-wrapper">
+                <div class="category">
+                    <ul class="list-group list-inline">
+                        <div class="item-wrapper">
+                            <a href="#"><li class="category-item">Trading</li></a>
+                            <a href="#"><li class="category-item">Gaming</li></a>
+                            <a href="#"><li class="category-item">Laravel</li></a>
+                            <a href="#"><li class="category-item">Laravel</li></a>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-8">
-                    <!-- POST -->
-                    <div class="post row">
-                        <div class="wrap-ut col-md-8">
-                            <div class="row">
-                                <div class="userinfo col-md-2">
-                                    <div class="avatar">
-                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
-                                    </div>
-                                </div>
-                                <div class="posttext col-md-10">
-                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
-                                        that's
-                                        your prerogative.</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                    <ul class="tags">
-                                        <li class="badge">Gaming</li>
-                                        <li class="badge">Studio</li>
-                                        <li class="badge">Keyboard</li>
-                                        <li class="badge">PHP</li>
-                                        <li class="badge">Laravel</li>
-                                    </ul>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    560
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-
-                    <div class="post row">
-                        <div class="wrap-ut col-md-8">
-                            <div class="row">
-                                <div class="userinfo col-md-2">
-                                    <div class="avatar">
-                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
-                                    </div>
-                                </div>
-                                <div class="posttext col-md-10">
-                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
-                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
-                                        that's
-                                        your prerogative.</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <ul class="tags">
-                                    <li class="badge"><a href="#">Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfo pull-left">
-                            <div class="comments">
-                                <div class="commentbg">
-                                    560
-                                    <div class="mark"></div>
-                                </div>
-
-                            </div>
-                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
-                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- POST -->
-
-                </div>
                 <div class="col-lg-4 col-md-4">
 
                     <!-- -->
@@ -404,6 +335,89 @@
                         </div>
                     </div>
 
+
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    <!-- POST -->
+                    <div class="post row">
+                        <div class="wrap-ut col-md-8">
+                            <div class="row">
+                                <div class="userinfo col-md-2">
+                                    <div class="avatar">
+                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
+                                    </div>
+                                </div>
+                                <div class="posttext col-md-10">
+                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
+                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
+                                        that's
+                                        your prerogative.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="tags">
+                                    <li class="badge">Gaming</li>
+                                    <li class="badge">Studio</li>
+                                    <li class="badge">Keyboard</li>
+                                    <li class="badge">PHP</li>
+                                    <li class="badge">Laravel</li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfo pull-left">
+                            <div class="comments">
+                                <div class="commentbg">
+                                    560
+                                    <div class="mark"></div>
+                                </div>
+
+                            </div>
+                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!-- POST -->
+
+
+                    <div class="post row">
+                        <div class="wrap-ut col-md-8">
+                            <div class="row">
+                                <div class="userinfo col-md-2">
+                                    <div class="avatar">
+                                        <img src="{{asset('images/avatar.png')}}" alt=""/>
+                                    </div>
+                                </div>
+                                <div class="posttext col-md-10">
+                                    <h2><a href="02_topic.html">10 Kids Unaware of Their Halloween Costume</a></h2>
+                                    <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
+                                        that's
+                                        your prerogative.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="tags">
+                                    <li class="badge"><a href="#">Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                    <li class="badge"><a>Gaming</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfo pull-left">
+                            <div class="comments">
+                                <div class="commentbg">
+                                    560
+                                    <div class="mark"></div>
+                                </div>
+
+                            </div>
+                            <div class="views"><i class="fa fa-eye"></i> 1,568</div>
+                            <div class="time"><i class="fa fa-clock-o"></i> 24 min</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!-- POST -->
 
                 </div>
             </div>

@@ -9,7 +9,7 @@
 @import 'vendor/template/custom.css';
 @import 'vendor/template/style.css';
 
-body a:hover{
+body a:hover {
   text-decoration: none
 }
 
@@ -25,7 +25,7 @@ body a:hover{
 }
 
 .avatar a img {
-  width:40px;
+  width: 40px;
   height: 40px;
 }
 
@@ -56,7 +56,7 @@ a#notification-icon.active:after {
 .login-social a {
   width: 100%;
   display: block;
-  padding:10px;
+  padding: 10px;
 }
 
 .login-social i {
@@ -102,7 +102,7 @@ li.nav-item.active a {
   margin-top: 20px;
 }
 
-.content .container{
+.content .container {
   margin-top: 10px;
 }
 
@@ -127,7 +127,43 @@ li.nav-item.active a {
   padding-top: 7px;
 }
 
-li.badge a{
+li.badge a {
   color: #fff;
   text-decoration: none;
+}
+
+.category .list-group a {
+  display: inline-block;
+}
+
+.category .list-group a:hover > li {
+  background-color: #95a5a6;
+  -webkit-transition: background-color 1s;
+  -moz-transition: background-color 1s;
+  -ms-transition: background-color 1s;
+  -o-transition: background-color 1s;
+  transition: background-color 1s;
+
+  color: #2c3e50;
+  -webkit-transition: color 1s;
+  -moz-transition: color 1s;
+  -ms-transition: color 1s;
+  -o-transition: color 1s;
+  transition: color 1s;
+}
+
+.item-wrapper {
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+li.category-item {
+  padding: 15px;
+  background: #bdc3c7;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #fff;
+  margin:0 20px;
+  min-width:90px;
 }
