@@ -11,6 +11,8 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('posts')->truncate();
+
         $posts = factory(App\Entities\Post::class, 50)
             ->create()
             ->each(function ($post) {

@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="posttext col-md-10">
-                        <h2><a href="{{route('post.show', ['id' => $post->id])}}">{{$post->title}}</a></h2>
+                        <h2><a href="{{route('post.show', ['slug' => $post->slug])}}">{{$post->title}}</a></h2>
                         <div class="user-name">
                             <i class="fa fa-user"></i> {{$post->user->name}}
                         </div>

@@ -13,9 +13,9 @@
 
 Route::group(['middleware' => 'user.auth'], function () {
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/{id}', 'PostController@show')->name('post.show');
-        Route::post('/comment/{id}', 'PostController@comment')->name('post.comment');
-        Route::get('/vote/{id}', 'PostController@vote')->name('post.vote');
+        Route::get('/{slug}', 'PostController@show')->name('post.show');
+        Route::post('/comment/{slug}', 'PostController@comment')->name('post.comment');
+        Route::get('/vote/{slug}', 'PostController@vote')->name('post.vote');
     });
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', 'UserController@listUser')->name('user.list');
@@ -25,11 +25,11 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::group(['prefix' => 'post', 'namespace' => 'User'], function () {
             Route::get('/', 'PostController@index')->name('user.post.index');
             Route::get('/create', 'PostController@create')->name('user.post.create')->middleware('user.block');
-            Route::get('/{id}', 'PostController@show')->name('user.post.show');
+            Route::get('/{slug}', 'PostController@show')->name('user.post.show');
             Route::post('/create', 'PostController@store')->name('user.post.store')->middleware('user.block');
-            Route::get('/{id}/edit', 'PostController@edit')->name('user.post.edit');
-            Route::delete('/{id}', 'PostController@destroy')->name('user.post.delete');
-            Route::put('/{id}', 'PostController@update')->name('user.post.update');
+            Route::get('/{slug}/edit', 'PostController@edit')->name('user.post.edit');
+            Route::delete('/{slug}', 'PostController@destroy')->name('user.post.delete');
+            Route::put('/{slug}', 'PostController@update')->name('user.post.update');
         });
     });
 });
@@ -42,7 +42,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('logout', 'UserController@logout')->name('auth.logout');
     Route::get('/', 'PostController@index')->name('post.index');
     Route::group(['prefix' => 'post'], function () {
-        Route::get('/{id}', 'PostController@show')->name('post.show');
+        Route::get('/{slug}', 'PostController@show')->name('post.show');
     });
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
@@ -73,10 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
         Route::group(['prefix' => 'post'], function () {
             Route::get('/', 'PostController@all')->name('admin.post');
-            Route::get('/{id}', 'PostController@show')->name('admin.post.show');
-            Route::get('/{id}/publish', 'PostController@publishPost')->name('admin.post.publish');
-            Route::delete('/{id}', 'PostController@delete')->name('admin.post.delete');
-            Route::get('/restore/{id}', 'PostController@restore')->name('admin.post.restore');
+            Route::get('/{slug}', 'PostController@show')->name('admin.post.show');
+            Route::get('/{slug}/publish', 'PostController@publishPost')->name('admin.post.publish');
+            Route::delete('/{slug}', 'PostController@delete')->name('admin.post.delete');
+            Route::get('/restore/{slug}', 'PostController@restore')->name('admin.post.restore');
         });
     });
     Route::get('/password', 'AdminController@showPassword')->name('admin.password');

@@ -10,7 +10,7 @@
                 <h2><i class="fa fa-pen"></i> Edit {{$post->title}} Post</h2>
                 <a href="{{route('user.post.index')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i> Back to list</a>
             </div>
-            <form action="{{route('user.post.update', ['id' => $post->id])}}" method="post">
+            <form action="{{route('user.post.update', ['slug' => $post->slug])}}" method="post">
                 <div class="panel-body">
                     @method('PUT')
                     {{csrf_field()}}

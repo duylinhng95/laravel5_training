@@ -40,9 +40,9 @@ class PostController extends Controller
         return view('Post.list', compact('posts'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        list($post, $tags, $comments, $followed) = $this->postService->find($id);
+        list($post, $tags, $comments, $followed) = $this->postService->findBySlug($slug);
 
         return view('Post.detail', compact('post', 'tags', 'comments', 'followed'));
     }
@@ -65,18 +65,22 @@ class PostController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        list($post, $tags) = $this->postService->find($id);
+        list($post, $tags) = $this->postService->find($slug);
         $categories = $this->categoryRepository->all();
 
         return view('Post.User.edit', compact('post', 'categories', 'tags'));
     }
 
-    public function update($id, PostRequest $request)
+    public function update($slug, PostRequest $request)
     {
         $input = $request->except('_method', '_token');
-        list($status, $message) = $this->postService->update($id, $input);
+        try {
+            list($status, $message) = $this->postService->update($slug, $input);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
         if ($status) {
             return redirect()->route('user.post.index');
         } else {
@@ -85,12 +89,14 @@ class PostController extends Controller
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $id = $post->id;
         $this->postRepository->delete($id);
 
         return $this->success('Delete Post Successful');

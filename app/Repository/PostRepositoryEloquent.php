@@ -124,14 +124,14 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return array
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         /** @var Post $post */
-        $post = $this->makeModel()->withTrashed()->find($id);
+        $post = $this->findWithTrashed($slug);
 
         try {
             DB::beginTransaction();
@@ -193,14 +193,15 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $mainQuery->orderBy('created_at', 'desc')->withTrashed()->paginate($num);
     }
 
-    public function findWithTrashed($id)
+    public function findWithTrashed($slug)
     {
-        return $this->makeModel()->withTrashed()->find($id);
+        return $this->makeModel()->withTrashed()->where('slug', $slug)->first();
     }
 
-    public function restore($id)
+    public function restore($slug)
     {
-        return $this->makeModel()->withTrashed()->find($id)->restore();
+        $post = $this->findWithTrashed($slug);
+        return $post->restore();
     }
 
     public function getPopularPosts()
@@ -213,9 +214,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $this->makeModel()->orderBy('created_at', 'desc')->limit(5)->get();
     }
 
-    public function publish($id)
+    public function publish($slug)
     {
-        $post         = $this->makeModel()->find($id);
+        $post         = $post = $this->findWithTrashed($slug);
         $post->status = config('constant.post.status.available');
         $post->save();
         return [true, 'Post Publish successful', $post];

@@ -13,7 +13,7 @@ use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
 use App\Repository\PostVoteRepositoryEloquent;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
 use Illuminate\Session\Store as Session;
@@ -49,6 +49,7 @@ class PostService
     {
         $input['user_id'] = Auth::id();
         $input['status']  = config('constant.post.status.pending');
+        $input['slug']    = str_slug($input['title']);
         if (array_key_exists('files', $input)) {
             $input['content'] = $this->convertImg($input['content']);
         }
@@ -62,9 +63,9 @@ class PostService
         return $this->postRepository->findByFields('user_id', $userId);
     }
 
-    public function find($id)
+    public function find($slug)
     {
-        $post = $this->postRepository->find($id);
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
         return [$post, $tags, $comments, $followed];
     }
@@ -84,21 +85,34 @@ class PostService
         return [$tags, $comments, $followed];
     }
 
+    public function findBySlug($slug)
+    {
+        $post = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        list($tags, $comments, $followed) = $this->getPostInfo($post);
+        return [$post, $tags, $comments, $followed];
+    }
+
     /**
-     * @param $id
+     * @param $slug
      * @param $input
      * @return array
      * @throws \Exception
      */
-    public function update($id, $input)
+    public function update($slug, $input)
     {
+        $input['slug'] = str_slug($input['title']);
+        $post          = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $id            = $post->id;
+
         if (!is_null($input['files'])) {
             $input['content'] = $this->convertImg($input['content']);
         }
         $this->postRepository->update($id, $input);
         $tags = $this->postRepository->generateTagFromString($input);
         $this->postTagRepository->deleteTags($tags, $id);
+
         $this->postTagRepository->updateMany(['post_id' => $id], $tags);
+
         return [true, 'Update is success'];
     }
 
@@ -127,10 +141,13 @@ class PostService
         return in_array($post->id, $viewed);
     }
 
-    public function comment($postId, $input)
+    public function comment($slug, $input)
     {
         $userId           = Auth::id();
         $input['user_id'] = $userId;
+        $post             = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $postId           = $post->id;
+
         $input['post_id'] = $postId;
         $comment          = $this->commentRepository->create($input);
         $comment->user;
@@ -138,28 +155,34 @@ class PostService
         return $comment;
     }
 
-    public function vote($postId)
+    public function vote($slug)
     {
         $userId = Auth::id();
+        $post   = $this->postRepository->findWhereGetFirst(['slug' => $slug]);
+        $postId = $post->id;
         return $this->postVoteRepository->votePost($postId, $userId);
     }
 
-    public function findWithTrashed($id)
+    /**
+     * @param $slug
+     * @return array
+     */
+    public function findWithTrashed($slug)
     {
-        $post = $this->postRepository->findWithTrashed($id);
+        $post = $this->postRepository->findWithTrashed($slug);
         list($tags, $comments, $followed) = $this->getPostInfo($post);
 
         return [$post, $tags, $comments, $followed];
     }
 
     /**
-     * @param $id
+     * @param $slug
      * @return array
      * @throws \Google\Cloud\Core\Exception\GoogleException
      */
-    public function publish($id)
+    public function publish($slug)
     {
-        list($status, $message, $post) = $this->postRepository->publish($id);
+        list($status, $message, $post) = $this->postRepository->publish($slug);
         if ($status) {
             $this->pushNotificationForFollower($post);
         }
@@ -181,7 +204,7 @@ class PostService
                 'created_at' => microtime(true) * 1000,
                 'is_read'    => false,
                 'user_id'    => (string)$follower->user_id,
-                'href'       => 'post/' . $post->id,
+                'href'       => 'post/' . $post->slug,
                 'title'      => $post->title,
             ];
             $this->addData('notifications', $data);

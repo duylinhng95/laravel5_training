@@ -25,7 +25,7 @@
             <div class="postinfobot">
 
                 <div class="likeblock pull-left">
-                    <a class="up" id="btnVotePost" data-post-id="{{$post->id}}"
+                    <a class="up" id="btnVotePost" data-post-id="{{$post->slug}}"
                        @if(Auth::id() == $post->user->id || !Auth::check())  disabled @endif>
                         <i class="fa fa-thumbs-o-up"></i><span id="voteNum">{{count($post->votes)}}</span>
                     </a>
@@ -89,7 +89,7 @@
                                 <div class="pull-left">
                                     <button type="button" class="btn btn-primary form-btn"
                                             id="btnComment"> Post comment
-                                        <input type="hidden" name="postId" id="postId" value="{{$post->id}}">
+                                        <input type="hidden" name="postId" id="postId" value="{{$post->slug}}">
                                     </button>
                                 </div>
                                 <div class="clearfix"></div>

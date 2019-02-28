@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-4">
                 <div class="row m-b-10">
-                    <form method="post" action="{{route('admin.post.delete', ['id' => $post->id])}}" class="w-75">
+                    <form method="post" action="{{route('admin.post.delete', ['slug' => $post->slug])}}" class="w-75">
                         {!! method_field('delete') !!}
                         {{csrf_field()}}
                         <button type="submit" class="btn btn-danger w-100">Permanently Delete</button>
@@ -23,10 +23,10 @@
                 </div>
                 <div class="row">
                     @if($post->deleted_at != null)
-                        <a href="{{route('admin.post.restore', ['id' =>$post->id])}}" class="w-75 btn btn-primary">Restore
+                        <a href="{{route('admin.post.restore', ['slug' => $post->slug])}}" class="w-75 btn btn-primary">Restore
                             post</a>
                     @elseif($post->status == config('constant.post.status.pending'))
-                        <a href="{{route('admin.post.publish', ['id' =>$post->id])}}" class="w-75 btn btn-success">Publish
+                        <a href="{{route('admin.post.publish', ['slug' => $post->slug])}}" class="w-75 btn btn-success">Publish
                             post</a>
                     @endif
                 </div>

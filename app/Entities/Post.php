@@ -23,7 +23,7 @@ class Post extends Model
 
     public $statusName = ['Pending' => 0, 'Available' => 1,];
 
-    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'status'];
+    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'status', 'slug'];
 
     public function category()
     {
