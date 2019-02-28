@@ -1,5 +1,6 @@
 @extends('Post.layout')
 @section('content')
+    @include('Post.partial.left-sidebar')
     <div class="col-lg-8 col-md-8" id="indexContent">
         <!-- POST -->
         @if($posts->isEmpty())
@@ -15,12 +16,12 @@
                         <div class="avatar">
                             <img src="{{asset('images/avatar.png')}}" alt=""/>
                         </div>
-                        <div class="name">
-                            <h4></h4>
-                        </div>
                     </div>
                     <div class="posttext col-md-10">
                         <h2><a href="{{route('post.show', ['id' => $post->id])}}">{{$post->title}}</a></h2>
+                        <div class="user-name">
+                            <i class="fa fa-user"></i> {{$post->user->name}}
+                        </div>
                         {!! $post->encode_content !!}
                         <ul class="tags">
                             @foreach($post->tags as $tag)

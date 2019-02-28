@@ -56,7 +56,6 @@
         <div class="container">
             <div class="row">
                 {{--Left sidebar--}}
-                @include('Post.partial.left-sidebar')
                 {{--List post--}}
                 @yield('content')
 

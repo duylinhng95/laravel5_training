@@ -13,7 +13,6 @@ class Comment {
 			contentComment: $("#commentContent"),
 			token: $("#csrf_token"),
 			btnComment: $("#btnComment"),
-			num: $("#commentNum"),
 			commentList: $(".comment-list"),
 			error_message: $("#error_message"),
 		}
@@ -31,7 +30,6 @@ class Comment {
 		let content = this.element.contentComment
 		let token = this.element.token
 		let error_msg = this.element.error_message
-		let comment_num = this.element.num
 		this.element.btnComment.on('click', function (event) {
 			let id = event.target.children.postId.value
 			let data = {
@@ -44,20 +42,28 @@ class Comment {
 				data: data,
 				success: function (response) {
 					let res = response.data
-					let value = comment_num.html()
-					value++
 					commentList.append(
-						`<div class="author-img">
-                <img class="img-responsive img-circle" src="../../images/avatar.png" alt="author"/>
-            </div>
-            <div class="author-post like-section">
-                <h4>${res.user.name}</h4>
-                <div class="post-meta comment">
-                    <span><i class="fa fa-calendar-check-o post-meta-icon"></i> ${res.created_at}</span>
-                </div>
-                <p>${res.content}</p>
-            </div>`)
-					comment_num.text(value)
+						`<div class="post">
+                        <div class="topwrap">
+                            <div class="userinfo pull-left">
+                                <div class="avatar">
+                                    <img src='../../images/avatar.png'alt="">
+                                </div>
+                            </div>
+                            <div class="posttext pull-left">
+                                <div class="user-name">
+                                    ${res.user.name}
+                                </div>
+                                <p>${res.content}</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfobot">
+                            <div class="posted pull-left"><i class="fa fa-clock-o"></i> Commented on
+                                : ${res.created_at}</div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>`)
 					content.val('')
 				},
 				error: function (res) {
