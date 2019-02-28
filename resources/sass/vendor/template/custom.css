@@ -84,7 +84,6 @@ ul.socialicons li a:hover {
 /*--- Header ---*/
 .headernav {
     height: 70px;
-    border-bottom: 1px solid #c9cccd;
 }
 
 
@@ -95,7 +94,6 @@ ul.socialicons li a:hover {
 
 .selecttopic {
     line-height: 69px;
-    font-family: 'Open Sans Semibold', sans-serif;
     font-size: 16px;
     color: #363838;
 }
@@ -111,7 +109,6 @@ ul.socialicons li a:hover {
 .headernav .search {
     color: #363838;
     font-size: 14px;
-    font-family: 'Open Sans Light', sans-serif;
     margin-top: 16px;
     height: 38px
 }
@@ -157,7 +154,6 @@ ul.socialicons li a:hover {
     box-shadow: none;
     color: #ffffff;
     font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif;
     padding-left: 30px;
     padding-right: 30px;
     background-color: #1abc9c;
@@ -234,7 +230,6 @@ ul.socialicons li a:hover {
     min-width: 24px;
     height: 24px;
     font-size: 14px;
-    font-family: 'Open Sans Semibold', sans-serif;
     color: #ffffff;
     background-color: #cfd5d7;
     border-radius: 2px;
@@ -250,7 +245,6 @@ ul.socialicons li a:hover {
     color: #363838;
     background-color: #ffffff;
     box-shadow: 0 1px 2px #c9cccd;
-    font-family: 'Open Sans Bold', sans-serif;
     text-decoration: none;
 
 }
@@ -283,16 +277,6 @@ ul.socialicons li a:hover {
     margin-bottom: 20px;
 }
 
-.sidebarblock h3 {
-    color: #363838;
-    font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif;
-    margin: 0;
-    padding: 20px;
-
-
-}
-
 .sidebarblock .divline {
     height: 1px;
     line-height: 1px;
@@ -319,7 +303,6 @@ ul.cats {
 ul.cats li a {
     font-size: 14px;
     color: #363838;
-    font-family: 'Open Sans Light', sans-serif;
     line-height: 30px;
 }
 
@@ -327,7 +310,6 @@ ul.cats .badge {
     background-color: #bdc3c7;
     font-size: 12px;
     color: #ffffff;
-    font-family: 'Open Sans Bold', sans-serif;
     margin-top: 7px;
 }
 
@@ -336,7 +318,6 @@ ul.cats .badge {
 
     font-size: 14px;
     color: #363838;
-    font-family: 'Open Sans Light', sans-serif;
 
 }
 
@@ -368,7 +349,6 @@ table.poll {
 .progress-bar {
     font-size: 14px;
     color: #ffffff;
-    font-family: 'Open Sans Bold', sans-serif;
     line-height: 31px;
     text-align: left;
     padding-left: 10px;
@@ -438,7 +418,6 @@ td.chbox {
 
     color: #989c9e;
     font-size: 14px;
-    font-family: 'Open Sans Light', sans-serif;   
     line-height: 25px;
 }
 
@@ -464,7 +443,6 @@ td.chbox {
 .post h2 {
     color: #363838;
     font-size: 18px;
-    font-family: 'Open Sans', sans-serif;   
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -483,7 +461,6 @@ td.chbox {
     padding: 12px 17px;
     color: #ffffff;
     font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif; 
     position: relative;
 }
 
@@ -504,7 +481,6 @@ td.chbox {
     border-bottom: solid 1px #f1f1f1;
     color:#9da6aa;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif; 
     text-align: center;
     line-height: 29px;
 }
@@ -516,7 +492,6 @@ td.chbox {
 .post .time {
     color:#9da6aa;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif; 
     text-align: center;
     line-height: 29px;
 
@@ -539,7 +514,6 @@ td.chbox {
 .breadcrumbf a , .breadcrumbf {
     color: #bdc3c7;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif; 
     line-height: 62px;
 }
 
@@ -581,7 +555,6 @@ td.chbox {
     margin-left: 18px;
     font-size: 12px;
     color: #bdc3c7;
-    font-family: 'Open Sans Regular', sans-serif; 
 }
 
 .postinfobot .posted i {
@@ -649,7 +622,6 @@ a.down:hover {
     font-size: 12px;
     color: #bdc3c7;
     display: block;
-    font-family: 'Open Sans Regular', sans-serif; 
 }
 
 .textwraper textarea {
@@ -686,7 +658,6 @@ a.down:hover {
 .postinfobot label {
     color: #bdc3c7;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif; 
 
 }
 
@@ -706,7 +677,6 @@ a.down:hover {
     padding: 10px 15px;
     color: #ffffff;
     font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif; 
     border: none;
 
 }
@@ -734,7 +704,6 @@ a.down:hover {
     padding: 20px;
     font-size: 14px;
     color: #989c9e;
-    font-family: 'Open Sans Light', sans-serif; 
     margin-bottom: 20px;
     height: 50px;
 }
@@ -747,7 +716,6 @@ a.down:hover {
 
     font-size: 14px;
     color: #989c9e;
-    font-family: 'Open Sans Light', sans-serif; 
     margin-bottom: 20px;
     height: 50px;
 }
@@ -767,7 +735,6 @@ a.down:hover {
     padding: 20px;
     font-size: 14px;
     color: #989c9e;
-    font-family: 'Open Sans Light', sans-serif; 
     margin-bottom: 20px;
     height: 150px;
 }
@@ -781,7 +748,6 @@ a.down:hover {
 .newtopic p {
     font-size: 14px;
     color: #363838;
-    font-family: 'Open Sans Light', sans-serif; 
 }
 
 
@@ -851,7 +817,6 @@ a.down:hover {
 .postinfotop h2 {
     color: #363838;
     font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif; 
     padding: 20px;
     margin: 0;
     border-bottom: solid 1px #f1f1f1;
@@ -870,7 +835,6 @@ a.down:hover {
     display: inline-block;
     color: #ffffff;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif;
 
 
 }
@@ -928,7 +892,6 @@ a.down:hover {
     padding: 20px;
     color: #ffffff;
     font-size: 14px;
-    font-family: 'Open Sans Light', sans-serif;
     text-align: left;
 }
 
@@ -958,7 +921,6 @@ a.down:hover {
 .accsection .imgsize {
     color:#989c9e;
     font-size: 12px;
-    font-family: 'Open Sans Regular', sans-serif;
     margin: 10px 0;
 }
 

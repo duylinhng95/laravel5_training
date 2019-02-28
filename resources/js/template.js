@@ -1,4 +1,3 @@
-require('./bootstrap')
 require("./vendor/template/jquery.themepunch.plugins.min")
 require("./vendor/template/jquery.themepunch.revolution.min")
 import Notification from './notification.js'
@@ -20,6 +19,7 @@ class Template {
 			notificationIcon: $("#notification-icon"),
 			loginForm: $("#loginForm"),
 			registerForm: $("#registerForm"),
+			navigationBar: $(".navigation-bar .item-wrapper a"),
 		}
 		this.postPage = 1
 		this.lastPage = false
@@ -36,7 +36,7 @@ class Template {
 			this.showNotifications()
 		}
 		this.navTab()
-		this.setActiveClass()
+		this.setActiveClass(this.element.navigationBar)
 		this.validateLoginForm()
 		this.validateRegisterForm()
 	}
@@ -59,10 +59,10 @@ class Template {
 
 	checkScrollToBottom() {
 		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-		let scrollHeight = $(".wrapper").height();
+		let scrollHeight = $("body").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
 		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
+		console.log(scrolledToBottom)
 		return scrolledToBottom;
 	}
 
@@ -173,11 +173,11 @@ class Template {
 		})
 	}
 
-	setActiveClass() {
+	setActiveClass(selection) {
 		let url = location.href
-		$(".collapsed").each(function () {
-			if (this.href === url) {
-				$(this).removeClass('collapsed')
+		selection.each(function (key, value) {
+			if(value.href === url) {
+				$(value).addClass('active')
 			}
 		})
 	}

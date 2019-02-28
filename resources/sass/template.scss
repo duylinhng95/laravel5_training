@@ -9,8 +9,15 @@
 @import 'vendor/template/custom.css';
 @import 'vendor/template/style.css';
 
-body a:hover {
-  text-decoration: none
+body {
+  font-family: Open Sans,Helvetica,Arial,sans-serif !important;
+}
+body a:hover, a:focus {
+  text-decoration: none;
+}
+
+ul {
+  padding-inline-start: 0;
 }
 
 .home-icon {
@@ -66,6 +73,10 @@ a#notification-icon.active:after {
   margin-right: 20px
 }
 
+.login-section {
+  text-align: center;
+}
+
 .login-section i {
   background: #66bb6a;
   padding: 10px;
@@ -106,10 +117,12 @@ li.nav-item.active a {
   margin-top: 10px;
 }
 
-.tp-banner img {
+.tp-banner{
   display: block;
   margin: 0 auto;
-  min-height: 200px;
+  max-width: 100%;
+  height: 400px;
+  background-image: url("https://i.pinimg.com/originals/68/33/29/6833299a253e8ca441393ac9a4841b8e.jpg")
 }
 
 .post .avatar {
@@ -123,8 +136,7 @@ li.nav-item.active a {
 }
 
 .post .tags {
-  border-top: solid 1px #f1f1f1;
-  padding-top: 7px;
+  padding-inline-start: 0px;
 }
 
 li.badge a {
@@ -132,11 +144,11 @@ li.badge a {
   text-decoration: none;
 }
 
-.category .list-group a {
+.navigation-bar .list-group a {
   display: inline-block;
 }
 
-.category .list-group a:hover > li {
+.navigation-bar .list-group a:hover > li {
   background-color: #95a5a6;
   -webkit-transition: background-color 1s;
   -moz-transition: background-color 1s;
@@ -150,6 +162,16 @@ li.badge a {
   -ms-transition: color 1s;
   -o-transition: color 1s;
   transition: color 1s;
+
+  padding-bottom: 15px;
+  border-bottom: 2px solid;
+}
+
+.navigation-bar a.active li {
+  background-color: #95a5a6;
+  color: #2c3e50;
+  padding-bottom: 15px;
+  border-bottom: 2px solid;
 }
 
 .item-wrapper {
@@ -158,7 +180,7 @@ li.badge a {
   margin-top: 20px;
 }
 
-li.category-item {
+li.navigation-item {
   padding: 15px;
   background: #bdc3c7;
   text-transform: uppercase;
@@ -166,4 +188,22 @@ li.category-item {
   color: #fff;
   margin:0 20px;
   min-width:90px;
+  padding-bottom: 17px;
+}
+
+ul.notification {
+  min-width: 320px;
+  line-height: 2;
+  padding-inline-start: 20px;
+}
+
+.notification i {
+  color: #66bb6a;
+}
+
+.sidebarblock h3 {
+  color: #363838;
+  font-family: 'Open Sans Bold', sans-serif;
+  margin: 0;
+  padding: 20px;
 }

@@ -1,23 +1,30 @@
-<div class="col-md-3 col-sm-4 col-xs-6 sidebar-offcanvas" id="sidebar">
-    <!--========================== left-sidebar ================================-->
-    <div class="left-sidebar">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading" id="headingOne">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" href="{{url('/')}}" >Newest</a>
-                    </h4>
-                </div>
-            </div>
-            @foreach($categories as $category)
-            <div class="panel panel-default">
-                <div class="panel-heading" id="headingOne">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" href="{{url('?category='.$category->id)}}" >{{$category->name}}</a>
-                    </h4>
-                </div>
-            </div>
+<div class="col-lg-4 col-md-4">
+
+    <!-- Categories -->
+    <div class="sidebarblock">
+        <h3><i class="fa fa-list-ul"></i> Categories</h3>
+        <div class="divline"></div>
+        <div class="blocktxt">
+            <ul class="cats">
+                @foreach($categories as $category)
+                <a href="{{url('?category='.$category->id)}}">
+                    <li>{{$category->name}} <span class="badge pull-right">{{$category->posts ? count($category->posts) : 0}}</span></li>
+                </a>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="sidebarblock">
+        <h3><i class="fa fa-tag"></i> Popular Tags</h3>
+        <div class="divline"></div>
+        <div class="blocktxt">
+            @foreach($tags as $tag)
+            <a href="{{url('?tags='.$tag->name)}}" class="badge">{{$tag->name}}</a>
             @endforeach
         </div>
-    </div><!-- left-sidebar -->
+    </div>
+
+
 </div>

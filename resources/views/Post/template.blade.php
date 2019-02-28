@@ -11,7 +11,9 @@
 
     <!-- Custom -->
     <link rel="stylesheet" type="text/css" href="{{mix('css/template.css')}}"/>
-
+    {{--FONTS--}}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,800" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -25,38 +27,16 @@
 <div class="container-fluid">
     <!-- Slider -->
     <div class="tp-banner-container">
-        <div class="tp-banner">
-            <ul>
-                <!-- SLIDE  -->
-                <li>
-                    <!-- MAIN IMAGE -->
-                    <img src="{{asset('images/logo-slider.png')}}" alt="slidebg1" data-bgfit="contain"
-                         data-bgposition="center"
-                         data-bgrepeat="no-repeat">
-                    <!-- LAYERS -->
-                </li>
-            </ul>
-        </div>
+        <div class="tp-banner"></div>
     </div>
     <!-- //Slider -->
 
     <div class="headernav">
         <div class="container">
             <div class="row">
-                <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="">
+                <div class="col-lg-2 col-xs-3 col-sm-2 col-md-2 logo "><a href="">
                         <i class="fa fa-home fa-2x home-icon"></i></a></div>
-                <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
-                    <div class="dropdown">
-                        <a data-toggle="dropdown" href="#">Category<b class="caret"></b></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="1" href="#">Borderlands 1</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="2" href="#">Borderlands 2</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="3" href="#">Borderlands 3</a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
+                <div class="col-lg-6 search hidden-xs hidden-sm col-md-6">
                     <div class="wrap">
                         <form action="#" method="post" class="form">
                             <div class="pull-left txt"><input type="text" class="form-control"
@@ -68,12 +48,10 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+                <div class="col-lg-4 col-xs-12 col-sm-5 col-md-3 avt">
                     @if(Auth::check())
                         <div class="stnt pull-left">
-                            <form action="03_new_topic.html" method="post" class="form">
-                                <button class="btn btn-primary">Start New Topic</button>
-                            </form>
+                            <a href="{{route("user.post.create")}}" class="btn btn-primary">Start New Topic</a>
                         </div>
                         <div class="env pull-left">
                             @if(Auth::check())
@@ -83,23 +61,20 @@
                                     <input type="hidden" id="user_id" value="{{Auth::id()}}">
                                 </a>
 
-                                <ul class="dropdown-menu login-success notification" id="user_notification">
+                                <ul class="dropdown-menu dropdown-menu-right notification" id="user_notification">
 
                                 </ul>
                             @endif
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
-                                <li><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
-                            </ul>
                         </div>
                         <div class="avatar pull-left dropdown">
-                            <a data-toggle="dropdown" href="#"><img src="{{asset('images/avatar.png')}}" alt=""/><b
+                            <a data-toggle="dropdown" href="#" data-toggle="dropdown" role="button"
+                               data-display="static"><img src="{{asset('images/avatar.png')}}" alt=""/><b
                                         class="caret"></b></a>
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu user-panel">
                                 @if(Auth::user()->checkRole( 'admin'))
                                     <li><a href="{{route('admin.index')}}">Admin Panel</a></li>
                                 @endif
-                                <li><a href="{{route('user.index')}}">User Detail</a></li>
+                                <li><a href="{{route('user.index')}}">User Info</a></li>
                                 <li><a href="{{route('auth.logout')}}">Sign Out</a></li>
                             </ul>
                         </div>
@@ -107,7 +82,7 @@
                         <div class="login-section">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                data-display="static">
-                                <i class="fa fa-key fa-2x"></i></a>
+                                <i class="fa fa-key fa-2x"></i> <b>Login/Sign Up</b></a>
                             <ul class="dropdown-menu">
                                 <ul class="nav nav-tabs text-center" role="tablist">
 
@@ -217,126 +192,60 @@
     </div>
 
     <section class="content">
+        {{--Navigation Button--}}
         <div class="container-fluid">
             <div class="row category-wrapper">
-                <div class="category">
+                <div class="navigation-bar">
                     <ul class="list-group list-inline">
                         <div class="item-wrapper">
-                            <a href="#"><li class="category-item">Trading</li></a>
-                            <a href="#"><li class="category-item">Gaming</li></a>
-                            <a href="#"><li class="category-item">Laravel</li></a>
-                            <a href="#"><li class="category-item">Laravel</li></a>
+                            <a href="{{url('/test')}}">
+                                <li class="navigation-item">Newest</li>
+                            </a>
+                            <a href="#">
+                                <li class="navigation-item">Browse</li>
+                            </a>
+                            @if(Auth::check())
+                                <a href="#">
+                                    <li class="navigation-item">Follows</li>
+                                </a>
+                            @endif
                         </div>
                     </ul>
                 </div>
             </div>
         </div>
+        {{--End Navigation Button--}}
+        {{--Main Content--}}
         <div class="container">
             <div class="row">
+                {{--Left sidebar--}}
                 <div class="col-lg-4 col-md-4">
 
-                    <!-- -->
+                    <!-- Categories -->
                     <div class="sidebarblock">
-                        <h3>Categories</h3>
+                        <h3><i class="fa fa-list-ul"></i> Categories</h3>
                         <div class="divline"></div>
                         <div class="blocktxt">
                             <ul class="cats">
-                                <li><a href="#">Trading for Money <span class="badge pull-right">20</span></a></li>
-                                <li><a href="#">Vault Keys Giveway <span class="badge pull-right">10</span></a></li>
-                                <li><a href="#">Misc Guns Locations <span class="badge pull-right">50</span></a></li>
-                                <li><a href="#">Looking for Players <span class="badge pull-right">36</span></a></li>
-                                <li><a href="#">Stupid Bugs &amp; Solves <span class="badge pull-right">41</span></a>
-                                </li>
-                                <li><a href="#">Video &amp; Audio Drivers <span class="badge pull-right">11</span></a>
-                                </li>
-                                <li><a href="#">2K Official Forums <span class="badge pull-right">5</span></a></li>
+                                <a href="#">
+                                    <li>Trading for Money <span class="badge pull-right">20</span></li>
+                                </a>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- -->
+                    <!-- Tags -->
                     <div class="sidebarblock">
-                        <h3>Poll of the Week</h3>
+                        <h3><i class="fa fa-tag"></i> Popular Tags</h3>
                         <div class="divline"></div>
                         <div class="blocktxt">
-                            <p>Which game you are playing this week?</p>
-                            <form action="#" method="post" class="form">
-                                <table class="poll">
-                                    <tr>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar color1" role="progressbar" aria-valuenow="40"
-                                                     aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                                    Call of Duty Ghosts
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="chbox">
-                                            <input id="opt1" type="radio" name="opt" value="1">
-                                            <label for="opt1"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar color2" role="progressbar" aria-valuenow="40"
-                                                     aria-valuemin="0" aria-valuemax="100" style="width: 63%">
-                                                    Titanfall
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="chbox">
-                                            <input id="opt2" type="radio" name="opt" value="2" checked>
-                                            <label for="opt2"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar color3" role="progressbar" aria-valuenow="40"
-                                                     aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-                                                    Battlefield 4
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="chbox">
-                                            <input id="opt3" type="radio" name="opt" value="3">
-                                            <label for="opt3"></label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                            <p class="smal">Voting ends on 19th of October</p>
-                        </div>
-                    </div>
-
-                    <!-- -->
-                    <div class="sidebarblock">
-                        <h3>My Active Threads</h3>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">This Dock Turns Your iPhone Into a Bedside Lamp</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Who Wins in the Battle for Power on the Internet?</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Sony QX10: A Funky, Overpriced Lens Camera for Your Smartphone</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">FedEx Simplifies Shipping for Small Businesses</a>
-                        </div>
-                        <div class="divline"></div>
-                        <div class="blocktxt">
-                            <a href="#">Loud and Brave: Saudi Women Set to Protest Driving Ban</a>
+                            <a href="#" class="badge">ABC</a>
                         </div>
                     </div>
 
 
                 </div>
+                {{--List post--}}
                 <div class="col-lg-8 col-md-8">
                     <!-- POST -->
                     <div class="post row">
@@ -352,16 +261,14 @@
                                     <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
                                         that's
                                         your prerogative.</p>
+                                    <ul class="tags">
+                                        <li class="badge">Gaming</li>
+                                        <li class="badge">Studio</li>
+                                        <li class="badge">Keyboard</li>
+                                        <li class="badge">PHP</li>
+                                        <li class="badge">Laravel</li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <ul class="tags">
-                                    <li class="badge">Gaming</li>
-                                    <li class="badge">Studio</li>
-                                    <li class="badge">Keyboard</li>
-                                    <li class="badge">PHP</li>
-                                    <li class="badge">Laravel</li>
-                                </ul>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -393,15 +300,13 @@
                                     <p>It's one thing to subject yourself to a Halloween costume mishap because, hey,
                                         that's
                                         your prerogative.</p>
+                                    <ul class="tags">
+                                        <li class="badge"><a href="#">Gaming</a></li>
+                                        <li class="badge"><a>Gaming</a></li>
+                                        <li class="badge"><a>Gaming</a></li>
+                                        <li class="badge"><a>Gaming</a></li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <ul class="tags">
-                                    <li class="badge"><a href="#">Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                    <li class="badge"><a>Gaming</a></li>
-                                </ul>
                             </div>
                             <div class="clearfix"></div>
                         </div>

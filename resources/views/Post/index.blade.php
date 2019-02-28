@@ -1,41 +1,50 @@
 @extends('Post.layout')
-@section('search')
-    @include('Post.search')
-@endsection
-@push('header')
-    @include('Post.partial.header')
-@endpush
-@push('left-sidebar')
-    @include('Post.partial.left-sidebar')
-@endpush
 @section('content')
-    <div class="col-md-6 col-sm-8 col-xs-12" >
-        <div class="main-content" id="indexContent">
-            @if($posts->isEmpty())
-                <div class="text-center">
-                    <h4>There are no post can be found</h4>
-                </div>
-            @endif
-            @foreach($posts as $post)
-                <article>
-                    <a href="{{route('post.show', ['id' => $post->id])}}"><h2 class="post-title">{{$post->title}}</h2></a>
-                    @foreach($post->tags as $tag)
-                        <a href="?tags={{$tag->name}}" class="btn btn-default btn-sm btn-category"
-                           type="submit">{{$tag->name}}</a>
-                    @endforeach
-                    <div class="post-meta">
-                        <span><i class="fa fa-eye post-meta-icon"></i> {{$post->view}} </span>
-                        <span><i class="fa fa-comments post-meta-icon"></i> {{$post->count_comments}} </span>
-                        <span><i class="fa fa-calendar-check-o post-meta-icon"></i> {{formatDate($post->created_at)}} </span>
+    <div class="col-lg-8 col-md-8" id="indexContent">
+        <!-- POST -->
+        @if($posts->isEmpty())
+            <div class="text-center">
+                <h4>There are no post can be found</h4>
+            </div>
+        @endif
+        @foreach($posts as $post)
+        <div class="post row">
+            <div class="wrap-ut col-md-8">
+                <div class="row">
+                    <div class="userinfo col-md-2">
+                        <div class="avatar">
+                            <img src="{{asset('images/avatar.png')}}" alt=""/>
+                        </div>
+                        <div class="name">
+                            <h4></h4>
+                        </div>
                     </div>
-                    <div class="post-content">
+                    <div class="posttext col-md-10">
+                        <h2><a href="{{route('post.show', ['id' => $post->id])}}">{{$post->title}}</a></h2>
                         {!! $post->encode_content !!}
+                        <ul class="tags">
+                            @foreach($post->tags as $tag)
+                            <a href="?tags={{$tag->name}}"><li class="badge">{{$tag->name}}</li></a>
+                            @endforeach
+                        </ul>
+
                     </div>
-                </article>
-            @endforeach
-        </div><!-- main-content -->
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="postinfo pull-left">
+                <div class="comments">
+                    <div class="commentbg">
+                        {{$post->count_comments}}
+                        <div class="mark"></div>
+                    </div>
+
+                </div>
+                <div class="views"><i class="fa fa-eye"></i> {{$post->view}}</div>
+                <div class="time"><i class="fa fa-clock-o"></i> {{formatDate($post->created_at)}}</div>
+            </div>
+            <div class="clearfix"></div>
+        </div><!-- POST -->
+        @endforeach
     </div>
 @endsection
-@push('right-sidebar')
-    @include('Post.partial.right-sidebar')
-@endpush
