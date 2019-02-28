@@ -25,6 +25,7 @@ ul {
   position: relative;
   top: 2vh;
   left: 45%;
+  color: #66bb6a;
 }
 
 .logo a:hover {
@@ -182,13 +183,14 @@ li.badge a {
 
 li.navigation-item {
   padding: 15px;
-  background: #bdc3c7;
+  background: #487eb0;
   text-transform: uppercase;
   font-weight: 900;
   color: #fff;
   margin:0 20px;
   min-width:90px;
   padding-bottom: 17px;
+  border-radius: 20px;
 }
 
 ul.notification {

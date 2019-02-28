@@ -30,7 +30,7 @@
 
     <section class="content">
         {{--Navigation Button--}}
-        <div class="container-fluid">
+        <div class="container">
             <div class="row category-wrapper">
                 <div class="navigation-bar">
                     <ul class="list-group list-inline">

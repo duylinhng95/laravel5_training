@@ -84,12 +84,7 @@ ul.socialicons li a:hover {
 /*--- Header ---*/
 .headernav {
     height: 70px;
-}
-
-
-.content {
-    background-color: #ecf0f1;
-    border-top: solid 1px #e0e4e5;
+    box-shadow: 0 10px 50px -2px #ccc;
 }
 
 .selecttopic {
@@ -135,9 +130,9 @@ ul.socialicons li a:hover {
 
 
 .headernav .search button {
-    border: solid 1px #697683;
+    border: solid 1px #66bb6a;
     box-shadow: none;
-    background-color: #697683;
+    background-color: #66bb6a;
     color: #ffffff;
     font-size: 18px;
 }
@@ -273,7 +268,7 @@ ul.socialicons li a:hover {
 .sidebarblock {
     background-color: #ffffff;
     border-radius: 2px;
-    box-shadow: 0 1px 2px #c9cccd;
+    box-shadow: 0 1px 50px #c9cccd;
     margin-bottom: 20px;
 }
 
@@ -397,7 +392,7 @@ td.chbox {
     background-color: #ffffff;
 
     border-radius: 2px;
-    box-shadow: 0 1px 2px #c9cccd;
+    box-shadow: 0 1px 50px #ccc;
     margin-bottom: 20px;
 }
 
