@@ -11,7 +11,7 @@
             <div class="col-lg-6 search hidden-xs hidden-sm col-md-6">
                 <div class="wrap">
                         <div class="pull-left txt">
-                            <input type="text" class="form-control" id="keywords" placeholder="What do you need help with?">
+                            <input type="text" class="form-control" id="keywordsPost" placeholder="What do you need help with?">
                         </div>
                         <div class="pull-right">
                             <button class=" btn btn-info btn-lg" id="btnSearchPost"><i class="fa fa-search"></i></button>

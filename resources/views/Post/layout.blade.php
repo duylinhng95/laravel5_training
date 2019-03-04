@@ -41,6 +41,9 @@
                             <a href="#">
                                 <li class="navigation-item">Browse</li>
                             </a>
+                            <a href="{{route('user.list')}}">
+                                <li class="navigation-item">Users</li>
+                            </a>
                             @if(Auth::check())
                                 <a href="#">
                                     <li class="navigation-item">Follows</li>

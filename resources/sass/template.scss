@@ -193,6 +193,7 @@ li.navigation-item {
   min-width:90px;
   padding-bottom: 17px;
   border-radius: 20px;
+  text-align: center;
 }
 
 ul.notification {
@@ -343,4 +344,76 @@ a.change-avatar:hover > .avatar-img {
 
 ul.cats .badge {
   background-color: #487eb0;
+}
+
+.search-section button {
+  border: solid 1px #487eb0;
+  box-shadow: none;
+  background-color: #487eb0;
+  color: #ffffff;
+  padding: 8px;
+  font-size: 18px;
+  width: 10%;
+}
+
+.search-section input {
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 80%;
+  /* margin: 0; */
+  vertical-align: middle;
+}
+
+.search-section {
+  margin-bottom: 15px;
+}
+
+.user-panel {
+  height: 21vh;
+  padding: 20px;
+}
+
+.author-name {
+  padding: 2px;
+  margin-bottom: 5px;
+}
+
+.author-name h3 {
+  text-align: center;
+  margin: 0;
+}
+
+.author-img img {
+  vertical-align: middle;
+  margin: 0 auto;
+  display: block;
+  width: 90px;
+  border-radius: 50%;
+  border: 1px solid #487eb0;
+  padding: 5px;
+}
+
+.author-info {
+  vertical-align: middle;
+  line-height: 30px;
+  list-style: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+  border-left: 1px solid #ccc;
+  padding-left: 20px;
+  box-shadow: 1px 0px 10px #ccc;
+}
+
+.section-follow button {
+  width: 100px;
+}
+
+.section-follow button i {
+  margin-right: 5px;
+}
+
+.section-follow {
+  text-align: center;
 }
