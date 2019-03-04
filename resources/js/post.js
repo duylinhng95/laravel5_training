@@ -1,6 +1,7 @@
 require('./bootstrap.js')
 window.Summernote = require('summernote/dist/summernote');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
+require('./vendor/summernote/summernote-ext-highlight')
 import Comment from './comment.js'
 import Follow from './follow.js'
 
@@ -14,7 +15,18 @@ class Post {
 	init() {
 		this.config()
 		this.listen()
-		$('#texteditor').summernote({height: 300})
+		$('#texteditor').summernote({
+			height: 300,
+			prettifyHtml:false,
+			toolbar:[
+				['style', ['style']],
+				['font', ['bold', 'italic', 'underline', 'highlight']],
+				['font', ['fontsize', 'color', 'superscript', 'subscript']],
+				['para', ['paragraph']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['undo', 'fullscreen']]
+			],
+		})
 		$('#tagsinput').tagsinput({
 			confirmKeys: [188, 32]
 		});

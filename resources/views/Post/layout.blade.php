@@ -35,7 +35,7 @@
                 <div class="navigation-bar">
                     <ul class="list-group list-inline">
                         <div class="item-wrapper">
-                            <a href="{{url('/test')}}">
+                            <a href="{{route('post.index')}}">
                                 <li class="navigation-item">Newest</li>
                             </a>
                             <a href="#">

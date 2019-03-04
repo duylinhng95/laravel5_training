@@ -104,4 +104,3 @@
     </div>
     @include('Post.partial.right-sidebar')
 @endsection
-<script src="{{mix('js/comment.js')}}"></script>

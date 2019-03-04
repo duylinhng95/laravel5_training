@@ -25,7 +25,7 @@ ul {
   position: relative;
   top: 2vh;
   left: 45%;
-  color: #66bb6a;
+  color: #487eb0;
 }
 
 .logo a:hover {
@@ -70,16 +70,12 @@ a#notification-icon.active:after {
 .login-social i {
   display: inline-block;
   border-radius: 100%;
-  background: #66bb6a;
+  background: #487eb0;
   margin-right: 20px
 }
 
-.login-section {
-  text-align: center;
-}
-
 .login-section i {
-  background: #66bb6a;
+  background: #487eb0;
   padding: 10px;
   border-radius: 50%;
   font-size: 2rem;
@@ -92,6 +88,11 @@ a#notification-icon.active:after {
   line-height: 20px;
   top: 50px;
 }
+
+.login-section b {
+  margin-left: 15px;
+}
+
 
 .login-area {
   margin-top: 15px;
@@ -200,7 +201,7 @@ ul.notification {
 }
 
 .notification i {
-  color: #66bb6a;
+  color: #487eb0;
 }
 
 .sidebarblock h3 {
@@ -248,4 +249,8 @@ button#btnComment {
 
 .notify-success {
   border: dashed green
+}
+
+.wrap {
+  height: 46px
 }

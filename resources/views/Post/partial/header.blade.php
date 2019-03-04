@@ -6,7 +6,7 @@
 <div class="headernav">
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-xs-3 col-sm-2 col-md-2 logo "><a href="">
+            <div class="col-lg-2 col-xs-3 col-sm-2 col-md-2 logo "><a href="{{route('post.index')}}">
                     <i class="fa fa-home fa-2x home-icon"></i></a></div>
             <div class="col-lg-6 search hidden-xs hidden-sm col-md-6">
                 <div class="wrap">

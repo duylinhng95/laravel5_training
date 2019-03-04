@@ -42,9 +42,12 @@ class Template {
 		this.setActiveClass(this.element.navigationBar)
 		this.validateLoginForm()
 		this.validateRegisterForm()
-		this.onScrollToFixSection()
-		this.replyBtnClick()
-		this.commentFormHover()
+		if(this.element.rightSideBar.length !== 0)
+		{
+			this.onScrollToFixSection()
+			this.replyBtnClick()
+			this.commentFormHover()
+		}
 	}
 
 	loadArticle(page) {
