@@ -101,6 +101,14 @@ class Template {
 			.onSnapshot(function (querySnapshot) {
 				self.element.notification.children().remove()
 				let isAllRead = true
+				if(querySnapshot.empty === true) {
+					let content = `<div class="row">
+								            <div class="col-md-12 text-left notify-element">								            										            		
+								                <div class="notify-title">There is no notification currently</div>
+								            </div>
+								        </div>`
+					self.element.notification.append(content)
+				}
 				querySnapshot.forEach(function (doc) {
 					let res = doc.data()
 					let is_read = `<i class="fas fa-circle fa-xs"></i>`
