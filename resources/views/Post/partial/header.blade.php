@@ -41,7 +41,7 @@
                         <a data-toggle="dropdown" href="#" data-toggle="dropdown" role="button"
                            data-display="static"><img src="{{asset('images/avatar.png')}}" alt=""/><b
                                     class="caret"></b></a>
-                        <ul class="dropdown-menu user-panel">
+                        <ul class="dropdown-menu">
                             @if(Auth::user()->checkRole( 'admin'))
                                 <li><a href="{{route('admin.index')}}">Admin Panel</a></li>
                             @endif

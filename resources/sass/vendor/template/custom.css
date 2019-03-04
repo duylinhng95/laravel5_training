@@ -159,11 +159,7 @@ ul.socialicons li a:hover {
 .avt .btn-primary:active, 
 .avt .btn-primary.active{
     background-color: #1abc9c;
-
-
-    border: none;
     box-shadow: none;
-
 }
 
 .env {
@@ -667,21 +663,14 @@ a.down:hover {
 
 .btn-primary {
     background-color: #1abc9c;
-    box-shadow: none;
-    border-radius: 2px;
-    padding: 10px 15px;
-    color: #ffffff;
-    font-size: 14px;
-    border: none;
-
+    border-color: #1abc9c;
 }
 
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-    border: none;
     background-color: #20e1bb;
-    box-shadow: none;
+    border-color: #1abc9c;
 }
 
 

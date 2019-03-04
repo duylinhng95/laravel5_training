@@ -235,15 +235,6 @@ button#btnComment {
   display: none;
 }
 
-.btn-danger {
-  box-shadow: none;
-  border-radius: 2px;
-  padding: 10px 15px;
-  color: #ffffff;
-  font-size: 14px;
-  border: none;
-}
-
 .cats .btn {
   width: 100%;
   margin-bottom: 15px
@@ -308,6 +299,7 @@ ul.activity-list {
 
 .activity-list a.btn-primary{
   background: #487eb0;
+  border-color: #487eb0;
   padding-bottom: 14px;
 }
 .activity-list a.btn-primary:hover{
@@ -420,4 +412,19 @@ ul.cats .badge {
 
 .comment-section {
   box-shadow: none;
+}
+
+i.fa.fa-edit.edit-btn {
+  position: absolute;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 50px;
+  width: 100%;
+  line-height: 4;
+  opacity: 0;
+}
+
+a.change-avatar:hover > .edit-btn {
+  opacity: 1;
 }

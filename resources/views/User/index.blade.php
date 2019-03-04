@@ -19,6 +19,7 @@
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-6">
                             <a href="#" class="change-avatar">
+                                <i class="fa fa-edit edit-btn"></i>
                                 <img class="avatar-img"
                                      src="{{asset('/images/avatar.png')}}"
                                      alt="My Profile Img">
