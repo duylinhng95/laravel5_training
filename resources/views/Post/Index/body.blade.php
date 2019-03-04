@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="posttext col-md-10">
-                    <h2><a href="{{route('post.show', ['id' => $post->id])}}">{{$post->title}}</a></h2>
+                    <h2><a href="{{route('post.show', ['slug' => $post->slug])}}">{{$post->title}}</a></h2>
                     {!! $post->encode_content !!}
                     <ul class="tags">
                         @foreach($post->tags as $tag)

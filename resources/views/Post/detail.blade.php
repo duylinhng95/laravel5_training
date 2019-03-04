@@ -18,7 +18,9 @@
                                type="submit">{{$tag->name}}</a>
                         @endforeach
                     </div>
-                    {!! $post->content !!}
+                    <div class="detail-content">
+                        {!! $post->content !!}
+                    </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
