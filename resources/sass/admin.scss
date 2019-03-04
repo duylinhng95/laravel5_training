@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
@@ -6,8 +7,6 @@
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '../fonts/circular-std/style.css';
 @import '~toastr/toastr.scss';
-
-@charset "UTF-8";
 /**
  * Summary:
  *
@@ -3387,7 +3386,7 @@ btn-link
   display: flex;
   -webkit-box-align: start;
   -ms-flex-align: start;
-  align-items: start;
+  align-items: flex-start;
   padding: .5rem;
   opacity: 0;
   z-index: 2;
@@ -5541,7 +5540,7 @@ Vertical Timeline - by CodyHouse.co
   background: #fafafa;
   background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
   background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
-  background: linear-gradient(top, #fafafa 0%, #eee 100%);
+  background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
   -webkit-border-radius: 3px;
   border-radius: 3px;
   box-sizing: border-box;
@@ -5575,7 +5574,7 @@ Vertical Timeline - by CodyHouse.co
   background: #ddd;
   background: -webkit-linear-gradient(top, #ddd 0%, #bbb 100%);
   background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
-  background: linear-gradient(top, #ddd 0%, #bbb 100%);
+  background: linear-gradient(to bottom, #ddd 0%, #bbb 100%);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }

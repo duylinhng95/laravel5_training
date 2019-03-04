@@ -1,73 +1,62 @@
 @extends('Post.layout')
-@section('title')
-    User Detail
-@endsection
-@section('search')
-    @include('User.search')
-@endsection
-@push('header')
-    @include('Post.partial.header')
-@endpush
 @section('content')
-    @if (session('error'))
-        <div class="panel-heading">
-            <div class="alert alert-danger">
-                {{session('error')}}
-            </div>
-        </div>
-    @endif
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Information</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <th>Name:</th>
-                        <td>{{$user->name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Email:</th>
-                        <td>{{$user->email}}</td>
-                    </tr>
-                    <tr>
-                        <th>Follows:</th>
-                        <td>{{count($user->followings)}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <a href="{{route('user.post.index')}}" class="btn btn-success d-block">Post List</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Followers</h4>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($user->follows as $index => $follow)
-                        <tr>
-                            <td>
-                                {{++$index}}
-                            </td>
-                            <td>
-                                {{$follow->follower->name}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+    <div class="col-md-12 col-lg-12">
+        <div class="panel">
+            @if (session('error'))
+                <div class="panel-heading">
+                    <div class="alert alert-danger">
+                        {{session('error')}}
+                    </div>
+                </div>
+            @endif
+            <div class="panel-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 heading">
+                            <h3>My Profile</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <a href="#" class="change-avatar">
+                                <i class="fa fa-edit edit-btn"></i>
+                                <img class="avatar-img"
+                                     src="{{asset('/images/avatar.png')}}"
+                                     alt="My Profile Img">
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-6">
+                            <div class="user-info">
+                                <ul class="info-list">
+                                    <li><h3>{{$user->name}}</h3></li>
+                                    <li><i class="fa fa-at"><span> Email</span> </i>
+                                        <p>{{$user->email}}</p></li>
+                                    <li><i class="fa fa-angle-double-right"><span> Follows</span></i>
+                                        <p>{{count($user->followings)}}</p></li>
+                                    <li><i class="fa fa-book"><span> Post</span></i>
+                                        <p>{{count($user->posts)}}</p></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-12">
+                            <div class="user-activity">
+                                <ul class="activity-list">
+                                    <li>
+                                        <a href="#" class="btn btn-primary"> Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-primary"> Edit Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('user.post.index')}}" class="btn btn-primary"> Post Management</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
