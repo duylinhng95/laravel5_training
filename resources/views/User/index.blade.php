@@ -52,9 +52,6 @@
                                     <li>
                                         <a href="{{route('user.post.index')}}" class="btn btn-primary"> Post Management</a>
                                     </li>
-                                    <li>
-                                        <a href="{{route('auth.logout')}}" class="btn btn-danger"> Sign Out</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>

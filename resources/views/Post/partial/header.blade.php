@@ -10,13 +10,14 @@
                     <i class="fa fa-home fa-2x home-icon"></i></a></div>
             <div class="col-lg-6 search hidden-xs hidden-sm col-md-6">
                 <div class="wrap">
-                        <div class="pull-left txt">
-                            <input type="text" class="form-control" id="keywordsPost" placeholder="What do you need help with?">
-                        </div>
-                        <div class="pull-right">
-                            <button class=" btn btn-info btn-lg" id="btnSearchPost"><i class="fa fa-search"></i></button>
-                        </div>
-                        <div class="clearfix"></div>
+                    <div class="pull-left txt">
+                        <input type="text" class="form-control" id="keywordsPost"
+                               placeholder="What do you need help with?">
+                    </div>
+                    <div class="pull-right">
+                        <button class=" btn btn-info btn-lg" id="btnSearchPost"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12 col-sm-5 col-md-3 avt">
@@ -25,17 +26,15 @@
                         <a href="{{route("user.post.create")}}" class="btn btn-primary">Start New Topic</a>
                     </div>
                     <div class="env pull-left">
-                        @if(Auth::check())
-                            <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
-                               data-toggle="dropdown" role="button" data-display="static">
-                                <i class="fa fa-bell author-icon"></i>
-                                <input type="hidden" id="user_id" value="{{Auth::id()}}">
-                            </a>
+                        <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
+                           data-toggle="dropdown" role="button" data-display="static">
+                            <i class="fa fa-bell author-icon"></i>
+                            <input type="hidden" id="user_id" value="{{Auth::id()}}">
+                        </a>
 
-                            <ul class="dropdown-menu dropdown-menu-right notification" id="user_notification">
+                        <ul class="dropdown-menu dropdown-menu-right notification" id="user_notification">
 
-                            </ul>
-                        @endif
+                        </ul>
                     </div>
                     <div class="avatar pull-left dropdown">
                         <a data-toggle="dropdown" href="#" data-toggle="dropdown" role="button"
@@ -48,6 +47,9 @@
                             <li><a href="{{route('user.index')}}">User Info</a></li>
                             <li><a href="{{route('auth.logout')}}">Sign Out</a></li>
                         </ul>
+                    </div>
+                    <div class="welcome">
+                        Hi, {{Auth::user()->first_name}}
                     </div>
                 @else
                     <div class="login-section">
