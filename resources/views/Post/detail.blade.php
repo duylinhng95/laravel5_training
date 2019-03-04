@@ -37,7 +37,7 @@
             </div>
         </div><!-- POST Detail-->
         {{--Comment Section--}}
-        <div class="panel">
+        <div class="panel comment-section">
             <div class="comment-body ">
                 <div class="comment-list">
                     @foreach($post->comments as $comment)
