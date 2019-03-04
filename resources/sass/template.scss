@@ -227,3 +227,25 @@ ul.notification {
 button#btnComment {
   margin-bottom: 5px;
 }
+
+.d-none {
+  display: none;
+}
+
+.btn-danger {
+  box-shadow: none;
+  border-radius: 2px;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+}
+
+.cats .btn {
+  width: 100%;
+  margin-bottom: 15px
+}
+
+.notify-success {
+  border: dashed green
+}

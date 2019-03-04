@@ -20,6 +20,9 @@ class Template {
 			loginForm: $("#loginForm"),
 			registerForm: $("#registerForm"),
 			navigationBar: $(".navigation-bar .item-wrapper a"),
+			btnReply: $("#btn-redirect"),
+			rightSideBar: $(".right-sidebar"),
+			commentForm: $("#comment-form"),
 		}
 		this.postPage = 1
 		this.lastPage = false
@@ -39,6 +42,9 @@ class Template {
 		this.setActiveClass(this.element.navigationBar)
 		this.validateLoginForm()
 		this.validateRegisterForm()
+		this.onScrollToFixSection()
+		this.replyBtnClick()
+		this.commentFormHover()
 	}
 
 	loadArticle(page) {
@@ -62,7 +68,6 @@ class Template {
 		let scrollHeight = $("body").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
 		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-		console.log(scrolledToBottom)
 		return scrolledToBottom;
 	}
 
@@ -176,7 +181,7 @@ class Template {
 	setActiveClass(selection) {
 		let url = location.href
 		selection.each(function (key, value) {
-			if(value.href === url) {
+			if (value.href === url) {
 				$(value).addClass('active')
 			}
 		})
@@ -224,7 +229,7 @@ class Template {
 				})
 			}
 		})
-		$('#loginForm button[type="submit"]').click(function(){
+		$('#loginForm button[type="submit"]').click(function () {
 			return $('#loginForm').valid();
 		})
 	}
@@ -288,8 +293,44 @@ class Template {
 				})
 			}
 		})
-		$('#registerForm button[type="submit"]').click(function(){
+		$('#registerForm button[type="submit"]').click(function () {
 			return $('#registerForm').valid();
+		})
+	}
+
+	onScrollToFixSection() {
+		let fixTop = this.element.rightSideBar.offset().top
+		let width = this.element.rightSideBar.width() + 30
+		let marginLeft = $(".detail-post").width() + 30
+		$(window).scroll(function () {
+			var currentScroll = $(window).scrollTop()
+			if (currentScroll >= fixTop) {
+				$(".right-sidebar").css({
+					'top': '10px',
+					'width': width,
+					'margin-left': marginLeft,
+					'position': 'fixed'
+				})
+			} else {
+				$(".right-sidebar").removeAttr("style")
+			}
+
+		});
+	}
+
+	replyBtnClick() {
+		let btnReply = this.element.btnReply
+		let commentForm = this.element.commentForm
+		btnReply.click(function () {
+			commentForm.addClass('notify-success')
+		})
+	}
+
+	commentFormHover() {
+		let commentForm = this.element.commentForm
+
+		commentForm.mouseover(function () {
+			commentForm.removeClass('notify-success')
 		})
 	}
 }

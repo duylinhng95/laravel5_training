@@ -1,6 +1,6 @@
 @extends('Post.layout')
 @section('content')
-    <div class="col-lg-8 col-md-8">
+    <div class="col-lg-8 col-md-8 detail-post">
 
         <!-- POST -->
         <div class="post">
@@ -66,7 +66,7 @@
                 </div>
                 {{--Comment Form--}}
                 @if(Auth::check())
-                    <div class="post">
+                    <div class="post" id="comment-form">
                         <div class="topwrap">
                             <div class="userinfo pull-left">
                                 <div class="avatar">
