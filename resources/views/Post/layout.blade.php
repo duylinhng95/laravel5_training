@@ -10,7 +10,7 @@
     <link href="{{asset('css/vendor/user/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom -->
-    <link rel="stylesheet" type="text/css" href="{{mix('css/template.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{mix('css/homepage.css')}}"/>
     {{--FONTS--}}
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli:400,800" rel="stylesheet">
@@ -70,7 +70,7 @@
 </div>
 <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
 <script src="{{mix('/js/post.js')}}"></script>
-<script src="{{mix('/js/template.js')}}"></script>
+<script src="{{mix('/js/homepage.js')}}"></script>
 <!-- END REVOLUTION SLIDER -->
 </body>
 </html>

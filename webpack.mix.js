@@ -17,12 +17,10 @@ mix.js('resources/js/post.js', 'public/js/post.js')
 	 .js('resources/js/category.js', 'public/js/category.js')
 	 .js('resources/js/comment.js', 'public/js/comment.js')
 	 .js('resources/js/homepage.js', 'public/js/homepage.js')
-	 .js('resources/js/template.js', 'public/js/template.js')
 	 .sass('resources/sass/app.scss', 'public/css')
 	 .sass('resources/sass/admin.scss', 'public/css')
 	 .sass('resources/sass/post.scss', 'public/css')
 	 .sass('resources/sass/homepage.scss', 'public/css')
-	 .sass('resources/sass/template.scss', 'public/css')
 	 .version()
 
 mix.copyDirectory('resources/images', 'public/images');
