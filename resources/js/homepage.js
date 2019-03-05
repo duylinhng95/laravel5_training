@@ -33,7 +33,6 @@ class Homepage {
 		this.currentURL = location.search
 		this.notification = new Notification()
 		this.userId = this.element.loginStatus.data('user-id')
-		this.userInterest = 'abc'
 	}
 
 	listen() {
@@ -347,49 +346,48 @@ class Homepage {
 		})
 	}
 
-	getInterestTopic(getResponse) {
+	getInterestTopic() {
 		let userId = this.userId
+		let self = this
 		return $.ajax({
 			url: this.apiURL + '/get-interest',
 			type: 'get',
 			data: {user_id: userId},
 			success: function(response)
 			{
-				getResponse(response.data)
+				self.getResponse(response.data)
 			}
 		})
 	}
 
 	getRecommendPost() {
 		let loginStatus = this.element.loginStatus.val()
-		let self = this
 		if (loginStatus === 'true') {
-			this.getInterestTopic(function(response) {
-				let data = response
-				if (data === null)
-				{
-					data =JSON.parse(window.localStorage.getItem('interest'))
-				}
-				$.ajax({
-					url: self.apiURL + '/load-interest-post',
-					type: 'get',
-					data: data,
-					success: function (response) {
-						let data =response.data
-						$(".recommend-section").append(data.view)
-					}
-				})
-			})
+			this.getInterestTopic()
 		} else {
-			$.ajax({
-				url: self.apiURL + '/load-interest-post',
-				type: 'get',
-				success: function (response) {
-					let data =response.data
-					$(".recommend-section").append(data.view)
-				}
-			})
+			this.requestAjaxInterest()
 		}
+	}
+
+	getResponse (responseData) {
+		let data = responseData
+		if (data === null)
+		{
+			data =JSON.parse(window.localStorage.getItem('interest'))
+		}
+		self.requestAjaxInterest(data)
+	}
+
+	requestAjaxInterest(data = null) {
+		$.ajax({
+			url: this.apiURL + '/load-interest-post',
+			type: 'get',
+			data: data,
+			success: function (response) {
+				let data =response.data
+				$(".recommend-section").append(data.view)
+			}
+		})
 	}
 }
 
