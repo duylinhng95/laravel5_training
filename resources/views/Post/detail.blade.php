@@ -12,9 +12,10 @@
                 </div>
                 <div class="posttext pull-left">
                     <h2>{{$post->title}}</h2>
-                    <div class="tags">
+                    <input type="hidden" value="{{$post->category->name}}" id="categoryName">
+                    <div class="tags" id="postTag">
                         @foreach($post->tags as $tag)
-                            <a href="{{url('/?tags='.$tag->name)}}" class="btn btn-default btn-sm badge "
+                            <a href="{{url('/?tags='.$tag->name)}}" class="btn btn-default btn-sm badge"
                                type="submit">{{$tag->name}}</a>
                         @endforeach
                     </div>
@@ -106,3 +107,6 @@
     </div>
     @include('Post.partial.right-sidebar')
 @endsection
+@push('script')
+    <script src="{{mix('js/interest.js')}}"></script>
+@endpush

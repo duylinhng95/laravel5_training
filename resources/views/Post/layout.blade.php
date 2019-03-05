@@ -71,6 +71,7 @@
 <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
 <script src="{{mix('/js/post.js')}}"></script>
 <script src="{{mix('/js/homepage.js')}}"></script>
+@stack('script')
 <!-- END REVOLUTION SLIDER -->
 </body>
 </html>
