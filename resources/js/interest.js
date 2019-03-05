@@ -13,6 +13,8 @@ class Interest {
 			categoryName: $("#categoryName"),
 			postTag: $("#postTag"),
 			loginStatus: $("#loginStatus"),
+			apiUrl: location.origin + '/api',
+
 		}
 	}
 
@@ -50,15 +52,7 @@ class Interest {
 		let storageData = JSON.parse(myStorage.getItem('interest'))
 
 		if (storageData != null) {
-			if (!storageData.category.includes(data.category)) {
-				storageData.category.push(data.category)
-			}
-
-			data.tags.forEach(function (value, key) {
-				if (!storageData.tags.includes(value)) {
-					storageData.tags.push(value)
-				}
-			})
+			storageData = this.setStorageDataArray(storageData, data)
 		} else {
 			storageData = {}
 			storageData.category = [data.category]
@@ -66,6 +60,36 @@ class Interest {
 		}
 
 		myStorage.setItem('interest', JSON.stringify(storageData))
+		if (loginStatus === 'true') {
+			let userId = this.element.loginStatus.data('user-id')
+			this.uploadInterest(storageData, userId)
+		}
+	}
+
+	setStorageDataArray(storageData, data) {
+		if (!storageData.category.includes(data.category)) {
+			storageData.category.push(data.category)
+		}
+
+		data.tags.forEach(function (value, key) {
+			if (!storageData.tags.includes(value)) {
+				storageData.tags.push(value)
+			}
+		})
+
+		return storageData
+	}
+
+	uploadInterest(storageData, userId) {
+		$.ajax({
+			url: this.element.apiUrl + '/set-interest',
+			type: "POST",
+			data: {
+				categories: storageData.category,
+				tags: storageData.tags,
+				user_id: userId
+			}
+		})
 	}
 }
 

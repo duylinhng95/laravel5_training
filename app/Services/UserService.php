@@ -2,10 +2,15 @@
 
 namespace App\Services;
 
+use App\Entities\User;
+use App\Repository\InterestRepository;
+use App\Repository\InterestRepositoryEloquent;
+use App\Repository\RocketProfileRepositoryEloquent;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Repository\UserRoleRepository;
 use App\Repository\RocketProfileRepository;
+use App\Repository\UserRoleRepositoryEloquent;
 use Auth;
 use DB;
 use Exception;
@@ -16,14 +21,19 @@ class UserService
 {
     /** @var UserRepositoryEloquent */
     protected $userRepository;
+    /** @var RocketProfileRepositoryEloquent */
     protected $rocketRepository;
+    /** @var UserRoleRepositoryEloquent */
     protected $roleRepository;
+    /** @var InterestRepositoryEloquent */
+    protected $interestRepository;
 
     public function __construct()
     {
-        $this->userRepository   = app(UserRepository::class);
-        $this->rocketRepository = app(RocketProfileRepository::class);
-        $this->roleRepository   = app(UserRoleRepository::class);
+        $this->userRepository     = app(UserRepository::class);
+        $this->rocketRepository   = app(RocketProfileRepository::class);
+        $this->roleRepository     = app(UserRoleRepository::class);
+        $this->interestRepository = app(InterestRepository::class);
     }
 
     /**
@@ -64,6 +74,7 @@ class UserService
     public function login($input)
     {
         if (Auth::guard()->attempt($input)) {
+            /** @var User $user */
             $user = Auth::user();
             if ($user->checkRole('admin')) {
                 Auth::logout();

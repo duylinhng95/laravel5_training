@@ -5,18 +5,24 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Repository\InterestRepository;
+use App\Repository\InterestRepositoryEloquent;
 use App\Services\UserService;
 use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     use ResponseTrait;
     /** @var UserService */
     protected $userService;
+    /** @var InterestRepositoryEloquent */
+    protected $interestRepository;
 
     public function __construct()
     {
-        $this->userService = app(UserService::class);
+        $this->userService        = app(UserService::class);
+        $this->interestRepository = app(InterestRepository::class);
     }
 
     public function register(RegisterRequest $request)
@@ -32,6 +38,18 @@ class UserController extends Controller
             return $this->success('Input is valid');
         } else {
             return $this->error($code, $message);
+        }
+    }
+
+    public function setInterest(Request $request)
+    {
+        $userId = $request->get('user_id');
+        $params = $request->except('user_id');
+        list($status, $code, $message, $data) = $this->interestRepository->setInterest($userId, $params);
+        if ($status) {
+            return $this->success($message, $data);
+        } else {
+            return $this->error($code, $message, $data);
         }
     }
 }

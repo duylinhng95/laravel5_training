@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12 col-sm-5 col-md-3 avt">
-                <input type="hidden" value="{{Auth::check() ? 'true' : 'false'}}" id="loginStatus">
+                <input type="hidden" value="{{Auth::check() ? 'true' : 'false'}}" @if(Auth::check()) data-user-id="{{Auth::id()}}" @endif id="loginStatus">
                 @if(Auth::check())
                     <div class="stnt pull-left">
                         <a href="{{route("user.post.create")}}" class="btn btn-primary">Start New Topic</a>
