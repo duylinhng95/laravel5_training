@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-4">
+<div class="col-lg-4 col-md-4 left-sidebar">
 
     <!-- Categories -->
     <div class="sidebarblock">
@@ -7,9 +7,11 @@
         <div class="blocktxt">
             <ul class="cats">
                 @foreach($categories as $category)
-                <a href="{{url('?category='.$category->id)}}">
-                    <li>{{$category->name}} <span class="badge pull-right">{{$category->posts ? count($category->posts) : 0}}</span></li>
-                </a>
+                    <a href="{{url('?category='.$category->id)}}">
+                        <li>{{$category->name}} <span
+                                    class="badge pull-right">{{$category->posts ? count($category->posts) : 0}}</span>
+                        </li>
+                    </a>
                 @endforeach
             </ul>
         </div>
@@ -21,10 +23,18 @@
         <div class="divline"></div>
         <div class="blocktxt">
             @foreach($tags as $tag)
-            <a href="{{url('?tags='.$tag->name)}}" class="badge">{{$tag->name}}</a>
+                <a href="{{url('?tags='.$tag->name)}}" class="badge">{{$tag->name}}</a>
             @endforeach
         </div>
     </div>
 
+    <!-- Recommended Post -->
 
+    <div class="sidebarblock ">
+        <h3><i class="fa fa-star"></i> Recommend Post</h3>
+        <div class="divline"></div>
+        <div class="recommend-section">
+
+        </div>
+    </div>
 </div>

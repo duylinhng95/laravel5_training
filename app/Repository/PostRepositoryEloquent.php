@@ -81,7 +81,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         }
 
         if (key_exists('tags', $param) && $param['tags']) {
-            $keyword   = $param['tags'];
+            $keyword = $param['tags'];
             /** @var \Illuminate\Database\Eloquent\Builder $mainQuery */
             $mainQuery = $mainQuery->WhereHas('tags', function ($subQuery) use ($keyword) {
                 /** @var Builder $subQuery */
@@ -148,6 +148,11 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return ['code' => 200, 'message' => 'Delete Post Successful'];
     }
 
+    public function findWithTrashed($slug)
+    {
+        return $this->makeModel()->withTrashed()->where('slug', $slug)->first();
+    }
+
     /**
      * @param $param
      * @param $num
@@ -193,11 +198,6 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         return $mainQuery->orderBy('created_at', 'desc')->withTrashed()->paginate($num);
     }
 
-    public function findWithTrashed($slug)
-    {
-        return $this->makeModel()->withTrashed()->where('slug', $slug)->first();
-    }
-
     public function restore($slug)
     {
         $post = $this->findWithTrashed($slug);
@@ -220,5 +220,26 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
         $post->status = config('constant.post.status.available');
         $post->save();
         return [true, 'Post Publish successful', $post];
+    }
+
+    public function getInterestPost($params)
+    {
+        $mainQuery = $this->makeModel();
+        if (!$params) {
+            $mainQuery = $mainQuery->orderByDesc('view');
+        } else {
+            $tags       = $params['tags'];
+            $categories = $params['category'];
+
+            $mainQuery = $mainQuery->whereHas('tags', function ($subQuery) use ($tags) {
+                /** @var Builder $subQuery */
+                $subQuery->whereIn('name', $tags);
+            })->orWhereHas('category', function ($subQuery) use ($categories) {
+                /** @var Builder $subQuery */
+                $subQuery->whereIn('name', $categories);
+            });
+        }
+
+        return $mainQuery->orderByDesc('created_at')->limit(5)->get();
     }
 }

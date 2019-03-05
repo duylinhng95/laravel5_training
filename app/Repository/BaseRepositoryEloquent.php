@@ -5,7 +5,7 @@ namespace App\Repository;
 use Illuminate\Container\Container as App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
-use Eloquent;
+use Illuminate\Database\Eloquent\Builder as Eloquent;
 
 abstract class BaseRepositoryEloquent implements BaseRepository
 {

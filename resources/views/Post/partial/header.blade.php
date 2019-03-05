@@ -21,6 +21,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12 col-sm-5 col-md-3 avt">
+                <input type="hidden" value="{{Auth::check() ? 'true' : 'false'}}" @if(Auth::check()) data-user-id="{{Auth::id()}}" @endif id="loginStatus">
                 @if(Auth::check())
                     <div class="stnt pull-left">
                         <a href="{{route("user.post.create")}}" class="btn btn-primary">Start New Topic</a>
@@ -29,7 +30,6 @@
                         <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
                            data-toggle="dropdown" role="button" data-display="static">
                             <i class="fa fa-bell author-icon"></i>
-                            <input type="hidden" id="user_id" value="{{Auth::id()}}">
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-right notification" id="user_notification">

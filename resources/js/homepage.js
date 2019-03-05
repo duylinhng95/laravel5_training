@@ -2,7 +2,7 @@ require("./vendor/template/jquery.themepunch.plugins.min")
 require("./vendor/template/jquery.themepunch.revolution.min")
 import Notification from './notification.js'
 
-class Template {
+class Homepage {
 	constructor() {
 		this.init()
 	}
@@ -23,6 +23,8 @@ class Template {
 			btnReply: $("#btn-redirect"),
 			rightSideBar: $(".right-sidebar"),
 			commentForm: $("#comment-form"),
+			loginStatus: $("#loginStatus"),
+			leftSidebar: $(".left-sidebar"),
 		}
 		this.postPage = 1
 		this.lastPage = false
@@ -30,7 +32,7 @@ class Template {
 		this.apiURL = location.origin + `/api`
 		this.currentURL = location.search
 		this.notification = new Notification()
-		this.userId = $("#user_id").val()
+		this.userId = this.element.loginStatus.data('user-id')
 	}
 
 	listen() {
@@ -42,12 +44,12 @@ class Template {
 		this.setActiveClass(this.element.navigationBar)
 		this.validateLoginForm()
 		this.validateRegisterForm()
-		if(this.element.rightSideBar.length !== 0)
-		{
+		if (this.element.rightSideBar.length !== 0) {
 			this.onScrollToFixSection()
 			this.replyBtnClick()
 			this.commentFormHover()
 		}
+		this.getRecommendPost()
 	}
 
 	loadArticle(page) {
@@ -66,12 +68,11 @@ class Template {
 		})
 	}
 
-	checkScrollToBottom() {
+	static checkScrollToBottom() {
 		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 		let scrollHeight = $("body").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-		return scrolledToBottom;
+		return Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 	}
 
 	checkActiveAPI() {
@@ -86,7 +87,7 @@ class Template {
 	onScrollDown() {
 		let self = this
 		$(window).on('scroll', function () {
-			let scrolledToBottom = self.checkScrollToBottom()
+			let scrolledToBottom = Homepage.checkScrollToBottom()
 			if (scrolledToBottom && self.lastPage === false) {
 				self.checkActiveAPI()
 			}
@@ -101,7 +102,7 @@ class Template {
 			.onSnapshot(function (querySnapshot) {
 				self.element.notification.children().remove()
 				let isAllRead = true
-				if(querySnapshot.empty === true) {
+				if (querySnapshot.empty === true) {
 					let content = `<div class="row">
 								            <div class="col-md-12 text-left notify-element">								            										            		
 								                <div class="notify-title">There is no notification currently</div>
@@ -344,6 +345,50 @@ class Template {
 			commentForm.removeClass('notify-success')
 		})
 	}
+
+	getInterestTopic() {
+		let userId = this.userId
+		let self = this
+		return $.ajax({
+			url: this.apiURL + '/get-interest',
+			type: 'get',
+			data: {user_id: userId},
+			success: function(response)
+			{
+				self.getResponse(response.data)
+			}
+		})
+	}
+
+	getRecommendPost() {
+		let loginStatus = this.element.loginStatus.val()
+		if (loginStatus === 'true') {
+			this.getInterestTopic()
+		} else {
+			this.requestAjaxInterest()
+		}
+	}
+
+	getResponse (responseData) {
+		let data = responseData
+		if (data === null)
+		{
+			data =JSON.parse(window.localStorage.getItem('interest'))
+		}
+		this.requestAjaxInterest(data)
+	}
+
+	requestAjaxInterest(data = null) {
+		$.ajax({
+			url: this.apiURL + '/load-interest-post',
+			type: 'get',
+			data: data,
+			success: function (response) {
+				let data =response.data
+				$(".recommend-section").append(data.view)
+			}
+		})
+	}
 }
 
-new Template()
+new Homepage()
