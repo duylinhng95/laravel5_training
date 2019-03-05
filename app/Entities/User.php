@@ -122,4 +122,9 @@ class User extends Authenticatable
         $array = explode(' ', $username);
         return end($array);
     }
+
+    public function interests()
+    {
+        return $this->hasMany(Interest::class);
+    }
 }
