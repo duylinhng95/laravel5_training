@@ -52,4 +52,15 @@ class UserController extends Controller
             return $this->error($code, $message, $data);
         }
     }
+
+    public function getInterest(Request $request)
+    {
+        $userId = $request->get('user_id');
+        list($status, $message, $data) = $this->interestRepository->getInterest($userId);
+        if ($status) {
+            return $this->success($message, $data);
+        } else {
+            return $this->response('true', 200, $message, $data);
+        }
+    }
 }

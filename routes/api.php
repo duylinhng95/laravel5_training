@@ -22,4 +22,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('/check-login', 'UserController@login');
     Route::get('/load-post', 'PostController@getPost');
     Route::post('/set-interest', 'UserController@setInterest');
+    Route::get('/get-interest', 'UserController@getInterest');
+    Route::get('/load-interest-post', 'PostController@loadInterestPost');
 });

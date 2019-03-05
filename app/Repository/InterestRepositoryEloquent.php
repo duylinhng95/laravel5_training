@@ -26,4 +26,17 @@ class InterestRepositoryEloquent extends BaseRepositoryEloquent implements Inter
 
         return [true, 200, 'Update/Create Interest successfully', $res];
     }
+
+    public function getInterest($params)
+    {
+        $userId = $params;
+        $res    = $this->findWhereGetFirst(['user_id' => $userId]);
+        if ($res) {
+            $tags       = explode(', ', $res->tags);
+            $categories = explode(', ', $res->categories);
+            return [true, "Retrieve interest successfully", ['tags' => $tags, 'category' => $categories]];
+        } else {
+            return [false, "User doesn't have interest", null];
+        }
+    }
 }

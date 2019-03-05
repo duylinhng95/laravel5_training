@@ -442,3 +442,44 @@ a.change-avatar:hover > .edit-btn {
 .notify-title {
   color: #494949;
 }
+
+.recommendPost {
+  font-family: "Roboto", sans-serif;
+}
+
+.recommendPost h2 {
+  color: #363838;
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.recommendPost .content {
+  font-size: 13px;
+  min-height: 50px;
+}
+
+span.category {
+  width: 100%;
+  border: 2px solid;
+  border-radius: 9%;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  border-color: #7f7f7f;
+}
+
+.blocktxt.recommendPost {
+  box-shadow: 0px 5px 50px -20px #333;
+  margin-top: 15px;
+}
+
+.recommend-section {
+  padding: 10px;
+}
+.title {
+  min-height: 30px;
+}

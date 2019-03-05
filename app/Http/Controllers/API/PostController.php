@@ -36,4 +36,11 @@ class PostController extends Controller
 
         return $this->success('Retrieve Post Success', ['view' => $html, 'lastPage' => $lastPage]);
     }
+
+    public function loadInterestPost(Request $request)
+    {
+        $posts = $this->postRepository->getInterestPost($request->all());
+        $html = view('Post.Index.sidebar', compact('posts'))->render();
+        return $this->success('Retrieve Post Success', ['view' => $html]);
+    }
 }

@@ -2,7 +2,7 @@ require("./vendor/template/jquery.themepunch.plugins.min")
 require("./vendor/template/jquery.themepunch.revolution.min")
 import Notification from './notification.js'
 
-class Template {
+class Homepage {
 	constructor() {
 		this.init()
 	}
@@ -23,6 +23,8 @@ class Template {
 			btnReply: $("#btn-redirect"),
 			rightSideBar: $(".right-sidebar"),
 			commentForm: $("#comment-form"),
+			loginStatus: $("#loginStatus"),
+			leftSidebar: $(".left-sidebar"),
 		}
 		this.postPage = 1
 		this.lastPage = false
@@ -30,7 +32,8 @@ class Template {
 		this.apiURL = location.origin + `/api`
 		this.currentURL = location.search
 		this.notification = new Notification()
-		this.userId = $("#user_id").val()
+		this.userId = this.element.loginStatus.data('user-id')
+		this.userInterest = 'abc'
 	}
 
 	listen() {
@@ -47,6 +50,7 @@ class Template {
 			this.replyBtnClick()
 			this.commentFormHover()
 		}
+		this.getRecommendPost()
 	}
 
 	loadArticle(page) {
@@ -65,12 +69,11 @@ class Template {
 		})
 	}
 
-	checkScrollToBottom() {
+	static checkScrollToBottom() {
 		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 		let scrollHeight = $("body").height();
 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-		return scrolledToBottom;
+		return Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 	}
 
 	checkActiveAPI() {
@@ -85,7 +88,7 @@ class Template {
 	onScrollDown() {
 		let self = this
 		$(window).on('scroll', function () {
-			let scrolledToBottom = self.checkScrollToBottom()
+			let scrolledToBottom = Homepage.checkScrollToBottom()
 			if (scrolledToBottom && self.lastPage === false) {
 				self.checkActiveAPI()
 			}
@@ -343,8 +346,51 @@ class Template {
 			commentForm.removeClass('notify-success')
 		})
 	}
+
+	getInterestTopic(getResponse) {
+		let userId = this.userId
+		return $.ajax({
+			url: this.apiURL + '/get-interest',
+			type: 'get',
+			data: {user_id: userId},
+			success: function(response)
+			{
+				getResponse(response.data)
+			}
+		})
+	}
+
+	getRecommendPost() {
+		let loginStatus = this.element.loginStatus.val()
+		let self = this
+		if (loginStatus === 'true') {
+			this.getInterestTopic(function(response) {
+				let data = response
+				if (data === null)
+				{
+					data =JSON.parse(window.localStorage.getItem('interest'))
+				}
+				$.ajax({
+					url: self.apiURL + '/load-interest-post',
+					type: 'get',
+					data: data,
+					success: function (response) {
+						let data =response.data
+						$(".recommend-section").append(data.view)
+					}
+				})
+			})
+		} else {
+			$.ajax({
+				url: self.apiURL + '/load-interest-post',
+				type: 'get',
+				success: function (response) {
+					let data =response.data
+					$(".recommend-section").append(data.view)
+				}
+			})
+		}
+	}
 }
 
-new
-
-Template()
+new Homepage()

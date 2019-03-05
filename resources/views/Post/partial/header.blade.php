@@ -30,7 +30,6 @@
                         <a href="#" class="dropdown-toggle notification-bell" id="notification-icon"
                            data-toggle="dropdown" role="button" data-display="static">
                             <i class="fa fa-bell author-icon"></i>
-                            <input type="hidden" id="user_id" value="{{Auth::id()}}">
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-right notification" id="user_notification">
