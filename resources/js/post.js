@@ -1,6 +1,7 @@
 require('./bootstrap.js')
 window.Summernote = require('summernote/dist/summernote');
 window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/tagsinput.js');
+require('./vendor/summernote/summernote-ext-highlight')
 import Comment from './comment.js'
 import Follow from './follow.js'
 
@@ -14,7 +15,18 @@ class Post {
 	init() {
 		this.config()
 		this.listen()
-		$('#texteditor').summernote({height: 300})
+		$('#texteditor').summernote({
+			height: 300,
+			prettifyHtml: false,
+			toolbar: [
+				['style', ['style']],
+				['font', ['bold', 'italic', 'underline', 'highlight']],
+				['font', ['fontsize', 'color', 'superscript', 'subscript']],
+				['para', ['paragraph']],
+				['insert', ['link', 'picture', 'video']],
+				['misc', ['undo', 'fullscreen']]
+			],
+		})
 		$('#tagsinput').tagsinput({
 			confirmKeys: [188, 32]
 		});
@@ -24,7 +36,8 @@ class Post {
 		this.element = {
 			btnSearchPost: $("#btnSearchPost"),
 			btnSearchUser: $("#btnSearchUser"),
-			keywords: $("#keywords"),
+			keywordsPost: $("#keywordsPost"),
+			keywordsUser: $("#keywordsUser"),
 			btnDeletePost: $(".btn-delete-post"),
 			btnVotePost: $("#btnVotePost"),
 			voteNum: $("#voteNum"),
@@ -35,10 +48,10 @@ class Post {
 	}
 
 	listen() {
-		this.btnSearchEnter(this.element.btnSearchPost)
-		this.btnSearchEnter(this.element.btnSearchUser)
-		this.onSearch(this.element.btnSearchPost)
-		this.onSearch(this.element.btnSearchUser)
+		this.btnSearchEnter(this.element.btnSearchPost, this.element.keywordsPost)
+		this.btnSearchEnter(this.element.btnSearchUser, this.element.keywordsUser)
+		this.onSearch(this.element.btnSearchPost, this.element.keywordsPost)
+		this.onSearch(this.element.btnSearchUser, this.element.keywordsUser)
 		this.deletePost()
 		this.votePost()
 		this.navTab()
@@ -47,19 +60,24 @@ class Post {
 		this.validateRegisterForm()
 	}
 
-	btnSearchEnter(name) {
+	btnSearchEnter(name, section) {
 		let btnSearch = name
-		this.element.keywords.keypress(function (event) {
+		section.keypress(function (event) {
 			if (event.which === 13) {
 				btnSearch.click()
 			}
 		})
 	}
 
-	onSearch(name) {
-		let keywords = this.element.keywords
+	onSearch(name, section) {
+		let keywords = section
+		let url = ''
 		name.on('click', function () {
-			let url = location.pathname
+			if (section.attr('id') === 'keywordsPost') {
+				url = location.origin
+			} else {
+				url = location.pathname
+			}
 			let input = keywords.val()
 			if (input === '') {
 				alert("Search can't be empty")

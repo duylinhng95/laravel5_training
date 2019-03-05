@@ -345,4 +345,6 @@ class Template {
 	}
 }
 
-new Template()
+new
+
+Template()

@@ -38,6 +38,7 @@ class User extends Authenticatable
     protected $appends = [
         'count_follow',
         'count_post',
+        'first_name'
     ];
 
     public function rocket()
@@ -113,5 +114,12 @@ class User extends Authenticatable
             $userRoles[] = $role->role->name;
         }
         return in_array($roleName, $userRoles);
+    }
+
+    public function getFirstNameAttribute()
+    {
+        $username = $this->name;
+        $array = explode(' ', $username);
+        return end($array);
     }
 }

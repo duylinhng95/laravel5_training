@@ -1,38 +1,35 @@
-<!--========================== Right-Sidebar ================================-->
-<div class="col-md-3 col-sm-12 col-xs-12">
-    <div class="right-sidebar">
-        <div class="righ-sidebar-body">
-            <div class="item">
-                <div class="row">
-                    <div class="col-md-12 col-sm-6">
-                        <h4 class="post-title slide-title text-black">popular posts</h4>
-                    </div>
-                </div>
-                <div class="row">
-                @foreach($posts as $post)
-                    <div class="col-md-12 col-sm-6">
-                        <div class="carousel-caption">
-                            <a href="{{route('post.show', ['slug' => $post->slug])}}"><h5 class="post-title">{{$post->title}}</h5></a>
-                            <div class="post-meta">
-                                <span><i class="fa fa-calendar-check-o post-meta-icon"></i> {{formatDate($post->created_at)}} </span>
-                                <span><i
-                                            class="fa fa-comments post-meta-icon"></i> {{$post->count_comments}} </span>
-                            </div>
-                            <div class="post-content no-border">
-                                {!! $post->encode_content !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                </div>
+<div class="col-lg-4 col-md-4 right-sidebar">
+
+    <!-- Categories -->
+    @if(Auth::check())
+        <div class="sidebarblock">
+            <div class="divline"></div>
+            <div class="blocktxt">
+                <ul class="cats">
+                    @if(Auth::id() != $post->user->id)
+                        <button class="btn btn-primary btn-follow @if($followed === 1) d-none @endif"
+                                data-user-id="{{$post->user->id}}">
+                            Follow
+                        </button>
+                        <button class="btn btn-danger btn-unfollow @if($followed === 0) d-none @endif"
+                                data-user-id="{{$post->user->id}}">
+                            Unfollow
+                        </button>
+                    @endif
+                    <a href="#comment-form" class="btn btn-info" id="btn-redirect"> Reply </a>
+                </ul>
             </div>
-            <div class="item">
-                <h4 class="post-title slide-title text-black">popular tags</h4>
-                @foreach($tags as $tag)
-                    <a href="{{url('?tags='.$tag->name)}}" class="btn btn-default btn-sm btn-tags"
-                       type="submit">{{$tag->name}}</a>
-                @endforeach
-            </div>
-        </div><!-- Righ-sidebar-body -->
-    </div><!-- Right-Sidebar -->
+        </div>
+@endif
+
+<!-- Tags -->
+    <div class="sidebarblock">
+        <h3><i class="fa fa-tag"></i> Popular Tags</h3>
+        <div class="divline"></div>
+        <div class="blocktxt">
+            @foreach($tags as $tag)
+                <a href="{{url('?tags='.$tag->name)}}" class="badge">{{$tag->name}}</a>
+            @endforeach
+        </div>
+    </div>
 </div>

@@ -27,7 +27,7 @@ class PostController extends Controller
     public function getPost(Request $request)
     {
         $page     = $request->get('page');
-        $posts    = $this->postRepository->getPosts($request);
+        $posts    = $this->postRepository->getPosts($request->all());
         $lastPage = false;
         if ($page > $posts->lastPage()) {
             $lastPage = true;
