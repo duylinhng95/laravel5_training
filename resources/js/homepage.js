@@ -375,7 +375,7 @@ class Homepage {
 		{
 			data =JSON.parse(window.localStorage.getItem('interest'))
 		}
-		self.requestAjaxInterest(data)
+		this.requestAjaxInterest(data)
 	}
 
 	requestAjaxInterest(data = null) {
