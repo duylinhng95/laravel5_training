@@ -100,6 +100,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
                 case 'user':
                     $this->sortRelationship($mainQuery, $section, 'users', $order);
                     break;
+                case 'comments':
+                    $mainQuery = $mainQuery->withCount('comments')->orderBy('comments_count', $order);
+                    break;
                 default:
                     $mainQuery = $mainQuery->orderBy($section, $order);
             }

@@ -14,9 +14,9 @@
             <div class="divline"></div>
             <div class="blocktxt">
                     <ul class="browse-widget-filter">
-                        <li><a href="?sort=views"><i class="fa fa-arrow-down"></i>Views</a></li>
-                        <li><a href="?sort=comments"><i class="fa fa-arrow-down"></i>Comments</a></li>
-                        <li><a href="?sort=created_at"><i class="fa fa-arrow-down"></i>Created Date</a></li>
+                        <li><a data-type="view"><i class="fa fa-arrow-down"></i>Views</a></li>
+                        <li><a data-type="comments"><i class="fa fa-arrow-down"></i>Comments</a></li>
+                        <li><a data-type="created_at"><i class="fa fa-arrow-down"></i>Created Date</a></li>
                     </ul>
             </div>
         </div>

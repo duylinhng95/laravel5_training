@@ -13,6 +13,7 @@ class Browse {
 			browseWidget: $("#browseWidget"),
 			btnSearchPost: $("#btnSearchPost"),
 			keywordsPost: $("#keywordsPost"),
+			filterWidget: $(".browse-widget-filter"),
 			mainContent: $("#mainContent"),
 		}
 		this.apiURL = location.origin + '/api/browse'
@@ -21,7 +22,8 @@ class Browse {
 	listen() {
 		this.btnSearchEnter(this.element.btnSearchPost, this.element.keywordsPost)
 		this.onSearch(this.element.btnSearchPost, this.element.keywordsPost)
-		this.checkInput()
+		this.checkSearchInput()
+		this.filterBrowsePost()
 	}
 
 	btnSearchEnter(name, section) {
@@ -46,7 +48,7 @@ class Browse {
 		})
 	}
 
-	checkInput() {
+	checkSearchInput() {
 		let params = new URLSearchParams(location.search)
 		if (params.get('keywords')) {
 			let keywords = params.get('keywords')
@@ -66,6 +68,48 @@ class Browse {
 				mainContent.append(response.data.view)
 			}
 		})
+	}
+
+	filterBrowsePost() {
+		let filterButton = this.element.filterWidget.children()
+		let self = this
+		filterButton.each(function (key, value) {
+			$(value).find('a').on('click', function (event) {
+				let input = self.checkInputNull()
+				if (input) {
+					let target = event.currentTarget
+					let data = {
+						keywords: input,
+						sort: $(target).data('type'),
+					}
+					let childElement = $(target).find('i')
+					if (childElement.hasClass('fa-arrow-down')) {
+						data.order = 'asc'
+						childElement.removeClass('fa-arrow-down')
+						childElement.addClass('fa-arrow-up')
+					} else {
+						data.order = 'desc'
+						childElement.removeClass('fa-arrow-up')
+						childElement.addClass('fa-arrow-down')
+					}
+					self.callAjaxApi(data)
+				}
+			})
+		})
+	}
+
+	checkInputNull() {
+		let input = this.element.keywordsPost.val()
+		let mainContent = this.element.mainContent
+		if (input !== '') {
+			return input
+		} else {
+			mainContent.children().remove()
+			mainContent.append(`<div class="post row notification-heading">
+			        <h2>Please type in something for searching</h2>
+			    </div>`)
+			return false;
+		}
 	}
 }
 
