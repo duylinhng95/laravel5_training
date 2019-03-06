@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8 col-lg-8"id="mainContent">
+    <div class="col-md-8 col-lg-8" id="mainContent">
         <div class="post row notification-heading" >
             <h2><i class="fa fa-arrow-alt-circle-left"></i> Go on. Search something...</h2>
         </div>

@@ -38,7 +38,6 @@ class Browse {
 		let self = this
 		name.on('click', function () {
 			let input = keywords.val()
-			console.log('abc')
 			if (input === '') {
 				alert("Search can't be empty")
 			} else {
@@ -63,7 +62,7 @@ class Browse {
 			type: 'GET',
 			data: input,
 			success: function (response) {
-				mainContent.find('.notification-heading').remove()
+				mainContent.children().remove()
 				mainContent.append(response.data.view)
 			}
 		})
