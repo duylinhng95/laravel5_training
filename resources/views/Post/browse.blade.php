@@ -5,8 +5,8 @@
             <h3><i class="fa fa-search"></i> Search</h3>
             <div class="divline"></div>
             <div class="blocktxt browse-widget-search">
-                    <input type="text" name="search" id="searchPost">
-                    <button class="btn btn-lg btn-info"><i class="fa fa-search"></i></button>
+                    <input type="text" name="search" id="keywordsPost">
+                <button class=" btn btn-info btn-lg" id="btnSearchPost"><i class="fa fa-search"></i></button>
             </div>
         </div>
         <div class="sidebarblock">
@@ -48,10 +48,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8 col-lg-8">
-        <div class="post row">
-            <h2 class="notification-heading"><i class="fa fa-arrow-alt-circle-left"></i> Go on. Search something...</h2>
-            <div class="clearfix"></div>
+    <div class="col-md-8 col-lg-8"id="mainContent">
+        <div class="post row notification-heading" >
+            <h2><i class="fa fa-arrow-alt-circle-left"></i> Go on. Search something...</h2>
         </div>
     </div>
 @endsection

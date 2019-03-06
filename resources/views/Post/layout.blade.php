@@ -41,10 +41,11 @@
                             <a href="{{route('post.browse')}}">
                                 <li class="navigation-item">Browse</li>
                             </a>
-                            <a href="{{route('user.list')}}">
-                                <li class="navigation-item">Users</li>
-                            </a>
                             @if(Auth::check())
+                                <a href="{{route('user.list')}}">
+                                    <li class="navigation-item">Users</li>
+                                </a>
+
                                 <a href="#">
                                     <li class="navigation-item">Follows</li>
                                 </a>

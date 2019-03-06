@@ -34,9 +34,9 @@ class Post {
 
 	config() {
 		this.element = {
-			btnSearchPost: $("#btnSearchPost"),
+			btnSearch: $("#btnSearch"),
 			btnSearchUser: $("#btnSearchUser"),
-			keywordsPost: $("#keywordsPost"),
+			keywords: $("#keywords"),
 			keywordsUser: $("#keywordsUser"),
 			btnDeletePost: $(".btn-delete-post"),
 			btnVotePost: $("#btnVotePost"),
@@ -48,9 +48,7 @@ class Post {
 	}
 
 	listen() {
-		this.btnSearchEnter(this.element.btnSearchPost, this.element.keywordsPost)
 		this.btnSearchEnter(this.element.btnSearchUser, this.element.keywordsUser)
-		this.onSearch(this.element.btnSearchPost, this.element.keywordsPost)
 		this.onSearch(this.element.btnSearchUser, this.element.keywordsUser)
 		this.deletePost()
 		this.votePost()
@@ -58,6 +56,7 @@ class Post {
 		this.setActiveClass()
 		this.validateLoginForm()
 		this.validateRegisterForm()
+		this.searchHomepage(this.element.btnSearch)
 	}
 
 	btnSearchEnter(name, section) {
@@ -73,11 +72,7 @@ class Post {
 		let keywords = section
 		let url = ''
 		name.on('click', function () {
-			if (section.attr('id') === 'keywordsPost') {
-				url = location.origin
-			} else {
-				url = location.pathname
-			}
+			url = location.pathname
 			let input = keywords.val()
 			if (input === '') {
 				alert("Search can't be empty")
@@ -245,6 +240,14 @@ class Post {
 					}
 				})
 			}
+		})
+	}
+
+	searchHomepage(button) {
+		let self = this
+		button.on('click', function () {
+			let keywords = self.element.keywords.val()
+			location.href = self.apiUrl + '/browse?keywords=' + keywords
 		})
 	}
 }

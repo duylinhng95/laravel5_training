@@ -69,14 +69,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             $keyword   = $param['keywords'];
             $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
                 /** @var \Illuminate\Database\Eloquent\Builder $query */
-                $query->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhereHas('category', function ($subQuery) use ($keyword) {
-                        /** @var Builder $subQuery */
-                        $subQuery->where('name', 'like', '%' . $keyword . '%');
-                    })->orWhereHas('user', function ($subQuery) use ($keyword) {
-                        /** @var Builder $subQuery */
-                        $subQuery->where('name', 'like', '%' . $keyword . '%');
-                    });
+                $query->where('title', 'like', '%' . $keyword . '%');
             });
         }
 

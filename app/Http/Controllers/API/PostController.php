@@ -40,7 +40,23 @@ class PostController extends Controller
     public function loadInterestPost(Request $request)
     {
         $posts = $this->postRepository->getInterestPost($request->all());
-        $html = view('Post.Index.sidebar', compact('posts'))->render();
+        try {
+            $html = view('Post.Index.sidebar', compact('posts'))->render();
+        } catch (\Throwable $e) {
+            return $this->error($e->getCode(), 'Retrieve Post Failed', $e->getMessage());
+        }
+        return $this->success('Retrieve Post Success', ['view' => $html]);
+    }
+
+    public function browse(Request $request)
+    {
+        $params = $request->all();
+        $posts  = $this->postRepository->getPosts($params);
+        try {
+            $html = view('Post.Index.body', compact('posts'))->render();
+        } catch (\Throwable $e) {
+            return $this->error($e->getCode(), 'Retrieve Post Failed', $e->getMessage());
+        }
         return $this->success('Retrieve Post Success', ['view' => $html]);
     }
 }

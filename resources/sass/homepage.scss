@@ -537,7 +537,7 @@ button.load-more i {
 }
 
 .browse-widget-search button {
-  border: solid 2px #487eb0;
+  border: solid 1px #487eb0;
   background-color: #487eb0;
   color: #ffffff;
   font-size: 18px;
@@ -545,7 +545,7 @@ button.load-more i {
 
 .browse-widget-search button:hover {
   background-color: #95a5a6;
-  border: solid 2px #2c3e50;
+  border: solid 1px #2c3e50;
   color: #2c3e50;
   font-size: 18px;
   -webkit-transition: color 1s, border 1s;
@@ -567,7 +567,11 @@ button.load-more i {
   text-align: center;
 }
 
-.post .notification-heading {
+.post.notification-heading h2 {
   text-align: center;
   padding: 15px;
+}
+
+.left-sidebar h3, i{
+  color: #2c3e50;
 }
