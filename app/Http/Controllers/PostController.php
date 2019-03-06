@@ -7,6 +7,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\CategoryRepositoryEloquent;
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
+use App\Repository\PostTagRepository;
+use App\Repository\PostTagRepositoryEloquent;
 use App\Services\PostService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -21,12 +23,15 @@ class PostController extends Controller
     protected $postRepository;
     /** @var CategoryRepositoryEloquent */
     protected $categoryRepository;
+    /** @var PostTagRepositoryEloquent */
+    protected $postTagRepository;
 
     public function __construct()
     {
         $this->postService        = app(PostService::class);
         $this->postRepository     = app(PostRepository::class);
         $this->categoryRepository = app(CategoryRepository::class);
+        $this->postTagRepository  = app(PostTagRepository::class);
     }
 
     public function index(Request $request)
@@ -70,5 +75,12 @@ class PostController extends Controller
     public function vote($slug)
     {
         return $this->postService->vote($slug);
+    }
+
+    public function browsePost()
+    {
+        $categories = $this->categoryRepository->all();
+        $tags       = $this->postTagRepository->paginate(5);
+        return view('Post.browse', compact('categories', 'tags'));
     }
 }
