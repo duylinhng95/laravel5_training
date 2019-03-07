@@ -69,14 +69,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             $keyword   = $param['keywords'];
             $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
                 /** @var \Illuminate\Database\Eloquent\Builder $query */
-                $query->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhereHas('category', function ($subQuery) use ($keyword) {
-                        /** @var Builder $subQuery */
-                        $subQuery->where('name', 'like', '%' . $keyword . '%');
-                    })->orWhereHas('user', function ($subQuery) use ($keyword) {
-                        /** @var Builder $subQuery */
-                        $subQuery->where('name', 'like', '%' . $keyword . '%');
-                    });
+                $query->where('title', 'like', '%' . $keyword . '%');
             });
         }
 
@@ -107,8 +100,23 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
                 case 'user':
                     $this->sortRelationship($mainQuery, $section, 'users', $order);
                     break;
+                case 'comments':
+                    $mainQuery = $mainQuery->withCount('comments')->orderBy('comments_count', $order);
+                    break;
                 default:
                     $mainQuery = $mainQuery->orderBy($section, $order);
+            }
+        }
+
+        if (key_exists('filter', $param)) {
+            $section = $param['filter'];
+            $keys    = array_keys($section);
+            foreach ($keys as $key) {
+                $value     = $section[$key];
+                $mainQuery = $mainQuery->whereHas($key, function ($subQuery) use ($value) {
+                    /** @var Builder $subQuery */
+                    $subQuery->whereIn('name', $value);
+                });
             }
         }
 

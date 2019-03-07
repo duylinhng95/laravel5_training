@@ -53,6 +53,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/admin/login', 'AdminController@login')->name('admin.login');
     Route::get('login/{provider}', 'UserController@redirectToProvider')->name('login.social.provider');
     Route::get('login/{provider}/callback', 'UserController@handleProviderCallback')->name('login.social.handle');
+    Route::get('/browse', 'PostController@browsePost')->name('post.browse');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
