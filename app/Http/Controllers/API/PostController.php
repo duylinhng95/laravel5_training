@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryEloquent;
+use App\Services\PostService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,10 +14,13 @@ class PostController extends Controller
     use ResponseTrait;
     /** @var PostRepositoryEloquent */
     protected $postRepository;
+    /** @var PostService */
+    protected $postService;
 
     public function __construct()
     {
         $this->postRepository = app(PostRepository::class);
+        $this->postService    = app(PostService::class);
     }
 
     /**
@@ -51,12 +55,11 @@ class PostController extends Controller
     public function browse(Request $request)
     {
         $params = $request->all();
-        $posts  = $this->postRepository->getPosts($params);
-        try {
-            $html = view('Post.Index.body', compact('posts'))->render();
-        } catch (\Throwable $e) {
-            return $this->error($e->getCode(), 'Retrieve Post Failed', $e->getMessage());
+        list($status, $code, $message, $data) = $this->postService->browsePosts($params);
+        if ($status) {
+            return $this->success($message, ['view' => $data]);
+        } else {
+            return $this->error($code, $message);
         }
-        return $this->success('Retrieve Post Success', ['view' => $html]);
     }
 }

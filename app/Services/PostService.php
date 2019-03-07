@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
 use Illuminate\Session\Store as Session;
+use Illuminate\Support\Facades\Cache;
 
 class PostService
 {
@@ -208,6 +209,17 @@ class PostService
                 'title'      => $post->title,
             ];
             $this->addData('notifications', $data);
+        }
+    }
+
+    public function browsePosts($params)
+    {
+        $posts = $this->postRepository->getPosts($params);
+        try {
+            $html = view('Post.Index.body', compact('posts'))->render();
+            return [true, 200, 'Retrieve post success', $html];
+        } catch (\Throwable $e) {
+            return [false, 404, $e->getMessage(), null];
         }
     }
 }
