@@ -37,7 +37,7 @@
         <div class="sidebarblock">
             <h3><i class="fa fa-tags"></i> Tags</h3>
             <div class="divline"></div>
-            <div class="blocktxt">
+            <div class="blocktxt browse-widget-tags">
                 @foreach($tags as $tag)
                     <div>
                         <input type="checkbox" name="category" value="{{$tag->name}}" id="{{$tag->name}}">

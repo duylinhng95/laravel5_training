@@ -15,6 +15,16 @@ class Browse {
 			keywordsPost: $("#keywordsPost"),
 			filterWidget: $(".browse-widget-filter"),
 			mainContent: $("#mainContent"),
+			categoryWidget: $(".browse-widget-category"),
+			tagsWidget: $(".browse-widget-tags"),
+			filterData: {
+				keywords: "",
+				sort: "",
+				filter: {
+					category: [],
+					tags: [],
+				}
+			}
 		}
 		this.apiURL = location.origin + '/api/browse'
 	}
@@ -24,6 +34,8 @@ class Browse {
 		this.onSearch(this.element.btnSearchPost, this.element.keywordsPost)
 		this.checkSearchInput()
 		this.filterBrowsePost()
+		this.radioButtonFilter(this.element.categoryWidget)
+		this.radioButtonFilter(this.element.tagsWidget)
 	}
 
 	btnSearchEnter(name, section) {
@@ -73,15 +85,14 @@ class Browse {
 	filterBrowsePost() {
 		let filterButton = this.element.filterWidget.children()
 		let self = this
+		let data = this.element.filterData
 		filterButton.each(function (key, value) {
 			$(value).find('a').on('click', function (event) {
 				let input = self.checkInputNull()
 				if (input) {
 					let target = event.currentTarget
-					let data = {
-						keywords: input,
-						sort: $(target).data('type'),
-					}
+					data.keywords = input
+					data.sort = $(target).data('type')
 					let childElement = $(target).find('i')
 					if (childElement.hasClass('fa-arrow-down')) {
 						data.order = 'asc'
@@ -110,6 +121,38 @@ class Browse {
 			    </div>`)
 			return false;
 		}
+	}
+
+	radioButtonFilter(section) {
+		let widgetSection = section.children().find('input')
+		let data = this.element.filterData
+		let sectionData = data.filter.tags
+		let self = this
+
+		if (section.hasClass("browse-widget-category")) {
+			sectionData = data.filter.category
+		}
+
+		widgetSection.each(function (key, value) {
+			$(value).change(function () {
+				if ($(value).prop('checked') === true) {
+					sectionData.push($(value).val())
+				} else {
+					let pos = sectionData.indexOf($(value).val())
+					sectionData.splice(pos, 1)
+				}
+			})
+		})
+
+		widgetSection.change(function () {
+			let input = self.checkInputNull()
+
+			if (input) {
+				data.keywords = input
+			}
+
+			self.callAjaxApi(data)
+		})
 	}
 }
 

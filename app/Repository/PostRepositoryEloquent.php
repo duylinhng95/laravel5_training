@@ -108,6 +108,18 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             }
         }
 
+        if (key_exists('filter', $param)) {
+            $section = $param['filter'];
+            $keys    = array_keys($section);
+            foreach ($keys as $key) {
+                $value     = $section[$key];
+                $mainQuery = $mainQuery->whereHas($key, function ($subQuery) use ($value) {
+                    /** @var Builder $subQuery */
+                    $subQuery->whereIn('name', $value);
+                });
+            }
+        }
+
         return $mainQuery->orderBy('created_at', 'desc')->paginate(10);
     }
 
