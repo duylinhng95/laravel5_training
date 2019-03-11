@@ -1,9 +1,4 @@
-@if($posts->isEmpty())
-    <div class="post row notification-heading">
-        <h2>Try another keywords. Your search input is not found</h2>
-    </div>
-@else
-    @foreach($posts as $post)
+ @foreach($posts as $post)
         <div class="post row">
             <div class="wrap-ut col-md-8">
                 <div class="row">
@@ -44,4 +39,3 @@
             <div class="clearfix"></div>
         </div><!-- POST -->
     @endforeach
-@endif

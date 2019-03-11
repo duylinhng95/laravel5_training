@@ -215,11 +215,15 @@ class PostService
     public function browsePosts($params)
     {
         $posts = $this->postRepository->getPosts($params);
+        if ($posts->isEmpty()) {
+            return [true, 204, "Post not found", null];
+        }
         try {
             $html = view('Post.Index.body', compact('posts'))->render();
             return [true, 200, 'Retrieve post success', $html];
         } catch (\Throwable $e) {
             return [false, 404, $e->getMessage(), null];
         }
+
     }
 }

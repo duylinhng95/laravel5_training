@@ -365,7 +365,8 @@ class Homepage {
 		if (loginStatus === 'true') {
 			this.getInterestTopic()
 		} else {
-			this.requestAjaxInterest()
+			let data = JSON.parse(window.localStorage.getItem('interest'))
+			this.requestAjaxInterest(data)
 		}
 	}
 
