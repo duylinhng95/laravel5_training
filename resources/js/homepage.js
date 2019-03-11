@@ -26,6 +26,11 @@ class Homepage {
 			loginStatus: $("#loginStatus"),
 			leftSidebar: $(".left-sidebar"),
 		}
+		this.avatar = {
+			previewImage: $("#previewImage"),
+			avatarInput: $("#avatarInput"),
+			avatarForm: $("#avatarForm"),
+		}
 		this.postPage = 1
 		this.lastPage = false
 		this.isActive = 0
@@ -50,6 +55,9 @@ class Homepage {
 			this.commentFormHover()
 		}
 		this.getRecommendPost()
+
+		this.onChangeAvatar()
+		this.onSubmitFormAvatar()
 	}
 
 	loadArticle(page) {
@@ -353,8 +361,7 @@ class Homepage {
 			url: this.apiURL + '/get-interest',
 			type: 'get',
 			data: {user_id: userId},
-			success: function(response)
-			{
+			success: function (response) {
 				self.getResponse(response.data)
 			}
 		})
@@ -370,11 +377,10 @@ class Homepage {
 		}
 	}
 
-	getResponse (responseData) {
+	getResponse(responseData) {
 		let data = responseData
-		if (data === null)
-		{
-			data =JSON.parse(window.localStorage.getItem('interest'))
+		if (data === null) {
+			data = JSON.parse(window.localStorage.getItem('interest'))
 		}
 		this.requestAjaxInterest(data)
 	}
@@ -385,9 +391,47 @@ class Homepage {
 			type: 'get',
 			data: data,
 			success: function (response) {
-				let data =response.data
+				let data = response.data
 				$(".recommend-section").append(data.view)
 			}
+		})
+	}
+
+	onChangeAvatar() {
+		let previewImage = this.avatar.previewImage
+		let avatarInput = this.avatar.avatarInput
+
+		avatarInput.change(function (event) {
+			let input = event.currentTarget
+			let reader = new FileReader();
+			if (input.files && input.files[0]) {
+				reader.onload = function (e) {
+					previewImage.attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		})
+	}
+
+	onSubmitFormAvatar() {
+		let avatarForm = this.avatar.avatarForm
+		let avatarInput = this.avatar.avatarInput
+		let self = this
+		avatarForm.submit(function (event) {
+			event.preventDefault();
+			let formData = new FormData(avatarForm[0])
+			formData.append('user_id', avatarInput.data('user-id'))
+			$.ajax({
+				url: self.apiURL + '/user/avatar',
+				type: "POST",
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function(res) {
+					console.log(res)
+				}
+			})
+
 		})
 	}
 }

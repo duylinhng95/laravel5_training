@@ -15,6 +15,7 @@ use Auth;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Http\UploadedFile;
 use Socialite;
 
 class UserService
@@ -185,5 +186,23 @@ class UserService
         Auth::login($user);
 
         return [true, 200, 'User login Success'];
+    }
+
+    public function updateAvatar($params)
+    {
+        $userId = $params['user_id'];
+        /** @var UploadedFile $file */
+        $file = $params['avatar_img'];
+        $user = $this->userRepository->find($userId);
+        $pathName = public_path('/images/'.$user->email);
+        $filename = 'avatar.' . $file->getClientOriginalExtension();
+        try {
+            $file->move($pathName, $filename);
+        } catch (\Exception $e) {
+            return [false, $e->getMessage()];
+        }
+        $user->avatar = "images/{$user->email}/{$filename}";
+        $user->save();
+        return [true, 'Uploaded file success'];
     }
 }

@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="userinfo col-md-2">
                         <div class="avatar">
-                            <img src="{{asset('images/avatar.png')}}" alt=""/>
+                            <img src="{{asset($post->user->avatar)}}" alt=""/>
                         </div>
                     </div>
                     <div class="posttext col-md-10">

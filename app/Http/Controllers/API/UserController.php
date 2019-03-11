@@ -63,4 +63,15 @@ class UserController extends Controller
             return $this->response('true', 200, $message, $data);
         }
     }
+
+    public function updateAvatar(Request $request)
+    {
+        $params = $request->all();
+        list ($status, $message) = $this->userService->updateAvatar($params);
+        if ($status) {
+            return $this->success($message);
+        }
+
+        return $this->error(400, $message);
+    }
 }

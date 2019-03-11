@@ -18,14 +18,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-6">
-                            <a href="#" class="change-avatar">
+                            <a href="#avatarModal" class="change-avatar" data-toggle="modal">
                                 <i class="fa fa-edit edit-btn"></i>
                                 <img class="avatar-img"
-                                     src="{{asset('/images/avatar.png')}}"
+                                     src="{{asset($user->avatar)}}"
                                      alt="My Profile Img">
                             </a>
                         </div>
-
                         <div class="col-md-4 col-lg-4 col-sm-6">
                             <div class="user-info">
                                 <ul class="info-list">
@@ -60,5 +59,6 @@
             </div>
         </div>
     </div>
+    @include('User.partial.avatar')
 @endsection
 

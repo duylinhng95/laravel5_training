@@ -4,7 +4,7 @@
                 <div class="row">
                     <div class="userinfo col-md-2">
                         <div class="avatar">
-                            <img src="{{asset('images/avatar.png')}}" alt=""/>
+                            <img src="{{asset($post->user->avatar)}}" alt=""/>
                         </div>
                         <div class="name">
                             <h4></h4>

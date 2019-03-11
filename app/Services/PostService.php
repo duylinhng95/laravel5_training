@@ -224,6 +224,5 @@ class PostService
         } catch (\Throwable $e) {
             return [false, 404, $e->getMessage(), null];
         }
-
     }
 }

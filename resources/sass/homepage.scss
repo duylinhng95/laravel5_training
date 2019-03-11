@@ -317,6 +317,7 @@ img.avatar-img {
   display: block;
   margin: 0 auto;
   width: 220px;
+  height: 220px;
   border-radius: 50%;
   border: 5px solid #487eb0;
   padding: 1px;
@@ -575,4 +576,31 @@ button.load-more i {
 
 .left-sidebar h3, i{
   color: #2c3e50;
+}
+
+.fade.show {
+  opacity: 1;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5
+}
+
+.modal.show .modal-dialog {
+  -webkit-transform: translate(0,0);
+  -ms-transform: translate(0,0);
+  -o-transform: translate(0,0);
+  transform: translate(0,0);
+}
+
+#previewImage {
+  width: 300px;
+  height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+.avatar img {
+  width: 44px;
+  height: 44px;
 }

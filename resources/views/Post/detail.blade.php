@@ -7,7 +7,7 @@
             <div class="topwrap">
                 <div class="userinfo pull-left">
                     <div class="avatar">
-                        <img src={{asset('images/avatar.png')}} alt="">
+                        <img src={{asset($post->user->avatar)}} alt="">
                     </div>
                 </div>
                 <div class="posttext pull-left">
@@ -48,7 +48,7 @@
                             <div class="topwrap">
                                 <div class="userinfo pull-left">
                                     <div class="avatar">
-                                        <img src={{asset('images/avatar.png')}} alt="">
+                                        <img src={{asset($post->user->avatar)}} alt="">
                                     </div>
                                 </div>
                                 <div class="posttext pull-left">
@@ -73,7 +73,7 @@
                         <div class="topwrap">
                             <div class="userinfo pull-left">
                                 <div class="avatar">
-                                    <img src={{asset('images/avatar.png')}} alt="">
+                                    <img src={{asset(Auth::user()->avatar)}} alt="">
                                 </div>
                             </div>
                             <div class="posttext pull-left">

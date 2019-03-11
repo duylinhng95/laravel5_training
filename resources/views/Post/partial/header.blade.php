@@ -38,7 +38,7 @@
                     </div>
                     <div class="avatar pull-left dropdown">
                         <a data-toggle="dropdown" href="#" data-toggle="dropdown" role="button"
-                           data-display="static"><img src="{{asset('images/avatar.png')}}" alt=""/><b
+                           data-display="static"><img src="{{asset( Auth::user()->avatar )}}" alt=""/><b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
                             @if(Auth::user()->checkRole( 'admin'))

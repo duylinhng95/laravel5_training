@@ -42,28 +42,9 @@ class Comment {
 				data: data,
 				success: function (response) {
 					let res = response.data
+					console.log(res)
 					commentList.append(
-						`<div class="post">
-                        <div class="topwrap">
-                            <div class="userinfo pull-left">
-                                <div class="avatar">
-                                    <img src='../../images/avatar.png'alt="">
-                                </div>
-                            </div>
-                            <div class="posttext pull-left">
-                                <div class="user-name">
-                                    ${res.user.name}
-                                </div>
-                                <p>${res.content}</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="postinfobot">
-                            <div class="posted pull-left"><i class="fa fa-clock-o"></i> Commented on
-                                : ${res.created_at}</div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>`)
+						res.view)
 					content.val('')
 				},
 				error: function (res) {
