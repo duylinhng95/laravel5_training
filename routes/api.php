@@ -25,4 +25,5 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/get-interest', 'UserController@getInterest');
     Route::get('/load-interest-post', 'PostController@loadInterestPost');
     Route::get('/browse', 'PostController@browse');
+    Route::post('/user/avatar/', 'UserController@updateAvatar');
 });

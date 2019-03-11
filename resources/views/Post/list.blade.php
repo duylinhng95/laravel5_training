@@ -1,7 +1,4 @@
 @extends('Post.layout')
-@section('search')
-    @include('Post.search')
-@endsection
 @section('content')
     <div class="panel">
         <div class="panel-heading">

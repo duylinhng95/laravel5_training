@@ -57,7 +57,7 @@ class PostController extends Controller
         $params = $request->all();
         list($status, $code, $message, $data) = $this->postService->browsePosts($params);
         if ($status) {
-            return $this->success($message, ['view' => $data]);
+            return $this->success($message, ['view' => $data], $code);
         } else {
             return $this->error($code, $message);
         }

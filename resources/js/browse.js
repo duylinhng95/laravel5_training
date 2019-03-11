@@ -76,8 +76,15 @@ class Browse {
 			type: 'GET',
 			data: input,
 			success: function (response) {
-				mainContent.children().remove()
-				mainContent.append(response.data.view)
+				if (response === undefined) {
+					mainContent.children().remove()
+					mainContent.append(`<div class="post row notification-heading">
+			        <h2>Post not found. Please choose different keywords</h2>
+			    </div>`)
+				} else {
+					mainContent.children().remove()
+					mainContent.append(response.data.view)
+				}
 			}
 		})
 	}

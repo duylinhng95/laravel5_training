@@ -68,8 +68,13 @@ class PostController extends Controller
             return $this->error(400, "The comment is empty");
         }
         $comment = $this->postService->comment($slug, $input);
+        try {
+            $html = view('Post.partial.comment', compact('comment'))->render();
+        } catch (\Throwable $e) {
+            return $this->error($e->getCode(), $e->getMessage());
+        }
 
-        return $this->success('Add new comment successful', $comment);
+        return $this->success('Add new comment successful', ['view' => $html]);
     }
 
     public function vote($slug)

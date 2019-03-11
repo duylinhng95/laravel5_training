@@ -1,15 +1,10 @@
-@if($posts->isEmpty())
-    <div class="post row notification-heading">
-        <h2>Try another keywords. Your search input is not found</h2>
-    </div>
-@else
-    @foreach($posts as $post)
+ @foreach($posts as $post)
         <div class="post row">
             <div class="wrap-ut col-md-8">
                 <div class="row">
                     <div class="userinfo col-md-2">
                         <div class="avatar">
-                            <img src="{{asset('images/avatar.png')}}" alt=""/>
+                            <img src="{{asset($post->user->avatar)}}" alt=""/>
                         </div>
                         <div class="name">
                             <h4></h4>
@@ -44,4 +39,3 @@
             <div class="clearfix"></div>
         </div><!-- POST -->
     @endforeach
-@endif

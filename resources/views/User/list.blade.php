@@ -28,20 +28,20 @@
                             <div class="row">
                                 <div class="author-name col-md-offset-4">
                                     <h3>{{$user->name}}</h3>
-                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="author-img">
-                                        <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
+                                        <img class="img-responsive img-circle" src="{{asset($user->avatar)}}"
                                              alt="author"/>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <ul class="author-info">
-                                            <li><i class="fa fa-calendar-o"></i> {{formatDate($user->created_at)}}</li>
-                                            <li><i class="fa fa-book"></i> {{$user->count_post}}</li>
-                                            <li><i class="fa fa-thumbs-up"></i> {{$user->count_follow}}</li>
+                                        <li><i class="fa fa-calendar-o"></i> {{formatDate($user->created_at)}}</li>
+                                        <li><i class="fa fa-book"></i> {{$user->count_post}}</li>
+                                        <li><i class="fa fa-thumbs-up"></i> {{$user->count_follow}}</li>
                                     </ul>
                                 </div>
                             </div>
