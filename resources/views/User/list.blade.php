@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="author-img">
-                                        <img class="img-responsive img-circle" src="{{asset('images/avatar.png')}}"
+                                        <img class="img-responsive img-circle" src="{{asset($user->avatar)}}"
                                              alt="author"/>
                                     </div>
                                 </div>

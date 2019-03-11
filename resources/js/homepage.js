@@ -1,5 +1,6 @@
 require("./vendor/template/jquery.themepunch.plugins.min")
 require("./vendor/template/jquery.themepunch.revolution.min")
+import * as toastr from 'toastr/toastr';
 import Notification from './notification.js'
 
 class Homepage {
@@ -55,7 +56,6 @@ class Homepage {
 			this.commentFormHover()
 		}
 		this.getRecommendPost()
-
 		this.onChangeAvatar()
 		this.onSubmitFormAvatar()
 	}
@@ -400,15 +400,17 @@ class Homepage {
 	onChangeAvatar() {
 		let previewImage = this.avatar.previewImage
 		let avatarInput = this.avatar.avatarInput
-
+		let self = this
 		avatarInput.change(function (event) {
-			let input = event.currentTarget
-			let reader = new FileReader();
-			if (input.files && input.files[0]) {
-				reader.onload = function (e) {
-					previewImage.attr('src', e.target.result);
+			if (self.validateAvatarImage()) {
+				let input = event.currentTarget
+				let reader = new FileReader();
+				if (input.files && input.files[0]) {
+					reader.onload = function (e) {
+						previewImage.attr('src', e.target.result);
+					}
+					reader.readAsDataURL(input.files[0]);
 				}
-				reader.readAsDataURL(input.files[0]);
 			}
 		})
 	}
@@ -419,20 +421,34 @@ class Homepage {
 		let self = this
 		avatarForm.submit(function (event) {
 			event.preventDefault();
-			let formData = new FormData(avatarForm[0])
-			formData.append('user_id', avatarInput.data('user-id'))
-			$.ajax({
-				url: self.apiURL + '/user/avatar',
-				type: "POST",
-				data: formData,
-				contentType: false,
-				processData: false,
-				success: function(res) {
-					console.log(res)
-				}
-			})
-
+			if (self.validateAvatarImage()) {
+				let formData = new FormData(avatarForm[0])
+				formData.append('user_id', avatarInput.data('user-id'))
+				$.ajax({
+					url: self.apiURL + '/user/avatar',
+					type: "POST",
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function (res) {
+						location.reload()
+					}
+				})
+			}
 		})
+	}
+
+	validateAvatarImage() {
+		let str = this.avatar.avatarInput.val()
+		let mime = str.substring(str.lastIndexOf("."))
+		let mimeType = ['.png', '.jpg', '.jpeg']
+		if (mimeType.indexOf(mime) !== -1) {
+			return true;
+		} else {
+			toastr.options.preventDuplicates = true
+			toastr.error('The file must be type of png, jpg or jpeg', 'Wrong type of file!')
+			return false;
+		}
 	}
 }
 
