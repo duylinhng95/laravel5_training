@@ -42,7 +42,6 @@ class Comment {
 				data: data,
 				success: function (response) {
 					let res = response.data
-					console.log(res)
 					commentList.append(
 						res.view)
 					content.val('')
@@ -60,7 +59,7 @@ class Comment {
 		let error_msg = this.element.error_message
 		this.element.contentComment.keypress(function (event) {
 			error_msg.html('')
-			if(event.which === 13) {
+			if (event.which === 13) {
 				btnComment.click()
 			}
 		})
