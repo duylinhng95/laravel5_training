@@ -83,8 +83,8 @@
                                             <ul class="user-dropdown">
                                                 <div class="login-area">
                                                     <div class="form-group">
-                                                        <label for="exampleInputText1">Username</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                                        <label for="exampleInputText1">Username </label>
+                                                        <input type="email" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Email Address</label>
