@@ -23,6 +23,6 @@ class AuthenticateAdmin
             }
             return $next($request);
         }
-        return redirect()->route('post.index');
+        return redirect()->route('admin.login');
     }
 }
