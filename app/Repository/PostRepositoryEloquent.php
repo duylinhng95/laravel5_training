@@ -248,6 +248,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             });
         }
 
-        return $mainQuery->orderByDesc('created_at')->limit(5)->get();
+        return $mainQuery->where('status', config('constant.post.available'))
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
     }
 }

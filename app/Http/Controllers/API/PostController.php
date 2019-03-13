@@ -44,6 +44,7 @@ class PostController extends Controller
     public function loadInterestPost(Request $request)
     {
         $posts = $this->postRepository->getInterestPost($request->all());
+        dd($posts);
         try {
             $html = view('Post.Index.sidebar', compact('posts'))->render();
         } catch (\Throwable $e) {
