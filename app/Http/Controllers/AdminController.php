@@ -2,47 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    /** @var UserRepositoryEloquent */
+    protected $userRepository;
+    /** @var AdminService */
     protected $adminService;
 
     public function __construct()
     {
-        $this->adminService = app(AdminService::class);
+        $this->userRepository = app(UserRepository::class);
+        $this->adminService   = app(AdminService::class);
     }
 
-    public function importUser()
+    public function index(Request $request)
     {
-        $this->adminService->importUserDB();
-        return response()->json(['status' => '200', 'message' => 'Import User Success']);
-    }
-
-    public function index()
-    {
-        $users = $this->adminService->getUsers();
+        $params = $request->all();
+        $users  = $this->userRepository->getUsers($params);
         return view('Admin.user.index', compact('users'));
     }
 
-    public function blockUser(Request $request)
+    public function showPassword()
     {
-        $id = $request->input('id');
-        $user = $this->adminService->block($id);
-        return response()->json($user);
+        return view('Admin.password');
     }
 
-    public function unblockUser(Request $request)
+    public function storePassword(Request $request)
     {
-        $id = $request->input('id');
-        $user = $this->adminService->unblock($id);
-        return response()->json($user);
+        $input = $request->except('_token');
+        list($status, $code, $message) = $this->adminService->updatePassword($input);
+
+        if ($status) {
+            return redirect()->route('admin.password')->with(['code' => $code, 'message' => $message]);
+        }
+
+        return redirect()->route('admin.password')->with(['code' => $code, 'message' => $message]);
     }
 
-    public function listPost()
+    public function showLogin()
     {
-        $posts = $this->adminService->getPosts();
-        return view('Admin.post.index', compact('posts'));
+        return view('Admin.login');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $input = $request->except('_token');
+        list($status, $code, $message) = $this->adminService->login($input);
+        if ($status) {
+            return redirect()->route('admin.index');
+        } else {
+            return back()
+                ->with(['code' => $code, 'message' => $message]);
+        }
     }
 }

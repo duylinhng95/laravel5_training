@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use App\Repository\RocketProfileRepository;
-use App\Repository\BaseRepositoryEloquent;
 use App\Entities\RocketProfile;
 
 class RocketProfileRepositoryEloquent extends BaseRepositoryEloquent implements RocketProfileRepository
@@ -16,7 +14,7 @@ class RocketProfileRepositoryEloquent extends BaseRepositoryEloquent implements 
     public function createProfile($arr)
     {
         foreach ($arr as $a) {
-            $this->model->firstOrCreate($a);
+            $this->makeModel()->firstOrCreate($a);
         }
         return true;
     }

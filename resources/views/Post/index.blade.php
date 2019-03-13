@@ -1,38 +1,51 @@
 @extends('Post.layout')
-@section('title')
-    Post List
-@endsection
 @section('content')
-    <div class="card-header">
-        <h2>Post</h2>
-        <a href="{{url('/post/create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new post</a>
-        <a href="{{url('/auth/logout')}}" class="btn btn-danger float-right">Logout</a>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-light text-dark">
-                <thead class="text-center">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Content</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                @foreach($posts as $p)
-                    <tr>
-                        <td>{{$p->title}}</td>
-                        <td>{{$p->description}}</td>
-                        <td>{{$p->content}}</td>
-                        <td>
-                            <a href="{{url('/post/'.$p->id.'/edit')}}" class="btn btn-info"><i class="fa fa-pen"></i>
-                                Edit</a>
-                            <a href="{{url('/post/'.$p->id.'/delete')}}" class="btn btn-danger"><i
-                                        class="fa fa-trash"></i> Delete</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
+    @include('Post.partial.left-sidebar')
+    <div class="col-lg-8 col-md-8" id="indexContent">
+        <!-- POST -->
+        @if($posts->isEmpty())
+            <div class="text-center">
+                <h4>There are no post can be found</h4>
+            </div>
+        @endif
+        @foreach($posts as $post)
+        <div class="post row">
+            <div class="wrap-ut col-md-8">
+                <div class="row">
+                    <div class="userinfo col-md-2">
+                        <div class="avatar">
+                            <img src="{{asset($post->user->avatar)}}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="posttext col-md-10">
+                        <h2><a href="{{route('post.show', ['slug' => $post->slug])}}">{{$post->title}}</a></h2>
+                        <div class="user-name">
+                            <i class="fa fa-user"></i> {{$post->user->name}}
+                        </div>
+                        {!! $post->encode_content !!}
+                        <ul class="tags">
+                            @foreach($post->tags as $tag)
+                            <a href="?tags={{$tag->name}}"><li class="badge">{{$tag->name}}</li></a>
+                            @endforeach
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="postinfo pull-left">
+                <div class="comments">
+                    <div class="commentbg">
+                        {{$post->count_comments}}
+                        <div class="mark"></div>
+                    </div>
+
+                </div>
+                <div class="views"><i class="fa fa-eye"></i> {{$post->view}}</div>
+                <div class="time"><i class="fa fa-clock-o"></i> {{formatDate($post->created_at)}}</div>
+            </div>
+            <div class="clearfix"></div>
+        </div><!-- POST -->
+        @endforeach
     </div>
 @endsection

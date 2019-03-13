@@ -7,8 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    public $roleName   = ['user' => 1, 'admin' => 2];
+    public $statusName = ['not_verify' => 0, 'verify' => 1, 'block' => 2];
 
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -18,9 +20,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'status',
-        'role',
         'rating',
+        'provider',
+        'provider_id',
     ];
 
     /**
@@ -33,8 +35,96 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'count_follow',
+        'count_post',
+        'first_name'
+    ];
+
     public function rocket()
     {
-        $this->hasOne('App\Entities\RocketProfile');
+        return $this->hasOne(RocketProfile::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function follows()
+    {
+        return $this->hasMany(Follow::class);
+    }
+
+    public function followings()
+    {
+        return $this->hasMany(Follow::class, 'follower_id', 'id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(PostVote::class);
+    }
+
+    public function userRoles()
+    {
+        return $this->hasMany(UserRole::class);
+    }
+
+    public function getCountPostAttribute()
+    {
+        return count($this->posts);
+    }
+
+    public function getCountFollowAttribute()
+    {
+        return count($this->followings);
+    }
+
+    public function checkFollow($id)
+    {
+        return $this->follows->contains('follower_id', $id);
+    }
+
+    public function getRoles()
+    {
+        $userRoles = $this->userRoles;
+        $roles     = [];
+        foreach ($userRoles as $role) {
+            $roles[] = $role->role->name;
+        }
+        return $roles;
+    }
+
+    public function checkStatus()
+    {
+        return $this->status != $this->statusName['block'];
+    }
+
+    public function checkRole($roleName)
+    {
+        $roles     = $this->userRoles;
+        $userRoles = [];
+        foreach ($roles as $role) {
+            $userRoles[] = $role->role->name;
+        }
+        return in_array($roleName, $userRoles);
+    }
+
+    public function getFirstNameAttribute()
+    {
+        $username = $this->name;
+        $array = explode(' ', $username);
+        return end($array);
+    }
+
+    public function interests()
+    {
+        return $this->hasMany(Interest::class);
     }
 }

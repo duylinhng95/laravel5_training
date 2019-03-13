@@ -5,9 +5,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin Portal</title>
+    <title>NeoLog</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{mix('css/admin.css')}}">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
     <!-- ============================================================== -->
     <div class="dashboard-header">
         <nav class="navbar navbar-expand-lg bg-white fixed-top">
-            <a class="navbar-brand" href="../index.html">Admin Portal</a>
+            <a class="navbar-brand" href="{{route('admin.index')}}">NeoLog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,9 @@
                             <li class="connection-list">
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 offset-3">
-                                        <a href="#" class="connection-item"><i class="fa fa-key fa-3x"></i><span>Sign Out</span></a>
+                                        <a href="{{route('admin.password')}}" class="connection-item"><i class="fa fa-user-lock fa-3x" ></i><span>Password</span></a>
+                                        <a href="{{route('auth.logout')}}" class="connection-item"><i class="fa fa-key fa-3x"></i><span>Sign Out</span></a>
+                                        <a href="{{route('post.index')}}" class="connection-item"><i class="fa fa-arrow-circle-left fa-3x"></i><span>Back to Homepage</span></a>
                                     </div>
                                 </div>
                             </li>
@@ -124,8 +126,9 @@
 <!-- end main wrapper -->
 <!-- ============================================================== -->
 <!-- Optional JavaScript -->
-<script src="{{asset('js/admin.js')}}"></script>
-@yield('script')
+<script src="{{mix('js/admin.js')}}"></script>
+
+@stack('script')
 </body>
 
 </html>

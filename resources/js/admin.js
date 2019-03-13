@@ -1,128 +1,167 @@
-require('./bootstrap');
+require('./vendor/template.js')
+require('./bootstrap')
+require('jquery-validation/dist/additional-methods')
 
-window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
-
-
-jQuery(document).ready(function ($) {
-	'use strict';
-
-	// ==============================================================
-	// Notification list
-	// ==============================================================
-	if ($(".notification-list").length) {
-
-		$('.notification-list').slimScroll({
-			height: '250px'
-		});
-
+class Admin {
+	constructor() {
+		this.init()
 	}
 
-	// ==============================================================
-	// Menu Slim Scroll List
-	// ==============================================================
-
-
-	if ($(".menu-list").length) {
-		$('.menu-list').slimScroll({});
+	init() {
+		this.config()
+		this.listen()
 	}
 
-	// ==============================================================
-	// Sidebar scrollnavigation
-	// ==============================================================
+	config() {
+		this.element = {
+			btnImportUser: $("#btnImportUser"),
+			btnSearchUser: $("#searchBtnUser"),
+			btnSearchPost: $("#searchPostBtn"),
+			btnSearchWord: $("#searchWordsBtn"),
+			btnSubmitFileWord: $("#btnSubmitFileWord"),
+			fileForm: $("#submitFileForm"),
+			searchField: $("#search"),
+			params: location.search,
+			loader: $("#loader"),
+		}
+		this.section = {
+			title: $("#titleSort"),
+			category: $("#categorySort"),
+			user: $("#userSort"),
+			deleted_at: $("#deletedAtSort"),
+			email: $("#emailSort"),
+			status: $("#statusSort"),
+			name: $("#nameSort"),
 
-	if ($(".sidebar-nav-fixed a").length) {
-		$('.sidebar-nav-fixed a')
-		// Remove links that don't actually link to anything
+		}
+		this.apiURL = location.href
+		this.originURL = location.origin
+		this.pathName = location.pathname
+	}
 
-			.click(function (event) {
-				// On-page links
-				if (
-					location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
-					location.hostname == this.hostname
-				) {
-					// Figure out element to scroll to
-					var target = $(this.hash);
-					target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-					// Does a scroll target exist?
-					if (target.length) {
-						// Only prevent default if animation is actually gonna happen
-						event.preventDefault();
-						$('html, body').animate({
-							scrollTop: target.offset().top - 90
-						}, 1000, function () {
-							// Callback after animation
-							// Must change focus!
-							var $target = $(target);
-							$target.focus();
-							if ($target.is(":focus")) { // Checking if the target was focused
-								return false;
-							} else {
-								$target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-								$target.focus(); // Set focus again
-							}
-						});
-					}
+	listen() {
+		this.buttonSort()
+		this.importUser()
+		this.btnSearchEnter(this.element.btnSearchWord)
+		this.onSearch(this.element.btnSearchWord)
+		this.btnSearchEnter(this.element.btnSearchPost)
+		this.onSearch(this.element.btnSearchPost)
+		this.btnSearchEnter(this.element.btnSearchUser)
+		this.onSearch(this.element.btnSearchUser)
+		this.sortButtonPress()
+		this.checkNoData()
+		this.setActiveClass()
+		this.validateFileWord()
+	}
+
+	importUser() {
+		let url = `${this.originURL}/admin/user/import`
+		let self = this
+		this.element.btnImportUser.on('click', function () {
+			self.element.loader.html(`
+						<td colspan="6" align="center">
+                <span class="dashboard-spinner spinner-primary spinner-lg"></span>
+            </td>
+			`)
+			$.ajax({
+				url: url,
+				type: "GET",
+				success: function () {
+					location.reload()
 				}
-				$('.sidebar-nav-fixed a').each(function () {
-					$(this).removeClass('active');
-				})
-				$(this).addClass('active');
-			});
-
+			})
+		})
 	}
 
-	// ==============================================================
-	// tooltip
-	// ==============================================================
-	if ($('[data-toggle="tooltip"]').length) {
-
-		$('[data-toggle="tooltip"]').tooltip()
-
+	onSearch(name) {
+		let input = this.element.searchField
+		name.on('click', function (event) {
+			let url = location.pathname
+			input = input.val()
+			window.location.href = `${url}?keywords=${input}`
+		})
 	}
 
-	// ==============================================================
-	// popover
-	// ==============================================================
-	if ($('[data-toggle="popover"]').length) {
-		$('[data-toggle="popover"]').popover()
-
+	btnSearchEnter(name) {
+		let btnSearch = name
+		this.element.searchField.keypress(function (event) {
+			if (event.which === 13) {
+				btnSearch.click()
+			}
+		})
 	}
-	// ==============================================================
-	// Chat List Slim Scroll
-	// ==============================================================
 
-
-	if ($('.chat-list').length) {
-		$('.chat-list').slimScroll({
-			color: 'false',
-			width: '100%'
-
-
-		});
+	sortButtonPress() {
+		let params = new URLSearchParams(this.element.params)
+		let url = `${this.pathName}?`
+		$.each(this.section, function (key, value) {
+			value.on('click', function (event) {
+				let section = event.currentTarget.children[1].value
+				if (params.get('order') == 'desc') {
+					params.set('sort', section)
+					params.set('order', 'asc')
+					location.href = url + params.toString()
+				} else {
+					params.set('sort', section)
+					params.set('order', 'desc')
+					location.href = url + params.toString()
+				}
+			})
+		})
 	}
-	// ==============================================================
-	// dropzone script
-	// ==============================================================
 
-	//     if ($('.dz-clickable').length) {
-	//            $(".dz-clickable").dropzone({ url: "/file/post" });
-	// }
+	buttonSort() {
+		let urlParams = new URLSearchParams(window.location.search);
+		let order = urlParams.getAll('order');
+		let section = urlParams.get('sort');
+		let button = $('#' + section)
+		if (order == 'desc') {
+			button.removeClass('fa-arrow-up');
+			button.addClass('fa-arrow-down');
+		} else {
+			button.removeClass('fa-arrow-down');
+			button.addClass('fa-arrow-up');
+		}
+	}
 
-}); // AND OF JQUERY
+	checkNoData() {
+		let tbody = $("tbody")
+		if (tbody.children().length == 0) {
+			tbody.append(`<td colspan="6" align="center">
+                No data is found
+            </td>`)
+		}
+	}
 
+	setActiveClass() {
+		let url = location.href
+		$(".nav-link").each(function () {
+			if (this.href === url) {
+				$(this).addClass('active')
+			}
+		})
+	}
 
-// $(function() {
-//     "use strict";
+	validateFileWord() {
+		let formData = this.element.fileForm
+		formData.validate({
+			rules: {
+				banned_words: {
+					required: true,
+					extension: "csv"
+				}
+			},
+			messages: {
+				banned_words: {
+					required: "File is required",
+					extension: "File must be csv extension"
+				}
+			},
+			submitHandler: function (form) {
+				form.submit();
+			}
+		})
+	}
+}
 
-
-// var monkeyList = new List('test-list', {
-//    valueNames: ['name']
-
-// });
-// var monkeyList = new List('test-list-2', {
-//    valueNames: ['name']
-
-// });
-
-
-// });
+new Admin()

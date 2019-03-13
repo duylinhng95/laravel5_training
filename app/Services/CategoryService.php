@@ -13,11 +13,6 @@ class CategoryService
         $this->categoryRepository = app(CategoryRepositoryEloquent::class);
     }
 
-    public function all()
-    {
-        return $this->categoryRepository->all();
-    }
-
     public function create($input)
     {
         return $this->categoryRepository->create($input);
@@ -36,5 +31,14 @@ class CategoryService
     public function delete($id)
     {
         return $this->categoryRepository->delete($id);
+    }
+
+    public function checkPosts($id)
+    {
+        $category = $this->categoryRepository->find($id);
+        if (count($category->posts) != 0) {
+            return false;
+        }
+        return true;
     }
 }

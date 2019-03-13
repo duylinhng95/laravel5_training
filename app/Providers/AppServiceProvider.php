@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Http\Views\PostComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \View::composer([
+            'Post.layout',
+            'Post.partial.right-sidebar',
+            'Post.partial.footer',
+            'Post.partial.left-sidebar'
+        ], PostComposer::class);
+        \Schema::defaultStringLength(191);
     }
 
     /**

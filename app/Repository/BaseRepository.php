@@ -13,4 +13,14 @@ interface BaseRepository
     public function update($id, $att, $input);
 
     public function delete($id);
+
+    public function findByFields($fields, $value, $att, $columns);
+
+    public function paginate($num);
+
+    public function deleteWhere(array $where);
+
+    public function findWhereGetFirst(array $where);
+
+    public function findWhere(array $where, $columns = ['*']);
 }

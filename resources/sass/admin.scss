@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
@@ -5,8 +6,7 @@
 @import '~@fortawesome/fontawesome-free/scss/v4-shims.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '../fonts/circular-std/style.css';
-
-@charset "UTF-8";
+@import '~toastr/toastr.scss';
 /**
  * Summary:
  *
@@ -2072,7 +2072,8 @@ Pageheader
   color: #71748d;
   background-color: #fff;
   width: 100%;
-  /*position: absolute; bottom: 0;*/
+  position: absolute;
+  bottom: 1px;
 }
 
 .footer-links {}
@@ -3385,7 +3386,7 @@ btn-link
   display: flex;
   -webkit-box-align: start;
   -ms-flex-align: start;
-  align-items: start;
+  align-items: flex-start;
   padding: .5rem;
   opacity: 0;
   z-index: 2;
@@ -5539,7 +5540,7 @@ Vertical Timeline - by CodyHouse.co
   background: #fafafa;
   background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
   background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
-  background: linear-gradient(top, #fafafa 0%, #eee 100%);
+  background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
   -webkit-border-radius: 3px;
   border-radius: 3px;
   box-sizing: border-box;
@@ -5573,7 +5574,7 @@ Vertical Timeline - by CodyHouse.co
   background: #ddd;
   background: -webkit-linear-gradient(top, #ddd 0%, #bbb 100%);
   background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
-  background: linear-gradient(top, #ddd 0%, #bbb 100%);
+  background: linear-gradient(to bottom, #ddd 0%, #bbb 100%);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -5684,7 +5685,6 @@ Vertical Timeline - by CodyHouse.co
 .mailbox .drop-title:after {
   content: "";
   position: absolute;
-  background: url(../images/background/img5.html) no-repeat;
   opacity: 0.2;
   top: 0px;
   left: 0px;
@@ -6981,3 +6981,7 @@ Media Query
 }
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}
+
+.btn-search {
+  height: 38px;
+}

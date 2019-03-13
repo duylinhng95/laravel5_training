@@ -1,6 +1,6 @@
 /node_modules
 /public/hot
-/public/storage
+/public/storage/*
 /storage/*.key
 /vendor
 .env
@@ -12,3 +12,10 @@ yarn-error.log
 .idea/*
 yarn.lock
 composer.lock
+/public/mix-manifest.json
+/public/js/*
+/public/css/*
+/public/fonts/*
+/public/images/*
+/storage/debugbar/
+_ide_helper.php
