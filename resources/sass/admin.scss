@@ -6993,3 +6993,12 @@ h3 {
 span.required {
   color: red;
 }
+
+.action-dropdown {
+  width: 200px;
+  box-shadow: -10px 5px 30px #ccc;
+}
+
+.action-dropdown .btn {
+  width: 100%;
+}

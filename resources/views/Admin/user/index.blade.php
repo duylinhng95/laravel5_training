@@ -51,17 +51,7 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td id="userStatus">
-                        @switch($user->status)
-                            @case(0)
-                            Not Active
-                            @break
-                            @case(1)
-                            Active
-                            @break
-                            @case(2)
-                            Block
-                            @break
-                        @endswitch
+                        {{$user->get_status}}
                     </td>
                     <td>
                         {{implode(' ',$user->getRoles())}}

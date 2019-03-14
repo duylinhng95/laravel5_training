@@ -24,7 +24,6 @@ class Admin {
 			params: location.search,
 			loader: $("#loader"),
 			btnBlock: $(".btn-block"),
-			btnUnblock: $(".btn-unblock"),
 			actionDropdown: $(".action-dropdown"),
 		}
 		this.section = {
@@ -173,7 +172,7 @@ class Admin {
 			let target = this
 			let userId = $(target).data('user-id')
 			$.ajax({
-				url: self.originURL + "/api/block",
+				url: self.originURL + "/api/change-status",
 				data: {id: userId},
 				method: "get",
 				success: function (res) {

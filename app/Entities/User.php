@@ -39,7 +39,8 @@ class User extends Authenticatable
     protected $appends = [
         'count_follow',
         'count_post',
-        'first_name'
+        'first_name',
+        'get_status'
     ];
 
     public function rocket()
@@ -120,12 +121,25 @@ class User extends Authenticatable
     public function getFirstNameAttribute()
     {
         $username = $this->name;
-        $array = explode(' ', $username);
+        $array    = explode(' ', $username);
         return end($array);
     }
 
     public function interests()
     {
         return $this->hasMany(Interest::class);
+    }
+
+    public function getGetStatusAttribute()
+    {
+        $status = $this->status;
+        switch ($status) {
+            case 0:
+                return "Not Active";
+            case 1:
+                return "Active";
+            case 2:
+                return "Block";
+        }
     }
 }

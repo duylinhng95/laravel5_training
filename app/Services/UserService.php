@@ -171,6 +171,11 @@ class UserService
         return Socialite::driver($provider)->redirect();
     }
 
+    /**
+     * @param $provider
+     * @return array
+     * @throws Exception
+     */
     public function handleProviderCallback($provider)
     {
         $providerUser = Socialite::driver($provider)->user();
@@ -179,10 +184,22 @@ class UserService
             'name'        => $providerUser->name,
             'provider'    => $provider,
             'provider_id' => $providerUser->id,
+            'status'      => config('constant.user.status.verify')
         ];
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
 
+
+        try {
+            DB::beginTransaction();
+            /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+            $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
+            $this->roleRepository->firstOrCreate(['user_id' => $user->id], [
+                'role_id' => config('constant.user.role.user'),
+            ]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
         Auth::login($user);
 
         return [true, 200, 'User login Success'];
