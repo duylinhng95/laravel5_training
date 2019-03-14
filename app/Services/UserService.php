@@ -225,21 +225,12 @@ class UserService
     {
         $user = $this->userRepository->find($id);
         if ($user->status !== config('constant.user.status.block')) {
-            $user = $this->userRepository->blocked($id);
-            try {
-                $html = view('Admin.user.partial.dropdown', compact('user'))->render();
-            } catch (\Throwable $e) {
-                return [false, $e->getCode(), $e->getMessage(), null];
-            }
+            $this->userRepository->blocked($id);
             return [true, 200, 'User has been blocked', ['status' => 'Block']];
         }
 
         $user = $this->userRepository->unblocked($id);
-        try {
-            $html = view('Admin.user.partial.dropdown', compact('user'))->render();
-        } catch (\Throwable $e) {
-            return [false, $e->getCode(), $e->getMessage(), null];
-        }
+
         $status = "Active";
         if ($user->status !== config('constant.user.status.verify')) {
             $status = 'Not Active';
