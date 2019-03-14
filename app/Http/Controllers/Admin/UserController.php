@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->adminService = app(AdminService::class);
+        $this->adminService   = app(AdminService::class);
         $this->userRepository = app(UserRepository::class);
     }
 
@@ -45,5 +45,17 @@ class UserController extends Controller
         $id   = $request->input('id');
         $user = $this->userRepository->unblocked($id);
         return $this->success('Unblock User Successful', $user);
+    }
+
+    public function index(Request $request)
+    {
+        $params = $request->all();
+        $users  = $this->userRepository->getUsers($params);
+        return view('Admin.user.index', compact('users'));
+    }
+
+    public function create()
+    {
+        return view('Admin.user.create');
     }
 }
