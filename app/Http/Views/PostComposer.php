@@ -3,14 +3,20 @@
 namespace App\Http\Views;
 
 use App\Repository\CategoryRepository;
+use App\Repository\CategoryRepositoryEloquent;
+use App\Repository\PostRepositoryEloquent;
 use App\Repository\PostTagRepository;
 use App\Repository\PostRepository;
+use App\Repository\PostTagRepositoryEloquent;
 use Illuminate\View\View;
 
 class PostComposer
 {
+    /** @var PostTagRepositoryEloquent */
     protected $postTagRepository;
+    /** @var PostRepositoryEloquent */
     protected $postRepository;
+    /** @var CategoryRepositoryEloquent */
     protected $categoryRepository;
 
     public function __construct()

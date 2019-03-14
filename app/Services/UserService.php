@@ -171,6 +171,11 @@ class UserService
         return Socialite::driver($provider)->redirect();
     }
 
+    /**
+     * @param $provider
+     * @return array
+     * @throws Exception
+     */
     public function handleProviderCallback($provider)
     {
         $providerUser = Socialite::driver($provider)->user();
@@ -179,10 +184,22 @@ class UserService
             'name'        => $providerUser->name,
             'provider'    => $provider,
             'provider_id' => $providerUser->id,
+            'status'      => config('constant.user.status.verify')
         ];
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-        $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
 
+
+        try {
+            DB::beginTransaction();
+            /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+            $user = $this->userRepository->firstOrCreate(['email' => $params['email']], $params);
+            $this->roleRepository->firstOrCreate(['user_id' => $user->id], [
+                'role_id' => config('constant.user.role.user'),
+            ]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
         Auth::login($user);
 
         return [true, 200, 'User login Success'];
@@ -192,9 +209,9 @@ class UserService
     {
         $userId = $params['user_id'];
         /** @var UploadedFile $file */
-        $file = $params['avatar_img'];
-        $user = $this->userRepository->find($userId);
-        $pathName = public_path('/images/'.$user->email);
+        $file     = $params['avatar_img'];
+        $user     = $this->userRepository->find($userId);
+        $pathName = public_path('/images/' . $user->email);
         $filename = 'avatar.' . $file->getClientOriginalExtension();
         try {
             $file->move($pathName, $filename);
@@ -204,5 +221,38 @@ class UserService
         $user->avatar = "images/{$user->email}/{$filename}";
         $user->save();
         return [true, 'Uploaded file success'];
+    }
+
+    public function createUser($params)
+    {
+        $params['password'] = Hash::make($params['password']);
+        return $this->userRepository->create($params);
+    }
+
+    public function updateUser($id, $params)
+    {
+        if (is_null($params['password'])) {
+            unset($params['password']);
+        }
+
+        return $this->userRepository->update($id, $params);
+    }
+
+    public function blockUser($id)
+    {
+        $user = $this->userRepository->find($id);
+        if ($user->status !== config('constant.user.status.block')) {
+            $this->userRepository->blocked($id);
+            return [true, 200, 'User has been blocked', ['status' => 'Block']];
+        }
+
+        $user = $this->userRepository->unblocked($id);
+
+        $status = "Active";
+        if ($user->status !== config('constant.user.status.verify')) {
+            $status = 'Not Active';
+        }
+
+        return [true, 200, "User has been unblocked", ['status' => $status]];
     }
 }

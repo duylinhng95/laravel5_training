@@ -23,6 +23,8 @@ class Admin {
 			searchField: $("#search"),
 			params: location.search,
 			loader: $("#loader"),
+			btnBlock: $(".btn-block"),
+			actionDropdown: $(".action-dropdown"),
 		}
 		this.section = {
 			title: $("#titleSort"),
@@ -52,6 +54,7 @@ class Admin {
 		this.checkNoData()
 		this.setActiveClass()
 		this.validateFileWord()
+		this.blockUser(this.element.btnBlock)
 	}
 
 	importUser() {
@@ -136,7 +139,7 @@ class Admin {
 	setActiveClass() {
 		let url = location.href
 		$(".nav-link").each(function () {
-			if (this.href === url) {
+			if (url.includes(this.href)) {
 				$(this).addClass('active')
 			}
 		})
@@ -160,6 +163,36 @@ class Admin {
 			submitHandler: function (form) {
 				form.submit();
 			}
+		})
+	}
+
+	blockUser(button) {
+		let self = this
+		button.on('click', function (event) {
+			let target = this
+			let userId = $(target).data('user-id')
+			$.ajax({
+				url: self.originURL + "/api/change-status",
+				data: {id: userId},
+				method: "get",
+				success: function (res) {
+					let statusSection = $(target).parents("#action").parent().children('#userStatus')
+					let status = res.data.status
+					if(status === "Block")
+					{
+						$(target).removeClass("btn-danger")
+						$(target).addClass("btn-success")
+						$(target).html("Unblock")
+					} else {
+						$(target).removeClass("btn-success")
+						$(target).addClass("btn-danger")
+						$(target).html("Block")
+
+					}
+
+					statusSection.html(status)
+				}
+			})
 		})
 	}
 }

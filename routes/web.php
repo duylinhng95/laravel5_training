@@ -57,15 +57,23 @@ Route::group(['prefix' => '/'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
-    Route::get('/', 'AdminController@index')->name('admin.index');
+
+    Route::get('/', 'AdminController@dashboard')->name('admin.index');
+
     Route::group(['namespace' => 'Admin'], function () {
+
         Route::group(['prefix' => 'user'], function () {
+            Route::get('/', 'UserController@index')->name('admin.user');
             Route::get('import', 'UserController@import');
-            Route::get('block', 'UserController@block');
-            Route::get('unblock', 'UserController@unblock');
+            Route::get('create', 'UserController@create')->name('admin.user.create');
+            Route::post('create', 'UserController@store')->name('admin.user.create');
+            Route::get('/{id}', 'UserController@edit')->name('admin.user.edit');
+            Route::put('/{id}', 'UserController@update')->name('admin.user.edit');
+            Route::delete('/{id}', 'UserController@delete')->name('admin.user.delete');
         });
+
         Route::group(['prefix' => 'category'], function () {
-            Route::get('/', 'CategoryController@index');
+            Route::get('/', 'CategoryController@index')->name('admin.category');
             Route::post('/', 'CategoryController@store');
             Route::get('/{id}', 'CategoryController@show');
             Route::put('/', 'CategoryController@save');
@@ -87,7 +95,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-
-Route::get('/test', function() {
-    return view('Post.template');
-});

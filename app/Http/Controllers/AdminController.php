@@ -61,4 +61,9 @@ class AdminController extends Controller
                 ->with(['code' => $code, 'message' => $message]);
         }
     }
+
+    public function dashboard()
+    {
+        return redirect()->route('admin.user');
+    }
 }

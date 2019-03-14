@@ -6982,6 +6982,23 @@ Media Query
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}
 
-.btn-search {
-  height: 38px;
+button.btn-search {
+  height: 35px;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+span.required {
+  color: red;
+}
+
+.action-dropdown {
+  width: 200px;
+  box-shadow: -10px 5px 30px #ccc;
+}
+
+.action-dropdown .btn {
+  width: 100%;
 }
