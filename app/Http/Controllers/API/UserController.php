@@ -74,4 +74,14 @@ class UserController extends Controller
 
         return $this->error(400, $message);
     }
+
+    public function block(Request $request)
+    {
+        $id = $request->input('id');
+        list($status, $code, $message, $html) = $this->userService->blockUser($id);
+        if ($status) {
+            return $this->success($message, $html);
+        }
+        return $this->error($code, $message);
+    }
 }

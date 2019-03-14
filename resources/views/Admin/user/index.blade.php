@@ -50,7 +50,7 @@
                     <td>{{++$index}}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
-                    <td id="status">
+                    <td id="userStatus">
                         @switch($user->status)
                             @case(0)
                             Not Active
@@ -67,12 +67,10 @@
                         {{implode(' ',$user->getRoles())}}
                     </td>
                     <td id="action">
-                        <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
-                                @if($user->status == 2) disabled @endif>Block User
-                        </button>
-                        <button class="btn btn-success" onclick="unBlockUser({{$user->id}})"
-                                @if($user->status != 2) disabled @endif>Unblock User
-                        </button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">Action</button>
+                        <ul class="dropdown-menu action-dropdown">
+                            @include('Admin.user.partial.dropdown')
+                        </ul>
                     </td>
                 </tr>
             @endforeach
@@ -82,9 +80,3 @@
         {{$users->links()}}
     </div>
 @endsection
-@push('script')
-    <script>
-			var blockUserURI = "{{url('/admin/user/block')}}";
-			var unBlockUserURI = "{{url('/admin/user/unblock')}}";
-    </script>
-@endpush

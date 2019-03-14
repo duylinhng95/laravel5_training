@@ -65,10 +65,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', 'UserController@index')->name('admin.user');
             Route::get('import', 'UserController@import');
-            Route::get('block', 'UserController@block');
-            Route::get('unblock', 'UserController@unblock');
             Route::get('create', 'UserController@create')->name('admin.user.create');
             Route::post('create', 'UserController@store')->name('admin.user.create');
+            Route::get('/{id}', 'UserController@edit')->name('admin.user.edit');
+            Route::put('/{id}', 'UserController@update')->name('admin.user.edit');
+            Route::delete('/{id}', 'UserController@delete')->name('admin.user.delete');
         });
 
         Route::group(['prefix' => 'category'], function () {

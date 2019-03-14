@@ -40,9 +40,9 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     {
         $user = $this->makeModel()->find($id);
         if (!empty($user->email)) {
-            $user->status = $user->statusName['verify'];
+            $user->status = config('constant.user.status.verify');
         } else {
-            $user->status = $user->statusName['not_verify'];
+            $user->status = config('constant.user.status.not_verify');
         }
         $user->save();
         return $user;

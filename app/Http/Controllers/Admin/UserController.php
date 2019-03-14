@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UserEditRequest;
+use App\Http\Requests\UserRequest;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Services\UserService;
@@ -39,20 +41,6 @@ class UserController extends Controller
         return $this->success('Import User Successful');
     }
 
-    public function block(Request $request)
-    {
-        $id   = $request->input('id');
-        $user = $this->userRepository->blocked($id);
-        return $this->success('Block User Successful', $user);
-    }
-
-    public function unblock(Request $request)
-    {
-        $id   = $request->input('id');
-        $user = $this->userRepository->unblocked($id);
-        return $this->success('Unblock User Successful', $user);
-    }
-
     public function index(Request $request)
     {
         $params = $request->all();
@@ -66,10 +54,29 @@ class UserController extends Controller
     }
 
     //Change Request to RegisterRequest
-    public function store(RegisterRequest $request)
+    public function store(UserRequest $request)
     {
         $params = $request->except('_token');
         $user   = $this->userService->createUser($params);
         return redirect()->route('admin.user')->with('success', "Add User Successfully");
+    }
+
+    public function edit($id)
+    {
+        $user = $this->userRepository->find($id);
+        return view('Admin.user.edit', compact('user'));
+    }
+    public function update($id, UserRequest $request)
+    {
+        $params = $request->except('_token', '_method');
+        $this->userService->updateUser($id, $params);
+        $user = $this->userRepository->find($id);
+        return redirect()->route('admin.user')->with('success', "Edit {$user->name} Successfully");
+    }
+
+    public function delete($id)
+    {
+        $this->userRepository->delete($id);
+        return redirect()->route('admin.user')->with('success', 'Delete User Successfully');
     }
 }

@@ -192,9 +192,9 @@ class UserService
     {
         $userId = $params['user_id'];
         /** @var UploadedFile $file */
-        $file = $params['avatar_img'];
-        $user = $this->userRepository->find($userId);
-        $pathName = public_path('/images/'.$user->email);
+        $file     = $params['avatar_img'];
+        $user     = $this->userRepository->find($userId);
+        $pathName = public_path('/images/' . $user->email);
         $filename = 'avatar.' . $file->getClientOriginalExtension();
         try {
             $file->move($pathName, $filename);
@@ -210,5 +210,41 @@ class UserService
     {
         $params['password'] = Hash::make($params['password']);
         return $this->userRepository->create($params);
+    }
+
+    public function updateUser($id, $params)
+    {
+        if (is_null($params['password'])) {
+            unset($params['password']);
+        }
+
+        return $this->userRepository->update($id, $params);
+    }
+
+    public function blockUser($id)
+    {
+        $user = $this->userRepository->find($id);
+        if ($user->status !== config('constant.user.status.block')) {
+            $user = $this->userRepository->blocked($id);
+            try {
+                $html = view('Admin.user.partial.dropdown', compact('user'))->render();
+            } catch (\Throwable $e) {
+                return [false, $e->getCode(), $e->getMessage(), null];
+            }
+            return [true, 200, 'User has been blocked', ['status' => 'Block']];
+        }
+
+        $user = $this->userRepository->unblocked($id);
+        try {
+            $html = view('Admin.user.partial.dropdown', compact('user'))->render();
+        } catch (\Throwable $e) {
+            return [false, $e->getCode(), $e->getMessage(), null];
+        }
+        $status = "Active";
+        if ($user->status !== config('constant.user.status.verify')) {
+            $status = 'Not Active';
+        }
+
+        return [true, 200, "User has been unblocked", ['status' => $status]];
     }
 }
