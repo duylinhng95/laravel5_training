@@ -136,7 +136,7 @@ class Admin {
 	setActiveClass() {
 		let url = location.href
 		$(".nav-link").each(function () {
-			if (this.href === url) {
+			if (url.includes(this.href)) {
 				$(this).addClass('active')
 			}
 		})

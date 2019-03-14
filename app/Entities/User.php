@@ -23,6 +23,7 @@ class User extends Authenticatable
         'rating',
         'provider',
         'provider_id',
+        'status',
     ];
 
     /**

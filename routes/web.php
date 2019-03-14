@@ -67,7 +67,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
             Route::get('import', 'UserController@import');
             Route::get('block', 'UserController@block');
             Route::get('unblock', 'UserController@unblock');
-            Route::get('create', 'UserController@create');
+            Route::get('create', 'UserController@create')->name('admin.user.create');
+            Route::post('create', 'UserController@store')->name('admin.user.create');
         });
 
         Route::group(['prefix' => 'category'], function () {

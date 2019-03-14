@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\RegisterRequest;
 use App\Repository\UserRepository;
+use App\Repository\UserRepositoryEloquent;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
@@ -14,13 +17,16 @@ class UserController extends Controller
 
     /** @var $adminService AdminService */
     protected $adminService;
-    /** @var $userRepository UserRepository */
+    /** @var $userRepository UserRepositoryEloquent */
     protected $userRepository;
+    /** @var UserService */
+    protected $userService;
 
     public function __construct()
     {
         $this->adminService   = app(AdminService::class);
         $this->userRepository = app(UserRepository::class);
+        $this->userService    = app(UserService::class);
     }
 
     /**
@@ -57,5 +63,13 @@ class UserController extends Controller
     public function create()
     {
         return view('Admin.user.create');
+    }
+
+    //Change Request to RegisterRequest
+    public function store(RegisterRequest $request)
+    {
+        $params = $request->except('_token');
+        $user   = $this->userService->createUser($params);
+        return redirect()->route('admin.user')->with('success', "Add User Successfully");
     }
 }

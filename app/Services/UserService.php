@@ -205,4 +205,10 @@ class UserService
         $user->save();
         return [true, 'Uploaded file success'];
     }
+
+    public function createUser($params)
+    {
+        $params['password'] = Hash::make($params['password']);
+        return $this->userRepository->create($params);
+    }
 }

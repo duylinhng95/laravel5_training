@@ -4,9 +4,14 @@
 @endsection
 @section('content')
     <div class="card-header">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-6">
-                <button id="btnImportUser" class="btn btn-primary"> Import User</button>
+                <a class="btn btn-primary" href="{{route('admin.user.create')}}"><i class="fa fa-plus"></i> Add User</a>
             </div>
             <div class="col-6">
                 <div class="input-group">
@@ -41,35 +46,35 @@
             </thead>
             <tbody id="loader">
             @foreach($users as $index => $user)
-                    <tr id="{{$user->id}}">
-                        <td>{{++$index}}</td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
-                        <td id="status">
-                            @switch($user->status)
-                                @case(0)
-                                Not Active
-                                @break
-                                @case(1)
-                                Active
-                                @break
-                                @case(2)
-                                Block
-                                @break
-                            @endswitch
-                        </td>
-                        <td>
-                            {{implode(' ',$user->getRoles())}}
-                        </td>
-                        <td id="action">
-                            <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
-                                    @if($user->status == 2) disabled @endif>Block User
-                            </button>
-                            <button class="btn btn-success" onclick="unBlockUser({{$user->id}})"
-                                    @if($user->status != 2) disabled @endif>Unblock User
-                            </button>
-                        </td>
-                    </tr>
+                <tr id="{{$user->id}}">
+                    <td>{{++$index}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td id="status">
+                        @switch($user->status)
+                            @case(0)
+                            Not Active
+                            @break
+                            @case(1)
+                            Active
+                            @break
+                            @case(2)
+                            Block
+                            @break
+                        @endswitch
+                    </td>
+                    <td>
+                        {{implode(' ',$user->getRoles())}}
+                    </td>
+                    <td id="action">
+                        <button class="btn btn-danger" onclick='blockUser({{$user->id}})'
+                                @if($user->status == 2) disabled @endif>Block User
+                        </button>
+                        <button class="btn btn-success" onclick="unBlockUser({{$user->id}})"
+                                @if($user->status != 2) disabled @endif>Unblock User
+                        </button>
+                    </td>
+                </tr>
             @endforeach
             {{$users->links()}}
             </tbody>
