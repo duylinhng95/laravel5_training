@@ -7006,4 +7006,15 @@ span.required {
 
 .chart {
   height: 250px;
+  box-shadow: 0 20px 10px #ccc;
+
+}
+
+.total-numbers {
+  text-align: center;
+}
+
+.total-numbers .card {
+  min-height: 150px;
+  box-shadow: 0 10px 10px #ccc;
 }

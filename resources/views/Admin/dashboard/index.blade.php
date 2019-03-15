@@ -27,7 +27,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            # Comment in days
+                           <h3># Comment in days</h3>
                         </div>
                         <div class="card-body">
                             <h1>{{$commentsInDay}}</h1>
@@ -37,7 +37,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            # User register in days
+                            <h3># User register in days</h3>
                         </div>
                         <div class="card-body">
                             <h1>{{$registerInDay}}</h1>
