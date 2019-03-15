@@ -15,7 +15,6 @@ class Homepage {
 
 	config() {
 		this.element = {
-			userId: $("#user_id").val(),
 			notification: $("#user_notification"),
 			notificationIcon: $("#notification-icon"),
 			loginForm: $("#loginForm"),
@@ -43,7 +42,7 @@ class Homepage {
 
 	listen() {
 		this.onScrollDown()
-		if (this.element.userId !== undefined) {
+		if (this.userId !== undefined) {
 			this.showNotifications()
 		}
 		this.navTab()
@@ -105,7 +104,7 @@ class Homepage {
 	showNotifications() {
 		let self = this
 		this.notification.db.collection('notifications')
-			.where("user_id", '==', this.element.userId)
+			.where("user_id", '==', this.userId)
 			.orderBy('created_at', 'desc')
 			.onSnapshot(function (querySnapshot) {
 				self.element.notification.children().remove()
