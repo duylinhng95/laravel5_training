@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Repository\CommentRepository;
+use App\Repository\CommentRepositoryEloquent;
+use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
@@ -14,11 +18,17 @@ class AdminController extends Controller
     protected $userRepository;
     /** @var AdminService */
     protected $adminService;
+    /** @var PostRepositoryEloquent */
+    protected $postRepository;
+    /** @var CommentRepositoryEloquent */
+    protected $commentRepository;
 
     public function __construct()
     {
-        $this->userRepository = app(UserRepository::class);
-        $this->adminService   = app(AdminService::class);
+        $this->userRepository    = app(UserRepository::class);
+        $this->postRepository    = app(PostRepository::class);
+        $this->commentRepository = app(CommentRepository::class);
+        $this->adminService      = app(AdminService::class);
     }
 
     public function index(Request $request)
@@ -64,6 +74,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return redirect()->route('admin.user');
+        $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
+        $commentsInDay = $this->commentRepository->findWhere([['created_at', '>=', today()]])->count();
+        $registerInDay = $this->userRepository->findWhere([['created_at', '>=', today()]])->count();
+        return view('Admin.dashboard.index', compact('postInDay', 'registerInDay', 'commentsInDay'));
     }
 }

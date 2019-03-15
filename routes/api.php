@@ -24,4 +24,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/browse', 'PostController@browse');
     Route::post('/user/avatar/', 'UserController@updateAvatar');
     Route::get('/change-status', 'UserController@changeStatus');
+    Route::get('/get-post-day', 'PostController@getPostByDay');
+    Route::get('/get-register-day', 'UserController@getRegisterByDay');
 });

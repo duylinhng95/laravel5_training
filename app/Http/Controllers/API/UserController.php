@@ -84,4 +84,14 @@ class UserController extends Controller
         }
         return $this->error($code, $message);
     }
+
+    public function getRegisterByDay()
+    {
+        list($status, $code, $message, $data) = $this->userService->getRegisterByDay();
+        if ($status) {
+            return $this->success($message, $data);
+        }
+
+        return $this->error($code, $message);
+    }
 }

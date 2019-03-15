@@ -13,6 +13,7 @@ use App\Repository\PostTagRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FollowRepository;
 use App\Repository\PostVoteRepositoryEloquent;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\SummernoteTrait;
 use App\Traits\FireBaseTrait;
@@ -224,5 +225,29 @@ class PostService
         } catch (\Throwable $e) {
             return [false, 404, $e->getMessage(), null];
         }
+    }
+
+    public function getPostByDay()
+    {
+        $date  = today();
+        $posts = $this->postRepository
+            ->findWhere(['created_at' => ['created_at', '>=', $date]])
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('h:m');
+            });
+
+        if ($posts->isEmpty()) {
+            return [false, 404, 'No Post found today', null];
+        }
+
+        $data = [];
+
+        foreach ($posts as $key => $post) {
+            $element['hour']   = $key;
+            $element['number'] = count($post);
+            $data[]            = $element;
+        }
+
+        return [true, 200, 'Get Post by day successful', $data];
     }
 }

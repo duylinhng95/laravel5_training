@@ -58,6 +58,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider">
+                            <a class="nav-link nav-index" href="{{route('admin.index')}}"><i class="fas fa-fw fa-chart-pie"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-divider">
                             User
                         </li>
                         <li class="nav-item">

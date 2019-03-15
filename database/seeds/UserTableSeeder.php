@@ -40,5 +40,8 @@ class UserTableSeeder extends Seeder
                 'password' => bcrypt('mountainpassword'),
             ]
         ]);
+
+        factory(App\Entities\User::class, 50)
+            ->create();
     }
 }
