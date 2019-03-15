@@ -21,7 +21,10 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('/set-interest', 'UserController@setInterest');
     Route::get('/get-interest', 'UserController@getInterest');
     Route::get('/load-interest-post', 'PostController@loadInterestPost');
-    Route::get('/browse', 'PostController@browse');
+    Route::group(['prefix' => 'browse'], function () {
+        Route::get('/', 'PostController@browse');
+        Route::get('/get-tags', 'PostTagController@getTags');
+    });
     Route::post('/user/avatar/', 'UserController@updateAvatar');
     Route::get('/change-status', 'UserController@changeStatus');
     Route::get('/get-post-day', 'PostController@getPostByDay');

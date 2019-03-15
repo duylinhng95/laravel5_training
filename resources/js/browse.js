@@ -17,6 +17,8 @@ class Browse {
 			mainContent: $("#mainContent"),
 			categoryWidget: $(".browse-widget-category"),
 			tagsWidget: $(".browse-widget-tags"),
+			loadMoreBtn: $("#loadMoreBtn"),
+			tagsPage: 1,
 			filterData: {
 				keywords: "",
 				sort: "",
@@ -36,6 +38,7 @@ class Browse {
 		this.filterBrowsePost()
 		this.radioButtonFilter(this.element.categoryWidget)
 		this.radioButtonFilter(this.element.tagsWidget)
+		this.onClickLoadMoreBtn()
 	}
 
 	btnSearchEnter(name, section) {
@@ -159,6 +162,25 @@ class Browse {
 			}
 
 			self.callAjaxApi(data)
+		})
+	}
+
+	onClickLoadMoreBtn()
+	{
+		let btn = this.element.loadMoreBtn
+		let page = this.element.tagsPage
+		let self = this
+		btn.click(function() {
+			$.ajax({
+				url: self.apiURL + '/get-tags',
+				data: {page: ++page},
+				success: function (res) {
+					let data = res.data.view
+					self.element.tagsWidget.append(data)
+					self.element.tagsPage++
+					self.radioButtonFilter(self.element.tagsWidget)
+				}
+			})
 		})
 	}
 }

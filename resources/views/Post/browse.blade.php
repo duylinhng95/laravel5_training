@@ -37,14 +37,16 @@
         <div class="sidebarblock">
             <h3><i class="fa fa-tags"></i> Tags</h3>
             <div class="divline"></div>
-            <div class="blocktxt browse-widget-tags">
-                @foreach($tags as $tag)
-                    <div>
-                        <input type="checkbox" name="category" value="{{$tag->name}}" id="{{$tag->name}}">
-                        <label for="{{$tag->name}}">{{$tag->name}}</label>
-                    </div>
-                @endforeach
-                <button type="button" class="load-more"><i class="fa fa-plus"></i> Load more...</button>
+            <div class="blocktxt">
+                <div class="browse-widget-tags">
+                    @foreach($tags as $tag)
+                        <div>
+                            <input type="checkbox" name="category" value="{{$tag->name}}" id="{{$tag->name}}">
+                            <label for="{{$tag->name}}">{{$tag->name}}</label>
+                        </div>
+                    @endforeach
+                </div>
+                <button type="button" class="load-more" id="loadMoreBtn"><i class="fa fa-plus"></i> Load more...</button>
             </div>
         </div>
     </div>
