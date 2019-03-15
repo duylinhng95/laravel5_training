@@ -28,7 +28,7 @@ class Post {
 			],
 		})
 		$('#tagsinput').tagsinput({
-			confirmKeys: [188, 32]
+			confirmKeys: [188, 13]
 		});
 	}
 
