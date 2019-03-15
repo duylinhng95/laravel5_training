@@ -85,7 +85,7 @@ class PostController extends Controller
     public function browsePost()
     {
         $categories = $this->categoryRepository->all();
-        $tags       = $this->postTagRepository->paginate(5);
+        $tags       = $this->postTagRepository->getTags();
         return view('Post.browse', compact('categories', 'tags'));
     }
 }

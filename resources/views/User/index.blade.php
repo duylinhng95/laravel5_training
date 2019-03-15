@@ -43,12 +43,6 @@
                             <div class="user-activity">
                                 <ul class="activity-list">
                                     <li>
-                                        <a href="#" class="btn btn-primary"> Change Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="btn btn-primary"> Edit Profile</a>
-                                    </li>
-                                    <li>
                                         <a href="{{route('user.post.index')}}" class="btn btn-primary"> Post Management</a>
                                     </li>
                                 </ul>
