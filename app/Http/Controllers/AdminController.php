@@ -10,6 +10,7 @@ use App\Repository\PostRepositoryEloquent;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -22,6 +23,8 @@ class AdminController extends Controller
     protected $postRepository;
     /** @var CommentRepositoryEloquent */
     protected $commentRepository;
+    /** @var PostService */
+    protected $postService;
 
     public function __construct()
     {
@@ -29,6 +32,7 @@ class AdminController extends Controller
         $this->postRepository    = app(PostRepository::class);
         $this->commentRepository = app(CommentRepository::class);
         $this->adminService      = app(AdminService::class);
+        $this->postService       = app(PostService::class);
     }
 
     public function index(Request $request)
@@ -77,6 +81,14 @@ class AdminController extends Controller
         $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
         $commentsInDay = $this->commentRepository->findWhere([['created_at', '>=', today()]])->count();
         $registerInDay = $this->userRepository->findWhere([['created_at', '>=', today()]])->count();
-        return view('Admin.dashboard.index', compact('postInDay', 'registerInDay', 'commentsInDay'));
+        $mostComments  = $this->postService->getMostComments();
+        $mostLikes     = $this->postService->getMostLikes();
+        return view('Admin.dashboard.index', compact(
+            'postInDay',
+            'registerInDay',
+            'commentsInDay',
+            'mostComments',
+            'mostLikes'
+        ));
     }
 }

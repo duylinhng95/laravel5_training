@@ -250,4 +250,18 @@ class PostService
 
         return [true, 200, 'Get Post by day successful', $data];
     }
+
+    public function getMostComments()
+    {
+        $date = today();
+        return $this->postRepository->findWhere(['created_at' => ['created_at', '>=', $date]])
+            ->sortByDesc('count_comments')->take(5);
+    }
+
+    public function getMostLikes()
+    {
+        $date = today();
+        return $this->postRepository->findWhere(['created_at' => ['created_at', '>=', $date]])
+            ->sortByDesc('count_votes')->take(5);
+    }
 }
