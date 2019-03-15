@@ -13,7 +13,7 @@ $factory->define(App\Entities\Post::class, function (Faker $faker) {
             return App\Entities\Category::inRandomOrder()->first()->id;
         },
         'status' => config('constant.post.status.available'),
-        'created_at' => $faker->dateTime(),
+        'created_at' => now()->subHours(rand(1, 2)),
     ];
 });
 

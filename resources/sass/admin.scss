@@ -7,6 +7,7 @@
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '../fonts/circular-std/style.css';
 @import '~toastr/toastr.scss';
+@import '~morris.js/morris.css';
 /**
  * Summary:
  *
@@ -7001,4 +7002,23 @@ span.required {
 
 .action-dropdown .btn {
   width: 100%;
+}
+
+.chart {
+  height: 250px;
+  box-shadow: 0 20px 10px #ccc;
+
+}
+
+.total-numbers {
+  text-align: center;
+}
+
+.total-numbers .card {
+  min-height: 150px;
+  box-shadow: 0 10px 10px #ccc;
+}
+
+.top-comment .table, .top-like .table{
+  box-shadow: 0 20px 10px #ccc;
 }

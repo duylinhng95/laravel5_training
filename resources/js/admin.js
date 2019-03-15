@@ -1,6 +1,7 @@
 require('./vendor/template.js')
 require('./bootstrap')
 require('jquery-validation/dist/additional-methods')
+import Chart from "./chart.js"
 
 class Admin {
 	constructor() {
@@ -55,6 +56,7 @@ class Admin {
 		this.setActiveClass()
 		this.validateFileWord()
 		this.blockUser(this.element.btnBlock)
+		new Chart()
 	}
 
 	importUser() {
@@ -78,7 +80,7 @@ class Admin {
 
 	onSearch(name) {
 		let input = this.element.searchField
-		name.on('click', function (event) {
+		name.on('click', function () {
 			let url = location.pathname
 			input = input.val()
 			window.location.href = `${url}?keywords=${input}`
@@ -100,7 +102,7 @@ class Admin {
 		$.each(this.section, function (key, value) {
 			value.on('click', function (event) {
 				let section = event.currentTarget.children[1].value
-				if (params.get('order') == 'desc') {
+				if (params.get('order') === 'desc') {
 					params.set('sort', section)
 					params.set('order', 'asc')
 					location.href = url + params.toString()
@@ -118,7 +120,7 @@ class Admin {
 		let order = urlParams.getAll('order');
 		let section = urlParams.get('sort');
 		let button = $('#' + section)
-		if (order == 'desc') {
+		if (order === 'desc') {
 			button.removeClass('fa-arrow-up');
 			button.addClass('fa-arrow-down');
 		} else {
@@ -129,7 +131,7 @@ class Admin {
 
 	checkNoData() {
 		let tbody = $("tbody")
-		if (tbody.children().length == 0) {
+		if (tbody.children().length === 0) {
 			tbody.append(`<td colspan="6" align="center">
                 No data is found
             </td>`)
@@ -139,8 +141,16 @@ class Admin {
 	setActiveClass() {
 		let url = location.href
 		$(".nav-link").each(function () {
-			if (url.includes(this.href)) {
-				$(this).addClass('active')
+			if($(this).hasClass("nav-index"))
+			{
+				if(url === this.href)
+				{
+					return $(this).addClass('active')
+				}
+			} else {
+				if (url.includes(this.href)) {
+					$(this).addClass('active')
+				}
 			}
 		})
 	}
@@ -168,7 +178,7 @@ class Admin {
 
 	blockUser(button) {
 		let self = this
-		button.on('click', function (event) {
+		button.on('click', function () {
 			let target = this
 			let userId = $(target).data('user-id')
 			$.ajax({

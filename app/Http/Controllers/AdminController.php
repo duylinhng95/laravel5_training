@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Repository\CommentRepository;
+use App\Repository\CommentRepositoryEloquent;
+use App\Repository\PostRepository;
+use App\Repository\PostRepositoryEloquent;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryEloquent;
 use App\Services\AdminService;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,11 +19,20 @@ class AdminController extends Controller
     protected $userRepository;
     /** @var AdminService */
     protected $adminService;
+    /** @var PostRepositoryEloquent */
+    protected $postRepository;
+    /** @var CommentRepositoryEloquent */
+    protected $commentRepository;
+    /** @var PostService */
+    protected $postService;
 
     public function __construct()
     {
-        $this->userRepository = app(UserRepository::class);
-        $this->adminService   = app(AdminService::class);
+        $this->userRepository    = app(UserRepository::class);
+        $this->postRepository    = app(PostRepository::class);
+        $this->commentRepository = app(CommentRepository::class);
+        $this->adminService      = app(AdminService::class);
+        $this->postService       = app(PostService::class);
     }
 
     public function index(Request $request)
@@ -64,6 +78,19 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return redirect()->route('admin.user');
+        $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
+        $commentsInDay = $this->commentRepository->findWhere([['created_at', '>=', today()]])->count();
+        $registerInDay = $this->userRepository->findWhere([['created_at', '>=', today()]])->count();
+        $mostComments  = $this->postService->getPopularPostByField('count_comments');
+        $mostLikes     = $this->postService->getPopularPostByField('count_votes');
+        $mostViews     = $this->postService->getPopularPostByField('view');
+        return view('Admin.dashboard.index', compact(
+            'postInDay',
+            'registerInDay',
+            'commentsInDay',
+            'mostComments',
+            'mostLikes',
+            'mostViews'
+        ));
     }
 }

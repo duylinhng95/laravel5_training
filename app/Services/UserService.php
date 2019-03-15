@@ -255,4 +255,36 @@ class UserService
 
         return [true, 200, "User has been unblocked", ['status' => $status]];
     }
+
+    public function getRegisterByDay()
+    {
+        $date  = today();
+        $users = $this->userRepository->findWhere([['created_at', '>=', $date]])
+            ->groupBy('status');
+
+        if ($users->isEmpty()) {
+            return [false, 404, 'No User register today', null];
+        }
+
+        $data = [];
+        foreach ($users->toArray() as $key => $user) {
+            switch ($key) {
+                case 2:
+                    $element['label'] = 'Block';
+                    $element['value'] = count($user);
+                    break;
+                case 1:
+                    $element['label'] = 'Verify';
+                    $element['value'] = count($user);
+                    break;
+                default:
+                    $element['label'] = 'Not Verify';
+                    $element['value'] = count($user);
+            }
+            $data[] = $element;
+        }
+        sort($data);
+        $colors = ['#d63031', '#fdcb6e', '#00b894'];
+        return [true, 200, 'Get User register today success', ['data' => $data, 'colors' => $colors]];
+    }
 }

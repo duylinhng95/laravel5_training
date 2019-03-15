@@ -62,4 +62,14 @@ class PostController extends Controller
             return $this->error($code, $message);
         }
     }
+
+    public function getPostByDay()
+    {
+        list($status, $code, $message, $data) = $this->postService->getPostByDay();
+        if ($status) {
+            return $this->success($message, $data);
+        }
+
+        return $this->error($code, $message);
+    }
 }
