@@ -81,14 +81,16 @@ class AdminController extends Controller
         $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
         $commentsInDay = $this->commentRepository->findWhere([['created_at', '>=', today()]])->count();
         $registerInDay = $this->userRepository->findWhere([['created_at', '>=', today()]])->count();
-        $mostComments  = $this->postService->getMostComments();
-        $mostLikes     = $this->postService->getMostLikes();
+        $mostComments  = $this->postService->getPopularPostByField('count_comments');
+        $mostLikes     = $this->postService->getPopularPostByField('count_votes');
+        $mostViews     = $this->postService->getPopularPostByField('view');
         return view('Admin.dashboard.index', compact(
             'postInDay',
             'registerInDay',
             'commentsInDay',
             'mostComments',
-            'mostLikes'
+            'mostLikes',
+            'mostViews'
         ));
     }
 }

@@ -121,6 +121,37 @@
                     </div>
                 </div>
             </div>
+            <div class="row top-like">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Top Most Viewed</h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th style="width: 60%">Title</th>
+                                    <th style="width: 10%"># Viewed</th>
+                                    <th style="width: 30%">Author</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($mostViews as $post)
+                                    <tr>
+                                        <td>{{++$loop->index}}</td>
+                                        <td>{{$post->title}}</td>
+                                        <td>{{$post->view}}</td>
+                                        <td>{{$post->user->name}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
