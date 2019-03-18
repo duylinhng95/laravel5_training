@@ -253,4 +253,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             ->limit(5)
             ->get();
     }
+
+    public function getPendingPost()
+    {
+        return $this->makeModel()->where('status', config('constant.post.status.pending'))->get();
+    }
 }

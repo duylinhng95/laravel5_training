@@ -84,13 +84,15 @@ class AdminController extends Controller
         $mostComments  = $this->postService->getPopularPostByField('count_comments');
         $mostLikes     = $this->postService->getPopularPostByField('count_votes');
         $mostViews     = $this->postService->getPopularPostByField('view');
+        $pendingPosts  = $this->postRepository->getPendingPost();
         return view('Admin.dashboard.index', compact(
             'postInDay',
             'registerInDay',
             'commentsInDay',
             'mostComments',
             'mostLikes',
-            'mostViews'
+            'mostViews',
+            'pendingPosts'
         ));
     }
 }
