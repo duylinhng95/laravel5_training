@@ -45,10 +45,6 @@
                                 <a href="{{route('user.list')}}">
                                     <li class="navigation-item">Users</li>
                                 </a>
-
-                                <a href="#">
-                                    <li class="navigation-item">Follows</li>
-                                </a>
                             @endif
                         </div>
                     </ul>

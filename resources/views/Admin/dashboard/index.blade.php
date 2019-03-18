@@ -63,6 +63,44 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
+                            <h3>Pending for Approval Post</h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th style="width: 60%">Title</th>
+                                    <th style="width: 30%">Author</th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($pendingPosts->isEmpty())
+                                    <tr>
+                                        <td colspan="3" class="text-center">NO PENDING POST</td>
+                                    </tr>
+                                @else
+                                    @foreach($pendingPosts as $post)
+                                        <tr>
+                                            <td>{{++$loop->index}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->user->name}}</td>
+                                            <td><a href="{{route('admin.post.publish', ['slug' => $post->slug])}}"
+                                                   class="btn btn-success">Publish</a></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row top-comment">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
                             <h3>Top Most Comments</h3>
                         </div>
                         <div class="card-body table-responsive">

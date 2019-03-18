@@ -24,6 +24,6 @@ class PostTagService
             return [false, $e->getCode(), $e->getMessage(), null];
         }
 
-        return [true, 200, 'Get tags successful', ['view' => $html]];
+        return [true, 200, 'Get tags successful', ['view' => $html, 'lastPage' => $tags->lastPage()]];
     }
 }

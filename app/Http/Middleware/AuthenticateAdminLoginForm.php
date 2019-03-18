@@ -19,7 +19,7 @@ class AuthenticateAdminLoginForm
         if (!Auth::check()) {
             return $next($request);
         } else {
-            return redirect()->route('post.index');
+            return redirect()->route('admin.index');
         }
     }
 }

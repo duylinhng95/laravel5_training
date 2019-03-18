@@ -104,7 +104,7 @@ class Homepage {
 	showNotifications() {
 		let self = this
 		this.notification.db.collection('notifications')
-			.where("user_id", '==', this.userId)
+			.where("user_id", '==', this.userId.toString())
 			.orderBy('created_at', 'desc')
 			.onSnapshot(function (querySnapshot) {
 				self.element.notification.children().remove()

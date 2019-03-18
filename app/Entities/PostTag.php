@@ -24,7 +24,10 @@ class PostTag extends Model
 
     public function getPopularTagsAttribute()
     {
-        $tags = $this->selectRaw("Count('name') as count, name")
+        $tags = $this
+            ->join('posts', 'posts.id', '=', 'post_tags.post_id')
+            ->where('status', config('constant.post.status.available'))
+            ->selectRaw("Count('name') as count, name")
             ->groupBy('name')
             ->orderByDesc('count')
             ->limit(5)
