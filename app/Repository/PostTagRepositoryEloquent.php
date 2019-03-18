@@ -38,6 +38,9 @@ class PostTagRepositoryEloquent extends BaseRepositoryEloquent implements PostTa
 
     public function getTags($page = null)
     {
-        return $this->makeModel()->groupBy('name')->paginate(5);
+        return $this->makeModel()
+            ->join('posts', 'posts.id', '=', 'post_tags.post_id')
+            ->where('status', config('constant.post.status.available'))
+            ->paginate(5);
     }
 }
