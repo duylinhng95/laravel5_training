@@ -176,6 +176,10 @@ class Browse {
 				data: {page: ++page},
 				success: function (res) {
 					let data = res.data.view
+					if(page === res.data.lastPage)
+					{
+						btn.remove()
+					}
 					self.element.tagsWidget.append(data)
 					self.element.tagsPage++
 					self.radioButtonFilter(self.element.tagsWidget)

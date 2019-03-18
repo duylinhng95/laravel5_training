@@ -249,6 +249,11 @@ class Post {
 			let keywords = self.element.keywords.val()
 			location.href = self.apiUrl + '/browse?keywords=' + keywords
 		})
+		self.element.keywords.keypress(function (event) {
+			if (event.which === 13) {
+				button.click()
+			}
+		})
 	}
 }
 
