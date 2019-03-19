@@ -263,7 +263,7 @@ class UserService
             ->groupBy('status');
 
         if ($users->isEmpty()) {
-            return [false, 404, 'No User register today', null];
+            return [false, 200, 'No User register today', null];
         }
 
         $data = [];

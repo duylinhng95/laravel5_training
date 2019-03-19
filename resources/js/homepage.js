@@ -109,6 +109,7 @@ class Homepage {
 			.onSnapshot(function (querySnapshot) {
 				self.element.notification.children().remove()
 				let isAllRead = true
+				let countNoti = 0
 				if (querySnapshot.empty === true) {
 					let content = `<div class="row">
 								            <div class="col-md-12 text-left notify-element">								            										            		
@@ -124,6 +125,7 @@ class Homepage {
 						is_read = ''
 					} else {
 						isAllRead = false
+						countNoti++;
 					}
 
 					let content = '';
@@ -156,6 +158,8 @@ class Homepage {
 				})
 				if (isAllRead === false) {
 					self.element.notificationIcon.addClass('active');
+					self.element.notificationIcon.children().remove('.notification-count')
+					self.element.notificationIcon.append(`<span class="notification-count">${countNoti}</span>`);
 				} else {
 					self.element.notificationIcon.removeClass('active');
 				}
@@ -168,9 +172,7 @@ class Homepage {
 		$('.notification').find('a').each(function (index, value) {
 			$(value).hover(function () {
 				let notification_id = $(value).find('input').val()
-
 				let notification = self.notification.db.collection('notifications').doc(notification_id)
-
 				notification.update(
 					{is_read: true}
 				)

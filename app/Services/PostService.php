@@ -186,9 +186,29 @@ class PostService
     {
         list($status, $message, $post) = $this->postRepository->publish($slug);
         if ($status) {
+            $this->pushNotificationForAuthor($post);
             $this->pushNotificationForFollower($post);
         }
         return [$status, $message];
+    }
+
+    /**
+     * @param $post
+     * @throws \Google\Cloud\Core\Exception\GoogleException
+     */
+    private function pushNotificationForAuthor($post)
+    {
+        $user = $post->user;
+        $data = [
+            'action'     => 'create_post_author',
+            'content'    => ' Your post have been published',
+            'created_at' => microtime(true) * 1000,
+            'is_read'    => false,
+            'user_id'    => (string)$user->id,
+            'href'       => 'post/' . $post->slug,
+            'title'      => $post->title,
+        ];
+        $this->addData('notifications', $data);
     }
 
     /**
@@ -260,8 +280,8 @@ class PostService
 
     public function getAutocompleteData($keyword)
     {
-        $hints   = $this->postRepository->getPostHintTitle($keyword);
-        $data    = [];
+        $hints = $this->postRepository->getPostHintTitle($keyword);
+        $data  = [];
         foreach ($hints as $hint) {
             if (strpos($hint->category, $keyword) !== false) {
                 $data[] = $hint->category;
