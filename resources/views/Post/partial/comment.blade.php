@@ -15,7 +15,7 @@
     </div>
     <div class="postinfobot">
         <div class="posted pull-left"><i class="fa fa-clock-o"></i> Commented on
-            : {{formatDate($comment->created_at)}}</div>
+            : {{formatDate($comment->created_at, 'd-m-Y h:m:s')}}</div>
         <div class="clearfix"></div>
     </div>
 </div>
