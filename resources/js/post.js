@@ -43,6 +43,7 @@ class Post {
 			voteNum: $("#voteNum"),
 			loginForm: $("#loginForm"),
 			registerForm: $("#registerForm"),
+			createForm: $("#createForm"),
 		}
 		this.apiUrl = location.origin
 	}
@@ -57,6 +58,7 @@ class Post {
 		this.validateLoginForm()
 		this.validateRegisterForm()
 		this.enterSearchHomepage()
+		this.validateCreatePost()
 	}
 
 	btnSearchEnter(name, section) {
@@ -253,13 +255,44 @@ class Post {
 
 	}
 
-	enterSearchHomepage()
-	{
+	enterSearchHomepage() {
 		let keyword = this.element.keywords
 		let button = this.element.btnSearch
 		keyword.keypress(function (event) {
 			if (event.which === 13) {
 				button.click()
+			}
+		})
+	}
+
+	validateCreatePost() {
+		let form = this.element.createForm
+		console.log(form)
+		form.validate({
+			rules: {
+				title: {
+					required: true,
+				},
+				tags: {
+					required: true,
+				},
+				content: {
+					required: true,
+				}
+			},
+			messages: {
+				title: {
+					required: "Please enter Post's title"
+				},
+				tags: {
+					required: "Please enter Post's tags"
+				},
+				content: {
+					required: "Please enter Post's content"
+				}
+			},
+			submitHandler: function(form) {
+				form.submit()
 			}
 		})
 	}

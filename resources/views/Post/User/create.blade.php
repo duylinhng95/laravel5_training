@@ -14,7 +14,7 @@
                 <a href="{{route('user.post.index')}}" class="btn btn-primary"><i class="fa fa-arrow-alt-circle-left"></i>
                     Back to list</a>
             </div>
-            <form action="{{route('user.post.store')}}" method="POST" enctype="multipart/form-data" novalidate>
+            <form action="{{route('user.post.store')}}" method="POST" novalidate enctype="multipart/form-data" id="createForm">
                 <div class="panel-body">
                     {{csrf_field()}}
                     <div class="form-group">
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="title">Content</label>
+                        <label for="content">Content</label>
                         <textarea name="content" class="form-control"
                                   id="texteditor"></textarea>
                         @if($errors->has('content'))
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                    <button type="submit" class="btn btn-outline-primary" id="submitPost">Submit</button>
                     <a href="{{route('user.post.index')}}" class="btn btn-outline-secondary">Cancel</a>
                 </div>
             </form>
