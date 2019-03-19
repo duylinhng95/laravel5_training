@@ -257,4 +257,23 @@ class PostService
         return $this->postRepository->findWhere(['created_at' => ['created_at', '>=', $date]])
             ->sortByDesc($field)->take(5);
     }
+
+    public function getAutocompleteData($keyword)
+    {
+        $hints   = $this->postRepository->getPostHintTitle($keyword);
+        $data    = [];
+        foreach ($hints as $hint) {
+            if (strpos($hint->category, $keyword) !== false) {
+                $data[] = $hint->category;
+            } elseif (strpos($hint->tag, $keyword) !== false) {
+                $data[] = $hint->tag;
+            }
+        }
+
+        if (empty($data)) {
+            return [false, 'No hints found', null];
+        }
+        $data = array_values(array_unique(array_slice($data, 0, 5)));
+        return [true, 'Hints found', $data];
+    }
 }

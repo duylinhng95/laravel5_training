@@ -569,6 +569,7 @@ button.load-more i {
 
 .browse-widget-search {
   text-align: center;
+  position: relative;
 }
 
 .post.notification-heading h2 {
@@ -605,4 +606,27 @@ button.load-more i {
 .avatar img {
   width: 44px;
   height: 44px;
+}
+
+ul.dropdown.autocomplete {
+  position: absolute;
+  background-color: white;
+  height: fit-content;
+  list-style: none;
+  width: 265px;
+  left: 25px;
+  z-index: 1;
+  text-align: left;
+  box-shadow: 10px 0 50px #ccc;
+}
+
+ul.dropdown.autocomplete li {
+  padding: 5px;
+  padding-left: 10px;
+  font-family: Roboto, sans-serif;
+  text-transform: capitalize;
+}
+
+ul.dropdown.autocomplete li:hover {
+  background-color: #ccc;
 }

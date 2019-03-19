@@ -56,7 +56,7 @@ class Post {
 		this.setActiveClass()
 		this.validateLoginForm()
 		this.validateRegisterForm()
-		this.searchHomepage(this.element.btnSearch)
+		this.enterSearchHomepage()
 	}
 
 	btnSearchEnter(name, section) {
@@ -243,13 +243,21 @@ class Post {
 		})
 	}
 
-	searchHomepage(button) {
+	searchHomepage() {
 		let self = this
+		let button = this.element.btnSearch
 		button.on('click', function () {
 			let keywords = self.element.keywords.val()
 			location.href = self.apiUrl + '/browse?keywords=' + keywords
 		})
-		self.element.keywords.keypress(function (event) {
+
+	}
+
+	enterSearchHomepage()
+	{
+		let keyword = this.element.keywords
+		let button = this.element.btnSearch
+		keyword.keypress(function (event) {
 			if (event.which === 13) {
 				button.click()
 			}

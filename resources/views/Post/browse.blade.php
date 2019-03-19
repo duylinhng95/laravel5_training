@@ -5,7 +5,10 @@
             <h3><i class="fa fa-search"></i> Search</h3>
             <div class="divline"></div>
             <div class="blocktxt browse-widget-search">
-                    <input type="text" name="search" id="keywordsPost">
+                    <input type="text" name="search" id="keywordsPost" autocomplete="off">
+                <ul class="dropdown d-none autocomplete">
+
+                </ul>
                 <button class=" btn btn-info btn-lg" id="btnSearchPost"><i class="fa fa-search"></i></button>
             </div>
         </div>
