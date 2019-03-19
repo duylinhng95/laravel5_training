@@ -72,4 +72,14 @@ class PostController extends Controller
 
         return $this->error($code, $message);
     }
+
+    public function autocompleteKey(Request $request)
+    {
+        $params = $request->get('keyword');
+        list($status, $message, $data) = $this->postService->getAutocompleteData($params);
+        if ($status) {
+            return $this->success('Retrieve hints success', $data);
+        }
+        return $this->success($message, null);
+    }
 }

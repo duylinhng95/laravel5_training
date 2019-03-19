@@ -92,6 +92,6 @@ class UserController extends Controller
             return $this->success($message, $data);
         }
 
-        return $this->error($code, $message);
+        return $this->response(true, $code, $message, null);
     }
 }

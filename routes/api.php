@@ -24,6 +24,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::group(['prefix' => 'browse'], function () {
         Route::get('/', 'PostController@browse');
         Route::get('/get-tags', 'PostTagController@getTags');
+        Route::get('/autocomplete', 'PostController@autocompleteKey');
     });
     Route::post('/user/avatar/', 'UserController@updateAvatar');
     Route::get('/change-status', 'UserController@changeStatus');

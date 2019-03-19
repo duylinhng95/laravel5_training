@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entities\Post;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use DB;
@@ -66,11 +67,19 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     {
         $mainQuery = $this->makeModel()->where("status", "=", config('constant.post.status.available'));
         if (key_exists('keywords', $param) && $param['keywords']) {
-            $keyword   = $param['keywords'];
-            $mainQuery = $mainQuery->where(function ($query) use ($keyword) {
-                /** @var \Illuminate\Database\Eloquent\Builder $query */
-                $query->where('title', 'like', '%' . $keyword . '%');
-            });
+            $keyword = $param['keywords'];
+            /** @var \Illuminate\Database\Eloquent\Builder $mainQuery */
+            $mainQuery = $mainQuery
+                ->where('title', 'like', '%' . $keyword . '%')
+                ->orWhereHas('tags', function ($subQuery) use ($keyword) {
+                    /** @var Builder $subQuery */
+                    $subQuery->where('name', 'like', $keyword);
+                })
+                ->orWhereHas('category', function ($subQuery) use ($keyword) {
+                    /** @var Builder $subQuery */
+                    $subQuery->where('name', 'like', $keyword);
+                })
+                ->orWhere('content', 'like', '%' . $keyword . '%');
         }
 
         if (key_exists('tags', $param) && $param['tags']) {
@@ -257,5 +266,16 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
     public function getPendingPost()
     {
         return $this->makeModel()->where('status', config('constant.post.status.pending'))->get();
+    }
+
+    public function getPostHintTitle($keyword)
+    {
+        return $this->makeModel()->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->join('post_tags', 'posts.id', '=', 'post_tags.post_id')
+            ->select('categories.name as category', 'post_tags.name as tag')
+            ->where('categories.name', 'like', '%' . $keyword . '%')
+            ->orWhere('post_tags.name', 'like', '%' . $keyword . '%')
+            ->where('posts.status', config('constant.post.status.available'))
+            ->get();
     }
 }

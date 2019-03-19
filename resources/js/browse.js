@@ -19,6 +19,7 @@ class Browse {
 			tagsWidget: $(".browse-widget-tags"),
 			loadMoreBtn: $("#loadMoreBtn"),
 			tagsPage: 1,
+			autocomplete: $('.autocomplete'),
 			filterData: {
 				keywords: "",
 				sort: "",
@@ -39,6 +40,7 @@ class Browse {
 		this.radioButtonFilter(this.element.categoryWidget)
 		this.radioButtonFilter(this.element.tagsWidget)
 		this.onClickLoadMoreBtn()
+		this.autoSearch()
 	}
 
 	btnSearchEnter(name, section) {
@@ -165,19 +167,17 @@ class Browse {
 		})
 	}
 
-	onClickLoadMoreBtn()
-	{
+	onClickLoadMoreBtn() {
 		let btn = this.element.loadMoreBtn
 		let page = this.element.tagsPage
 		let self = this
-		btn.click(function() {
+		btn.click(function () {
 			$.ajax({
 				url: self.apiURL + '/get-tags',
 				data: {page: ++page},
 				success: function (res) {
 					let data = res.data.view
-					if(page === res.data.lastPage)
-					{
+					if (page === res.data.lastPage) {
 						btn.remove()
 					}
 					self.element.tagsWidget.append(data)
@@ -185,6 +185,49 @@ class Browse {
 					self.radioButtonFilter(self.element.tagsWidget)
 				}
 			})
+		})
+	}
+
+	autoSearch() {
+		let input = this.element.keywordsPost
+		let self = this
+		input.keyup(function () {
+			let value = input.val()
+			self.autocompleteSearch(value)
+			if (value.length >= 5) {
+				self.callAjaxApi({keywords: value})
+			}
+		})
+	}
+
+	autocompleteSearch(value) {
+		let url = this.apiURL + '/autocomplete'
+		let self = this
+		$.ajax({
+			url: url,
+			data: {keyword: value},
+			type: "GET",
+			success: function (res) {
+				let data = res.data
+				self.element.autocomplete.children().remove()
+				if (data) {
+					self.element.autocomplete.removeClass('d-none')
+					console.log(data)
+					data.forEach(function (value) {
+						self.element.autocomplete.append(
+							`<li>${value}</li>`
+						)
+					})
+					self.element.autocomplete.children().each(function (key, value) {
+						$(value).click(function () {
+							self.element.keywordsPost.val($(value).html())
+							self.callAjaxApi({keywords: $(value).html()})
+						})
+					})
+				} else {
+					self.element.autocomplete.addClass('d-none')
+				}
+			}
 		})
 	}
 }
