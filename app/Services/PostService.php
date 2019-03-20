@@ -272,11 +272,6 @@ class PostService
         return [true, 200, 'Get Post by day successful', $data];
     }
 
-    public function getPopularPostByField($field)
-    {
-        return $this->postRepository->sortByDesc($field, 5);
-    }
-
     public function getAutocompleteData($keyword)
     {
         $hints = $this->postRepository->getPostHintTitle($keyword);

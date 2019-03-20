@@ -265,7 +265,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function getPendingPost()
     {
-        return $this->makeModel()->where('status', config('constant.post.status.pending'))->get();
+        return $this->model->where('status', config('constant.post.status.pending'))->get();
     }
 
     public function getPostHintTitle($keyword)
@@ -279,8 +279,11 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             ->get();
     }
 
-    public function sortByDesc($field, $num)
+    public function getPostsByDay()
     {
-        return $this->model->orderByDesc($field)->take($num);
+        return $this->model->withCount('comments')
+            ->withCount('votes')
+            ->where('posts.created_at', '>=', today())
+            ->get();
     }
 }
