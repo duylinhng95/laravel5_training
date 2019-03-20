@@ -267,7 +267,6 @@ class Post {
 
 	validateCreatePost() {
 		let form = this.element.createForm
-		console.log(form)
 		form.validate({
 			rules: {
 				title: {

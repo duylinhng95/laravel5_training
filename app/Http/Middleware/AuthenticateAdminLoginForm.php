@@ -16,7 +16,7 @@ class AuthenticateAdminLoginForm
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
+        if (!Auth::guard('admin')->check()) {
             return $next($request);
         } else {
             return redirect()->route('admin.index');

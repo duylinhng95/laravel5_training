@@ -18,11 +18,14 @@ class AdminService
     /** @var RocketProfileRepository */
     protected $rocketRepository;
 
+    protected $authAdmin;
+
     public function __construct()
     {
         $this->adminRepository  = app(AdminRepository::class);
         $this->userRepository   = app(UserRepository::class);
         $this->rocketRepository = app(RocketProfileRepository::class);
+        $this->authAdmin        = Auth::guard('admin');
     }
 
     /**
@@ -94,16 +97,24 @@ class AdminService
 
     public function login($input)
     {
-        if (Auth::guard()->attempt($input)) {
-            $user = Auth::user();
+        if ($this->authAdmin->attempt($input)) {
+            $user = $this->authAdmin->user();
             if ($user->checkRole('admin')) {
                 return [true, 200, 'Login Successful'];
             } else {
-                Auth::logout();
+                $this->authAdmin->logout();
                 return [false, 404, 'Wrong Credential'];
             }
         }
 
         return [false, 400, 'Undefined error'];
+    }
+
+    public function logout()
+    {
+        if ($this->authAdmin->check()) {
+            $this->authAdmin->logout();
+        }
+        return redirect('/admin');
     }
 }
