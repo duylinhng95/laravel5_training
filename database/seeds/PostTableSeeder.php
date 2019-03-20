@@ -13,7 +13,7 @@ class PostTableSeeder extends Seeder
     {
         DB::table('posts')->truncate();
 
-        $posts = factory(App\Entities\Post::class, 50)
+        $posts = factory(App\Entities\Post::class, 20000)
             ->create()
             ->each(function ($post) {
                 $post->tags()->save(factory(App\Entities\PostTag::class)->make());
