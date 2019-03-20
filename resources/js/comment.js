@@ -30,7 +30,9 @@ class Comment {
 		let content = this.element.contentComment
 		let token = this.element.token
 		let error_msg = this.element.error_message
-		this.element.btnComment.on('click', function (event) {
+		let button = this.element.btnComment
+		button.on('click', function (event) {
+			this.disabledBtn(button)
 			let id = event.target.children.postId.value
 			let data = {
 				content: content.val(),
@@ -45,13 +47,20 @@ class Comment {
 					commentList.append(
 						res.view)
 					content.val('')
+					button.attr('disabled', false)
 				},
 				error: function (res) {
 					let response = res.responseJSON
 					error_msg.html(response.message)
+					button.attr('disabled', false)
 				}
 			})
 		})
+	}
+
+	disabledBtn(button, boolean = true)
+	{
+		button.attr('disabled', true)
 	}
 
 	btnCommentEnter() {

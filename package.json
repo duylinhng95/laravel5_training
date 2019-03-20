@@ -34,6 +34,7 @@
     "offcanvas": "^2.1.0",
     "raphael": "^2.2.7",
     "summernote": "^0.8.11",
+    "sweetalert2": "^8.5.0",
     "toastr": "^2.1.4"
   }
 }
