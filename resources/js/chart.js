@@ -21,8 +21,13 @@ class Chart {
 	}
 
 	listen() {
-		this.postDayChart()
-		this.registerDayChart()
+		if (this.element.postDayChart.length !== 0) {
+			this.postDayChart()
+		}
+
+		if (this.element.registerDayChart.length !== 0) {
+			this.registerDayChart()
+		}
 	}
 
 	postDayChart() {
@@ -30,11 +35,14 @@ class Chart {
 		$.ajax({
 			url: this.apiURL + "/get-post-day",
 			type: "get",
-			success: function(res) {
+			success: function (res) {
 				let id = 'postDayChart'
-				let data = res.data
-				let modified = ['hour', '# Posts']
-				self.drawAreaChart(id, data, modified)
+				if (res.data !== null) {
+
+					let data = res.data
+					let modified = ['hour', '# Posts']
+					self.drawAreaChart(id, data, modified)
+				}
 			}
 		})
 	}
@@ -44,16 +52,18 @@ class Chart {
 		$.ajax({
 			url: this.apiURL + "/get-register-day",
 			type: "get",
-			success: function(res) {
+			success: function (res) {
 				let id = 'registerDayChart'
-				let data = res.data.data
-				let modified = res.data.colors
-				self.drawDonutChart(id, data, modified)
+				if (res.data !== null) {
+					let data = res.data.data
+					let modified = res.data.colors
+					self.drawDonutChart(id, data, modified)
+				}
 			}
 		})
 	}
 
-	drawAreaChart(id,data, modified) {
+	drawAreaChart(id, data, modified) {
 		Morris.Area({
 			// ID of the element in which to draw the chart.
 			element: id,

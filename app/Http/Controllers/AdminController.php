@@ -59,23 +59,6 @@ class AdminController extends Controller
         return redirect()->route('admin.password')->with(['code' => $code, 'message' => $message]);
     }
 
-    public function showLogin()
-    {
-        return view('Admin.login');
-    }
-
-    public function login(LoginRequest $request)
-    {
-        $input = $request->except('_token');
-        list($status, $code, $message) = $this->adminService->login($input);
-        if ($status) {
-            return redirect()->route('admin.index');
-        } else {
-            return back()
-                ->with(['code' => $code, 'message' => $message]);
-        }
-    }
-
     public function dashboard()
     {
         $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
