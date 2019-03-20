@@ -103,11 +103,11 @@ class AdminService
                 return [true, 200, 'Login Successful'];
             } else {
                 $this->authAdmin->logout();
-                return [false, 404, 'Wrong Credential'];
+                return [false, 404, "You don't have permission to access this page"];
             }
         }
 
-        return [false, 400, 'Undefined error'];
+        return [false, 400, 'Wrong Credential'];
     }
 
     public function logout()
