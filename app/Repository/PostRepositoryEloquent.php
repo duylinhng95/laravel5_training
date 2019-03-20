@@ -278,4 +278,9 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             ->where('posts.status', config('constant.post.status.available'))
             ->get();
     }
+
+    public function sortByDesc($field, $num)
+    {
+        return $this->model->orderByDesc($field)->take($num);
+    }
 }

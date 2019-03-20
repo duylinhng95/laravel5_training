@@ -58,6 +58,7 @@ class Post {
 		this.setActiveClass()
 		this.validateLoginForm()
 		this.validateRegisterForm()
+		this.searchHomepage()
 		this.enterSearchHomepage()
 		this.validateCreatePost()
 	}

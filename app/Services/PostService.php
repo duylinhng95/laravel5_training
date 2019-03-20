@@ -274,9 +274,7 @@ class PostService
 
     public function getPopularPostByField($field)
     {
-        $date = today();
-        return $this->postRepository->findWhere(['created_at' => ['created_at', '>=', $date]])
-            ->sortByDesc($field)->take(5);
+        return $this->postRepository->sortByDesc($field, 5);
     }
 
     public function getAutocompleteData($keyword)
