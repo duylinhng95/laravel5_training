@@ -62,7 +62,8 @@ class PostService
     public function listByUser()
     {
         $userId = Auth::id();
-        return $this->postRepository->findByFields('user_id', $userId);
+        $posts = $this->postRepository->findByFields('user_id', $userId);
+        return $posts->sortByDesc('created_at');
     }
 
     public function find($slug)
