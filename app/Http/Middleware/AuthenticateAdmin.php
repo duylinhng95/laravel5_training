@@ -20,13 +20,7 @@ class AuthenticateAdmin
         if (!$auth->check()) {
             return redirect()->route('admin.login');
         } else {
-            $user = $auth->user();
-            if ($user->checkRole('admin')) {
-                return $next($request);
-            } else {
-                $auth->logout();
-                return redirect()->route('admin.login')->with('error', "You don't have permission to proceed");
-            }
+            return $next($request);
         }
     }
 }
