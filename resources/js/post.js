@@ -4,6 +4,7 @@ window.Tagsinput = require('../../node_modules/bootstrap4-tagsinput-douglasanpa/
 require('./vendor/summernote/summernote-ext-highlight')
 import Comment from './comment.js'
 import Follow from './follow.js'
+import Swal from 'sweetalert2'
 
 class Post {
 	constructor() {
@@ -51,7 +52,7 @@ class Post {
 	listen() {
 		this.btnSearchEnter(this.element.btnSearchUser, this.element.keywordsUser)
 		this.onSearch(this.element.btnSearchUser, this.element.keywordsUser)
-		this.deletePost()
+		this.onClickBtnDelete()
 		this.votePost()
 		this.navTab()
 		this.setActiveClass()
@@ -84,19 +85,42 @@ class Post {
 		})
 	}
 
-	deletePost() {
-		let url = `${this.apiUrl}/user/post`
-		this.element.btnDeletePost.on('click', function (event) {
-			let id = event.target.children.postId.value
-			let token = event.target.children[1].value
-			$.ajax({
-				url: `${url}/${id}`,
-				type: "DELETE",
-				data: {_token: token},
-				success: function () {
-					location.reload();
+	onClickBtnDelete() {
+		let self = this
+		let button = this.element.btnDeletePost
+		button.click(function () {
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				type: 'warning',
+				width: '50%',
+				padding: '10%',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.value) {
+					self.deletePost(button.data('post-id'), button.data('csrf-token'))
+					Swal.fire(
+						'Deleted!',
+						'Your file has been deleted.',
+						'success'
+					)
 				}
 			})
+		})
+	}
+
+	deletePost(id, token) {
+		let url = `${this.apiUrl}/user/post`
+		$.ajax({
+			url: `${url}/${id}`,
+			type: "DELETE",
+			data: {_token: token},
+			success: function () {
+				location.reload();
+			}
 		})
 	}
 
@@ -290,7 +314,12 @@ class Post {
 					required: "Please enter Post's content"
 				}
 			},
-			submitHandler: function(form) {
+			submitHandler: function (form) {
+				Swal.fire(
+					'Post success',
+					'Wait for this pop-up dismiss',
+					'success'
+				)
 				form.submit()
 			}
 		})
