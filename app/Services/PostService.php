@@ -257,7 +257,7 @@ class PostService
             });
 
         if ($posts->isEmpty()) {
-            return [false, 404, 'No Post found today', null];
+            return [false, 200, 'No Post found today', null];
         }
 
         $data = [];
