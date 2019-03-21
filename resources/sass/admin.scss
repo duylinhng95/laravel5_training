@@ -7007,7 +7007,6 @@ span.required {
 .chart {
   height: 250px;
   box-shadow: 0 20px 10px #ccc;
-
 }
 
 .total-numbers {
@@ -7021,4 +7020,17 @@ span.required {
 
 .top-comment .table, .top-like .table{
   box-shadow: 0 20px 10px #ccc;
+}
+
+#loader-chart {
+  background-image: url("../images/loading-chart.gif");
+  width: auto;
+  height: 250px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.chart-notify {
+  text-align: center;
+  padding-top: 125px;
 }

@@ -32,32 +32,49 @@ class Chart {
 
 	postDayChart() {
 		let self = this
+		let postDayChart = this.element.postDayChart
 		$.ajax({
 			url: this.apiURL + "/get-post-day",
 			type: "get",
 			success: function (res) {
 				let id = 'postDayChart'
+				self.removeLoadingGif(postDayChart)
 				if (res.data !== null) {
-
 					let data = res.data
 					let modified = ['hour', '# Posts']
 					self.drawAreaChart(id, data, modified)
+				} else {
+					self.appendNullData(postDayChart)
 				}
 			}
 		})
 	}
 
+	removeLoadingGif(section)
+	{
+		section.find('#loader-chart').remove()
+	}
+
+	appendNullData(section)
+	{
+		section.html(`<div class="chart-notify">No data is found</div>`)
+	}
+
 	registerDayChart() {
 		let self = this
+		let registerDayChart = this.element.registerDayChart
 		$.ajax({
 			url: this.apiURL + "/get-register-day",
 			type: "get",
 			success: function (res) {
+				self.removeLoadingGif(registerDayChart)
 				let id = 'registerDayChart'
 				if (res.data !== null) {
 					let data = res.data.data
 					let modified = res.data.colors
 					self.drawDonutChart(id, data, modified)
+				} else {
+					self.appendNullData(registerDayChart)
 				}
 			}
 		})
