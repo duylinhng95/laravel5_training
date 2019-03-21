@@ -44,7 +44,9 @@
                             <h3>Post analytics by day</h3>
                         </div>
                         <div class="card-body">
-                            <div id="postDayChart" class="chart"></div>
+                            <div id="postDayChart" class="chart">
+                                <div id="loader-chart"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,9 @@
                             <h3>Register analytics by day</h3>
                         </div>
                         <div class="card-body">
-                            <div id="registerDayChart" class="chart"></div>
+                            <div id="registerDayChart" class="chart">
+                                <div id="loader-chart"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,14 +118,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($mostComments as $post)
+                                @if ($mostComments->isEmpty())
                                     <tr>
-                                        <td>{{++$loop->index}}</td>
-                                        <td>{{$post->title}}</td>
-                                        <td>{{$post->count_comments}}</td>
-                                        <td>{{$post->user->name}}</td>
+                                        <td colspan="4" class="text-center">No data is found</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach($mostComments as $post)
+                                        <tr>
+                                            <td>{{++$loop->index}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->count_comments}}</td>
+                                            <td>{{$post->user->name}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -145,14 +155,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($mostLikes as $post)
+                                @if ($mostLikes->isEmpty())
                                     <tr>
-                                        <td>{{++$loop->index}}</td>
-                                        <td>{{$post->title}}</td>
-                                        <td>{{$post->count_votes}}</td>
-                                        <td>{{$post->user->name}}</td>
+                                        <td colspan="4" class="text-center">No data is found</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach($mostLikes as $post)
+                                        <tr>
+                                            <td>{{++$loop->index}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->count_votes}}</td>
+                                            <td>{{$post->user->name}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -176,14 +192,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($mostViews as $post)
+                                @if ($mostViews->isEmpty())
                                     <tr>
-                                        <td>{{++$loop->index}}</td>
-                                        <td>{{$post->title}}</td>
-                                        <td>{{$post->view}}</td>
-                                        <td>{{$post->user->name}}</td>
+                                        <td colspan="4" class="text-center">No data is found</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach($mostViews as $post)
+                                        <tr>
+                                            <td>{{++$loop->index}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->view}}</td>
+                                            <td>{{$post->user->name}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
