@@ -61,13 +61,14 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $postInDay     = $this->postRepository->findWhere([['created_at', '>=', today()]])->count();
+        $posts         = $this->postRepository->getPostsByDay();
         $commentsInDay = $this->commentRepository->findWhere([['created_at', '>=', today()]])->count();
         $registerInDay = $this->userRepository->findWhere([['created_at', '>=', today()]])->count();
-        $mostComments  = $this->postService->getPopularPostByField('count_comments');
-        $mostLikes     = $this->postService->getPopularPostByField('count_votes');
-        $mostViews     = $this->postService->getPopularPostByField('view');
         $pendingPosts  = $this->postRepository->getPendingPost();
+        $postInDay     = $posts->count();
+        $mostComments  = $posts->sortByDesc('comments_count')->take(5);
+        $mostLikes     = $posts->sortByDesc('votes_count')->take(5);
+        $mostViews     = $posts->sortByDesc('view')->take(5);
         return view('Admin.dashboard.index', compact(
             'postInDay',
             'registerInDay',

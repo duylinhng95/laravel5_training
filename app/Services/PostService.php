@@ -62,7 +62,8 @@ class PostService
     public function listByUser()
     {
         $userId = Auth::id();
-        return $this->postRepository->findByFields('user_id', $userId);
+        $posts = $this->postRepository->findByFields('user_id', $userId);
+        return $posts->sortByDesc('created_at');
     }
 
     public function find($slug)
@@ -269,13 +270,6 @@ class PostService
         }
 
         return [true, 200, 'Get Post by day successful', $data];
-    }
-
-    public function getPopularPostByField($field)
-    {
-        $date = today();
-        return $this->postRepository->findWhere(['created_at' => ['created_at', '>=', $date]])
-            ->sortByDesc($field)->take(5);
     }
 
     public function getAutocompleteData($keyword)

@@ -265,7 +265,7 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
 
     public function getPendingPost()
     {
-        return $this->makeModel()->where('status', config('constant.post.status.pending'))->get();
+        return $this->model->where('status', config('constant.post.status.pending'))->get();
     }
 
     public function getPostHintTitle($keyword)
@@ -276,6 +276,14 @@ class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepos
             ->where('categories.name', 'like', '%' . $keyword . '%')
             ->orWhere('post_tags.name', 'like', '%' . $keyword . '%')
             ->where('posts.status', config('constant.post.status.available'))
+            ->get();
+    }
+
+    public function getPostsByDay()
+    {
+        return $this->model->withCount('comments')
+            ->withCount('votes')
+            ->where('posts.created_at', '>=', today())
             ->get();
     }
 }
