@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Admin Portal</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 </head>
@@ -65,7 +65,13 @@
                             Post
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-user"></i>Posts list</a>
+                            <a class="nav-link" href="{{url('/admin/post')}}"><i class="fas fa-fw fa-sticky-note"></i>Posts list</a>
+                        </li>
+                        <li class="nav-divider">
+                            Category
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/admin/category')}}"><i class="fas fa-fw fa-database"></i>Categories list</a>
                         </li>
                     </ul>
                 </div>

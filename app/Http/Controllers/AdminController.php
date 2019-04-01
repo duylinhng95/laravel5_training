@@ -23,19 +23,19 @@ class AdminController extends Controller
     public function index()
     {
         $users = $this->adminService->getUsers();
-        return view('Admin.index', compact('users'));
+        return view('Admin.user.index', compact('users'));
     }
 
     public function blockUser(Request $request)
     {
-        $id = $request->id;
+        $id = $request->input('id');
         $user = $this->adminService->block($id);
         return response()->json($user);
     }
 
     public function unblockUser(Request $request)
     {
-        $id = $request->id;
+        $id = $request->input('id');
         $user = $this->adminService->unblock($id);
         return response()->json($user);
     }
@@ -43,6 +43,6 @@ class AdminController extends Controller
     public function listPost()
     {
         $posts = $this->adminService->getPosts();
-        return view('Admin.post', compact('posts'));
+        return view('Admin.post.index', compact('posts'));
     }
 }

@@ -4,16 +4,17 @@ namespace App\Repository;
 
 use App\Repository\AdminRepository;
 use App\Entities\User;
-use App\Traits\AdminTrait;
+use App\Traits\RocketTrait;
 use GuzzleHttp\Client;
 
 class AdminRepositoryEloquent implements AdminRepository
 {
-    use AdminTrait;
+    use RocketTrait;
 
     public function getUser()
     {
-        $user    = $this->loginAPI();
+        $params = ['email' => config('rocket.username'), 'password' => config('rocket.password')];
+        $user    = $this->loginAPI($params);
         $headers = [
             'X-Auth-Token' => $user['data']['authToken'],
             'X-User-Id'    => $user['data']['userId'],

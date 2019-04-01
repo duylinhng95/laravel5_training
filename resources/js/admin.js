@@ -1,6 +1,5 @@
 require('./bootstrap');
 
-window.Dropzone = require('dropzone');
 window.SlimScroll = require('./components/slimscroll/jquery.slimscroll.js');
 
 
@@ -61,11 +60,9 @@ jQuery(document).ready(function ($) {
 								$target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
 								$target.focus(); // Set focus again
 							}
-							;
 						});
 					}
 				}
-				;
 				$('.sidebar-nav-fixed a').each(function () {
 					$(this).removeClass('active');
 				})

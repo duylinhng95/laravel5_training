@@ -5,10 +5,10 @@
 @section('content')
     <div class="card-header">
         <h2>Login</h2>
-        @if(session('error'))
+        @if(session('code'))
             <div class="alert alert-danger">
                 <div class="col-md-6">
-                    {{session('error')}}
+                    {{session('message')}}
                 </div>
             </div>
         @endif

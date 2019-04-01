@@ -16,6 +16,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "rap2hpoutre/laravel-log-viewer": "^1.0",
+        "squizlabs/php_codesniffer": "^3.4",
         "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {

@@ -17,13 +17,14 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         $this->makeModel();
     }
 
-    abstract public function model();
-
     public function makeModel()
     {
-        $model = $this->app->make($this->model());
-        return $this->model = $model;
+        $model       = $this->app->make($this->model());
+        $this->model = $model;
+        return $this->model;
     }
+
+    abstract public function model();
 
     public function all()
     {
@@ -40,7 +41,7 @@ abstract class BaseRepositoryEloquent implements BaseRepository
         return $this->model->create($input);
     }
 
-    public function update($id, $att = 'id', $input)
+    public function update($id, $input, $att = 'id')
     {
         return $this->model->where($att, $id)->update($input);
     }

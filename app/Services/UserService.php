@@ -17,6 +17,10 @@ class UserService
         $this->rocketRepository = app(RocketProfileRepositoryEloquent::class);
     }
 
+    /**
+     * @param $input
+     * @return array
+     */
     public function register($input)
     {
         $user = $this->userRepository->loginRocket($input);
@@ -37,9 +41,9 @@ class UserService
     public function login($input)
     {
         if ($user = Auth::guard()->attempt($input)) {
-            return redirect('/user');
+            return ['code' => 200, 'message' => 'Login successful'];
         } else {
-            return redirect('/auth/login')->with('error', 'Wrong credentials');
+            return ['code' => 401, 'message' => 'Wrong Credential'];
         }
     }
 

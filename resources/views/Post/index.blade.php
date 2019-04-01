@@ -12,10 +12,12 @@
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-light text-dark">
                 <thead class="text-center">
-                <th>Title</th>
-                <th>Description</th>
-                <th>Content</th>
-                <th>Action</th>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Content</th>
+                    <th>Action</th>
+                </tr>
                 </thead>
                 @foreach($posts as $p)
                     <tr>

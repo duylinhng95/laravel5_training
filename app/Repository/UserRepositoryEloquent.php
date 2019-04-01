@@ -5,11 +5,11 @@ namespace App\Repository;
 use App\Entities\User;
 use App\Repository\UserRepository;
 use App\Repository\BaseRepositoryEloquent;
-use App\Traits\UserTrait;
+use App\Traits\RocketTrait;
 
 class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepository
 {
-    use UserTrait;
+    use RocketTrait;
 
     public function model()
     {
@@ -18,6 +18,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
 
     public function createProfile($users)
     {
+        $rockets = [];
         foreach ($users as $u) {
             $id                = $this->model->firstOrCreate($u['user'])->id;
             $rocket            = $u['rocket'];

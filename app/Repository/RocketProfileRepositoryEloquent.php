@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Repository\RocketProfileRepository;
@@ -14,8 +15,7 @@ class RocketProfileRepositoryEloquent extends BaseRepositoryEloquent implements 
 
     public function createProfile($arr)
     {
-        foreach ($arr as $a)
-        {
+        foreach ($arr as $a) {
             $this->model->firstOrCreate($a);
         }
         return true;

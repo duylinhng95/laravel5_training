@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\PostRepositoryEloquent;
-use Exception;
+use App\Services\PostService;
+use App\Services\CategoryService;
 
 class PostController extends Controller
 {
-    protected $postRepository;
+    protected $postService;
+    protected $categorySerivice;
 
     public function __construct()
     {
-        $this->postRepository = app(PostRepositoryEloquent::class);
+        $this->postService     = app(PostService::class);
+        $this->categoryService = app(CategoryService::class);
     }
 
     public function index()
     {
-        $posts = $this->postRepository->all();
-        return view('Post/index', compact('posts'));
+        $posts      = $this->postService->all();
+        $categories = $this->categoryService->all();
+        return view('Post/index', compact('posts', 'categories'));
     }
 
     public function show($id)
@@ -29,27 +32,21 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('Post/create');
+        $categories = $this->categoryService->all();
+        return view('Post/create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        try {
-            $input = $request->all();
-            $this->postRepository->create($input);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        $input = $request->except('_token');
+        $this->postService->create($input);
         return redirect('/post');
     }
 
     public function edit($id)
     {
-        if ($post = $this->postRepository->find($id)) {
-            return view('Post/edit', compact('post'));
-        } else {
-            throw new Exception('Post not found');
-        }
+        $post = $this->postRepository->find($id);
+        return view('Post/edit', compact('post'));
     }
 
     public function update($id, Request $request)
